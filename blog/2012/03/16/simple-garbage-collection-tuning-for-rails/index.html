@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Simple Garbage Collection Tuning for Rails - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Simple Garbage Collection Tuning for Rails
+
+
+  
+    16 Mar 2012
+    by Jake Vanderdray
+  
+  
+    
+      
+    
+  
+
+
+
+  Ruby is known for being bad a...">
+  <link rel="stylesheet" href="/assets/app-8b6d37be9d46988b325682ed906140e0.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+</head>
+
+  <body class="Default">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-1eab0e8af4627b0a8eb96649c8ab2274.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+
+
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="main sb-Wrapper">
+      <div class="content">
+        <h1>Simple Garbage Collection Tuning for Rails</h1>
+
+<div class="author">
+  <div class="info">
+    16 Mar 2012<br>
+    by Jake Vanderdray
+  </div>
+  <div class="gravatar">
+    
+      <img width="40px" src="http://www.gravatar.com/avatar/91add4ff5dc22b24fe8df41bbf3a26e7?s=150"/>
+    
+  </div>
+</div>
+
+<div class="post">
+  <p>Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren&#39;t very good for a Rails application so if you run a Rails app you really should do some tuning (this requires either Ruby Enterprise or Ruby 1.9.2).  Here&#39;s a streamlined process for getting started:</p>
+
+<h3 id="get-a-baseline">Get a Baseline</h3>
+
+<p>Turn on collecting GC stats for New Relic (of course you&#39;re using <a href="http://newrelic.com/">New Relic</a>).  You want to know what you&#39;re fixing and this will probably show you that about &#8531; of the &quot;Ruby&quot; portion of your app response time is really garbage collection.  Just add the following line to your <code>environment.rb</code> file:</p>
+
+<p><code>GC.enable_stats if defined?(GC) &amp;&amp; GC.respond_to?(:enable_stats)</code></p>
+
+<!--more-->
+
+<h3 id="examine-the-heap">Examine the Heap</h3>
+
+<p>Once you&#39;ve gathered enough data in NewRelic to be able to see a change, you&#39;ll want to see what the heap looks like in one of your passenger threads.</p>
+
+<ul>
+<li>Take one of your app servers out of production</li>
+<li>Install gdb.rb:</li>
+</ul>
+
+<p><code>sudo gem install gdb.rb</code></p>
+
+<ul>
+<li>Use <code>sudo passenger-status</code> to find a thread that has handled enough requests to be pretty well warmed up and note its PID.</li>
+<li>Connect to the passenger thread with gdb.rb:</li>
+</ul>
+
+<p><code>sudo gdb.rb &lt;pid&gt;</code></p>
+
+<ul>
+<li>Get gdb.rb to print out the stats about your objects:</li>
+</ul>
+
+<p><code>ruby objects</code></p>
+
+<p>You&#39;re looking for a section that looks like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">HEAPS            9
+  SLOTS      3061241
+  LIVE       1457106 (47.60%)
+  FREE       1604135 (52.40%)
+</code></pre></div>
+<p>We&#39;re going to assume that &quot;LIVE&quot; number is representative of how many slots you normally use up.  Round that up to something sensible like 1,500,000.  Now do the math like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">RUBY_HEAP_MIN_SLOTS=1800000          # Slots Live + 20%
+RUBY_HEAP_FREE_MIN=18000             # 1% of HEAP_MIN_SLOTS
+RUBY_HEAP_SLOTS_INCREMENT=144000     # 8% of HEAP_MIN_SLOTS
+RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+RUBY_GC_MALLOC_LIMIT=60000000
+</code></pre></div>
+<p>I know there&#39;s no explanation for those last two settings, but I haven&#39;t really explained the math behind the other numbers either.  This is meant to be a good starting point.  Its customized for your app to some degree, but with some assumptions.</p>
+
+<h2 id="wrap-your-ruby">Wrap Your Ruby</h2>
+
+<p>Now create a wrapper script that sets these variables in the environment before calling ruby.  I&#39;m going to assume you put it in <code>/usr/local/bin</code> and call it <code>ruby_tuned</code>.  The file should look like this (make sure you adjust for the path to ruby on your system):</p>
+<div class="highlight"><pre><code class="language-" data-lang=""><span class="c">#!/bin/bash</span>
+
+<span class="nb">export </span><span class="nv">RUBY_HEAP_MIN_SLOTS</span><span class="o">=</span>1800000
+<span class="nb">export </span><span class="nv">RUBY_HEAP_FREE_MIN</span><span class="o">=</span>18000
+<span class="nb">export </span><span class="nv">RUBY_HEAP_SLOTS_INCREMENT</span><span class="o">=</span>144000
+<span class="nb">export </span><span class="nv">RUBY_HEAP_SLOTS_GROWTH_FACTOR</span><span class="o">=</span>1
+<span class="nb">export </span><span class="nv">RUBY_GC_MALLOC_LIMIT</span><span class="o">=</span>60000000
+
+<span class="nb">exec</span> <span class="s2">"/usr/local/bin/ruby"</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+</code></pre></div>
+<h2 id="update-passenger">Update Passenger</h2>
+
+<p>Have passenger use your <code>ruby_tuned</code> wrapper instead of calling ruby directly by updating <code>passenger.conf</code> (look in <code>/etc/apache2/mods-enabled</code> on Ubuntu).  You&#39;ll want it to look like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">PassengerRoot /usr/local/lib/ruby/gems/1.8/gems/passenger-3.0.11
+PassengerRuby /usr/local/bin/ruby_tuned
+</code></pre></div>
+<p>Now restart apache, add the server back into production and check NewRelic to see how you did.</p>
+
+<h2 id="what-we-got">What We Got</h2>
+
+<p><img src="http://technology-customink-com.s3.amazonaws.com/images/Response_Time_GC.jpg" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy"></p>
+
+<p>The graph above is from New Relic as I rolled the changes out one server at a time.  When we applied these changes to our first app we saw:</p>
+
+<ul>
+<li>Time spent in GC drop from ~35ms per request to ~10ms</li>
+<li>CPU usage drop almost in half</li>
+<li>A slight increase in memory used</li>
+</ul>
+
+<h2 id="where-those-numbers-actually-came-from">Where Those Numbers Actually Came From</h2>
+
+<p>To understand these settings and what they do checkout:</p>
+
+<ul>
+<li><a href="http://www.viddler.com/v/87ae120a">This Presentation from Joe Damato</a></li>
+<li><a href="http://www.coffeepowered.net/2009/06/13/fine-tuning-your-garbage-collector/">This Post from Chris Heald</a> (he adds a gem to his app instead of using gdb.rb)</li>
+<li><a href="http://www.rubyenterpriseedition.com/documentation.html#_garbage_collector_performance_tuning">The Ruby Enterprise GC documentation</a></li>
+</ul>
+
+</div>
+
+
+<section id="disqus_thread">
+</section>
+<script type="text/javascript">
+  var disqus_shortname = 'custominktechnologyblog';
+  var disqus_identifier = '/blog/2012/03/16/simple-garbage-collection-tuning-for-rails';
+  var disqus_title = "Simple Garbage Collection Tuning for Rails";
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+      </div>
+    </div>
+    <div class="footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-ca69057f0a3c7907fba6689b1396c0dd.js"></script>
+  </body>
+</html>

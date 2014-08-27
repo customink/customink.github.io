@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Organizing Your Rails Models - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Organizing Your Rails Models
+
+
+  
+    03 Feb 2012
+    by Karle Durante
+  
+  
+    
+      
+    
+  
+
+
+
+  Like people, applications start out small.  U...">
+  <link rel="stylesheet" href="/assets/app-8b6d37be9d46988b325682ed906140e0.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+</head>
+
+  <body class="Default">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-1eab0e8af4627b0a8eb96649c8ab2274.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+
+
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="main sb-Wrapper">
+      <div class="content">
+        <h1>Organizing Your Rails Models</h1>
+
+<div class="author">
+  <div class="info">
+    03 Feb 2012<br>
+    by Karle Durante
+  </div>
+  <div class="gravatar">
+    
+      <img width="40px" src="http://www.gravatar.com/avatar/41e75ca920386f6949e2f9cc1714d71f?s=150"/>
+    
+  </div>
+</div>
+
+<div class="post">
+  <p>Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.</p>
+
+<p>&quot;We use Rails, the convention tells us how to organize our code&quot;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.</p>
+
+<!--more-->
+
+<p>A simple thing I like to do is group related models into folders.  This allows you to organize the related models of a domain into a single location while any shared or stand alone models simply remain in the root directory.  For instance, my directory structure may look something like:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">app
+|_models
+   |_address.rb
+   |_orders
+      |_order.rb
+      |_item.rb
+      |_shipping_detail.rb
+</code></pre></div>
+<p>And to make sure Rails can find all of my models, I need to update config/application.rb file as such:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="err">'</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/**</span><span class="s2">"]
+</span></code></pre></div>
+<p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
+
+</div>
+
+
+<section id="disqus_thread">
+</section>
+<script type="text/javascript">
+  var disqus_shortname = 'custominktechnologyblog';
+  var disqus_identifier = '/blog/2012/02/03/organizing-your-rails-models';
+  var disqus_title = "Organizing Your Rails Models";
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+      </div>
+    </div>
+    <div class="footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-ca69057f0a3c7907fba6689b1396c0dd.js"></script>
+  </body>
+</html>
