@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript</loc>
+    <lastmod>2014-08-29T00:00:00-04:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/blog/2014/08/26/modular-css-with-suit</loc>
     <lastmod>2014-08-26T00:00:00-04:00</lastmod>
     <priority>0.8</priority>
@@ -281,14 +287,14 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2014-08-27T12:06:19-04:00</lastmod>
+    <lastmod>2014-08-29T09:40:55-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/team/</loc>
-    <lastmod>2014-08-27T12:06:19-04:00</lastmod>
+    <lastmod>2014-08-29T09:40:55-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
