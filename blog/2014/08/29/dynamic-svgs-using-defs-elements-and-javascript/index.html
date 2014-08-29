@@ -163,7 +163,7 @@
   <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">randomBase</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="nx">max</span><span class="o">+</span><span class="mi">50</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Here is our random scale function which takes a <code>min</code> and <code>max</code> threshold. This will allow us to adjust the weight of each star type in the cluster and possible adjust the exported size differences from our image program into the <code>&lt;defs&gt;</code> area. This function returns a two decimal float value.</p>
+<p>Here is our random scale function which takes a <code>min</code> and <code>max</code> threshold. This will allow us to adjust the weight of each star type in the cluster and possibly adjust the exported size differences from our image program into the <code>&lt;defs&gt;</code> area. This function returns a two decimal float value.</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">randomScale</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">randomBase</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
 <span class="p">}</span>
@@ -171,7 +171,7 @@
 <span class="o">&gt;</span> <span class="nx">randomScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span> <span class="c1">// 0.6</span>
 <span class="o">&gt;</span> <span class="nx">randomScale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span> <span class="c1">// 0.85</span>
 </code></pre></div>
-<p>Finally, here is a helper function builds on top of <code>randomScale</code> that takes a star <code>name</code> and returns the proper value.</p>
+<p>Finally, here is a helper function that builds on top of <code>randomScale</code>. It takes a star <code>name</code> and returns the proper value.</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">randomScaleNamed</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">scale</span><span class="p">;</span>
   <span class="k">switch</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
