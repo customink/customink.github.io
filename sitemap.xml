@@ -299,83 +299,17 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2014-09-10T15:56:49-04:00</lastmod>
+    <lastmod>2014-09-11T13:24:49-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/team/</loc>
-    <lastmod>2014-09-10T15:56:49-04:00</lastmod>
+    <lastmod>2014-09-11T13:24:49-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
-  
-  <url>
-    <loc>/bower_components/sassy-maps/examples/index.html</loc>
-    <lastmod>2014-06-03T10:49:55Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/guide-inkicons-contrib.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/guide.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/index.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/rails.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/sass-codekit.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/sass.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux-buttons.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux-global.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux-responsive.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
   
 </urlset>
