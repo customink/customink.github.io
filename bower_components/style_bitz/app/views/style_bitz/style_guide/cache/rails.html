@@ -1,0 +1,119 @@
+<h1 id="stylebitz-loves-rails.">StyleBitz loves Rails.</h1>
+
+<p>On top of all the goodness of <a href="/style_bitz/sass">our own Sass framework</a> using the StyleBitz gem with Rails will give you access to mobile first responsive views and pre-defined layouts that automatically render common CustomInk components like our header and footer. StyleBitz allows you to take as much or as little as you want. You are in full control.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use StyleBitz with Rails, just add it to your <code>Gemfile</code>. If needed, you can use a semantic version tag. See our <a href="index#change-log">Change Log</a> for details.</p>
+<pre><code class="highlight ruby"><span class="n">gem</span> <span class="s1">'style_bitz'</span><span class="p">,</span> <span class="ss">github: </span><span class="s1">'customink/style_bitz'</span>
+</code></pre>
+
+<p>Optionally, you can mount the StyleBitz engine by adding the following line to your <code>routes.rb</code> file. This will allow you to access the living style guide at the <code>/style_bitz</code> URL within your Rails application. It is recommended to do this only for the development environment.</p>
+<pre><code class="highlight ruby"><span class="k">if</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">.</span><span class="nf">development?</span>
+  <span class="n">mount</span> <span class="no">StyleBitz</span><span class="o">::</span><span class="no">Rails</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s1">'/style_bitz'</span>
+<span class="k">end</span>
+</code></pre>
+
+<h2 id="layouts-&amp;-views">Layouts &amp; Views</h2>
+
+<p>Since StyleBitz is all about mobile first responsive design, it has only a single Rails layout. We call this the core layout. The core layout&#39;s responsibility is very small. It&#39;s job is to include other core partials to assemble a working page.</p>
+
+<ul>
+<li>Common <code>&lt;head&gt;</code> via <code>style_bitz/core/head</code> partial.</li>
+<li>Common header via <code>style_bitz/core/header</code> partial.</li>
+<li>Yielded content within a <code>&lt;main class=&quot;sb-main&quot;&gt;</code> element.</li>
+<li>Common footer via <code>style_bitz/core/footer</code> partial.</li>
+</ul>
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ProductsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">layout</span> <span class="s1">'style_bitz/layouts/core'</span>
+<span class="k">end</span>
+</code></pre>
+
+<h4 id="partial:-style_bitz/core/head">Partial: style_bitz/core/head</h4>
+
+<p>This partial puts all of our common head elements that you would expect – keywords, title, mobile compatible hints, etc. It also has a stylesheet link tag for the <code>style_bitz/style_bitz</code> manifest. This is the fully rendered core CSS as explained in <a href="/style_bitz/sass">our Sass framework</a> section and it is automatically added to your applications precompile list. StyleBitz does this so it can be cached between requests. It also exposes the following interfaces:</p>
+
+<ol>
+<li>A content for yield to <code>:sb_head</code> at the very end to customize the contents.</li>
+<li>A content for <code>:sb_page_title</code> to customize the title tag.</li>
+</ol>
+
+<p><span class="sg-Label sg-Label--todo"></span> There are 14 icon meta tags to fill in. Get some from SG mobile_phone.html.erb assets.</p>
+
+<h4 id="partial:-style_bitz/core/header">Partial: style_bitz/core/header</h4>
+
+<p>This partial renders our responsive header. It includes a customizeable TTARP number that is also hooked into our legacy StyleGuide TTARP override. Meaning TTARP number cookies set in StyleGuide will render in StyleBitz. Please see the TTARP Helper section for more details.</p>
+
+<p>The header partial also renders our LivePerson link. It leverages the ESI helpers within the RailsFrontend application too. This ESI partial is what allows Sales/Service to dynamically enable/disable the LivePerson feature via <a href="https://www.customink.com/admin/live_person">this admin page</a>. Please see the ESI Helper section for more details.</p>
+
+<h4 id="partial:-style_bitz/core/footer">Partial: style_bitz/core/footer</h4>
+
+<p>The footer loads the StyleBitz JavaScript manifest. Please see the JavaScript section to learn more about what assets are loaded and how to use them. The footer exposes the following programtic interfaces.</p>
+
+<ol>
+<li>A content for yield to <code>:sb_footer</code> at the very end to add other content and/or JavaScript.</li>
+</ol>
+
+<p><span class="sg-Label sg-Label--todo"></span> Add Google analytics JavaScript.<br/>
+<span class="sg-Label sg-Label--todo"></span> Add Coremetrics JavaScript.<br/></p>
+
+<h2 id="helpers">Helpers</h2>
+
+<p>If you add a new helper module to StyleBitz, please follow these guidelines:</p>
+
+<ol>
+<li>Avoid name conflicts and prefix all method names with <code>sb_</code>.</li>
+<li>Include the new helper in the <code>StyleBitz::ApplicationHelper</code> module.</li>
+</ol>
+
+<p>There is no need to include helpers in your host application. StyleBitz will prepare your application by including our root application helper for you.</p>
+
+<h4 id="ttarp-helper">TTARP Helper</h4>
+
+<p>Divergent from our legacy StyleGuide, the StyleBitz gem does not champion named TTARP numbers like <code>:sales</code>. We felt this feature is out of Scope for StyleBitz and we only hard code a single default number.</p>
+
+<p>If you want to override the the TTARP number, there are a few ways to do this. First is our typical method that will set the number and cookie it allowing us to track visitors from unique landing pages. To do this, use the following ERB method in your view.</p>
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">sb_ttarp_number_override_cookied</span> <span class="s1">'800-555-1234'</span> <span class="cp">%&gt;</span>
+</code></pre>
+
+<p>Please use the <code>sb_ttarp_number_span</code> in any content to generate the current TTARP number (default or override). This content tag will be updated by the cookied number above if set too allowing content pages to participate in conversion tracking. If you want to override the TTARP number for a single page without setting a cookie use this in your Rails view.</p>
+<pre><code class="highlight erb"><span class="cp">&lt;%</span> <span class="n">sb_ttarp_number_override</span> <span class="s1">'800-555-1234'</span> <span class="cp">%&gt;</span>
+</code></pre>
+
+<h4 id="esi-helper">ESI Helper</h4>
+
+<p>Used for header footer ESI host app delegation, specifically RailsFrontend. If the host application does not have a <code>render_esi</code> helper method, then StyleBitz will render a local partial. Meaning LivePerson is on all the time. The ESI functionality will only work when the request is not SSL or the Rails env is not test or development.</p>
+
+<p>If you change anything in StyleBitz <code>app/views/style_bitz/esi</code> view directory, please make sure to update any host application&#39;s matching directory. For example and ESI path for <code>live_person/sb_footer</code> is in partial form in StyleBitz and a <a href="https://github.com/customink/rails_frontend/tree/master/app/views/live_person">full view in RailsFrontend</a>.</p>
+
+<h2 id="javascript-assets">JavaScript Assets</h2>
+
+<p><span class="sg-Label sg-Label--todo"></span> Will be opening a GitHub issue to discuss.</p>
+
+<h2 id="demo-pages">Demo Pages</h2>
+
+<p>Here are a few pages to show full-stack usage of StyleBitz and Rails. The first page is a sandbox that you can play with. It is an empty layout. Feel free to play with the <code>sandbox.scss</code> file that imports StyleBitz core! Then add your HTML to <code>sandbox.html.erb</code> too.</p>
+
+<ul>
+<li><a href="pages/sandbox">Open Sandbox Page</a></li>
+</ul>
+
+<p><span class="sg-Label sg-Label--todo"></span> Here are a few content pages that Dara recomended that we build to show content first methodolgy being championed.</p>
+
+<ul>
+<li><a href="http://www.customink.com/about/customink_difference">The CustomInk Difference</a></li>
+<li><a href="http://www.customink.com/events/st-patricks-day-t-shirt">St. Patrick&#39;s Day T-Shirts</a></li>
+</ul>
+
+<p><span class="sg-Label sg-Label--todo"></span> We are waiting to hear back on a mocked up &quot;share the bill&quot; page.</p>
+
+<ul>
+<li><a href="#">Some Mocked Up Share The Bill Page?</a></li>
+</ul>
+
+<h2 id="todo">TODO</h2>
+
+<ul>
+<li>Talk about precompile
+*</li>
+</ul>
