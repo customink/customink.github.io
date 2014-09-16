@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>From Rails 3.2 to 4.2 - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="From Rails 3.2 to 4.2
+
+
+  
+    16 Sep 2014
+    by Ken Collins
+  
+  
+    
+      
+    
+  
+
+
+
+  Last week I set out to upgrade HomeMarks, a personal b...">
+  <link rel="stylesheet" href="/assets/app-ffe4cbb0853baa74d5737a7b435ca1ac.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+</head>
+
+  <body class="Default">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-1eab0e8af4627b0a8eb96649c8ab2274.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+
+
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="main sb-Wrapper">
+      <div class="content">
+        <h1>From Rails 3.2 to 4.2</h1>
+
+<div class="author">
+  <div class="info">
+    16 Sep 2014<br>
+    by Ken Collins
+  </div>
+  <div class="gravatar">
+    
+      <img width="40px" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    
+  </div>
+</div>
+
+<div class="post">
+  <p>Last week I set out to upgrade <a href="https://homemarks.com/">HomeMarks</a>, a personal bookmarking project of mine. This application sat on a very <a href="https://homemarks.com/blog/2014-02-26-homemarks-v3-launches">recent upgrade</a> to Rails 3.2. It is written as an API to both an iOS and HTML JavaScript interface. It is by no means huge and should represent a nominal service oriented application. Here are some stats:</p>
+
+<ul>
+<li>8 Models (450 LOC)</li>
+<li>11 Controllers (550 LOC)</li>
+<li>2 Mailers (50 LOC)</li>
+<li>8 Libraries (500 LOC)</li>
+<li>Using Ruby 2.1.2.</li>
+</ul>
+
+<p>The application is heavily tested with an emphasis on controller and integrations. It uses a standard Rails test setup with simple <a href="https://github.com/metaskills/minitest-spec-rails#readme">minitest-spec-rails</a> usage. Integrations are done using the Capybara DSL with the <a href="https://github.com/teampoltergeist/poltergeist">Poltergeist</a> driver. JavaScript tests use <a href="https://github.com/jfirebaugh/konacha">Konacha</a> which leverage MochaJS and the Chai assertion library.</p>
+
+<p>With the introductions out of the way let&#39;s do some fun upgrade work! Here is a step by step process of how I tackled the task and I hope you find it useful.</p>
+
+<h2 id="grease-the-wheels">Grease The Wheels</h2>
+
+<p>The first step I always recommend for any Rails upgrade is to update your entire bundle with your current Rails semver as the only gem constraint. The goal here is to have no gem versions other than <code>~&gt; 3.2</code> for Rails itself in your Gemfile - hence allowing Bundler to do all the work during your big 4.2 update. For this reason you should delete any explicit gem version specs and run <code>bundle update</code>.</p>
+
+<p>During this time you will want to remove any non-essential gems as well. Great examples are test related gems. Spending time debugging any non-essential gem during an upgrade process is the worst time spent of all. Likewise, identify gems that are obsolete in your target upgrade. In my application, good examples were the <code>mail_view</code> and the <code>quiet_assets</code> gems. Hopefully your application has a tagging convention for notes when upgrading. At CustomInk, we use <code>PENDING: [Rails4]...</code> style comment tags.</p>
+
+<p>Once done, update your master branch with this work and get that deployed. This is your new base for the push to Rails 4.2.</p>
+
+<h2 id="make-a-template">Make A Template</h2>
+
+<p>We want to reference a fresh 4.2 application as a guide. This will come in handy in many ways later on. During the time of this article Rails 4.2 was in beta1, so all examples will use that version. Please adjust your commands/examples as newer versions are released.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>gem install rails 4.2.0.beta1
+<span class="gp">$ </span>rbenv rehash
+<span class="gp">$ </span>rails new myapp
+</code></pre></div>
+<h2 id="the-big-bundle-update">The Big Bundle Update</h2>
+
+<p>We need to focus on the Gemfile first. Start by changing that <code>~&gt; 3.2</code> twiddle-wakka to our target version of <code>~&gt; 4.2.0.beta1</code> as our Rails gem version. Go through your notes and delete those obsolete gems too and make any adjustments to any pessimistic version if you noted any.</p>
+
+<p>In Rails 4.2, there is no such thing as an <code>assets</code> group for gems. So I removed my <code>group :assets</code> and flattened my asset gems to the root of the Gemfile. I do suggest maintaining an comment and clustering your asset gems in your Gemfile as a way to keep them organized. Due to <code>sass-rails</code> being in beta, I ended up with something like this.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'bcrypt-ruby'</span>
+<span class="n">gem</span> <span class="s1">'pg'</span>
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'~&gt; 4.2.0.beta1'</span> <span class="c1"># PENDING: [Rails 4.2] Remove wakka.</span>
+
+<span class="c1"># Assets</span>
+<span class="n">gem</span> <span class="s1">'bourbon'</span>
+<span class="n">gem</span> <span class="s1">'coffee-rails'</span>
+<span class="n">gem</span> <span class="s1">'jquery-rails'</span>
+<span class="n">gem</span> <span class="s1">'sass-rails'</span><span class="p">,</span> <span class="s1">'~&gt; 5.0.0.beta1'</span> <span class="c1"># PENDING: [Rails 4.2] Remove wakka.</span>
+<span class="n">gem</span> <span class="s1">'uglifier'</span>
+</code></pre></div>
+<p>Lastly, I find it extremely useful to delete the <code>Gemfile.lock</code> now. In my experience Bundler will have a much better time coping by allowing the entire dep graph to be rebuilt. Now go for the big update with a simple bundle install.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ bundle install
+</code></pre></div>
+<p>If you run into any problems here, take them on one by one. In some cases you could be using a gem that does not optimistically include 4.x versions. Before proceeding, find each project&#39;s issue tracker and do a little research. If you encounter resistance, look broadly first and avoid hacking around it. This could be your time to shine and help with an open source pull request.</p>
+
+<p>Once you are bundled, you are ready for the next step. <strong>Avoid the temptation to launch your application or running tests!</strong> You are no where near ready for that, so slow your roll. We still have some good work to do.</p>
+
+<h2 id="the-mimic-process">The Mimic Process</h2>
+
+<p>This is a great time to open the template application we created above. It is a very straightforward process to go through each of the application&#39;s files &amp; folders and mimic the template within your own application.</p>
+
+<p>In my experience I have seen a lot of pain in converting over <code>config/environments</code> files to the newer format. If you have never done so, I highly recommend following a simple practice that makes upgrading of these files easier in the future. Always keep the environment file largely untouched and add your configs to the bottom of each below a comment like this.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span>
+
+  <span class="c1"># ... Rails generated ...</span>
+
+  <span class="c1"># My Configs</span>
+  <span class="c1"># ----------</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">action_mailer</span><span class="p">.</span><span class="nf">show_previews</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>This makes updating these files in the future go much quicker. Here are some general notes I had when doing my entire mimesis process.</p>
+
+<h4 id="environments-&amp;-initializers">Environments &amp; Initializers</h4>
+
+<ul>
+<li>Removed <code>config.filter_parameters</code> from application.rb to config/initializers/filter_parameter_logging.rb</li>
+<li>The <code>config.assets.precompile</code> and <code>config.assets.version</code> have moved to config/initializers/assets.rb</li>
+<li>Many files now use the <code>Rails.application</code> singleton resource vs <code>MyApp::Application</code> constant.</li>
+</ul>
+
+<h4 id="concerns-directories">Concerns Directories</h4>
+
+<p>I fully embraced the new concern directories. I created both <code>app/controllers/concerns/.keep</code> and <code>app/models/concerns/.keep</code>. I found there were a few files in my lib directory that were actually concerns. For example, I moved both my AuthenticatedSystem and RenderInvalidRecord modules to the controller concerns. This allowed me to remove any hacks I had for setting the auto load path on the lib directory too.</p>
+
+<h4 id="bin-directory-&amp;-spring">Bin Directory &amp; Spring</h4>
+
+<p>I have been using both bundler bin stubs and Spring in all of my 3.2 applications. Now that Rails supports both the local <code>bin</code> directory and Spring in an integrated way, I wanted to follow the golden path of least resistance.</p>
+
+<p>The first step was to blow away my entire bin directory and just copy over the one from the application template. These new bin files for <code>rake</code> and <code>rails</code> leverage the Spring preloader. Make sure to delete your local or global bundle config for installing bins too. Do this with <code>bundle config --delete bin</code>. Now, instead of having Bundler install bin stubs for every gem which could conflict with the preloader bins, we should be explicit on a per gem basis. For example, this would install the bins for guard.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ bundle binstubs guard
+</code></pre></div>
+<p>Lastly, if you have never done so, change your shell&#39;s <code>PATH</code> to look for the local <code>./bin</code> directory before any others. I do this after my rbenv initialization.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">eval</span> <span class="s2">"</span><span class="k">$(</span>rbenv init -<span class="k">)</span><span class="s2">"</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"./bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</code></pre></div>
+<h4 id="routes-file">Routes File</h4>
+
+<ul>
+<li>Removed my <code>match</code> methods in favor of <code>get</code> verb method.</li>
+</ul>
+
+<h4 id="new-test-directories">New Test Directories</h4>
+
+<ul>
+<li>Renamed <code>test/functional</code> folder to <code>test/controllers</code></li>
+<li>Renamed <code>test/unit</code> folder to <code>test/models</code></li>
+<li>Created a <code>test/mailers</code> folder and moved all my mailer tests from units to it.</li>
+<li>Renamed <code>ActionController::IntegrationTest</code> to <code>ActionDispatch::IntegrationTest</code>.</li>
+</ul>
+
+<h2 id="framework-changes">Framework Changes</h2>
+
+<p>Now is the time where you can start to run your tests and identify what needs to change. I recommend starting with the model tests and moving on from there. Though I am a big fan of Guard for automatic test runs, Rails now has a new option when using rake. Just pass the filename after the test argument. For example, this would run a single model test and since the new <code>bin/rake</code> file uses Spring, you can run this command over and over again very quickly.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ rake test test/models/user_test.rb
+</code></pre></div>
+<p>Below are things I found while moving through my tests. I have organized them by framework. They are by no means comprehensive and your application may expose more differences between Rails 3.2 and 4.2.</p>
+
+<h4 id="activerecord">ActiveRecord</h4>
+
+<p>You are going to see a lot of <code>ArgumentError: Unknown key: ...</code> errors. The reason is that Rails 4.0 now requires that scopes use a callable object such as a Proc or lambda. I saw these errors mostly on <code>:order</code> and the <code>:readonly</code> option arguments. Here are a few before/after examples.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Old</span>
+<span class="n">has_many</span> <span class="ss">:foos</span><span class="p">,</span> <span class="ss">order: </span><span class="s1">'position'</span>
+<span class="n">has_many</span> <span class="ss">:bars</span><span class="p">,</span> <span class="ss">through: :foos</span><span class="p">,</span> <span class="ss">readonly: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">order: </span><span class="s1">'foos.position, bars.position'</span>
+
+<span class="c1"># New</span>
+<span class="n">has_many</span> <span class="ss">:foos</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">order</span><span class="p">(</span><span class="s1">'position'</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">has_many</span> <span class="ss">:bars</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">order</span><span class="p">(</span><span class="s1">'foos.position, bars.position'</span><span class="p">).</span><span class="nf">readonly</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span> <span class="p">},</span> <span class="ss">through: :foos</span>
+</code></pre></div>
+<p>Seems the callable object has to be the second argument and you can easily chain the scopes within. I took a wild guess that the <code>readyonly</code> scope took an optional <code>false</code> argument and was handsomely rewarded.</p>
+
+<p>I also got a few good <code>ArgumentError: The provided regular expression is using multiline anchors (^ or $) ...</code> errors. This was easy to fix by using the suggested \A and \z instead. Really happy to see the framework warning on this common errors when using regular expressions for validations.</p>
+
+<p>I deleted all the <code>attr_accesible</code> declarations from my models and switched to strong parameters in the controllers. If you are new to strong parameters, <a href="http://easyactiverecord.com/blog/2014/04/01/rails4-strong-parameters-and-the-attr-accessible-macro">check out this article</a> which goes into great depth on the topic. Alternatively, you can start using strong parameters before you upgrade to Rails 4.x by using the backward compatible <a href="https://github.com/rails/strong_parameters">strong parameters gem</a>. A great strategy to ease large application transitions. Thanks to <a href="http://about.me/cmar">Chris Mar</a> for pointing out this approach to our team.</p>
+
+<p>The class <code>update_all</code> no longer takes a second conditions argument. I always disliked methods that took two option hashes and this is a great change. For example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Old</span>
+<span class="no">Book</span><span class="p">.</span><span class="nf">update_all</span><span class="p">({</span><span class="ss">author: </span><span class="s1">'David'</span><span class="p">},</span> <span class="p">{</span><span class="ss">title: </span><span class="s1">'Rails'</span><span class="p">})</span>
+
+<span class="c1"># New</span>
+<span class="no">Book</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="ss">title: </span><span class="s1">'Rails'</span><span class="p">).</span><span class="nf">update_all</span><span class="p">(</span><span class="ss">author: </span><span class="s1">'David'</span><span class="p">)</span>
+</code></pre></div>
+<p>Lastly, the <code>all</code> method no longer takes finder options.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Old</span>
+<span class="no">User</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span><span class="n">conditions</span><span class="p">:{</span><span class="n">email</span><span class="p">:</span><span class="s1">'ken@metaskills.net'</span><span class="p">}).</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:id</span><span class="p">)</span>
+
+<span class="c1"># New</span>
+<span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">email</span><span class="p">:</span><span class="s1">'ken@metaskills.net'</span><span class="p">).</span><span class="nf">all</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:id</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="actionmailer">ActionMailer</h4>
+
+<p>Using <code>_path</code> url methods in mailers will now result in a <code>DEPRECATION WARNING... cannot be used here as a full URL is required</code> message. Unless you were manually augmenting these paths to have a host, this is a good thing and will keep developers from including partial URLs in mailers.</p>
+
+<p>MailView is now fully integrated into ActionMailer. Read <a href="http://brewhouse.io/blog/2013/12/17/whats-new-in-rails-4-1.html">this article</a> for full details. If you have never used MailView in a Rails 3 application, it allows you to develop your mails in the browser as if they were controller view. When moving from old MailView support to Rails 4.x usage, follow these steps:</p>
+
+<ul>
+<li>Add <code>config.action_mailer.show_previews</code> to config/environments/development.rb file.</li>
+<li>Moved previous mailer previews to new <code>test/mailers/previews</code> directory.</li>
+</ul>
+
+<h4 id="actionpack">ActionPack</h4>
+
+<p>Partials can no longer have <code>-</code> hyphens in the filename. I had to change a few.</p>
+
+<p>There is a new and <a href="https://github.com/rails/rails/blob/master/actionpack/lib/action_controller/metal/request_forgery_protection.rb">better request forgery protection</a> in Rails 4.x. Read the source link for full error messages and documentation. In my case, I had already redefined a protected <code>protect_against_forgery?</code> for a special controller and needed to only add <code>skip_before_action :verify_authenticity_token</code> to my filters to fully work around the security warning.</p>
+
+<h4 id="asset-pipeline">Asset Pipeline</h4>
+
+<p>The biggest issue that I had is that asset compilation no longer generates non-digest filenames for each asset. This <a href="https://github.com/rails/sprockets-rails/issues/49">github issue</a> explains the rationale, but I do believe there are some corner cases where you do want to reference the non-digest asset filename.</p>
+
+<p>If after careful examination you find yourself in need of this corner case, do not disable digests for all files. Instead install the <a href="https://github.com/alexspeller/non-stupid-digest-assets">non-stupid-digest-assets</a> gem which allows you to whitelist specific asset files and thereby including a non-digest filename along with the fingerprinted filenames for said asset(s). I recommend putting the <code>NonStupidDigestAssets.whitelist</code> settings at the bottom of the new <code>config/initializers/assets.rb</code> file.</p>
+
+<h4 id="testing">Testing</h4>
+
+<p>The Rails testing task strategy has changed a lot. By default now, when you run <code>rake test</code> all models, mailers, controllers and integrations are run in one collective suite run. If you are interested in learning how, read the <a href="https://github.com/rails/rails/blob/master/railties/lib/rails/test_unit/testing.rake">testing.rake</a> source. I also talked about how to add different directories to this process within a <a href="https://github.com/metaskills/minitest-spec-rails/issues/49">github issues under the minitest-spec-rails</a> project where <a href="http://blowmage.com">Mike Moore</a> contributed a few helpful hints too.</p>
+
+<p>The reason I mention this is that it is somewhat common to expect your Capybara enhanced integrations to run in a distinct process. Because of this, it is also common to see monkey patches to the ActiveRecord connection pool to support integration tests that leverage DB transactions. Depending on your setup, you may be required to make a few tweaks.</p>
+
+<h2 id="in-closing">In Closing</h2>
+
+<p>Upgrading Rails applications used to be a pain! My recent upgrade only took two evenings of my spare time. In my opinion Rails 3.1 and up have become much more stable for both application and gem authors to leverage the framework. Thus making upgrades approachable. Keep your applications small and focused as a way to win the upgrade wars!</p>
+
+<p>In closing, thanks for reading and I hope you found this information helpful. If you have any questions, feel free to ask in the comments. Cheers!</p>
+
+</div>
+
+
+<section id="disqus_thread">
+</section>
+<script type="text/javascript">
+  var disqus_shortname = 'custominktechnologyblog';
+  var disqus_identifier = '/blog/2014/09/16/from-rails-3.2-to-4.2';
+  var disqus_title = "From Rails 3.2 to 4.2";
+  (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+      </div>
+    </div>
+    <div class="footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-ca69057f0a3c7907fba6689b1396c0dd.js"></script>
+  </body>
+</html>
