@@ -1,8 +1,0 @@
-<ul>
-<li>
-<a href="#framework-setup">Framework Setup</a>
-</li>
-<li>
-<a href="#stylebitz-project">StyleBitz Project</a>
-</li>
-</ul>
