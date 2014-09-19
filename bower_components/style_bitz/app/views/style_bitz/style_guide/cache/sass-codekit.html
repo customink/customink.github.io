@@ -1,0 +1,39 @@
+<p><a href="https://incident57.com/codekit/" title="CodeKit"><img class="sg-Page-img--quarter" alt="CodeKit" src="https://cloud.githubusercontent.com/assets/2381/3487261/a5b1a18e-0470-11e4-89ec-8ace8c48f827.png" style="width: 100px" /></a>
+In order to use StyleBitz as a <a href="https://incident57.com/codekit/">CodeKit</a> framework you must first have a local copy the <a href="https://github.com/customink/style_bitz">StyleBitz repo</a> cloned to your local drive. If you are new to git, we recommend using <a href="https://mac.github.com">GitHub for Mac</a>.</p>
+
+<h2 id="framework-setup">Framework Setup</h2>
+
+<p>The first step is to setup StyleBitz as a CodeKit framework. Open up your GitHub cloned repo/directory. From there find the <code>app/assets/stylesheets</code> directory and drag that to the CodeKit window. Make sure to drop it on the lower part of the windows so that it is added as a framework.</p>
+
+<p><img class="sg-Page-img sg-Page-img--half-lg" alt="Drag the stylesheets directory as a CodeKit framework to the CodeKit window." src="https://cloud.githubusercontent.com/assets/2381/3487859/aa621bf0-04ac-11e4-9d41-e8a1d9d41efb.jpg" /></p>
+
+<p><img class="sg-Page-img sg-Page-img--half" alt="Optionally rename the new StyleBitz framework." src="https://cloud.githubusercontent.com/assets/2381/3487897/e3b430b0-04b0-11e4-94f9-058a09a11071.jpg" />
+Once that is done, you can rename the framework from <strong>stylesheets</strong> (the name of the folder) to <strong>StyleBitz</strong>. This is optional.</p>
+
+<p>Now that you have StyleBitz setup as a CodeKit framework, you will be able to use StyleBitz in any future CodeKit project.</p>
+
+<h2 id="stylebitz-project">StyleBitz Project</h2>
+
+<p>Create a new CodeKit project to use with StyleBitz. Now you will need to install the StyleBitz dependencies via CodeKit&#39;s Bower integration. We recommend adding these dependencies as CodeKit favorites to make this step easy for each project. To install StyleBitz dependencies, click on the <strong>Assets</strong> section in the CodeKit project toolbar. Now install the following dependencies:</p>
+
+<ul>
+<li>bourbon</li>
+<li>compass-breakpoint - <em>(bad bower name, not really for compass)</em></li>
+<li>susy</li>
+<li>sassy-maps</li>
+</ul>
+
+<p>We do depend on normalize.css but it is vendored into StyleBitz as a Sass file, no need to install it with Bower.</p>
+
+<p><img class="sg-Page-img sg-Page-img--half" alt="Final CodeKit project example." src="https://cloud.githubusercontent.com/assets/2381/3488859/3f57395c-0507-11e4-8702-f6ac7bf406f7.jpg" />
+Once the dependencies are installed, you should see them in a folder called <code>bower_components</code> at the root of your project. You must create a Sass file at the <strong>ROOT</strong> of your project. In our example, we made one called <code>app.scss</code>. Again this has to be at the root of your project for the following import to work.</p>
+<pre><code class="highlight scss"><span class="k">@import</span> <span class="s2">"style_bitz/codekit"</span><span class="p">;</span>
+</code></pre>
+
+<p>This import is the same as StyleBitz <strong>more</strong> mentioned in <a href="/style_bitz/sass">our Sass framework</a> docs. This means you get access to the entire Sass framework as well as the compiled bootstrap CSS for all StyleBitz components.</p>
+
+<p>By default, CodeKit will save the processed Sass file using the same name to the <code>css</code> directory of your project. So your projects HTML files should link to that file. For example:</p>
+<pre><code class="highlight html"><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"/css/app.css"</span> <span class="na">media=</span><span class="s">"screen"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
+</code></pre>
+
+<p>Any changes to your source Sass file or the root StyleBitz Sass files will automatically trigger a CodeKit compilation! Happy coding.</p>

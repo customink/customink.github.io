@@ -6,21 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading
-
-
-  
-    18 Jun 2012
-    by Seth Vargo
-  
-  
-    
-  
-
-
-
-  I was recently work...">
-  <link rel="stylesheet" href="/assets/app-9de29a0536cbba821fff90bba6f82858.css">
+  <meta name="description" content="I was recently working on a gem that involved marshaling data from a remote API. I really wanted the gem to behave like a native Ruby object, but t...">
+  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -33,7 +20,7 @@
 
 </head>
 
-  <body class="Default">
+  <body class="Home">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -61,19 +48,8 @@
     <div class="main sb-Wrapper">
       <div class="content">
         <h1>Profiling OpenStruct, Eager Loading, Method Missing, and Lazy Loading</h1>
-
-<div class="author">
-  <div class="info">
-    18 Jun 2012<br>
-    by Seth Vargo
-  </div>
-  <div class="gravatar">
-    
-  </div>
-</div>
-
-<div class="post">
-  <p>I was recently working on a gem that involved marshaling data from a remote API. I really wanted the gem to behave like a native Ruby object, but they methods would vary depending on the response. Since the data was dynamic, it would have been counter-productive and not scalable to define each of the methods individually.</p>
+        <div class="post">
+          <p>I was recently working on a gem that involved marshaling data from a remote API. I really wanted the gem to behave like a native Ruby object, but they methods would vary depending on the response. Since the data was dynamic, it would have been counter-productive and not scalable to define each of the methods individually.</p>
 
 <p>As such, I thought of a few different ways to get the result I wanted, but that just raised more questions, mainly <strong>performance</strong>. How would each of these methods perform? This was especially important given the large number of queries I would be making. In this blog post, I detail the exploration of these different methods and arrive at some pretty cool conclusions.</p>
 
@@ -394,9 +370,21 @@ lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.40
   }
 </script>
 
+        </div>
+      </div>
+
+      <div class="side-bar post-author">
+
+  
+
+  <div class="info">
+    18 Jun 2012<br>
+    by Seth Vargo
+  </div>
+
 </div>
 
-
+      
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -411,8 +399,6 @@ lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.40
 </script>
 
 
-
-      </div>
     </div>
     <div class="footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>

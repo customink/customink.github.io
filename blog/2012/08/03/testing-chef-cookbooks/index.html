@@ -6,21 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Testing Chef Cookbooks
-
-
-  
-    03 Aug 2012
-    by Seth Vargo
-  
-  
-    
-  
-
-
-
-  Throughout my internship at CustomInk, I&#39;ve put a significant ...">
-  <link rel="stylesheet" href="/assets/app-9de29a0536cbba821fff90bba6f82858.css">
+  <meta name="description" content="Throughout my internship at CustomInk, I&#39;ve put a significant focus on Chef cookbook testing. At the time of this writing, there are a few solu...">
+  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -33,7 +20,7 @@
 
 </head>
 
-  <body class="Default">
+  <body class="Home">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -61,19 +48,8 @@
     <div class="main sb-Wrapper">
       <div class="content">
         <h1>Testing Chef Cookbooks</h1>
-
-<div class="author">
-  <div class="info">
-    03 Aug 2012<br>
-    by Seth Vargo
-  </div>
-  <div class="gravatar">
-    
-  </div>
-</div>
-
-<div class="post">
-  <p>Throughout my internship at CustomInk, I&#39;ve put a significant focus on Chef cookbook testing. At the time of this writing, there are a few solutions for testing cookbooks - <a href="https://github.com/acrmp/chefspec">ChefSpec</a>, <a href="http://www.cucumber-chef.org/">cucumber-chef</a>, <a href="https://github.com/calavera/minitest-chef-handler">minitest-chef-handler</a>, and <a href="https://github.com/calavera/rspec-chef">rspec-chef</a> – and they each have their own distinct advantages. At the very least, you should run <code>knife cookbook test</code> and <code>foodcritic</code> against all your cookbooks. Nathen Harvey covered this in his <a href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a> blog post.</p>
+        <div class="post">
+          <p>Throughout my internship at CustomInk, I&#39;ve put a significant focus on Chef cookbook testing. At the time of this writing, there are a few solutions for testing cookbooks - <a href="https://github.com/acrmp/chefspec">ChefSpec</a>, <a href="http://www.cucumber-chef.org/">cucumber-chef</a>, <a href="https://github.com/calavera/minitest-chef-handler">minitest-chef-handler</a>, and <a href="https://github.com/calavera/rspec-chef">rspec-chef</a> – and they each have their own distinct advantages. At the very least, you should run <code>knife cookbook test</code> and <code>foodcritic</code> against all your cookbooks. Nathen Harvey covered this in his <a href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a> blog post.</p>
 
 <p>At CustomInk, we test using <a href="https://github.com/acrmp/chefspec">ChefSpec</a>. Additionally, we use some home-grown gems such as <a href="https://github.com/customink/fauxhai">fauxhai</a> and <a href="https://github.com/customink/strainer">Strainer</a> to make testing easier.</p>
 
@@ -179,9 +155,21 @@ chefspec: bundle <span class="nb">exec </span>spec
 
 <p>Chef testing is a huge topic, and it&#39;s going to be awhile until the community agrees on a single method for testing. Rails still has yet to figure it out... Here&#39;s what is important - <strong>test your cookbooks</strong>. Even if it&#39;s just running foodcritic against all your cookbooks, you are making the cookbook-world a better place. And <strong>talk about it</strong>. Tutorials like this one, as well as <a href="/blog/our-team/seth-vargo">some of the other posts I&#39;ve written</a> will help the community embrace testing :)!</p>
 
+        </div>
+      </div>
+
+      <div class="side-bar post-author">
+
+  
+
+  <div class="info">
+    03 Aug 2012<br>
+    by Seth Vargo
+  </div>
+
 </div>
 
-
+      
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -196,8 +184,6 @@ chefspec: bundle <span class="nb">exec </span>spec
 </script>
 
 
-
-      </div>
     </div>
     <div class="footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
