@@ -22,7 +22,7 @@
 
 
   The scalable vecto...">
-  <link rel="stylesheet" href="/assets/app-ffe4cbb0853baa74d5737a7b435ca1ac.css">
+  <link rel="stylesheet" href="/assets/app-b3eb3ca142f2b3b2be494f1acac72859.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -112,7 +112,7 @@
 </code></pre></div>
 <p>Our image will have a slender vertical portrait area to match the general proportions of the sidebar. The SVG is setup to preserve the <a href="http://www.justinmccandless.com/blog/Making+Sense+of+SVG+viewBox&#x27;s+Madness">aspect ratio</a> in such a way that allows the bottom planet to always be in view when scaled. We have a <code>&lt;defs&gt;</code> area where we can add reusable objects, an in-line style sheet for our awesome CSS, and a <code>&lt;g&gt;</code> starfield element to hold each star. Lastly, a place to write some JavaScript.</p>
 
-<h2 id="base-star-objects">Base Star Objects</h2>
+<h3 id="base-star-objects">Base Star Objects</h3>
 
 <p>Adding these to our SVG is really easy. I started by creating a canvas in my favorite vector program, <a href="http://bohemiancoding.com/sketch/">Sketch</a>. We want to make sure our exported paths start at 0,0 position and are are generally the size you expect to use them. This will help you later when translating these paths to different positions.</p>
 
@@ -125,7 +125,7 @@
   <span class="nt">&lt;path</span> <span class="na">id=</span><span class="s">"steeler"</span> <span class="na">d=</span><span class="s">"M3.231,6.211 L0,5.830 ... Z"</span><span class="nt">&gt;&lt;/path&gt;</span>
 <span class="nt">&lt;/defs&gt;</span>
 </code></pre></div>
-<h2 id="using-defined-objects">Using Defined Objects</h2>
+<h3 id="using-defined-objects">Using Defined Objects</h3>
 
 <p>If we were to view our SVG now, it would be pretty boring and contain only the colored background rect. So lets add some stars by using the defined objects above. We do this with the <code>&lt;use&gt;</code> element by setting each <code>xlink:href</code> to the id of that object we want to target. To move and size each star, we use the SVG <code>transform</code> attribute to both translate and scale each star. Adding these elements right before the JavaScript tag will create the following image.</p>
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;use</span> <span class="na">xlink:href=</span><span class="s">"#star"</span> <span class="na">transform=</span><span class="s">"translate(10,10) scale(1.0)"</span> <span class="na">class=</span><span class="s">"star"</span> <span class="nt">/&gt;</span>
@@ -136,7 +136,7 @@
 
 <p>Still kind of boring... and who has time to stochastically place several dozen stars around the canvas? Time for some JavaScript automation.</p>
 
-<h2 id="svgs-&amp;-javascript">SVGs &amp; JavaScript</h2>
+<h3 id="svgs-&amp;-javascript">SVGs &amp; JavaScript</h3>
 
 <p>Yes! SVGs are distinct documents that can have their own CSS and JavaScript. But in order for this JavaScript to execute, we must embed it into the parent HTML document. Linking to an SVG via an <code>&lt;img&gt;</code> tag will not allow this due to security concerns. We can get around that issue by using an <code>&lt;object&gt;</code> tag instead.</p>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;object</span> <span class="na">data=</span><span class="s">"our-awesome.svg"</span> <span class="na">type=</span><span class="s">"image/svg+xml"</span><span class="nt">&gt;&lt;/object&gt;</span>
@@ -148,7 +148,7 @@
     <span class="nx">height</span> <span class="o">=</span> <span class="mi">700</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">starfield</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"starfield"</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="random-javascript-helpers">Random JavaScript Helpers</h2>
+<h3 id="random-javascript-helpers">Random JavaScript Helpers</h3>
 
 <p>Before we just start adding some stars, we need some random functions to help us position and scale our stars. I like to start low level and build up. So here is our random function that takes a min and max value.</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">randomBase</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">)</span> <span class="p">{</span>
@@ -182,7 +182,7 @@
   <span class="k">return</span> <span class="nx">scale</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="adding-use-elements">Adding Use Elements</h2>
+<h3 id="adding-use-elements">Adding Use Elements</h3>
 
 <p>Now that we have the boring random functions out of the way, time to create our star-agnostic <code>addElement</code> function. This will create a new <code>&lt;g&gt;</code> element for each star&#39;s <code>&lt;use&gt;</code> element. The group is for placement and size, the use is for twinkle and shine animations.</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">addElement</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
@@ -213,7 +213,7 @@
 <span class="nx">addElements</span><span class="p">(</span><span class="s1">'burst'</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
 <span class="nx">addElements</span><span class="p">(</span><span class="s1">'star'</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
 </code></pre></div>
-<h2 id="going-further">Going Further</h2>
+<h3 id="going-further">Going Further</h3>
 
 <p>Thanks for reading this far! If you are interested in how I handled star animations using Bourbon &amp; Sass, check out <a href="https://gist.github.com/metaskills/f3be83a2cabf9e1061fc">this gist</a> on GitHub for my source code. It also shows how I animated the planet to spin at the bottom of the image and cover the background stars.</p>
 

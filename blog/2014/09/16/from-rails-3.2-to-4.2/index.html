@@ -22,7 +22,7 @@
 
 
   Last week I set out to upgrade HomeMarks, a personal b...">
-  <link rel="stylesheet" href="/assets/app-ffe4cbb0853baa74d5737a7b435ca1ac.css">
+  <link rel="stylesheet" href="/assets/app-b3eb3ca142f2b3b2be494f1acac72859.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -91,7 +91,7 @@
 
 <p>With the introductions out of the way let&#39;s do some fun upgrade work! Here is a step by step process of how I tackled the task and I hope you find it useful.</p>
 
-<h2 id="grease-the-wheels">Grease The Wheels</h2>
+<h3 id="grease-the-wheels">Grease The Wheels</h3>
 
 <p>The first step I always recommend for any Rails upgrade is to update your entire bundle with your current Rails semver as the only gem constraint. The goal here is to have no gem versions other than <code>~&gt; 3.2</code> for Rails itself in your Gemfile - hence allowing Bundler to do all the work during your big 4.2 update. For this reason you should delete any explicit gem version specs and run <code>bundle update</code>.</p>
 
@@ -99,14 +99,14 @@
 
 <p>Once done, update your master branch with this work and get that deployed. This is your new base for the push to Rails 4.2.</p>
 
-<h2 id="make-a-template">Make A Template</h2>
+<h3 id="make-a-template">Make A Template</h3>
 
 <p>We want to reference a fresh 4.2 application as a guide. This will come in handy in many ways later on. During the time of this article Rails 4.2 was in beta1, so all examples will use that version. Please adjust your commands/examples as newer versions are released.</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>gem install rails 4.2.0.beta1
 <span class="gp">$ </span>rbenv rehash
 <span class="gp">$ </span>rails new myapp
 </code></pre></div>
-<h2 id="the-big-bundle-update">The Big Bundle Update</h2>
+<h3 id="the-big-bundle-update">The Big Bundle Update</h3>
 
 <p>We need to focus on the Gemfile first. Start by changing that <code>~&gt; 3.2</code> twiddle-wakka to our target version of <code>~&gt; 4.2.0.beta1</code> as our Rails gem version. Go through your notes and delete those obsolete gems too and make any adjustments to any pessimistic version if you noted any.</p>
 
@@ -129,7 +129,7 @@
 
 <p>Once you are bundled, you are ready for the next step. <strong>Avoid the temptation to launch your application or running tests!</strong> You are no where near ready for that, so slow your roll. We still have some good work to do.</p>
 
-<h2 id="the-mimic-process">The Mimic Process</h2>
+<h3 id="the-mimic-process">The Mimic Process</h3>
 
 <p>This is a great time to open the template application we created above. It is a very straightforward process to go through each of the application&#39;s files &amp; folders and mimic the template within your own application.</p>
 
@@ -184,7 +184,7 @@
 <li>Renamed <code>ActionController::IntegrationTest</code> to <code>ActionDispatch::IntegrationTest</code>.</li>
 </ul>
 
-<h2 id="framework-changes">Framework Changes</h2>
+<h3 id="framework-changes">Framework Changes</h3>
 
 <p>Now is the time where you can start to run your tests and identify what needs to change. I recommend starting with the model tests and moving on from there. Though I am a big fan of Guard for automatic test runs, Rails now has a new option when using rake. Just pass the filename after the test argument. For example, this would run a single model test and since the new <code>bin/rake</code> file uses Spring, you can run this command over and over again very quickly.</p>
 <div class="highlight"><pre><code class="language-" data-lang="">$ rake test test/models/user_test.rb
@@ -251,7 +251,7 @@
 
 <p>The reason I mention this is that it is somewhat common to expect your Capybara enhanced integrations to run in a distinct process. Because of this, it is also common to see monkey patches to the ActiveRecord connection pool to support integration tests that leverage DB transactions. Depending on your setup, you may be required to make a few tweaks.</p>
 
-<h2 id="in-closing">In Closing</h2>
+<h3 id="in-closing">In Closing</h3>
 
 <p>Upgrading Rails applications used to be a pain! My recent upgrade only took two evenings of my spare time. In my opinion Rails 3.1 and up have become much more stable for both application and gem authors to leverage the framework. Thus making upgrades approachable. Keep your applications small and focused as a way to win the upgrade wars!</p>
 
