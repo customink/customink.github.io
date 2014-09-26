@@ -8,7 +8,7 @@
   
   <meta name="description" content="One of the big themes that emerged during #ChefConf was that we should be testing our infrastructure code.  Software engineers have been practicing...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -19,9 +19,10 @@
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -44,11 +45,10 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>MVT:  Foodcritic and Travis CI</h1>
-        <div class="post">
-          <p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It&#39;s becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I&#39;ll look at a &quot;minimum viable testing&quot; (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
+        <p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It&#39;s becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I&#39;ll look at a &quot;minimum viable testing&quot; (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
 
 <h3 id="testing-with-chef">Testing with Chef</h3>
 
@@ -216,23 +216,21 @@ end
 
 <p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">Nathen Harvey&#39;s blog</a><sub></p>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2012-06-04T13:45:00-04:00">
       04 Jun 2012
     </time></br>
-    by Nathen Harvery
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -247,8 +245,7 @@ end
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

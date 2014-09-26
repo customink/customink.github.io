@@ -8,7 +8,7 @@
   
   <meta name="description" content="At CustomInk, we recently made the switch to a new DNS provider. During the switch, we mass-imported records from our existing provider to our new ...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -19,9 +19,10 @@
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -44,11 +45,10 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>Easily test your DNS</h1>
-        <div class="post">
-          <p>At CustomInk, we recently made the switch to a new DNS provider. During the switch, we mass-imported records from our existing provider to our new provider. Did we get them all? Are they live yet? The immediate solution was to open up the terminal and fire off cURL requests, but there had to be a better way...</p>
+        <p>At CustomInk, we recently made the switch to a new DNS provider. During the switch, we mass-imported records from our existing provider to our new provider. Did we get them all? Are they live yet? The immediate solution was to open up the terminal and fire off cURL requests, but there had to be a better way...</p>
 
 <p>In this post/tutorial, I will show you how I created a test suite for our DNS records using RSpec. The solution is amazingly simple, and your specs will only be about 7 lines of code!</p>
 
@@ -215,23 +215,21 @@ end
 
 <p>This post was written using Ruby 1.9.3. It should work on Ruby 1.9.x, but I guarantee it won&#39;t work on 1.8.7.</p>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2012-07-31T01:31:00-04:00">
       31 Jul 2012
     </time></br>
-    by Seth Vargo
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -246,8 +244,7 @@ end
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

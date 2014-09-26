@@ -8,7 +8,7 @@
   
   <meta name="description" content="Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren&#39;t very good for a Rails application so if yo...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -19,9 +19,10 @@
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -44,11 +45,10 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>Simple Garbage Collection Tuning for Rails</h1>
-        <div class="post">
-          <p>Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren&#39;t very good for a Rails application so if you run a Rails app you really should do some tuning (this requires either Ruby Enterprise or Ruby 1.9.2).  Here&#39;s a streamlined process for getting started:</p>
+        <p>Ruby is known for being bad at garbage collection.  The truth is that the default GC settings aren&#39;t very good for a Rails application so if you run a Rails app you really should do some tuning (this requires either Ruby Enterprise or Ruby 1.9.2).  Here&#39;s a streamlined process for getting started:</p>
 
 <h3 id="get-a-baseline">Get a Baseline</h3>
 
@@ -140,27 +140,25 @@ PassengerRuby /usr/local/bin/ruby_tuned
 <li><a href="http://www.rubyenterpriseedition.com/documentation.html#_garbage_collector_performance_tuning">The Ruby Enterprise GC documentation</a></li>
 </ul>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
-    <div class="gravatar">
-      <div class="Member-gravatar"><img title="Jake Vanderdray" src="http://www.gravatar.com/avatar/91add4ff5dc22b24fe8df41bbf3a26e7?s=150"/></div>
+    <div class="tb-Author-gravatar">
+      <img title="Jake Vanderdray" src="http://www.gravatar.com/avatar/91add4ff5dc22b24fe8df41bbf3a26e7?s=150"/>
     </div>
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2012-03-16T08:07:00-04:00">
       16 Mar 2012
     </time></br>
-    by Jake Vanderdray
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -175,8 +173,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

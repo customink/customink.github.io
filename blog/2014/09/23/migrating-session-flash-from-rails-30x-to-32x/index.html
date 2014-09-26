@@ -9,7 +9,7 @@
   <meta name="description" content="When upgrading a high-traffic Rails application from 3.0.x to 3.2.x, existing
 sessions with Flash data will raise dump format error during the sess...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -20,9 +20,10 @@ sessions with Flash data will raise dump format error during the sess...">
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -45,11 +46,10 @@ sessions with Flash data will raise dump format error during the sess...">
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>Migrating Session Flash from Rails 3.0.x to 3.2.x</h1>
-        <div class="post">
-          <p>When upgrading a high-traffic Rails application from 3.0.x to 3.2.x, existing
+        <p>When upgrading a high-traffic Rails application from 3.0.x to 3.2.x, existing
 sessions with Flash data will raise <strong>dump format error</strong> during the session unmarshalling
 step of the users next request. For an ostensibly minor patch <a href="http://semver.org/">(see semver)</a>, breaking
 user sessions is an unexpected surprise and a real bummer for your users.</p>
@@ -261,27 +261,25 @@ tests to pass. The session data below is invalid.</p>
 <p>No, it&#39;s not pretty. But it will help you overcome an unexpected <strong>dump format error</strong> when deploying
 a Rails 3.2 upgrade.</p>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
-    <div class="gravatar">
-      <div class="Member-gravatar"><img title="Chris Mar" src="http://www.gravatar.com/avatar/7c9f4c37280d4cf26f9bda785478a09a?s=150"/></div>
+    <div class="tb-Author-gravatar">
+      <img title="Chris Mar" src="http://www.gravatar.com/avatar/7c9f4c37280d4cf26f9bda785478a09a?s=150"/>
     </div>
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2014-09-23T00:00:00-04:00">
       23 Sep 2014
     </time></br>
-    by Chris Mar
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -296,8 +294,7 @@ a Rails 3.2 upgrade.</p>
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

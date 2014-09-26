@@ -7,23 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="description" content="
+
   
   
     
     
-      
       
         
-          
   
     
-      Posted On 03 Feb 2012
+      Posted On 02 Mar 2012
     
-    Organizing Your Rails Models
+    Simple Data Mapper
   
-  Like people, appl...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  I recently tackled a pretty typical data mig...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http:///feed.xml" />
+  <link rel="stylesheet" href="/assets/app.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -34,13 +33,16 @@
   })(document);
 </script>
 
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Home">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-1eab0e8af4627b0a8eb96649c8ab2274.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -59,111 +61,128 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
-        <div class="home">
-  <!-- Paginated posts -->
-  <div class="posts">
+    <div class="tb-Home-main sb-Wrapper">
+      <div class="tb-Home-content">
+        <!-- Paginated posts -->
+<div class="tb-PostContainer">
+  
+  
     
     
-      
-      
-        <div class="post">
-          <article class="Excerpt">
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
   <header>
-    <time class="Excerpt-date" pubdate datetime="2012-02-03T15:38:00-05:00">
+    <time class="tb-Excerpt-date" pubdate datetime="2012-03-02T15:35:00-05:00">
+      Posted On 02 Mar 2012
+    </time>
+    <h2><a href="/blog/2012/03/02/simple-data-mapper">Simple Data Mapper</a></h2>
+  </header>
+  <p class="tb-Excerpt-text">I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future.
+</p>
+  <a href="/blog/2012/03/02/simple-data-mapper" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
+</article>
+
+      </div>
+    
+  
+    
+    
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
+  <header>
+    <time class="tb-Excerpt-date" pubdate datetime="2012-02-03T15:38:00-05:00">
       Posted On 03 Feb 2012
     </time>
     <h2><a href="/blog/2012/02/03/organizing-your-rails-models">Organizing Your Rails Models</a></h2>
   </header>
-  <p class="Excerpt-text">Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.
+  <p class="tb-Excerpt-text">Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.
 
 &quot;We use Rails, the convention tells us how to organize our code&quot;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.
 </p>
   <a href="/blog/2012/02/03/organizing-your-rails-models" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
 </article>
 
-        </div>
-      
+      </div>
     
-      
-      
-        <div class="post">
-          <article class="Excerpt">
+  
+    
+    
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
   <header>
-    <time class="Excerpt-date" pubdate datetime="2012-01-31T10:14:00-05:00">
+    <time class="tb-Excerpt-date" pubdate datetime="2012-01-31T10:14:00-05:00">
       Posted On 31 Jan 2012
     </time>
     <h2><a href="/blog/2012/01/31/pagerduty">PagerDuty, Nagios and Chef</a></h2>
   </header>
-  <p class="Excerpt-text">Three Things that Work Great Together If you use Chef and Nagios, you already know what a great combination they make. As you build new servers they automatically start getting monitored by Nagios. Without you having to do anything they&#39;re grouped together based on role, so its easy to apply the same checks for all servers in a given role. If you haven&#39;t tried Nagios built with the chef cookbook its easy to get started with this guide from Opscode....</p>
+  <p class="tb-Excerpt-text">Three Things that Work Great Together If you use Chef and Nagios, you already know what a great combination they make. As you build new servers they automatically start getting monitored by Nagios. Without you having to do anything they&#39;re grouped together based on role, so its easy to apply the same checks for all servers in a given role. If you haven&#39;t tried Nagios built with the chef cookbook its easy to get started with this guide from Opscode....</p>
   <a href="/blog/2012/01/31/pagerduty" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
 </article>
 
-        </div>
-      
+      </div>
     
-      
-      
-        <div class="post">
-          <article class="Excerpt">
+  
+    
+    
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
   <header>
-    <time class="Excerpt-date" pubdate datetime="2012-01-02T14:17:00-05:00">
+    <time class="tb-Excerpt-date" pubdate datetime="2012-01-02T14:17:00-05:00">
       Posted On 02 Jan 2012
     </time>
     <h2><a href="/blog/2012/01/02/green-screen">Green Screen</a></h2>
   </header>
-  <p class="Excerpt-text">Green Screen is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room. We use Green Screen at CustomInk to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a...</p>
+  <p class="tb-Excerpt-text">Green Screen is a build monitoring tool that is designed to be used as a dynamic Big Visible Chart (BVC) in your work area. It lets you add links to your build servers and displays the largest possible information on a monitor so that the team can see the build status from anywhere in the room. We use Green Screen at CustomInk to look after our continuous integration servers, currently 3 Hudson servers and one Jenkins cluster. We have a...</p>
   <a href="/blog/2012/01/02/green-screen" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
 </article>
 
-        </div>
-      
+      </div>
     
-      
-      
-        <div class="post">
-          <article class="Excerpt">
+  
+    
+    
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
   <header>
-    <time class="Excerpt-date" pubdate datetime="2011-11-21T03:29:00-05:00">
+    <time class="tb-Excerpt-date" pubdate datetime="2011-11-21T03:29:00-05:00">
       Posted On 21 Nov 2011
     </time>
     <h2><a href="/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink">Why we chose Chef over Puppet at CustomInk</a></h2>
   </header>
-  <p class="Excerpt-text">Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.
+  <p class="tb-Excerpt-text">Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.
 </p>
   <a href="/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
 </article>
 
-        </div>
-      
+      </div>
     
-      
-      
-        <div class="post">
-          <article class="Excerpt">
+  
+    
+    
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
   <header>
-    <time class="Excerpt-date" pubdate datetime="2010-07-16T09:00:00-04:00">
+    <time class="tb-Excerpt-date" pubdate datetime="2010-07-16T09:00:00-04:00">
       Posted On 16 Jul 2010
     </time>
     <h2><a href="/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects">Testing mod_rewrite and apache redirects</a></h2>
   </header>
-  <p class="Excerpt-text">At CustomInk, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.
+  <p class="tb-Excerpt-text">At CustomInk, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.
 
 With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn&#39;t loose any redirects along the way.
 </p>
   <a href="/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
 </article>
 
-        </div>
-      
+      </div>
     
-  </div>
-
-  <!-- Pagination links -->
-<div class="Paginator">
   
-    <div class="Paginator-newerBtn">
+</div>
+
+<!-- Pagination links -->
+<div class="tb-Paginator">
+  
+    <div class="tb-Paginator-newerBtn">
       
         <a href="/page7/" class="sb-Btn"  title="Newer Posts">&#8592; Newer</a>
       
@@ -173,10 +192,9 @@ With over 500 redirect and rewrite rules in place I needed a way to ensure my co
   
 </div>
 
-</div>
 
       </div>
-      <div class="side-bar">
+      <div class="tb-Sidebar">
   <a class="twitter-timeline" href="https://twitter.com/CustomInkTech"
    data-widget-id="500337390162960386"
    data-chrome="nofooter"
@@ -189,25 +207,13 @@ With over 500 redirect and rewrite rules in place I needed a way to ensure my co
 </div>
 
     </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-ca69057f0a3c7907fba6689b1396c0dd.js"></script>
+    <script src="/assets/app.js"></script>
   </body>
 </html>

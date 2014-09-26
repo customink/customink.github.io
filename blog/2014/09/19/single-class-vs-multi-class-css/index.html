@@ -8,7 +8,7 @@
   
   <meta name="description" content="As I have mentioned previously in my post on Modular CSS, structuring Sass/CSS is hard. One of the best ways to determine how clean and well struct...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -19,9 +19,10 @@
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -44,11 +45,10 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>Single Class vs. Multi Class CSS</h1>
-        <div class="post">
-          <p>As I have mentioned previously in my post on <a href="/blog/2014/08/26/modular-css-with-suit/">Modular CSS</a>, structuring Sass/CSS is hard. One of the best ways to determine how clean and well structured the resulting CSS within a project is, is to take a look at the markup being used in project. Overly nested elements typically mean overly nested CSS and if you find it difficult to discern the purpose of the classes on those elements, the CSS itself is probably not semantically written. To add insult to injury, the more classes we add to each element, the harder it becomes to read. What if there was a better way? What if we could just write a single class that provides all the styling we need for a given element?</p>
+        <p>As I have mentioned previously in my post on <a href="/blog/2014/08/26/modular-css-with-suit/">Modular CSS</a>, structuring Sass/CSS is hard. One of the best ways to determine how clean and well structured the resulting CSS within a project is, is to take a look at the markup being used in project. Overly nested elements typically mean overly nested CSS and if you find it difficult to discern the purpose of the classes on those elements, the CSS itself is probably not semantically written. To add insult to injury, the more classes we add to each element, the harder it becomes to read. What if there was a better way? What if we could just write a single class that provides all the styling we need for a given element?</p>
 
 <!--more-->
 
@@ -210,27 +210,25 @@
 
 <p><sub>Reposted from <a href="http://inlehmansterms.net/2014/09/19/single-class-vs-multi-class-css/" rel="canonical">Jonathan&#39;s blog- In Lehman&#39;s Terms</a>.</sub></p>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
-    <div class="gravatar">
-      <div class="Member-gravatar"><img title="Jonathan Lehman" src="http://www.gravatar.com/avatar/f536f0fa21e9c9be534642bb52293946?s=150"/></div>
+    <div class="tb-Author-gravatar">
+      <img title="Jonathan Lehman" src="http://www.gravatar.com/avatar/f536f0fa21e9c9be534642bb52293946?s=150"/>
     </div>
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2014-09-19T00:00:00-04:00">
       19 Sep 2014
     </time></br>
-    by Jonathan Lehman
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -245,8 +243,7 @@
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

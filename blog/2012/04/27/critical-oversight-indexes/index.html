@@ -8,7 +8,7 @@
   
   <meta name="description" content="One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of ...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -19,9 +19,10 @@
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -44,11 +45,10 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>Critical Oversight: Indexes</h1>
-        <div class="post">
-          <p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
+        <p>One of the most common production issues I run into are missing indexes.  The other day I got to thinking that they are usually missing because of the evolution of the software.</p>
 
 <p>We might use some rails generators to prototype some basic functionality.  Then we&#39;ll iterate over a set of stories incorporating new behavior.  Maybe we&#39;ll do some refactoring, scrap some features, pull out some dead code and &quot;harden&quot; some areas we&#39;ve identified as brittle.  But we almost never analyze the &quot;data model&quot; before we deploy.</p>
 
@@ -80,27 +80,25 @@
 </code></pre></div>
 <p>Of course, if you don&#39;t think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it&#39;s too late.</p>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
-    <div class="gravatar">
-      <div class="Member-gravatar"><img title="Karle Durante" src="http://www.gravatar.com/avatar/ccaeb0336801e0015145ad901d879377?s=150"/></div>
+    <div class="tb-Author-gravatar">
+      <img title="Karle Durante" src="http://www.gravatar.com/avatar/ccaeb0336801e0015145ad901d879377?s=150"/>
     </div>
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2012-04-27T11:48:00-04:00">
       27 Apr 2012
     </time></br>
-    by Karle Durante
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -115,8 +113,7 @@
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

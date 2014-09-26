@@ -8,7 +8,7 @@
   
   <meta name="description" content="In my last post, MVT: Foodcritic and Travis CI I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookb...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-dfef33a9570af809772c134536c74038.css">
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -19,9 +19,10 @@
   })(document);
 </script>
 
+  
 </head>
 
-  <body class="Home">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -44,11 +45,10 @@
   </div>
 </header>
 
-    <div class="main sb-Wrapper">
-      <div class="content">
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
         <h1>MVT: knife test and TravisCI</h1>
-        <div class="post">
-          <p>In my last post, <a href="/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">MVT: Foodcritic and Travis CI</a> I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each <code>git push</code>.  In this post, we&#39;ll iterate on the &quot;Minimum Viable Test&quot; idea by adding in support for knife&#39;s cookbook testing.</p>
+        <p>In my last post, <a href="/blog/2012/06/04/mvt-foodcritic-and-travis-ci/">MVT: Foodcritic and Travis CI</a> I described the process for having Travis CI look after your cookbooks and run Foodcritic, the cookbook lint tool, on your cookbook after each <code>git push</code>.  In this post, we&#39;ll iterate on the &quot;Minimum Viable Test&quot; idea by adding in support for knife&#39;s cookbook testing.</p>
 
 <p>Wait, I&#39;m already running foodcritic, do I really need to run <code>knife cookbook test</code>, too?</p>
 
@@ -232,23 +232,21 @@ gem 'chef', '~&gt; 10.12.0'
 
 <p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/">Nathen Harvey&#39;s blog</a><sub></p>
 
-        </div>
       </div>
-
-      <div class="side-bar post-author">
-
+      <div class="tb-Author">
   
 
-  <div class="info">
+  <div class="tb-Author-info">
     <time pubdate datetime="2012-07-06T22:52:00-04:00">
       06 Jul 2012
     </time></br>
-    by Nathen Harvery
+    by 
   </div>
-
 </div>
 
-      
+    </div>
+
+    
 <section id="disqus_thread">
 </section>
 <script type="text/javascript">
@@ -263,8 +261,7 @@ gem 'chef', '~&gt; 10.12.0'
 </script>
 
 
-    </div>
-    <div class="footer">
+    <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
 </div>

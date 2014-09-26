@@ -7,6 +7,64 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Ruby Meta - Method Madness</title>
+        <description>&lt;p&gt;Ruby metaprogramming is fun and very rewarding, but also a little bewildering. One of the great things about Ruby is that you can dynamically add methods to objects.  Ruby gives us &lt;code&gt;#eval&lt;/code&gt;, &lt;code&gt;#instance_eval&lt;/code&gt;, and &lt;code&gt;#class_eval&lt;/code&gt; for this purpose, but the names aren’t as clear as one might expect, and can lead to some confusion. Hopefully the code examples below help clarify how each is used, and get on on the way to meta-mastery.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;One important thing to remember in Ruby is that objects are instances of a class, but classes are also objects... classes are instances of class &lt;code&gt;Class&lt;/code&gt;!!&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;class_eval(string)&lt;/code&gt; means that we are defining a class, and we are eval&amp;#39;ing in that context basically, the equivalent of:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ClassDemo&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# can also use class_eval here&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Demo 1 - &lt;code&gt;class_eval&lt;/code&gt; on a class:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;def speak; puts &quot;hi&quot;; end&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ClassDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;ClassDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;class_eval&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;ClassDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# hi&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;ClassDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# NoMethodError: undefined method `speak&#39; for ClassDemo:Class&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Demo 1 corollary - &lt;code&gt;class_eval&lt;/code&gt; on an instance:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# No such thing!&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ClassDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;class_eval&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# NoMethodError: undefined method `class_eval&#39; for #&amp;lt;ClassDemo:0x...&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;instance_eval(string)&lt;/code&gt; means that we are eval&amp;#39;ing for a specific instance when instance_eval&amp;#39;ing on a class, that instance is the class&amp;#39;s instance!!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InstanceDemo&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Demo 2 - &lt;code&gt;instance_eval&lt;/code&gt; on an instance:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;def speak; puts &quot;hi&quot;; end&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;id1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;id2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;id1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;instance_eval&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;id1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# hi&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;id2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# NoMethodError: undefined method `speak&#39; for #&amp;lt;InstanceDemo:0x...&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Demo 2 corollary - &lt;code&gt;instance_eval&lt;/code&gt; on a class:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;def speak; puts &quot;hi&quot;; end&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;instance_eval&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speak_method&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# hi&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;InstanceDemo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;speak&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# NoMethodError: undefined method `speak&#39; for #&amp;lt;InstanceDemo:0x...&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So hopefully this helps clarify the distinctions between &lt;code&gt;#eval&lt;/code&gt;, &lt;code&gt;#class_eval&lt;/code&gt;, and &lt;code&gt;#instance_eval&lt;/code&gt;. The next time you want to dynamically modify the methods to objects (and classes), you’ll know which of these methods to choose!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 26 Sep 2014 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness</guid>
+      </item>
+    
+      <item>
         <title>Migrating Session Flash from Rails 3.0.x to 3.2.x</title>
         <description>&lt;p&gt;When upgrading a high-traffic Rails application from 3.0.x to 3.2.x, existing
 sessions with Flash data will raise &lt;strong&gt;dump format error&lt;/strong&gt; during the session unmarshalling
