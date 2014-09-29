@@ -571,7 +571,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 
 &lt;h3 id=&quot;make-a-template&quot;&gt;Make A Template&lt;/h3&gt;
 
-&lt;p&gt;We want to reference a fresh 4.2 application as a guide. This will come in handy in many ways later on. During the time of this article Rails 4.2 was in beta1, so all examples will use that version. Please adjust your commands/examples as newer versions are released.&lt;/p&gt;
+&lt;p&gt;We want to reference a fresh 4.2 application as a guide. This will come in handy in many ways later on. During the time of this article Rails 4.2 was in beta2, so all examples will use that version. Please adjust your commands/examples as newer versions are released.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gem install rails 4.2.0.beta1
 &lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;rbenv rehash
 &lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;rails new myapp
