@@ -79,12 +79,12 @@
 </code></pre></div>
 <h3 id="the-big-bundle-update">The Big Bundle Update</h3>
 
-<p>We need to focus on the Gemfile first. Start by changing that <code>~&gt; 3.2</code> twiddle-wakka to our target version of <code>~&gt; 4.2.0.beta1</code> as our Rails gem version. Go through your notes and delete those obsolete gems too and make any adjustments to any pessimistic version if you noted any.</p>
+<p>We need to focus on the Gemfile first. Start by changing that <code>~&gt; 3.2</code> twiddle-wakka to our target version of <code>~&gt; 4.2.0.beta2</code> as our Rails gem version. Go through your notes and delete those obsolete gems too and make any adjustments to any pessimistic version if you noted any.</p>
 
 <p>In Rails 4.2, there is no such thing as an <code>assets</code> group for gems. So I removed my <code>group :assets</code> and flattened my asset gems to the root of the Gemfile. I do suggest maintaining an comment and clustering your asset gems in your Gemfile as a way to keep them organized. Due to <code>sass-rails</code> being in beta, I ended up with something like this.</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'bcrypt-ruby'</span>
 <span class="n">gem</span> <span class="s1">'pg'</span>
-<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'~&gt; 4.2.0.beta1'</span> <span class="c1"># PENDING: [Rails 4.2] Remove wakka.</span>
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'~&gt; 4.2.0.beta2'</span> <span class="c1"># PENDING: [Rails 4.2] Remove wakka.</span>
 
 <span class="c1"># Assets</span>
 <span class="n">gem</span> <span class="s1">'bourbon'</span>
@@ -123,6 +123,7 @@
 <li>Removed <code>config.filter_parameters</code> from application.rb to config/initializers/filter_parameter_logging.rb</li>
 <li>The <code>config.assets.precompile</code> and <code>config.assets.version</code> have moved to config/initializers/assets.rb</li>
 <li>Many files now use the <code>Rails.application</code> singleton resource vs <code>MyApp::Application</code> constant.</li>
+<li>New <code>config.active_support.test_order = :random</code> added in test environment file.</li>
 </ul>
 
 <h4 id="concerns-directories">Concerns Directories</h4>
@@ -194,6 +195,8 @@
 <span class="no">User</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">email</span><span class="p">:</span><span class="s1">'ken@metaskills.net'</span><span class="p">).</span><span class="nf">all</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:id</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="actionmailer">ActionMailer</h4>
+
+<p>The <code>#deliver</code> method is deprecated and will be removed in Rails 5. Now that Rails 4.2 has <code>ActiveJob</code> the preferred way to deliver emails via it would be to call <code>#deliver_later</code> or <code>#deliver_now</code>. Since the default queue adapter for ActiveJob is <code>:inline</code>, just go ahead and switch things to the deliver later method. You can then change your queue adapter and create workers later on if needed.</p>
 
 <p>Using <code>_path</code> url methods in mailers will now result in a <code>DEPRECATION WARNING... cannot be used here as a full URL is required</code> message. Unless you were manually augmenting these paths to have a host, this is a good thing and will keep developers from including partial URLs in mailers.</p>
 

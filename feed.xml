@@ -65,6 +65,99 @@
       </item>
     
       <item>
+        <title>Unit Testing Sass Frameworks</title>
+        <description>&lt;p&gt;Building the &lt;a href=&quot;/blog/2014/09/08/building-the-customink-living-style-guide&quot;&gt;living style guide&lt;/a&gt; for &lt;a href=&quot;http://www.customink.com&quot;&gt;CustomInk&amp;#39;s&lt;/a&gt; new mobile/responsive sites required that we stand on the shoulders of other great frameworks. All of them well authored and hence well tested. But as we built more tools on top of these giants, we felt the need to test our own framework code and thus began the search for CSS/Sass testing tools. I was kind of let down.&lt;/p&gt;
+
+&lt;p&gt;To be fair, there are some really clever solutions for this problem and some may work for you! One example is the &lt;a href=&quot;https://github.com/ericam/true&quot;&gt;True&lt;/a&gt; unit test framework for Sass. This project is written by Eric Suzanne for his awesome &lt;a href=&quot;https://github.com/ericam/susy&quot;&gt;Susy&lt;/a&gt; grid framework. True allows you to write assertions in Sass itself but is limited to only value-based assertions. Since our living style guide is built within a &lt;code&gt;Rails::Engine&lt;/code&gt; we felt that a solution closer to Ruby would fit our needs better. Again, nothing existing fit those needs well.&lt;/p&gt;
+
+&lt;h4 id=&quot;ruby-here-doc-strings&quot;&gt;Ruby Here-Doc Strings&lt;/h4&gt;
+
+&lt;p&gt;Let&amp;#39;s start at the&lt;/p&gt;
+
+&lt;p&gt;I have always wanted to use one of the many &lt;a href=&quot;http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code&quot;&gt;Ruby here-doc strings&lt;/a&gt; methods and testing Sass sounded like a great reason&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-first&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    $list: (one two three);
+    .test { content: my-first($list); }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    .test { content: one; }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-last&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    $list: (one two three);
+    .test { content: my-last($list); }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    .test { content: three; }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;always&lt;/p&gt;
+
+&lt;p&gt;So let&amp;#39;s start at the end&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{})&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:syntax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:scss&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:syntax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:compact&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Sass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;render&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_my_framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;render_sass&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%|@import &quot;my_framework&quot;;\n#{template}|&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;assert_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sass_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_equal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;squish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render_my_framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sass_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;squish&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-first&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-last&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-first&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    $list: (one two three);
+    .test { content: my-first($list); }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    .test { content: one; }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-last&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    $list: (one two three);
+    .test { content: my-last($list); }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    .test { content: three; }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;!--
+Remove compass deps from sassy-maps project https://github.com/Team-Sass/Sassy-Maps/pull/6
+
+
+* http://technology.customink.dev/blog/2014/09/08/building-the-customink-living-style-guide
+
+
+* https://github.com/Team-Sass/Sassy-Maps/pull/6
+* https://github.com/Team-Sass/navigator/issues/6
+--&gt;
+
+&lt;h3 id=&quot;other-resources&quot;&gt;Other Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ericam/true&quot;&gt;True Sass Unit Testing Framework&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cburgmer/csscritic&quot;&gt;CSS Critic Regression Testing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code&quot;&gt;Ruby here-doc Strings&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 23 Sep 2014 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2014/09/23/unit-testing-sass-frameworks</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/23/unit-testing-sass-frameworks</guid>
+      </item>
+    
+      <item>
         <title>Migrating Session Flash from Rails 3.0.x to 3.2.x</title>
         <description>&lt;p&gt;When upgrading a high-traffic Rails application from 3.0.x to 3.2.x, existing
 sessions with Flash data will raise &lt;strong&gt;dump format error&lt;/strong&gt; during the session unmarshalling
@@ -485,12 +578,12 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;the-big-bundle-update&quot;&gt;The Big Bundle Update&lt;/h3&gt;
 
-&lt;p&gt;We need to focus on the Gemfile first. Start by changing that &lt;code&gt;~&amp;gt; 3.2&lt;/code&gt; twiddle-wakka to our target version of &lt;code&gt;~&amp;gt; 4.2.0.beta1&lt;/code&gt; as our Rails gem version. Go through your notes and delete those obsolete gems too and make any adjustments to any pessimistic version if you noted any.&lt;/p&gt;
+&lt;p&gt;We need to focus on the Gemfile first. Start by changing that &lt;code&gt;~&amp;gt; 3.2&lt;/code&gt; twiddle-wakka to our target version of &lt;code&gt;~&amp;gt; 4.2.0.beta2&lt;/code&gt; as our Rails gem version. Go through your notes and delete those obsolete gems too and make any adjustments to any pessimistic version if you noted any.&lt;/p&gt;
 
 &lt;p&gt;In Rails 4.2, there is no such thing as an &lt;code&gt;assets&lt;/code&gt; group for gems. So I removed my &lt;code&gt;group :assets&lt;/code&gt; and flattened my asset gems to the root of the Gemfile. I do suggest maintaining an comment and clustering your asset gems in your Gemfile as a way to keep them organized. Due to &lt;code&gt;sass-rails&lt;/code&gt; being in beta, I ended up with something like this.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bcrypt-ruby&#39;&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;pg&#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;rails&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;~&amp;gt; 4.2.0.beta1&#39;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# PENDING: [Rails 4.2] Remove wakka.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;rails&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;~&amp;gt; 4.2.0.beta2&#39;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# PENDING: [Rails 4.2] Remove wakka.&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# Assets&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bourbon&#39;&lt;/span&gt;
@@ -529,6 +622,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;li&gt;Removed &lt;code&gt;config.filter_parameters&lt;/code&gt; from application.rb to config/initializers/filter_parameter_logging.rb&lt;/li&gt;
 &lt;li&gt;The &lt;code&gt;config.assets.precompile&lt;/code&gt; and &lt;code&gt;config.assets.version&lt;/code&gt; have moved to config/initializers/assets.rb&lt;/li&gt;
 &lt;li&gt;Many files now use the &lt;code&gt;Rails.application&lt;/code&gt; singleton resource vs &lt;code&gt;MyApp::Application&lt;/code&gt; constant.&lt;/li&gt;
+&lt;li&gt;New &lt;code&gt;config.active_support.test_order = :random&lt;/code&gt; added in test environment file.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&quot;concerns-directories&quot;&gt;Concerns Directories&lt;/h4&gt;
@@ -600,6 +694,8 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;ken@metaskills.net&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;actionmailer&quot;&gt;ActionMailer&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code&gt;#deliver&lt;/code&gt; method is deprecated and will be removed in Rails 5. Now that Rails 4.2 has &lt;code&gt;ActiveJob&lt;/code&gt; the preferred way to deliver emails via it would be to call &lt;code&gt;#deliver_later&lt;/code&gt; or &lt;code&gt;#deliver_now&lt;/code&gt;. Since the default queue adapter for ActiveJob is &lt;code&gt;:inline&lt;/code&gt;, just go ahead and switch things to the deliver later method. You can then change your queue adapter and create workers later on if needed.&lt;/p&gt;
 
 &lt;p&gt;Using &lt;code&gt;_path&lt;/code&gt; url methods in mailers will now result in a &lt;code&gt;DEPRECATION WARNING... cannot be used here as a full URL is required&lt;/code&gt; message. Unless you were manually augmenting these paths to have a host, this is a good thing and will keep developers from including partial URLs in mailers.&lt;/p&gt;
 
