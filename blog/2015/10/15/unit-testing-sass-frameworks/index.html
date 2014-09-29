@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Unit Testing Sass Frameworks - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Building the living style guide for CustomInk&#39;s new mobile/responsive sites required that we stand on the shoulders of other great frameworks. ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-b651f92cdaf3b55ddcf369818f306fa8.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-1eab0e8af4627b0a8eb96649c8ab2274.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Unit Testing Sass Frameworks</h1>
+        <p>Building the <a href="/blog/2014/09/08/building-the-customink-living-style-guide">living style guide</a> for <a href="http://www.customink.com">CustomInk&#39;s</a> new mobile/responsive sites required that we stand on the shoulders of other great frameworks. All of them well authored and hence well tested. But as we built more tools on top of these giants, we felt the need to test our own framework code and thus began the search for CSS/Sass testing tools. I was kind of let down.</p>
+
+<p>To be fair, there are some really clever solutions for this problem and some may work for you! One example is the <a href="https://github.com/ericam/true">True</a> unit test framework for Sass. This project is written by Eric Suzanne for his awesome <a href="https://github.com/ericam/susy">Susy</a> grid framework. True allows you to write assertions in Sass itself but is limited to only value-based assertions. Since our living style guide is built within a <code>Rails::Engine</code> we felt that a solution closer to Ruby would fit our needs better. Again, nothing existing fit those needs well.</p>
+
+<h4 id="ruby-here-doc-strings">Ruby Here-Doc Strings</h4>
+
+<p>Let&#39;s start at the</p>
+
+<p>I have always wanted to use one of the many <a href="http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code">Ruby here-doc strings</a> methods and testing Sass sounded like a great reason</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">it</span> <span class="s1">'my-first'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    $list: (one two three);
+    .test { content: my-first($list); }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { content: one; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+
+<span class="n">it</span> <span class="s1">'my-last'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    $list: (one two three);
+    .test { content: my-last($list); }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { content: three; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>always</p>
+
+<p>So let&#39;s start at the end</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">render_sass</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+  <span class="n">options</span><span class="p">[</span><span class="ss">:syntax</span><span class="p">]</span> <span class="o">=</span> <span class="ss">:scss</span> <span class="k">unless</span> <span class="n">options</span><span class="p">.</span><span class="nf">key?</span><span class="p">(</span><span class="ss">:syntax</span><span class="p">)</span>
+  <span class="n">options</span><span class="p">[</span><span class="ss">:style</span><span class="p">]</span> <span class="o">=</span> <span class="ss">:compact</span> <span class="k">unless</span> <span class="n">options</span><span class="p">.</span><span class="nf">key?</span><span class="p">(</span><span class="ss">:style</span><span class="p">)</span>
+  <span class="n">options</span><span class="p">[</span><span class="ss">:cache</span><span class="p">]</span> <span class="o">=</span> <span class="kp">false</span>
+  <span class="no">Sass</span><span class="o">::</span><span class="no">Engine</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">options</span><span class="p">).</span><span class="nf">render</span>
+<span class="k">end</span>
+</code></pre></div><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">render_my_framework</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+  <span class="n">render_sass</span> <span class="sx">%|@import "my_framework";\n#{template}|</span>
+<span class="k">end</span>
+</code></pre></div><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">assert_sass</span><span class="p">(</span><span class="n">sass_template</span><span class="p">,</span> <span class="n">expected_css</span><span class="p">)</span>
+  <span class="n">assert_equal</span> <span class="n">expected_css</span><span class="p">.</span><span class="nf">squish</span><span class="p">,</span> <span class="n">render_my_framework</span><span class="p">(</span><span class="n">sass_template</span><span class="p">).</span><span class="nf">squish</span>
+<span class="k">end</span>
+</code></pre></div><div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="k">@function</span> <span class="nt">my-first</span><span class="o">(</span><span class="err">$</span><span class="nt">list</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@return</span> <span class="nt">nth</span><span class="o">(</span><span class="err">$</span><span class="nt">list</span><span class="o">,</span> <span class="nt">1</span><span class="o">)</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@function</span> <span class="nt">my-last</span><span class="o">(</span><span class="err">$</span><span class="nt">list</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">@return</span> <span class="nt">nth</span><span class="o">(</span><span class="err">$</span><span class="nt">list</span><span class="o">,</span> <span class="nt">length</span><span class="o">(</span><span class="err">$</span><span class="nt">list</span><span class="o">))</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">it</span> <span class="s1">'my-first'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    $list: (one two three);
+    .test { content: my-first($list); }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { content: one; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+
+<span class="n">it</span> <span class="s1">'my-last'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    $list: (one two three);
+    .test { content: my-last($list); }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { content: three; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+</code></pre></div>
+<!--
+Remove compass deps from sassy-maps project https://github.com/Team-Sass/Sassy-Maps/pull/6
+
+
+* http://technology.customink.dev/blog/2014/09/08/building-the-customink-living-style-guide
+
+
+* https://github.com/Team-Sass/Sassy-Maps/pull/6
+* https://github.com/Team-Sass/navigator/issues/6
+-->
+
+<h3 id="other-resources">Other Resources</h3>
+
+<ul>
+<li><a href="https://github.com/ericam/true">True Sass Unit Testing Framework</a></li>
+<li><a href="https://github.com/cburgmer/csscritic">CSS Critic Regression Testing</a></li>
+<li><a href="http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code">Ruby here-doc Strings</a></li>
+</ul>
+
+      </div>
+      <div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-10-15T00:00:00-04:00">
+      15 Oct 2015
+    </time></br>
+    by Ken Collins
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/10/15/unit-testing-sass-frameworks';
+    var disqus_title = "Unit Testing Sass Frameworks";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-ca69057f0a3c7907fba6689b1396c0dd.js"></script>
+  </body>
+</html>
