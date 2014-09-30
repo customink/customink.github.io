@@ -8,15 +8,70 @@
     
       <item>
         <title>Unit Testing Sass Frameworks</title>
-        <description>&lt;p&gt;Building the &lt;a href=&quot;/blog/2014/09/08/building-the-customink-living-style-guide&quot;&gt;living style guide&lt;/a&gt; for &lt;a href=&quot;http://www.customink.com&quot;&gt;CustomInk&amp;#39;s&lt;/a&gt; new mobile/responsive sites required that we stand on the shoulders of other great frameworks. All of them well authored and hence well tested. But as we built more tools on top of these giants, we felt the need to test our own framework code and thus began the search for CSS/Sass testing tools. I was kind of let down.&lt;/p&gt;
+        <description>&lt;p&gt;Building the &lt;a href=&quot;/blog/2014/09/08/building-the-customink-living-style-guide&quot;&gt;living style guide&lt;/a&gt; for &lt;a href=&quot;http://www.customink.com&quot;&gt;CustomInk&amp;#39;s&lt;/a&gt; new mobile/responsive sites required that we stand on the shoulders of other great frameworks. All of them well authored and hence well tested. But as we built more tools on top of these giants, we felt the need to test our own framework&amp;#39;s code and thus began the search for Sass/CSS testing methods. After surveying the current state of testing, I found myself let down.&lt;/p&gt;
 
-&lt;p&gt;To be fair, there are some really clever solutions for this problem and some may work for you! One example is the &lt;a href=&quot;https://github.com/ericam/true&quot;&gt;True&lt;/a&gt; unit test framework for Sass. This project is written by Eric Suzanne for his awesome &lt;a href=&quot;https://github.com/ericam/susy&quot;&gt;Susy&lt;/a&gt; grid framework. True allows you to write assertions in Sass itself but is limited to only value-based assertions. Since our living style guide is built within a &lt;code&gt;Rails::Engine&lt;/code&gt; we felt that a solution closer to Ruby would fit our needs better. Again, nothing existing fit those needs well.&lt;/p&gt;
+&lt;p&gt;To be fair, there are some really clever solutions for this problem and some may work for you. One example is the &lt;a href=&quot;https://github.com/ericam/true&quot;&gt;True&lt;/a&gt; unit test framework for Sass. This project is written by Eric Suzanne for his awesome &lt;a href=&quot;https://github.com/ericam/susy&quot;&gt;Susy&lt;/a&gt; grid framework. True allows you to write assertions in Sass itself but is limited to only value-based assertions. Since our living style guide is built within a Ruby gem, we felt that a solution closer to Ruby would fit our needs. That said, the solutions I propose below can be used by any Sass framework if you choose to test that framework with Ruby.&lt;/p&gt;
 
-&lt;h4 id=&quot;ruby-here-doc-strings&quot;&gt;Ruby Here-Doc Strings&lt;/h4&gt;
+&lt;h3 id=&quot;sass-framework-extensions&quot;&gt;Sass Framework Extensions&lt;/h3&gt;
 
-&lt;p&gt;Let&amp;#39;s start at the&lt;/p&gt;
+&lt;p&gt;First, we need some Sass to test. Our awesome framework wants more Sass list power! So we created these two fancy Sass functions below for accessing the first or last item of a list.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-first&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;I have always wanted to use one of the many &lt;a href=&quot;http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code&quot;&gt;Ruby here-doc strings&lt;/a&gt; methods and testing Sass sounded like a great reason&lt;/p&gt;
+&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-last&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From here, let&amp;#39;s pretend that these extensions are loaded whenever you &lt;code&gt;@import &amp;quot;my_framework&amp;quot;;&lt;/code&gt;. With great power comes great responsibility, hence we need to test them. But how?&lt;/p&gt;
+
+&lt;h3 id=&quot;enter-ruby-here-doc-strings&quot;&gt;Enter Ruby Here-Doc Strings&lt;/h3&gt;
+
+&lt;p&gt;I have always wanted to use one of the many Ruby &lt;a href=&quot;http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code&quot;&gt;here-doc&lt;/a&gt; string methods and testing Sass felt like a great opportunity to pay closer attention to these. Here is what I mocked up for our ideal Minitest assertion syntax. It uses the &lt;code&gt;&amp;lt;&amp;lt;-FLAG&lt;/code&gt; vs the &lt;code&gt;&amp;lt;&amp;lt;FLAG&lt;/code&gt; here-doc termination sequence so that indentation is maintained.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-red&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    .test { color: $my-red; }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    .test { color: #ee3524; }
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This looks really clean to me. It is easy to identify that we have some Sass at the top that we want to render to CSS below. If you are lucky, your editor will even syntax highlight each here-doc string too. Astute testing fans might complain that our fictional &lt;code&gt;assert_sass&lt;/code&gt; arguments&amp;#39; are backwards and that the actual CSS value needs to be the first parameter. I get it, but I think it looks and reads cleaner the other way around. As yes, I know it is &lt;a href=&quot;http://sassnotsass.com&quot;&gt;Sass not SASS&lt;/a&gt; but I wanted to stick with here-doc conventions and uppercase my termination sequences.&lt;/p&gt;
+
+&lt;h3 id=&quot;implementation-time&quot;&gt;Implementation Time&lt;/h3&gt;
+
+&lt;p&gt;Now that the vision is out of the way, we need to make &lt;code&gt;assert_sass&lt;/code&gt; work. Our project added the following Ruby methods to a &lt;code&gt;SassTestHelpers&lt;/code&gt; module that was in turn mixed into our base spec case. The details of where you put them in your own project is up to you.&lt;/p&gt;
+
+&lt;p&gt;That out of the way, the first thing we will need is a helper to render Sass.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{})&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:syntax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:scss&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:syntax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:compact&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Sass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;render&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The first argument here is a template string to render and some options to pass down to the Sass rendering engine. Set the default syntax to your own needs. But I suggest keeping the &lt;code&gt;:style&lt;/code&gt; option set to &lt;code&gt;:compact&lt;/code&gt;. We felt this was the best output method for tests. Lastly, this method does not leverage the Sass cache for safety. Just say no to Heisenbugs!&lt;/p&gt;
+
+&lt;p&gt;Now we need a method to render a string of Sass within our framework&amp;#39;s context. Luckily our gem already adds itself to the Sass load path via the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable. So all we have to do is import our awesome framework before whatever Sass we want to test. Again, Ruby&amp;#39;s here-doc strings come in handy.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_my_framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;render_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;TEMPLATE&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+    @import &quot;my_framework&quot;;
+    &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  TEMPLATE&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So with only two helper methods, we can finally implement &lt;code&gt;assert_sass&lt;/code&gt;. Since Minitest::Spec builds on top of unit style assertions, we delegate our assertion to &lt;code&gt;assert_equal&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;assert_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sass_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;expected&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;squish&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;actual&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render_my_framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sass_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;squish&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;assert_equal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;actual&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This time we make sure to switch the expected and actual to line up with the proper expectation order. If we did not do this, the test error output would be backwards. Lastly, we are using ActiveSupport &lt;a href=&quot;http://apidock.com/rails/ActiveSupport/CoreExtensions/String/Filters/squish&quot;&gt;squish&lt;/a&gt; string extension which removes consecutive whitespace not only from the ends of a string, but from within the middle too. This makes your CSS assertions tolerant to irrelevant white space introduced by indented here-doc strings.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-sass-tests&quot;&gt;Final Sass Tests&lt;/h3&gt;
+
+&lt;p&gt;The final tests for our Sass framework&amp;#39;s list extensions are below.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-first&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
     $list: (one two three);
@@ -35,56 +90,7 @@
 &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;always&lt;/p&gt;
-
-&lt;p&gt;So let&amp;#39;s start at the end&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{})&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:syntax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:scss&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:syntax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:compact&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;key?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
-  &lt;span class=&quot;no&quot;&gt;Sass&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;render&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_my_framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;render_sass&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%|@import &quot;my_framework&quot;;\n#{template}|&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;assert_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sass_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;assert_equal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expected_css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;squish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;render_my_framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sass_template&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;squish&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-first&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-last&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-first&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
-    $list: (one two three);
-    .test { content: my-first($list); }
-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
-    .test { content: one; }
-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;my-last&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;assert_sass&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SASS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;CSS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
-    $list: (one two three);
-    .test { content: my-last($list); }
-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  SASS&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;
-    .test { content: three; }
-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!--
-Remove compass deps from sassy-maps project https://github.com/Team-Sass/Sassy-Maps/pull/6
-
-
-* http://technology.customink.dev/blog/2014/09/08/building-the-customink-living-style-guide
-
-
-* https://github.com/Team-Sass/Sassy-Maps/pull/6
-* https://github.com/Team-Sass/navigator/issues/6
---&gt;
+&lt;p&gt;The result is a simple declarative test style that boosts our confidence level as we move our living style guide&amp;#39;s Sass framework forward. We can literally test anything from values to full expressions. Ruby is a great tool for testing and makes authoring Sass frameworks fun. I hope that you can use something like this within your own project and thanks for reading!&lt;/p&gt;
 
 &lt;h3 id=&quot;other-resources&quot;&gt;Other Resources&lt;/h3&gt;
 
@@ -94,9 +100,9 @@ Remove compass deps from sassy-maps project https://github.com/Team-Sass/Sassy-M
 &lt;li&gt;&lt;a href=&quot;http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code&quot;&gt;Ruby here-doc Strings&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Thu, 15 Oct 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/10/15/unit-testing-sass-frameworks</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/15/unit-testing-sass-frameworks</guid>
+        <pubDate>Tue, 30 Sep 2014 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks</guid>
       </item>
     
       <item>
@@ -850,6 +856,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;li&gt;&lt;a href=&quot;/blog/2014/08/26/modular-css-with-suit/&quot;&gt;Modular CSS With SUIT CSS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;/blog/2014/09/01/a-new-living-style-guide/&quot;&gt;A New Living Style Guide&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;/blog/2014/09/19/single-class-vs-multi-class-css/&quot;&gt;Single Class vs Multi Class CSS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/2014/09/30/unit-testing-sass-frameworks&quot;&gt;Unit Testing Sass Frameworks&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;em&gt;Presentation Slide Decks&lt;/em&gt;
 
