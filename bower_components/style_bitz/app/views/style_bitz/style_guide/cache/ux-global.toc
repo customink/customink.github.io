@@ -1,0 +1,11 @@
+<ul>
+<li>
+<a href="#header">Header</a>
+</li>
+<li>
+<a href="#footer">Footer</a>
+</li>
+<li>
+<a href="#menu">Menu</a>
+</li>
+</ul>
