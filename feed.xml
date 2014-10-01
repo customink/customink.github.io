@@ -36,7 +36,7 @@
 &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;  CSS&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;This looks really clean to me. It is easy to identify that we have some Sass at the top that we want to render to CSS below. If you are lucky, your editor will even syntax highlight each here-doc string too. Astute testing fans might complain that our fictional &lt;code&gt;assert_sass&lt;/code&gt; arguments&amp;#39; are backwards and that the actual CSS value needs to be the first parameter. I get it, but I think it looks and reads cleaner the other way around. As yes, I know it is &lt;a href=&quot;http://sassnotsass.com&quot;&gt;Sass not SASS&lt;/a&gt; but I wanted to stick with here-doc conventions and uppercase my termination sequences.&lt;/p&gt;
+&lt;p&gt;This looks really clean to me. It is easy to identify that we have some Sass at the top that we want to render to CSS below. If you are lucky, your editor will even syntax highlight each here-doc string too. Astute testing fans might complain that our fictional &lt;code&gt;assert_sass&lt;/code&gt; arguments&amp;#39; are backwards and that the expected CSS value needs to be the first parameter. I get it, but I think it looks and reads cleaner the other way around. As yes, I know it is &lt;a href=&quot;http://sassnotsass.com&quot;&gt;Sass not SASS&lt;/a&gt; but I wanted to stick with here-doc conventions and uppercase my termination sequences.&lt;/p&gt;
 
 &lt;h3 id=&quot;implementation-time&quot;&gt;Implementation Time&lt;/h3&gt;
 
