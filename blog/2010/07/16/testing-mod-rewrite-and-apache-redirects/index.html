@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Testing mod_rewrite and apache redirects - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="At CustomInk, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache co...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Testing mod_rewrite and apache redirects</h1>
+        <p>At <a href="http://www.customink.com">CustomInk</a>, we recently migrated from mongrel to Passenger for our Ruby on Rails website. This migration included a full rewrite of our apache configuration files.</p>
+
+<p>With over 500 redirect and rewrite rules in place I needed a way to ensure my copy-n-paste skills were up to snuff and that we didn&#39;t loose any redirects along the way.</p>
+
+<!--more-->
+
+<p>In my search for help, I found a <a href="http://www.viget.com/extend/test-drive-mod-rewrite-rules-with-testunit/">blog post by Patrick Reagan from Viget labs</a> that described a method for writing tests that will verify all the rewrite rules and redirects. Patrick&#39;s ideas were packaged up into a gem and available on <a href="http://github.com/eightbitraptor/http_redirect_test">github</a>.</p>
+
+<p>I can now write up tests like:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">should_redirect</span> <span class="s2">"/cink/ideas/ideas.jsp"</span><span class="p">,</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">"/inspiration/"</span>
+</code></pre></div>
+<p>So now I can to some TDC (test-driven configuration) whenever I get a request for a new redirect.</p>
+
+<p>What other methods have you used to test your rewrite rules?</p>
+
+<hr>
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/">Nathen Harvey&#39;s blog</a>.</sub></p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2010-07-16T09:00:00-04:00">
+      16 Jul 2010
+    </time></br>
+    by Nathen Harvery
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects';
+    var disqus_title = "Testing mod_rewrite and apache redirects";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+  </body>
+</html>
