@@ -10,6 +10,8 @@
         <title>Taking a peak at Active Record Proxies</title>
         <description>&lt;p&gt;If you&amp;#39;ve worked in a Rails project before, you&amp;#39;ve undoubtedly set up associations beteween your models. Active Record provides a clean and simple way in setting up these associations, while hiding a lot of the complexity behind the scenes.&lt;/p&gt;
 
+&lt;!--more--&gt;
+
 &lt;p&gt;One thing that I found interesting is how method calls are forwarded between associated models. Let&amp;#39;s take a look at a simple example:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Team&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;has_many&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:players&lt;/span&gt;
