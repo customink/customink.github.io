@@ -7,7 +7,7 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Taking a peak at Active Record Proxies</title>
+        <title>Taking a peek at Active Record Proxies</title>
         <description>&lt;p&gt;If you&amp;#39;ve worked in a Rails project before, you&amp;#39;ve undoubtedly set up associations beteween your models. Active Record provides a clean and simple way in setting up these associations, while hiding a lot of the complexity behind the scenes.&lt;/p&gt;
 
 &lt;!--more--&gt;
