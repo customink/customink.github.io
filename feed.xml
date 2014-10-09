@@ -7,6 +7,75 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>The New Sass Load Path Solution</title>
+        <description>&lt;p&gt;One of the biggest hurdles in effectively using &lt;a href=&quot;http://sass-lang.com/&quot;&gt;Sass&lt;/a&gt; is correctly setting the load path when using Sass libraries. Surprisingly many libraries do not set up the load paths correctly. Some libraries add themselves to the &lt;code&gt;Sass.load_paths&lt;/code&gt;, but stomp on paths that were already loaded, which introduces problems like requirements for the order dependencies are loaded, a situation that should not affect the outcome. Many others require &lt;a href=&quot;http://compass-style.org/&quot;&gt;Compass&lt;/a&gt; rather than using Sass&amp;#39; built-in functionality by default and hooking into Compass only if it is provided. In short, the current state of things could use improvement.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;For those of you that are aware of the challenges using the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable and just want the solution, the &lt;a href=&quot;https://rubygems.org/gems/sass_paths&quot;&gt;SassPaths gem&lt;/a&gt; provides utilities to easily include directories, Sass gems, and Bower Sass dependencies in the &lt;code&gt;SASS_PATH&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-do-load-paths-matter?&quot;&gt;Why do load paths matter?&lt;/h2&gt;
+
+&lt;p&gt;The Sass load paths let Sass know the directories it should look in when trying to import files. Correctly setting up the load paths allow us to import a Sass library with its name, rather than having to use the relative path to the resource.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sass&quot; data-lang=&quot;sass&quot;&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;susy&#39;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// versus
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;bundle/ruby/2.1.0/gems/susy-2.1.3/sass/susy&#39;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;where-sass-is-headed&quot;&gt;Where Sass is headed&lt;/h2&gt;
+
+&lt;p&gt;To help solve the load path problem, Sass 3.2 introduced the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable, an environment variable that can be hooked into to set the load paths for Sass. As first specified in the &lt;a href=&quot;https://github.com/sass/sass/blob/stable/doc-src/SASS_CHANGELOG.md#smaller-improvements-2&quot;&gt;3.2 change log&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Sass.load_paths is initialized to the value of the SASS_PATH environment variable. This variable should contain a colon-separated list of load paths (semicolon-separated on Windows).&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable is not just an optional alternative, it is at the core of where Sass is headed regarding setting up/managing its load paths. In fact, Sass 3.4 introduces a backwards incompatibility with how the load path was handled before. As specified in the &lt;a href=&quot;https://github.com/sass/sass/blob/stable/doc-src/SASS_CHANGELOG.md#backwards-incompatibilities----must-read&quot;&gt;Sass 3.4 change log&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;The current working directory will no longer be placed onto the Sass load path by default. If you need the current working directory to be available, set SASS_PATH=. in your shell&amp;#39;s environment.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Another significant change occurring in the Sass community is that Sass no longer requires Ruby. &lt;a href=&quot;http://libsass.org/&quot;&gt;LibSass&lt;/a&gt; brings a C implementation of Sass to the table to remove the requirement of Ruby as well as provide a significant performance increase in compilation. LibSass also &lt;a href=&quot;https://github.com/sass/libsass/issues/90&quot;&gt;implements&lt;/a&gt; the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable so there is no denying that the &lt;code&gt;SASS_PATH&lt;/code&gt; is the accepted way forward.&lt;/p&gt;
+
+&lt;p&gt;The problem with LibSass is that it currently only implements features up to Sass 3.2, meaning most notably, it does not support Sass maps. The good news is that the core team recently &lt;a href=&quot;https://github.com/sass/libsass/wiki/The-LibSass-Compatibility-Plan&quot;&gt;announced&lt;/a&gt; that they plan on getting LibSass to be 100% compatible with Ruby Sass.&lt;/p&gt;
+
+&lt;h2 id=&quot;all-your-sass-paths-are-belong-to-us&quot;&gt;All Your Sass Paths Are Belong To Us&lt;/h2&gt;
+
+&lt;p&gt;If &lt;code&gt;SASS_PATH&lt;/code&gt; is the way to go, why does it seem that so many projects are having difficulties setting the path correctly? While I cannot give a definitive answer, my guess is that it takes time for change to permeate through all resources and despites Sass&amp;#39; newfound maturity, users have grown accustomed to hacking their own paths together. We no longer need to hack together the load paths, these should just work as long as we use the provided environment variable as an interface.&lt;/p&gt;
+
+&lt;p&gt;Though the environment variable provides a common interface to hook into, there are many ways Sass libraries might be pulled into a project. How do we rectify setting up the &lt;code&gt;SASS_PATH&lt;/code&gt; correctly when these paths might come via Ruby gems, Bower dependencies, or the file directory? We are releasing the &lt;a href=&quot;https://rubygems.org/gems/sass_paths&quot;&gt;SassPaths gem&lt;/a&gt; to provide a set of easy to use utility methods to include any Sass dependency, whether it comes from Bower, Ruby gems, or elsewhere. SassPaths also plays nicely with Ruby on Rails. You can read the &lt;a href=&quot;https://github.com/customink/sass_paths/blob/master/README.md&quot;&gt;documentation&lt;/a&gt; on GitHub, but I will provide a quick overview below.&lt;/p&gt;
+
+&lt;h3 id=&quot;sasspaths-primer&quot;&gt;SassPaths Primer&lt;/h3&gt;
+
+&lt;p&gt;First you will need to &lt;code&gt;bundle install&lt;/code&gt; the SassPaths gem in your application.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Gemfile.rb&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;sass_paths&#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now all you need is an initialization file that will run when your application starts, which will make use of the SassPaths utilities to setup the &lt;code&gt;SASS_PATH&lt;/code&gt;. If you are using Rails, you can simply add this file to your initializers directory.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# sass_paths_init.rb&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;sass_paths&#39;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# append a directory, or list of directories to SASS_PATH&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SassPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;/my/first/sass/path&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;/my/second/sass/path&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# append a Ruby gem&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SassPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append_gem_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gem_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;directory_in_gem_that_contains_sass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# append all Sass Bower components&#39; directories&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;SassPaths&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;append_bower_components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bower_components_directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;acknowledgements&quot;&gt;Acknowledgements&lt;/h4&gt;
+
+&lt;p&gt;Many thanks to my fellow CustomInk teammates, Stafford Brunk and Ken Collins. Stafford co-authored the gem with me and Ken has been a driving force in adopting the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable as well as &lt;a href=&quot;https://github.com/at-import/Sassy-Maps/pull/6&quot;&gt;epic pull requests&lt;/a&gt; to fix the problems existing repositories have with &lt;code&gt;SASS_PATH&lt;/code&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 09 Oct 2014 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2014/10/09/new-sass-load-path-solution</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/09/new-sass-load-path-solution</guid>
+      </item>
+    
+      <item>
         <title>Taking a peek at Active Record Proxies</title>
         <description>&lt;p&gt;If you&amp;#39;ve worked in a Rails project before, you&amp;#39;ve undoubtedly set up associations beteween your models. Active Record provides a clean and simple way in setting up these associations, while hiding a lot of the complexity behind the scenes.&lt;/p&gt;
 
