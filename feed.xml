@@ -7,7 +7,7 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Better Hash Injection using each_with_index</title>
+        <title>Better Hash Injection using each_with_object</title>
         <description>&lt;p&gt;A common Ruby pattern for injecting values from an Array into to a Hash
 is to use the Enumerable#inject method and pass the hash as the memo. If you
 had an enumeration of User objects, you might convert them to a hash

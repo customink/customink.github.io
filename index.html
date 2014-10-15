@@ -59,7 +59,7 @@
     <time class="tb-Excerpt-date" pubdate datetime="2014-10-14T00:00:00-04:00">
       Posted On 14 Oct 2014&nbsp;&nbsp;-&nbsp;&nbsp;Chris Mar
     </time>
-    <h2><a href="/blog/2014/10/14/better-hash-injection-using-each-with-object">Better Hash Injection using each_with_index</a></h2>
+    <h2><a href="/blog/2014/10/14/better-hash-injection-using-each-with-object">Better Hash Injection using each_with_object</a></h2>
   </header>
   <p class="tb-Excerpt-text">A common Ruby pattern for injecting values from an Array into to a Hash is to use the Enumerable#inject method and pass the hash as the memo. If you had an enumeration of User objects, you might convert them to a hash with something like this: # build a hash of { name =&gt; email } users = User.all users.inject({}) do |memo, user| memo[user.name] = user.email memo # you must return the memo each time! end While this will reduce...</p>
   <a href="/blog/2014/10/14/better-hash-injection-using-each-with-object" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
