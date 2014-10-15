@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Better Hash Injection using each_with_index - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="A common Ruby pattern for injecting values from an Array into to a Hash
+is to use the Enumerable#inject method and pass the hash as the memo. If yo...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Better Hash Injection using each_with_index</h1>
+        <p>A common Ruby pattern for injecting values from an Array into to a Hash
+is to use the Enumerable#inject method and pass the hash as the memo. If you
+had an enumeration of User objects, you might convert them to a hash
+with something like this:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="c1"># build a hash of { name =&gt; email }</span>
+  <span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">all</span>
+
+  <span class="n">users</span><span class="p">.</span><span class="nf">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">user</span><span class="o">|</span>
+    <span class="n">memo</span><span class="p">[</span><span class="n">user</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">email</span>
+    <span class="n">memo</span> <span class="c1"># you must return the memo each time!</span>
+  <span class="k">end</span>
+</code></pre></div>
+<p>While this will reduce the Array down to a Hash, it has the gotcha that
+you must return the memo each time. Enumerable#inject sets the memo to the return value of the block.
+If you forget to return the memo hash, your next memo will be set to the result of the assignment
+which is user.email.</p>
+
+<p>There are some alternatives you can use to avoid the explicit return for the memo. Hash#merge is a
+popular choice. Hash#merge will combine the current hash with the new values and return a new hash. Which sets
+the memo to the new hash:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="c1"># build a hash of { name =&gt; email }</span>
+  <span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">all</span>
+
+  <span class="n">users</span><span class="p">.</span><span class="nf">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">memo</span><span class="p">,</span> <span class="n">user</span><span class="o">|</span>
+    <span class="n">memo</span><span class="p">.</span><span class="nf">merge</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="nf">name</span> <span class="o">=&gt;</span> <span class="n">user</span><span class="p">.</span><span class="nf">email</span><span class="p">)</span>
+  <span class="k">end</span>
+</code></pre></div>
+<p>Hash#merge returns a hash lest you forget to return the memo. It could be argued that using
+merge is not clear in this use case. Using plain merge also creates a new hash each time. This
+could be mitigated with the Hash#merge! which updates and returns the current hash. But it does
+not clean up our ruby code. We&#39;d prefer if our intentions were presented in a clear and concise way.</p>
+
+<p>Why are we so intent to use the Enumerable#inject method when building hashes? Enumerable#inject is wonderful when
+reducing a list, like determining the sum of values from the list. For example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">   <span class="c1"># inject is great for reducing a list to a value</span>
+   <span class="n">users</span> <span class="o">=</span> <span class="no">User</span><span class="p">.</span><span class="nf">all</span>
+   <span class="n">sum</span> <span class="o">=</span> <span class="n">users</span><span class="p">.</span><span class="nf">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">sum</span><span class="p">,</span> <span class="n">user</span><span class="o">|</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">user</span><span class="p">.</span><span class="nf">age</span> <span class="p">}</span>
+</code></pre></div>
+<p>But not so great when building a hash (see above). There is another way! Enumerable also has a less
+commonly used method: Enumerable#each_with_object, which solves our issues. Enumerable#each_with_object
+passes the same memo to each iteration of the block. It does not reassign it to the return value. This
+gives us the behavior we expected with Enumerable#inject but without the caveats.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">users</span><span class="p">.</span><span class="nf">each_with_object</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="p">,</span> <span class="n">memo</span><span class="o">|</span> <span class="c1"># note object and memo reversed from #inject</span>
+    <span class="n">memo</span><span class="p">[</span><span class="n">user</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">email</span>
+  <span class="k">end</span>
+</code></pre></div>
+<p>Ah! Nice and clean. Our intentions are clear. The code in the block is exactly what you would expect. The block
+is called for each element and the same memo object is passed in for each iteration. You
+set the name/value in the hash and need not concern yourself with the return value.</p>
+
+<p>Using Enumerable#inject to build a hash never felt comfortable. It always felt like a hack. Ruby&#39;s Enumerable#inject
+was never a good fit for Hash building, but Enumerable#each_with_object fits just right.</p>
+
+<p>Enumerable is a powerful mixin. Even after many years of coding with it in Ruby, we find new ways of expressing
+ourselves and revealing our intentions. Next time you have to reduce an Array to a Hash, don&#39;t fall into
+the #inject trap. Use Enumerable#each_with_object and impress your friends and family.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Chris Mar" src="http://www.gravatar.com/avatar/7c9f4c37280d4cf26f9bda785478a09a?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-10-14T00:00:00-04:00">
+      14 Oct 2014
+    </time></br>
+    by Chris Mar
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/cmar"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/cmar"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2014/10/14/better-hash-injection-using-each-with-object';
+    var disqus_title = "Better Hash Injection using each_with_index";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+  </body>
+</html>
