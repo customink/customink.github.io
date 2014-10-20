@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="description" content="The scalable vector graphics format has a really nifty way to define and reuse objects. It does this by allowing objects or paths to be defined in ...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http:///feed.xml" />
+  <link rel="stylesheet" href="/assets/app.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -20,13 +20,15 @@
 </script>
 
   
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+  
 </head>
 
   <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -54,7 +56,7 @@
 
 <p>While designing the third iteration of my personal <a href="http://metaskills.net/">MetaSkills.net</a> blog, I decided to carry the retro space theme into the background of the fixed left navigation area. The design called for something like this image below. Besides the planet, it has three distinct types of stars that are scattered all over the place. Each has a different scale and opacity with plans to animate a few.</p>
 
-<p><img src="/assets/content/svg-planet-stars-0319932d2bc35a68a723534571b5e01a.png" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" alt="MetaSkills.net Planet & Stars SVG Example" /></p>
+<p><img src="/assets/content/svg-planet-stars.png" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" alt="MetaSkills.net Planet & Stars SVG Example" /></p>
 
 <p>So where to start? We could export a final pre-designed SVG image from any type of vector program – but that would bloat the file size since it would copy and paste each star&#39;s path. It would also make animating distinct stars tricky and require post production edits. Lastly, who has time to randomly scatter stars? Not me! So let&#39;s program up a solution that solves all of this for us. Here is the base SVG structure that we are going to work with.</p>
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;svg</span>
@@ -87,7 +89,7 @@
 
 <p>Adding these to our SVG is really easy. I started by creating a canvas in my favorite vector program, <a href="http://bohemiancoding.com/sketch/">Sketch</a>. We want to make sure our exported paths start at 0,0 position and are are generally the size you expect to use them. This will help you later when translating these paths to different positions.</p>
 
-<p><img src="/assets/content/svg-our-awesome-sketch-1490a58ac9b77cfe15b8e1a266ba1262.png" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" alt="Setting up our base stars in the Sketch v3 application." /></p>
+<p><img src="/assets/content/svg-our-awesome-sketch.png" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" alt="Setting up our base stars in the Sketch v3 application." /></p>
 
 <p>I exported each star type as an SVG and then copied the path into the <code>&lt;defs&gt;</code> area of our template above. When you do this make sure that each path has its own unique id. Also, you may want to optimize your paths. Many programs export 6 or more decimal points for a path&#39;s data. I recommend running them through some sort of <a href="http://petercollingridge.appspot.com/svg_optimiser">SVG optimiser</a> or tweaking your export settings if your art program has them. Now we have our reusable path objects, see below. Examples have truncated <code>d</code> attributes for brevity.</p>
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;defs&gt;</span>
@@ -103,7 +105,7 @@
 <span class="nt">&lt;use</span> <span class="na">xlink:href=</span><span class="s">"#burst"</span> <span class="na">transform=</span><span class="s">"translate(30,20) scale(1.0)"</span> <span class="na">class=</span><span class="s">"burst"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;use</span> <span class="na">xlink:href=</span><span class="s">"#steeler"</span> <span class="na">transform=</span><span class="s">"translate(60,10) scale(1.5)"</span> <span class="na">class=</span><span class="s">"steeler"</span> <span class="nt">/&gt;</span>
 </code></pre></div>
-<p><img src="/assets/content/svg-planet-stars-v1-0a702030ad99e0797508925b75e659dc.png" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" alt="MetaSkills.net Planet & Stars SVG Example" /></p>
+<p><img src="/assets/content/svg-planet-stars-v1.png" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" alt="MetaSkills.net Planet & Stars SVG Example" /></p>
 
 <p>Still kind of boring... and who has time to stochastically place several dozen stars around the canvas? Time for some JavaScript automation.</p>
 
@@ -237,21 +239,6 @@
     </div>
 
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript';
-    var disqus_title = "Dynamic SVGs Using &lt;defs&gt; Elements &amp; JavaScript";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
@@ -259,19 +246,7 @@
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+    <script src="/assets/app.js"></script>
   </body>
 </html>

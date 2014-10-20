@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Open Sourcing a Gem: Part 2 - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Considerations when Open Sourcing
+
+When open sourcing a gem (or any project, this post can be generalized to not just focus on gems), there are a n...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http:///feed.xml" />
+  <link rel="stylesheet" href="/assets/app.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Open Sourcing a Gem: Part 2</h1>
+        <h2 id="considerations-when-open-sourcing">Considerations when Open Sourcing</h2>
+
+<p>When open sourcing a gem (or any project, this post can be generalized to not just focus on gems), there are a number of things to consider. The first check is to ensure that the use case is general enough that it is likely to be helpful to other parties. Though the project might never gain many external users, it is a good sanity check before taking on the work to open source the project. Following this there are a number of things to think out, with the purpose of determining a track of work that needs to be taken (if any) before the gem can be open sourced.</p>
+
+<!--more-->
+
+<h2 id="generalize-the-implementation">Generalize the implementation</h2>
+
+<ul>
+<li>Remove coupled business logic and application specific code.</li>
+<li>Ensure no keys/account information were stored in the repo (even in past commits). Typically not considered a good practice, but it is something to be aware of when releasing the source of a project publicly.</li>
+</ul>
+
+<h2 id="set-bounds-on-the-responsibilities">Set bounds on the responsibilities</h2>
+
+<ul>
+<li>What is the purpose of this gem and what needs is it fulfilling?</li>
+<li>Take a step back from how you currently use the library. What other potential use cases might others use it for? Is it worth generalizing the implementation to aid these other use cases?</li>
+<li>Set bounds on the responsibilities that the gem will take care of.</li>
+<li>What will the gem provide and what is left up to the user? In the case of Signalman, we allow users to customize the URL of the Signalman admin page, but it is up to the user to provide additional authentication besides obscurity. Signalman is a gem designed to aid with A/B testing, not authentication.
+
+<ul>
+<li>Try to stick to the gem&#39;s core competencies. Do not add features at a whim to quell user requests. This can cause a gem to grow out of control and become hard to manage or even discern its original purpose/intent.</li>
+</ul></li>
+</ul>
+
+<h2 id="consider-strategies-to-manage-repository-ownership">Consider strategies to manage repository ownership</h2>
+
+<ul>
+<li>Like it or not, becoming a maintainer is a big responsibility. If you are open sourcing a project with a team, this will greatly ease the burden, but you must still consider processes to manage external pull requests and issues that arise.</li>
+<li>Giving the user power and encouraging pull requests and a community that supports each other&#39;s issues can also relieve the burden of being a project maintainer. You can help this process by adding documentation for contributing and making it easy for other parties to contribute to the project. This also means providing help to newer developers; you never know who might become a leading contributor in the future.</li>
+</ul>
+
+<h3 id="more-from-this-series">More from this series</h3>
+
+<p><a href="/blog/2014/09/12/open-sourcing-a-gem-pt-1/">Part 1</a></p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Jonathan Lehman" src="http://www.gravatar.com/avatar/f536f0fa21e9c9be534642bb52293946?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-10-20T00:00:00-04:00">
+      20 Oct 2014
+    </time></br>
+    by Jonathan Lehman
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/inLehmans_Terms"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/jdlehman"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://inlehmansterms.net"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
