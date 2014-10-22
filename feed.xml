@@ -7,6 +7,81 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Managing Your Local Project Repos</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.git-scm.com/&quot;&gt;Git&lt;/a&gt; is great for managing a project. And &lt;a href=&quot;http://github.com&quot;&gt;Github&lt;/a&gt; is a great way to share your git managed project with your teammates and the world. But, how do you manage all of those projects locally? I&amp;#39;m not claiming this is the only way or even the best way. It&amp;#39;s just my way of managing the repos I need to have locally. So let&amp;#39;s get down to it.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;projects-namespace&quot;&gt;Projects Namespace&lt;/h3&gt;
+
+&lt;p&gt;I like to put all of the projects under a main projects folder. I use the name projects, but you could use whatever you like: workspace, repos, code, gits, etc...&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Terminal256&quot; data-lang=&quot;Terminal256&quot;&gt;  projects/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Pretty simple stuff. What&amp;#39;s next?&lt;/p&gt;
+
+&lt;h3 id=&quot;author/project-folder-structure&quot;&gt;Author/Project Folder Structure&lt;/h3&gt;
+
+&lt;p&gt;Whenever I clone a repo I create a folder for the author or organization name that matches up with github then clone the project into that. An easy example would be projects under my account that were created by me. I don&amp;#39;t put forked projects under my name, but I will get to that later.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Terminal256&quot; data-lang=&quot;Terminal256&quot;&gt;  projects/
+  └── nhessler/
+      ├── converserver/
+      └── hacknut-theme/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And I have projects at customink that I work on so let&amp;#39;s add some of those projects in and see what things look like.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Terminal256&quot; data-lang=&quot;Terminal256&quot;&gt;  projects/
+  ├── customink/
+  ¦    ├── fauxhai/
+  ¦    ├── gigo/
+  ¦    ├── secondbase/
+  ¦    └── stoplight/
+  └── nhessler/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This should be enough to see the basic structure of how I manage my projects. You can see that each project is located inside of a folder representing the originating author.&lt;/p&gt;
+
+&lt;h3 id=&quot;local-projects&quot;&gt;Local Projects&lt;/h3&gt;
+
+&lt;p&gt;This works great for projects on github, but what about projects you have only on your machine? Well, you could put them under the account you plan to push them to. But, that breaks the convention of projects living under their author namespace. And, it makes it hard to remember what has and hasn&amp;#39;t been pushed up under that account. So, until I&amp;#39;ve pushed a project to github I put them under the _local folder. The _ is added to make sure it&amp;#39;s always at the top of the author list.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Terminal256&quot; data-lang=&quot;Terminal256&quot;&gt;  projects/
+  ├── _local/
+  ¦    ├── dotfiles/
+  ¦    └── blog/
+  ├── customink/
+  └── nhessler/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I know, I know. I really should get those pushed to github. but at least I can easily see that they aren&amp;#39;t on github yet and resolve that issue quickly. The _local folder is also great for playing around with projects you don&amp;#39;t ever plan to push github. You can write some code, play around with it, and delete later. when it is time to push it to github then you can move it under the appropriate folder.&lt;/p&gt;
+
+&lt;h3 id=&quot;forked-projects&quot;&gt;Forked Projects&lt;/h3&gt;
+
+&lt;p&gt;As I said earlier, I deal with forked libraries a bit differently. Let&amp;#39;s look at a couple of those projects. Specifically, we&amp;#39;ll look at &lt;a href=&quot;https://github.com/robbyrussell/oh-my-zsh&quot;&gt;oh-my-zsh&lt;/a&gt; by Robby Russel, &lt;a href=&quot;https://github.com/bbatsov/prelude&quot;&gt;prelude&lt;/a&gt; by Bozhidar Batsov, and &lt;a href=&quot;https://github.com/oneKelvinSmith/monokai-emacs&quot;&gt;monokai-emacs&lt;/a&gt; by Kelvin Smith. First, let&amp;#39;s just see the directory structure for these projects.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Terminal256&quot; data-lang=&quot;Terminal256&quot;&gt;  projects/
+  ├── _local/
+  ├── bbatsov/
+  ¦   └── prelude/
+  ├── customink/
+  ├── nhessler/
+  ├── oneKelvinSmith/
+  ¦   └── monokai-emacs/
+  └── robbyrussel/
+      └── oh-my-zsh/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that each project is under the original author&amp;#39;s name. Why do I do this? There are a couple reasons. First, I like to remember where the projects came from and this helps remind me who the original authors are. Second, project names are not unique. There are forks of projects, and there are projects with the same name that are completely different. Doing a search on github for rails turned up 138K repositories and on the first page 7 out of ten were named &amp;#39;rails&amp;#39; the only difference was author name. the first two projects were &amp;#39;rails/rails&amp;#39; and &amp;#39;capistrano/rails&amp;#39;. Two projects I can easily see people forking. You could complain that maybe capistrano should have used the project name capistrano-rails over rails, but is it worth it? Finally, prelude and oh-my-zsh are libraries that were meant to be used by cloning them to your local machine, and I don&amp;#39;t need or want to fork them to use them. I can just clone them from the original repo.&lt;/p&gt;
+
+&lt;h3 id=&quot;final-thoughts&quot;&gt;Final Thoughts&lt;/h3&gt;
+
+&lt;p&gt;Here are some other things to think about that make this setup a little more useful.&lt;/p&gt;
+
+&lt;p&gt;If you use ZSH it would be helpful to add your projects folder to the CDPATH environment variable. I also add the nhessler and customink folders. This way I can jump to my frequently used projects by name only.&lt;/p&gt;
+
+&lt;p&gt;I also diverge a bit from how github recommends you &lt;a href=&quot;https://help.github.com/articles/fork-a-repo/&quot;&gt;fork and clone a repo&lt;/a&gt;. I still fork the repo, but I then clone the original and set up a remote called &amp;#39;fork&amp;#39; which points at my fork of the repo. I find this matches how I think about forked projects better and seems to be in line with my folder structure as well.&lt;/p&gt;
+
+&lt;p&gt;If you have a workflow that you like to use for managing your repos that differs from, this I would love to hear about it.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 22 Oct 2014 07:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos</guid>
+      </item>
+    
+      <item>
         <title>Open Sourcing a Gem: Part 2</title>
         <description>&lt;h2 id=&quot;considerations-when-open-sourcing&quot;&gt;Considerations when Open Sourcing&lt;/h2&gt;
 
