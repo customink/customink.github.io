@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/blog/2014/11/19/rubyconf5k-2014</loc>
+    <lastmod>2014-11-19T08:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/blog/2014/10/31/ecomic-con-2014</loc>
     <lastmod>2014-10-31T09:00:00-04:00</lastmod>
     <priority>0.8</priority>
@@ -383,83 +389,17 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2014-11-06T08:03:32-05:00</lastmod>
+    <lastmod>2014-11-20T07:11:17-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/team/</loc>
-    <lastmod>2014-11-06T08:03:32-05:00</lastmod>
+    <lastmod>2014-11-20T07:11:17-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
-  
-  <url>
-    <loc>/bower_components/sassy-maps/examples/index.html</loc>
-    <lastmod>2014-06-03T10:49:55Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/guide-inkicons-contrib.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/guide.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/index.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/rails.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/sass-codekit.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/sass.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux-buttons.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux-global.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux-responsive.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>/bower_components/style_bitz/app/views/style_bitz/style_guide/cache/ux.html</loc>
-    <lastmod>2014-07-23T15:49:31Z</lastmod>
-    <priority>0.6</priority>
-  </url>
   
 </urlset>
