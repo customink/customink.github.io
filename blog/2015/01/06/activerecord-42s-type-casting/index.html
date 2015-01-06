@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="description" content="Last month Rails 4.2 was released and if you have been keeping up with my posts, I even covered how you can upgrade from 3.2 to 4.2 in one step! Th...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http:///feed.xml" />
+  <link rel="stylesheet" href="/assets/app.css">
   <script type="text/javascript">
   (function(d) {
     var config = {
@@ -20,13 +20,15 @@
 </script>
 
   
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+  
 </head>
 
   <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -48,7 +50,7 @@
     <div class="tb-Post-main sb-Wrapper">
       <div class="tb-Post-content">
         <h1>ActiveRecord 4.2's Type Casting</h1>
-        <p>Last month <a href="http://weblog.rubyonrails.org/2014/12/19/Rails-4-2-final/">Rails 4.2</a> was released and if you have been keeping up with my posts, I even covered <a href="http://technology.customink.dev/blog/2014/09/16/from-rails-3.2-to-4.2">how you can upgrade</a> from 3.2 to 4.2 in one step! This speaks volumes to how easy it is to adopt to outward facing API changes within our beloved framework. But often times, version changes bring implementation changes that we never see. For example, all of Aaron Patterson&#39;s work for <a href="http://tenderlovemaking.com/2014/02/19/adequaterecord-pro-like-activerecord.html">AdequateRecord Pro&trade;</a> are performance optimizations that affect no outward API interface at all. Unless you read the source, many of these awesome changes go unnoticed and that&#39;s a damn shame because some of them can make our lives easier.</p>
+        <p>Last month <a href="http://weblog.rubyonrails.org/2014/12/19/Rails-4-2-final/">Rails 4.2</a> was released and if you have been keeping up with my posts, I even covered <a href="/blog/2014/09/16/from-rails-3.2-to-4.2">how you can upgrade</a> from 3.2 to 4.2 in one step! This speaks volumes to how easy it is to adopt to outward facing API changes within our beloved framework. But often times, version changes bring implementation changes that we never see. For example, all of Aaron Patterson&#39;s work for <a href="http://tenderlovemaking.com/2014/02/19/adequaterecord-pro-like-activerecord.html">AdequateRecord Pro&trade;</a> are performance optimizations that affect no outward API interface at all. Unless you read the source, many of these awesome changes go unnoticed and that&#39;s a damn shame because some of them can make our lives easier.</p>
 
 <p>Today I want to share some of the new hotness I found while working on the latest ActiveRecord <a href="https://github.com/rails-sqlserver/activerecord-sqlserver-adapter">SQL Server Adapter</a>. Specifically, how ActiveRecord type casts values. Up until Rails 4.2, all type casting was done in class methods like <code>value_to_date</code> implemented on the <code>ActiveRecord::ConnectionAdapters::Column</code> object. Sean Griffin does a <a href="http://robots.thoughtbot.com/how-rails-works-type-casting">great job</a> explaining this convoluted process. Warning, it&#39;s kind of boring and a chore to read.</p>
 
@@ -208,21 +210,6 @@
     </div>
 
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2015/01/06/activerecord-42s-type-casting';
-    var disqus_title = "ActiveRecord 4.2's Type Casting";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
@@ -230,19 +217,7 @@
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+    <script src="/assets/app.js"></script>
   </body>
 </html>
