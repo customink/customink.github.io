@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>ActiveRecord 4.2's Type Casting - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Last month Rails 4.2 was released and if you have been keeping up with my posts, I even covered how you can upgrade from 3.2 to 4.2 in one step! Th...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>ActiveRecord 4.2's Type Casting</h1>
+        <p>Last month <a href="http://weblog.rubyonrails.org/2014/12/19/Rails-4-2-final/">Rails 4.2</a> was released and if you have been keeping up with my posts, I even covered <a href="http://technology.customink.dev/blog/2014/09/16/from-rails-3.2-to-4.2">how you can upgrade</a> from 3.2 to 4.2 in one step! This speaks volumes to how easy it is to adopt to outward facing API changes within our beloved framework. But often times, version changes bring implementation changes that we never see. For example, all of Aaron Patterson&#39;s work for <a href="http://tenderlovemaking.com/2014/02/19/adequaterecord-pro-like-activerecord.html">AdequateRecord Pro&trade;</a> are performance optimizations that affect no outward API interface at all. Unless you read the source, many of these awesome changes go unnoticed and that&#39;s a damn shame because some of them can make our lives easier.</p>
+
+<p>Today I want to share some of the new hotness I found while working on the latest ActiveRecord <a href="https://github.com/rails-sqlserver/activerecord-sqlserver-adapter">SQL Server Adapter</a>. Specifically, how ActiveRecord type casts values. Up until Rails 4.2, all type casting was done in class methods like <code>value_to_date</code> implemented on the <code>ActiveRecord::ConnectionAdapters::Column</code> object. Sean Griffin does a <a href="http://robots.thoughtbot.com/how-rails-works-type-casting">great job</a> explaining this convoluted process. Warning, it&#39;s kind of boring and a chore to read.</p>
+
+<p>This process has been around for as long as I can remember. It made it really hard to write good abstract OO code that casts values going into and out of the database. All that has changed with the new <code>ActiveRecord::Type</code> namespace. All objects within this namespace are simple POROs with very obvious and well documented interfaces. The base class is <code>ActiveRecord::Type::Value</code> and below is a slightly trimmed down version of that object, sans comments. Take a quick read.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">ActiveRecord</span>
+  <span class="k">module</span> <span class="nn">Type</span>
+    <span class="k">class</span> <span class="nc">Value</span>
+
+      <span class="k">def</span> <span class="nf">type_cast_from_database</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">type_cast</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">type_cast_from_user</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">type_cast</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">type_cast_for_database</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">type_cast_for_schema</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span><span class="p">.</span><span class="nf">inspect</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">changed?</span><span class="p">(</span><span class="n">old_value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">,</span> <span class="n">_new_value_before_type_cast</span><span class="p">)</span>
+        <span class="n">old_value</span> <span class="o">!=</span> <span class="n">new_value</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">changed_in_place?</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+        <span class="kp">false</span>
+      <span class="k">end</span>
+
+
+      <span class="kp">private</span>
+
+      <span class="k">def</span> <span class="nf">type_cast</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">cast_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">unless</span> <span class="n">value</span><span class="p">.</span><span class="nf">nil?</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">cast_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">value</span>
+      <span class="k">end</span>
+
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div>
+<p>Do you see what I see? This is amazing. I see an object that finally handles all of the following.</p>
+
+<ul>
+<li>Casting raw DB values.</li>
+<li>Casting user input to prepare for DB quoting.</li>
+<li>Casting for default values in schema dumpers.</li>
+<li>Avoid <code>ActiveRecord::ConnectionAdapters::Column</code> code bloat.</li>
+<li>So much more!</li>
+</ul>
+
+<p>Case in point, a lot of database connection gems still return raw strings for every value. Sub classes of <code>Value</code> can define their own <code>type_cast_from_database</code> implementation to deal with this. For example, here is the <code>Integer</code> object&#39;s default behavior. Super easy!</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">type_cast_from_database</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+  <span class="k">return</span> <span class="k">if</span> <span class="n">value</span><span class="p">.</span><span class="nf">nil?</span>
+  <span class="n">value</span><span class="p">.</span><span class="nf">to_i</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>One thing that Rails core team did to make this even better allows us to type check our Ruby values ahead of time during attribute assignment vs. when we save to the database. This is now done in the <code>Integer</code> class using the <code>limit</code> attribute parsed from the SQL type. Here are the salient points of that class.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">ActiveRecord</span>
+  <span class="k">module</span> <span class="nn">Type</span>
+    <span class="k">class</span> <span class="nc">Integer</span> <span class="o">&lt;</span> <span class="no">Value</span>
+
+      <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+        <span class="k">super</span>
+        <span class="vi">@range</span> <span class="o">=</span> <span class="n">min_value</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">max_value</span>
+      <span class="k">end</span>
+
+      <span class="kp">private</span>
+
+      <span class="k">def</span> <span class="nf">cast_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">value</span>
+        <span class="k">when</span> <span class="kp">true</span> <span class="k">then</span> <span class="mi">1</span>
+        <span class="k">when</span> <span class="kp">false</span> <span class="k">then</span> <span class="mi">0</span>
+        <span class="k">else</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="nf">to_i</span> <span class="k">rescue</span> <span class="kp">nil</span>
+          <span class="n">ensure_in_range</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="n">result</span>
+          <span class="n">result</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">ensure_in_range</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">unless</span> <span class="n">range</span><span class="p">.</span><span class="nf">cover?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+          <span class="k">raise</span> <span class="no">RangeError</span><span class="p">,</span> <span class="s2">"</span><span class="si">#{</span><span class="n">value</span><span class="si">}</span><span class="s2"> is out of range for </span><span class="si">#{</span><span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="si">}</span><span class="s2"> with limit </span><span class="si">#{</span><span class="n">limit</span> <span class="o">||</span> <span class="mi">4</span><span class="si">}</span><span class="s2">"</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">max_value</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">limit</span> <span class="o">||</span> <span class="mi">4</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">limit</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 8 bits per byte with one bit for sign</span>
+      <span class="k">end</span>
+
+      <span class="k">def</span> <span class="nf">min_value</span>
+        <span class="o">-</span><span class="n">max_value</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Any type aliased to use the <code>Integer</code> value object will now type check that the value is within the accepted database range. As far as I can tell, only Integer objects in Rails core do this, but I plan on implementing these checks for Decimal and other values too. Here is how SQL Server&#39;s <code>smallint(2)</code> SQL type attribute behaves.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="vi">@obj</span><span class="p">.</span><span class="nf">small_int_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32_768</span>
+<span class="vi">@obj</span><span class="p">.</span><span class="nf">small_int_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32_769</span>  <span class="c1"># =&gt; RangeError!</span>
+
+<span class="vi">@obj</span><span class="p">.</span><span class="nf">small_int_value</span> <span class="o">=</span> <span class="mi">32_767</span>
+<span class="vi">@obj</span><span class="p">.</span><span class="nf">small_int_value</span> <span class="o">=</span> <span class="mi">32_768</span>   <span class="c1"># =&gt; RangeError!</span>
+</code></pre></div>
+<p>There is so much more that we can do with these objects. The PostgreSQL adapter already casts the JSON data type. I can even see SQL Server returning a Nokogiri object for an XML data type. The sky is the limit. The core <code>Value</code> object allows the SQL Server Adapter to implement guards for different connection modes. Our <code>TinyTDS</code> connection returns all DB values mapped to their proper Ruby primitive. To avoid wasting precious time, we bypass all Rails type casting in one single place now.</p>
+
+<p>These objects are a great step forward and they should open up all sorts of possibilities for gems to extend our DB objects. Thanks so much to Sean Griffin and anyone else working on ActiveRecord to make it better, faster, and easier to use!</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+<li><a href="http://robots.thoughtbot.com/how-rails-works-type-casting">How Rails&#39; Type Casting Works</a></li>
+</ul>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-01-06T03:29:00-05:00">
+      06 Jan 2015
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/01/06/activerecord-42s-type-casting';
+    var disqus_title = "ActiveRecord 4.2's Type Casting";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+  </body>
+</html>
