@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Customizing Rake Tasks In Rails 4.1 And Higher - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="I have been overriding, invoking, and executing custom Rake tasks since I was an early Ruby developer. Tweaking your project&#39;s automated tasks ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Customizing Rake Tasks In Rails 4.1 And Higher</h1>
+        <p>I have been overriding, invoking, and executing custom Rake tasks since I was an early Ruby developer. Tweaking your project&#39;s automated tasks are likely the closest thing Rails developers come to building their own light saber. Most popular are adding or changing how the Rails test suite behaves. For example, adding Capybara to your project.</p>
+
+<p>Recently I have been <a href="/blog/2014/09/16/from-rails-3.2-to-4.2/">upgrading projects from 3.2 to 4.2</a> and one thing that really stood out to me was how Rails testing tasks are created and run. Most obvious is that the default test task now runs all model, controller, mailer, helper, job, and integration tests in a single process now. Upon investigation, I found that these major changes were introduced in Rails 4.1. Go check out their new <a href="https://github.com/rails/rails/blob/4-2-stable/railties/lib/rails/test_unit/testing.rake">testing.rake</a> file if you are interested. Much cleaner than before!</p>
+
+<!--more-->
+
+<p>So what does this mean for you? Let me describe a real scenario I had to address in one of my projects. This project uses two custom test additions. The first is called <a href="https://github.com/jfirebaugh/konacha">Konacha</a>, a gem that leverages the asset pipeline to easily test my projects JavaScript with Mocha &amp; Chai under Capybara with PhantomJS. The second addition uses the Capybara::DSL within the standard Rails <code>test/integration</code> namespace and directory structure.</p>
+
+<p>When moving to Rails 4.2 I found that my integration tests were mixed together with everything else. This was a problem since I really wanted my slower integration tests to run after all my other tests. No matter what I tried, I could not get the setup I wanted. So like most problems, I solved this by diving into the code and learning.</p>
+
+<h2 id="deconstructing-rails::testtask">Deconstructing Rails::TestTask</h2>
+
+<p>So we already had a look at the new testing.rake file above. But looking closer, we can see how the default test task is defined right at the top. Also of interest to us is that <code>test:run</code> task too.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'rake/testtask'</span>
+<span class="nb">require</span> <span class="s1">'rails/test_unit/sub_test_task'</span>
+
+<span class="n">task</span> <span class="ss">default: :test</span>
+
+<span class="n">desc</span> <span class="s2">"Runs all tests in test folder"</span>
+<span class="n">task</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="no">Rails</span><span class="o">::</span><span class="no">TestTask</span><span class="p">.</span><span class="nf">test_creator</span><span class="p">(</span><span class="no">Rake</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">top_level_tasks</span><span class="p">).</span><span class="nf">invoke_rake_task</span>
+<span class="k">end</span>
+
+<span class="n">namespace</span> <span class="ss">:test</span> <span class="k">do</span>
+  <span class="c1"># ...</span>
+  <span class="no">Rails</span><span class="o">::</span><span class="no">TestTask</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:run</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">pattern</span> <span class="o">=</span> <span class="s2">"test/**/*_test.rb"</span>
+  <span class="k">end</span>
+  <span class="c1"># ...</span>
+</code></pre></div>
+<p>That description for <code>test</code> is pretty helpful and quite accurate. Indeed even though we have distinct test tasks like <code>test:models</code> and <code>test:mailers</code>, this default task is somehow aggregating each into a single run. To learn more about this implementation, we need to open up the <a href="https://github.com/rails/rails/blob/4-2-stable/railties/lib/rails/test_unit/sub_test_task.rb">sub_test_task.rb</a> file required at the top.</p>
+
+<p>In here we can see two new utility classes. One called <code>TestCreator</code> and another called <code>TestInfo</code>. The <code>TestCreator#invoke_rake_task</code> instance method is what we came here for.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">invoke_rake_task</span>
+  <span class="k">if</span> <span class="vi">@info</span><span class="p">.</span><span class="nf">files</span><span class="p">.</span><span class="nf">any?</span>
+    <span class="n">create_and_run_single_test</span>
+    <span class="n">reset_application_tasks</span>
+  <span class="k">else</span>
+    <span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="p">[</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'TEST'</span><span class="p">]</span> <span class="p">?</span> <span class="s1">'test:single'</span> <span class="p">:</span> <span class="s1">'test:run'</span><span class="p">].</span><span class="nf">invoke</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Without knowing too much about the <code>@info</code> object initialized by <code>TestCreator</code>, we can make a pretty good guess that <code>test:run</code> is what we came here to find. By looking back at the <code>test:run</code> tasks pattern of <code>&quot;test/**/*_test.rb&quot;</code> it seems clear that this is the test responsible for running all of our tests at once. Knowing that, let&#39;s start adding code to the project&#39;s <code>Rakefile</code> and make our new tests tasks do our bidding.</p>
+
+<h2 id="customizing-your-rakefile">Customizing Your Rakefile</h2>
+
+<p>Here is the first cut at customizing our Rails project&#39;s Rakefile. These come right after the default <code>Rails.application.load_tasks</code> line.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="p">[</span><span class="s1">'test:run'</span><span class="p">].</span><span class="nf">clear</span>
+
+<span class="n">namespace</span> <span class="ss">:test</span> <span class="k">do</span>
+
+  <span class="n">task</span> <span class="s1">'js'</span> <span class="o">=&gt;</span> <span class="s1">'konacha:run'</span>
+
+  <span class="no">Rails</span><span class="o">::</span><span class="no">TestTask</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:_run</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">test_files</span> <span class="o">=</span> <span class="no">FileList</span><span class="p">[</span><span class="s1">'test/**/*_test.rb'</span><span class="p">].</span><span class="nf">exclude</span><span class="p">(</span>
+      <span class="s1">'test/integration/**/*_test.rb'</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">task</span> <span class="ss">:run</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'test:js'</span><span class="p">,</span> <span class="s1">'test:_run'</span><span class="p">,</span> <span class="s1">'test:integration'</span><span class="p">]</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>The first thing that is happening is we want to remove the existing <code>test:run</code> task using the <code>clear</code> method. We then open up the test task namespace and make a few additions. In order they are:</p>
+
+<ol>
+<li>Create a simple <code>test:js</code> alias for the Konacha provided <code>konacha:run</code>.</li>
+<li>Create our <code>test:run</code> replacement but now named <code>test:_run</code>. Note how we use <code>test_files</code> vs a <code>pattern</code> so we can use the exclude method on FileList to remove all integration tests.</li>
+<li>Make a new <code>test:run</code> task that calls each other task in the order we want.</li>
+</ol>
+
+<p>If you were to run <code>rake test</code> now, we would see that our integrations are still inter-mixed with all the other Rails test cases. But why!?!</p>
+
+<h2 id="final-rakefile-separating-integrations">Final Rakefile Separating Integrations</h2>
+
+<p>So why did our integration tests still run with all the other Rails test cases? The answer lies in one simple override that <code>Rails::TestTask</code> implements. Normally the <code>Rake::TestTask</code> calls an instance method named <code>define</code> which basically builds a string and executes a Ruby subprocess. The <code>Rails::TestTask</code> class implements the define method like so:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">define</span>
+  <span class="n">task</span> <span class="vi">@name</span> <span class="k">do</span>
+    <span class="k">if</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'TESTOPTS'</span><span class="p">]</span>
+      <span class="no">ARGV</span><span class="p">.</span><span class="nf">replace</span> <span class="no">Shellwords</span><span class="p">.</span><span class="nf">split</span> <span class="no">ENV</span><span class="p">[</span><span class="s1">'TESTOPTS'</span><span class="p">]</span>
+    <span class="k">end</span>
+    <span class="n">libs</span> <span class="o">=</span> <span class="vi">@libs</span> <span class="o">-</span> <span class="vg">$LOAD_PATH</span>
+    <span class="vg">$LOAD_PATH</span><span class="p">.</span><span class="nf">unshift</span><span class="p">(</span><span class="o">*</span><span class="n">libs</span><span class="p">)</span>
+    <span class="n">file_list</span><span class="p">.</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">fl</span><span class="o">|</span>
+      <span class="no">FileList</span><span class="p">[</span><span class="n">fl</span><span class="p">].</span><span class="nf">to_a</span><span class="p">.</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="nb">require</span> <span class="no">File</span><span class="p">.</span><span class="nf">expand_path</span> <span class="n">f</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>See what is happening there? At the end of the day, all <code>Rails::TestTask</code> tasks do is require the test files. So now it makes perfect sense as to why it appeared that each task was being merged. With this knowledge, we can now customize our setup.</p>
+
+<p>Rather than using Rails test task, we will just bail out and use the default <code>Rake::TestTask</code> instead. When doing so, we will have to push the test directory to the libs too. This is one of the few things done for us by <code>Rails::TestTask</code>.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="p">[</span><span class="s1">'test:run'</span><span class="p">].</span><span class="nf">clear</span>
+<span class="no">Rake</span><span class="o">::</span><span class="no">Task</span><span class="p">[</span><span class="s1">'test:integration'</span><span class="p">].</span><span class="nf">clear</span>
+
+<span class="n">namespace</span> <span class="ss">:test</span> <span class="k">do</span>
+
+  <span class="n">task</span> <span class="s1">'js'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'konacha:run'</span><span class="p">]</span>
+
+  <span class="no">Rake</span><span class="o">::</span><span class="no">TestTask</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:_run</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">libs</span> <span class="o">&lt;&lt;</span> <span class="s2">"test"</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">test_files</span> <span class="o">=</span> <span class="no">FileList</span><span class="p">[</span><span class="s1">'test/**/*_test.rb'</span><span class="p">].</span><span class="nf">exclude</span><span class="p">(</span>
+      <span class="s1">'test/integration/**/*_test.rb'</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="no">Rake</span><span class="o">::</span><span class="no">TestTask</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'integration'</span> <span class="o">=&gt;</span> <span class="s1">'test:prepare'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">libs</span> <span class="o">&lt;&lt;</span> <span class="s1">'test'</span>
+    <span class="n">t</span><span class="p">.</span><span class="nf">pattern</span> <span class="o">=</span> <span class="s1">'test/integration/**/*_test.rb'</span>
+  <span class="k">end</span>
+
+  <span class="n">task</span> <span class="ss">:run</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'test:js'</span><span class="p">,</span> <span class="s1">'test:_run'</span><span class="p">,</span> <span class="s1">'test:integration'</span><span class="p">]</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>Now we are cooking. All of our JavaScript tests will run first, then all normal Rails test cases, and finally our integration tests. By customizing the <code>test:run</code> task we get the full benefit of the default <code>test</code> task implementation which allows us to pass file and/or <code>TESTOPTS</code> arguments. This happens to be one of my favorite features of Rails 4.1 and up too.</p>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>rake <span class="nb">test test</span>/models/user_test.rb
+<span class="gp">$ </span>rake <span class="nb">test test</span>/integration/app_stories_test.rb
+</code></pre></div>
+<p>And it all just works! Thanks for reading!</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-02-08T00:00:00-05:00">
+      08 Feb 2015
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher';
+    var disqus_title = "Customizing Rake Tasks In Rails 4.1 And Higher";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+  </body>
+</html>
