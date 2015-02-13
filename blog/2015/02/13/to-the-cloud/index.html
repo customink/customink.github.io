@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>To the Cloud! - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="This month, WebOps overcame one of our final hurdles to rid ourselves of managing hardware, joining the likes of Netflix, AirBnB, and Dropbox in th...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">TEAM</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>To the Cloud!</h1>
+        <p>This month, WebOps overcame one of our final hurdles to rid ourselves of managing hardware, joining the likes of Netflix, AirBnB, and Dropbox in the cloud. We had been on a steady migration path and each step of the way, it has been a win for everyone; WebOps, Developers, Business Customers and most importantly, our customers. CustomInk now has more server capacity at it’s disposal than AOL when I left in 2010 all for an incremental hourly fee.</p>
+
+<!--more-->
+
+<p>As an old-school SysAdmin, not owning your own Silicon was a significant shift in mentality. In other jobs, I’ve had this false sense of security that if I knew where my hardware was, could touch it, my employees managed it, it was secure. Time and time again, we’ve learned that’s not the case. The latest security breach at Sony’s was not due to use of a public cloud. The failure of CodeSafe was poor security and not AWS. The reality is that every piece of hardware we shut down, the more liberating it was. I’m looking forward to returning the keys of our CoLo.</p>
+
+<h2 id="in-the-beginning">In the Beginning</h2>
+
+<p>A year ago, we were at a crossroads that I’m sure many of my peers are currently facing. Do we continue to roll our own or jump off the datacenter. If we stayed the course, we were facing a very large expenditure in capital. We didn’t have the additional capacity to support Customink’s exploding growth. To make matters worse, I adopted an aging infrastructure. Half of our deployed hardware was no longer under support and over 5 years old. It was going to take a lot of upfront CapEx.</p>
+
+<p>Moving to an enterprise cloud provider, you get scale and options that any medium sized business could never afford. For us, that’s five data centers, spread across the US, network bandwidth as wide as the Beltway, 14  staging environments (at 10% the cost of prod), multi-location DB replication with automatic failover, a data-warehouse environment built with a few clicks, VPCs without having to evaluate router vendors, a backup solution without owning ANY tape, and on and on. Before the move, every purchase was a compromise or a task to do more when additional money was budgeted for the next year.  We still have to watch costs, but it’s now pay as you go, versus buying excess capacity that never gets completely used.</p>
+
+<p>Like almost everyone, we started with DR. It was a minimal setup that looking back, I’m thankful we never had to implement. Phase II was the Hybrid Cloud model (½ in/out) with staging out of the data center first. This was not a sustainable model. We had an investment in networking, floorspace, racks and excess capacity. In many ways, we were paying three times. Once to Savvis, another to Dell and a third to AWS. Also, we had to have additional staff that could rack/stack/replace. Phase III was the final push to move production.</p>
+
+<p>There are three things that have it easier. First, our use of Chef (you owe me lunch Nathan) allows us to deploy consistent, identical application servers significantly quicker and easier. Second, our the DevOps model is integrated into Chef so that Ops can build and deploy any of our applications. It has saved us time and again when the occasional hardware spike allowing us to deploy new servers in 20 minutes. If you aren’t using Chef or Puppet, you have too many WebOps Engineers. And last, we don’t have a lot of cruft. Compared to many places I’ve worked, maintenance at CustomInk is part of the way the tech teams operate. Software upgrades, patches, bug fix is built into the process.</p>
+
+<p>To be honest, it’s a huge relief. With a few exceptions, If a hard drive fails in the middle of the night, a server crashes everyone sleeps. If the application is throttling the servers, you can double the server size in 5 minutes, build out additional servers in 15. Horizontal and vertical scaling in minutes!</p>
+
+<p>I do have one regret. I am no longer invited to Dell’s suite at the Capitals games. Thanks for reading!</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="John Peterson" src="http://www.gravatar.com/avatar/fda84d4db2e66f4ff7cf616b7cee09b2?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-02-13T00:00:00-05:00">
+      13 Feb 2015
+    </time></br>
+    by John Peterson
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/jcpetrson"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/jcpetrson"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/02/13/to-the-cloud';
+    var disqus_title = "To the Cloud!";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-0e8c01ca6abedebdcee8ba6245646e4c.js"></script>
+  </body>
+</html>

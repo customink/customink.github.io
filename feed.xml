@@ -7,6 +7,33 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>To the Cloud!</title>
+        <description>&lt;p&gt;This month, WebOps overcame one of our final hurdles to rid ourselves of managing hardware, joining the likes of Netflix, AirBnB, and Dropbox in the cloud. We had been on a steady migration path and each step of the way, it has been a win for everyone; WebOps, Developers, Business Customers and most importantly, our customers. CustomInk now has more server capacity at it’s disposal than AOL when I left in 2010 all for an incremental hourly fee.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;As an old-school SysAdmin, not owning your own Silicon was a significant shift in mentality. In other jobs, I’ve had this false sense of security that if I knew where my hardware was, could touch it, my employees managed it, it was secure. Time and time again, we’ve learned that’s not the case. The latest security breach at Sony’s was not due to use of a public cloud. The failure of CodeSafe was poor security and not AWS. The reality is that every piece of hardware we shut down, the more liberating it was. I’m looking forward to returning the keys of our CoLo.&lt;/p&gt;
+
+&lt;h2 id=&quot;in-the-beginning&quot;&gt;In the Beginning&lt;/h2&gt;
+
+&lt;p&gt;A year ago, we were at a crossroads that I’m sure many of my peers are currently facing. Do we continue to roll our own or jump off the datacenter. If we stayed the course, we were facing a very large expenditure in capital. We didn’t have the additional capacity to support Customink’s exploding growth. To make matters worse, I adopted an aging infrastructure. Half of our deployed hardware was no longer under support and over 5 years old. It was going to take a lot of upfront CapEx.&lt;/p&gt;
+
+&lt;p&gt;Moving to an enterprise cloud provider, you get scale and options that any medium sized business could never afford. For us, that’s five data centers, spread across the US, network bandwidth as wide as the Beltway, 14  staging environments (at 10% the cost of prod), multi-location DB replication with automatic failover, a data-warehouse environment built with a few clicks, VPCs without having to evaluate router vendors, a backup solution without owning ANY tape, and on and on. Before the move, every purchase was a compromise or a task to do more when additional money was budgeted for the next year.  We still have to watch costs, but it’s now pay as you go, versus buying excess capacity that never gets completely used.&lt;/p&gt;
+
+&lt;p&gt;Like almost everyone, we started with DR. It was a minimal setup that looking back, I’m thankful we never had to implement. Phase II was the Hybrid Cloud model (½ in/out) with staging out of the data center first. This was not a sustainable model. We had an investment in networking, floorspace, racks and excess capacity. In many ways, we were paying three times. Once to Savvis, another to Dell and a third to AWS. Also, we had to have additional staff that could rack/stack/replace. Phase III was the final push to move production.&lt;/p&gt;
+
+&lt;p&gt;There are three things that have it easier. First, our use of Chef (you owe me lunch Nathan) allows us to deploy consistent, identical application servers significantly quicker and easier. Second, our the DevOps model is integrated into Chef so that Ops can build and deploy any of our applications. It has saved us time and again when the occasional hardware spike allowing us to deploy new servers in 20 minutes. If you aren’t using Chef or Puppet, you have too many WebOps Engineers. And last, we don’t have a lot of cruft. Compared to many places I’ve worked, maintenance at CustomInk is part of the way the tech teams operate. Software upgrades, patches, bug fix is built into the process.&lt;/p&gt;
+
+&lt;p&gt;To be honest, it’s a huge relief. With a few exceptions, If a hard drive fails in the middle of the night, a server crashes everyone sleeps. If the application is throttling the servers, you can double the server size in 5 minutes, build out additional servers in 15. Horizontal and vertical scaling in minutes!&lt;/p&gt;
+
+&lt;p&gt;I do have one regret. I am no longer invited to Dell’s suite at the Capitals games. Thanks for reading!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 13 Feb 2015 00:00:00 -0500</pubDate>
+        <link>http://technology.customink.com//blog/2015/02/13/to-the-cloud</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/02/13/to-the-cloud</guid>
+      </item>
+    
+      <item>
         <title>Customizing Rake Tasks In Rails 4.1 And Higher</title>
         <description>&lt;p&gt;I have been overriding, invoking, and executing custom Rake tasks since I was an early Ruby developer. Tweaking your project&amp;#39;s automated tasks are likely the closest thing Rails developers come to building their own light saber. Most popular are adding or changing how the Rails test suite behaves. For example, adding Capybara to your project.&lt;/p&gt;
 
