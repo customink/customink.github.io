@@ -7,6 +7,54 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Ruby Pretzel Colons</title>
+        <description>&lt;p&gt;The Ruby Pretzel Colon is one of my favorite idioms. But it&amp;#39;s salty goodness can an acquired taste for new Ruby programmers.
+There seems to be an aversion to it&amp;#39;s apparent magic. It is an unusual syntax. But it is easy to understand if you break it
+down into it&amp;#39;s parts.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Here is an example of the pretzel colon:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# general style:
+[person1, person2, person3].map { |person| person.name }
+
+
+# pretzel style:
+[person1, person2, person3].map(&amp;amp;:name)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The pretzel colon style &lt;code&gt;&amp;amp;:&lt;/code&gt; is more concise and focused and makes the perfect snack at the ball game.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s break down what is happening here. In the general style, the &lt;code&gt;map&lt;/code&gt; is iterating through the array and passing each person object to the block. The block is defined to take a single argument of a person, the block then calls &lt;code&gt;person.name&lt;/code&gt; and returns the name of the person.&lt;/p&gt;
+
+&lt;p&gt;Using pretzel style, the result is the same, but the block is built for us using the &lt;code&gt;&amp;amp;&lt;/code&gt; operator. The &lt;code&gt;&amp;amp;&lt;/code&gt; operator calls &lt;code&gt;#to_proc&lt;/code&gt; on the object then converts the result into a block. If our object was a lambda or Proc, they return &lt;code&gt;self&lt;/code&gt; in their default &lt;code&gt;#to_proc&lt;/code&gt; method. But in this case, our object is a Symbol.&lt;/p&gt;
+
+&lt;p&gt;The default implementation of &lt;code&gt;#to_proc&lt;/code&gt; on Symbol is to return a Proc that takes the first argument and &lt;code&gt;sends&lt;/code&gt; itself to the argument. Example pseudo code:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class Symbol
+
+    def to_proc
+      Proc.new { |object| object.send self }
+    end
+
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The third act of a magic trick is called the Prestige. Using the default &lt;code&gt;#to_proc&lt;/code&gt; defined in &lt;code&gt;Symbol&lt;/code&gt;, combining it with &lt;code&gt;&amp;amp;&lt;/code&gt; which calls &lt;code&gt;#to_proc&lt;/code&gt; and converts the result into a block. We are building a block that takes the person object and sends the symbol to it. Sending &lt;code&gt;:name&lt;/code&gt; to person is the same as calling &lt;code&gt;person.name&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# expanded pretzel
+[person1, person2, person3].map { |person| person.send :name }
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The combination of the Ruby &lt;code&gt;&amp;amp;&lt;/code&gt; operator&amp;#39;s ability to convert objects into blocks and the default implementation of Symbol&amp;#39;s &lt;code&gt;#to_proc&lt;/code&gt; combine into a magic pretzel. This makes our code more concise and expressive.&lt;/p&gt;
+
+&lt;p&gt;A bit of history on the pretzel colon. This idiom started in Rails ActiveSupport but was eventually moved to Ruby Core. It was removed after Rails 2.3. The git history of the file shows &amp;quot;Marcel Molina authored on Nov 20, 2005&amp;quot;. The pretzel colon is almost 10 years old.&lt;/p&gt;
+
+&lt;p&gt;see &lt;a href=&quot;https://github.com/rails/rails/blob/2-3-stable/activesupport/lib/active_support/core_ext/symbol.rb&quot;&gt;https://github.com/rails/rails/blob/2-3-stable/activesupport/lib/active_support/core_ext/symbol.rb&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Jun 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/06/08/ruby-pretzels</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/08/ruby-pretzels</guid>
+      </item>
+    
+      <item>
         <title>To the Cloud!</title>
         <description>&lt;p&gt;This month, WebOps overcame one of our final hurdles to rid ourselves of managing hardware, joining the likes of Netflix, AirBnB, and Dropbox in the cloud. We had been on a steady migration path and each step of the way, it has been a win for everyone; WebOps, Developers, Business Customers and most importantly, our customers. CustomInk now has more server capacity at it’s disposal than AOL when I left in 2010 all for an incremental hourly fee.&lt;/p&gt;
 
