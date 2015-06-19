@@ -77,7 +77,7 @@
 &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;king&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blind&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;sure plays a mean pinball&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Again, not at all what I expected. I decided to go to the &lt;a href=&quot;http://apidock.com/ruby/Module/private&quot;&gt;Ruby docs&lt;/a&gt; to read up on private.&lt;/p&gt;
+&lt;p&gt;Again, not at all what I expected. I decided to go to the &lt;a href=&quot;http://ruby-doc.org/core-2.0.0/Module.html#method-i-private&quot;&gt;Ruby docs&lt;/a&gt; to read up on private.&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;With no arguments, sets the default visibility for subsequently defined methods to private. With arguments, sets the named methods to have private visibility.&lt;/p&gt;
