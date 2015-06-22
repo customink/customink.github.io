@@ -56,13 +56,12 @@ down into it&#39;s parts.</p>
 <!--more-->
 
 <p>Here is an example of the pretzel colon:</p>
-<div class="highlight"><pre><code class="language-" data-lang=""># general style:
-[person1, person2, person3].map { |person| person.name }
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># general style:</span>
+<span class="p">[</span><span class="n">person1</span><span class="p">,</span> <span class="n">person2</span><span class="p">,</span> <span class="n">person3</span><span class="p">].</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">person</span><span class="o">|</span> <span class="n">person</span><span class="p">.</span><span class="nf">name</span> <span class="p">}</span>
 
 
-# pretzel style:
-[person1, person2, person3].map(&amp;:name)
-
+<span class="c1"># pretzel style:</span>
+<span class="p">[</span><span class="n">person1</span><span class="p">,</span> <span class="n">person2</span><span class="p">,</span> <span class="n">person3</span><span class="p">].</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:name</span><span class="p">)</span>
 </code></pre></div>
 <p>The pretzel colon style <code>&amp;:</code> is more concise and focused and makes the perfect snack at the ball game.</p>
 
@@ -71,18 +70,17 @@ down into it&#39;s parts.</p>
 <p>Using pretzel style, the result is the same, but the block is built for us using the <code>&amp;</code> operator. The <code>&amp;</code> operator calls <code>#to_proc</code> on the object then converts the result into a block. If our object was a lambda or Proc, they return <code>self</code> in their default <code>#to_proc</code> method. But in this case, our object is a Symbol.</p>
 
 <p>The default implementation of <code>#to_proc</code> on Symbol is to return a Proc that takes the first argument and <code>sends</code> itself to the argument. Example pseudo code:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">class Symbol
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Symbol</span>
 
-    def to_proc
-      Proc.new { |object| object.send self }
-    end
+    <span class="k">def</span> <span class="nf">to_proc</span>
+    <span class="no">Proc</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">object</span><span class="o">|</span> <span class="n">object</span><span class="p">.</span><span class="nf">send</span> <span class="nb">self</span> <span class="p">}</span>
+  <span class="k">end</span>
 
-end
+<span class="k">end</span>
 </code></pre></div>
 <p>The third act of a magic trick is called the Prestige. Using the default <code>#to_proc</code> defined in <code>Symbol</code>, combining it with <code>&amp;</code> which calls <code>#to_proc</code> and converts the result into a block. We are building a block that takes the person object and sends the symbol to it. Sending <code>:name</code> to person is the same as calling <code>person.name</code>.</p>
-<div class="highlight"><pre><code class="language-" data-lang=""># expanded pretzel
-[person1, person2, person3].map { |person| person.send :name }
-
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># expanded pretzel</span>
+<span class="p">[</span><span class="n">person1</span><span class="p">,</span> <span class="n">person2</span><span class="p">,</span> <span class="n">person3</span><span class="p">].</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">person</span><span class="o">|</span> <span class="n">person</span><span class="p">.</span><span class="nf">send</span> <span class="ss">:name</span> <span class="p">}</span>
 </code></pre></div>
 <p>The combination of the Ruby <code>&amp;</code> operator&#39;s ability to convert objects into blocks and the default implementation of Symbol&#39;s <code>#to_proc</code> combine into a magic pretzel. This makes our code more concise and expressive.</p>
 
