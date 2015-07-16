@@ -7,6 +7,30 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Colorized SQL Log Backport for ActiveRecord</title>
+        <description>&lt;p&gt;One of the &lt;a href=&quot;https://github.com/rails/rails/pull/20607&quot;&gt;new features&lt;/a&gt; of Rails 5 will be granular SQL logging so you can easily see &lt;code&gt;SELECT&lt;/code&gt;, &lt;code&gt;INSERT&lt;/code&gt;, &lt;code&gt;UPDATE&lt;/code&gt;, &lt;code&gt;DELETE&lt;/code&gt;, and &lt;code&gt;TRANSACTION&lt;/code&gt; statements in your log. For example:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/colored-logging-9ee3a092515c98bb8649774403f380fc.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;Colorized SQL Log Backport for Rails 5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;But why let Rails 5 have all the fun? Today I created a gem that allows you to leverage this feature now. The gem is currently compatible and tested for Rails 3.2 to 4.2. Get it here and happy logging!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/customink/activerecord-colored_log_subscriber&quot;&gt;https://github.com/customink/activerecord-colored_log_subscriber&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/activerecord-colored_log_subscriber&quot;&gt;Colorized SQL Log Backport Gem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rails/rails/pull/20607&quot;&gt;Rails 5 Pull Request&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 16 Jul 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord</guid>
+      </item>
+    
+      <item>
         <title>I have the PR!</title>
         <description>&lt;p&gt;&lt;img src=&quot;http://blog.culturewaves.net/wp-content/uploads/2011/09/he-man-columbia.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;he-man&quot; /&gt;&lt;/p&gt;
 

@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/blog/2015/07/16/colorized-sql-log-backport-for-activerecord</loc>
+    <lastmod>2015-07-16T00:00:00-04:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/blog/2015/07/07/i-have-the-pr</loc>
     <lastmod>2015-07-07T00:00:00-04:00</lastmod>
     <priority>0.8</priority>
@@ -431,14 +437,14 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2015-07-07T10:53:30-04:00</lastmod>
+    <lastmod>2015-07-16T13:41:37-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/team/</loc>
-    <lastmod>2015-07-07T10:53:30-04:00</lastmod>
+    <lastmod>2015-07-16T13:41:37-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
