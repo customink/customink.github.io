@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Bundler Inline Gemfile Dependencies - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="If you haven&#39;t noticed, the Bundler team has been on a tear lately. It&#39;s hard
+to keep up with the pace of the 1.10.x releases. Along with i...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-c8107c6a6d6ccb2825cda0df6e904aa6.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-58757c9eae4e383b5761a73d95df2341.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Bundler Inline Gemfile Dependencies</h1>
+        <p>If you haven&#39;t noticed, the <a href="http://bundler.io/blog/2015/06/24/version-1-10-released.html">Bundler</a> team has been on a tear lately. It&#39;s hard
+to keep up with the pace of the 1.10.x releases. Along with improvements, they have been adding features. One that you might have missed is the new <a href="https://github.com/bundler/bundler/blob/master/lib/bundler/inline.rb">bundler/inline</a> and it&#39;s <code>gemfile</code> method.</p>
+
+<p>Bundler Inline allows you declare your gem dependencies &quot;inline&quot; instead of a Gemfile. This is perfect for single file scripts. Everything can be contained in a single file, no Gemfile, no <code>bundle install</code>, and you can run your script without a prefixing it with <code>bundle exec</code>.</p>
+
+<!--more-->
+
+<p>Recently at <a href="http://rubyloco.com">RubyLoCo Hack Night</a>, we were challenged with creating an ASCII flag. Given a <a href="https://github.com/rubyloco/hack-night/blob/master/meetings/2015-07-13/flag.rb">starter script</a> that printed out a simple ASCII art American flag, our  first thought was to print it in color. There is a gem for that named <a href="https://github.com/fazibear/colorize">colorize</a>. But how do we install the gem and require it in our script? We wouldn&#39;t be so pedestrian as to actually run <code>gem install colorize</code>. We are proud bundlers.</p>
+
+<p><img src=/assets/content/bundler_inline_gemfile/pre_flag-bb6cd10df42a3253a340d2f405360d68.png alt="Default Flag"></p>
+
+<h2 id="inline-gemfile">Inline Gemfile</h2>
+
+<p>For a simple script, creating a Gemfile is too much ceremony. The new <a href="https://github.com/bundler/bundler/blob/master/lib/bundler/inline.rb">Bundler Inline</a> will help us. We require <code>bundler/inline</code> and then pass a block to <code>gemfile</code>. Inside the block, we use the traditional Bundler DSL.</p>
+
+<p>The gems declared inside the <code>gemfile</code> block will automatically be required into our script. You can still pass the option to <code>require: false</code>. At the top of our script, we declare our gemfile <em>inline</em>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#!/usr/bin/env ruby</span>
+<span class="nb">require</span> <span class="s1">'bundler/inline'</span>
+
+<span class="n">gemfile</span> <span class="kp">true</span> <span class="k">do</span>
+ <span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+ <span class="n">gem</span> <span class="s1">'colorize'</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>By default, running your script will not install gems to your system. But, we can pass &quot;true&quot; as the first argument to check and install gems when our script is run.</p>
+
+<p>Because this is all inline, we do not need to prefix our command line with <code>bundle exec</code>. We can just run our script, Bundler will install the required gems and require them for us. Now that we have required the colorize gem, our strings have color changing methods like:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">puts</span> <span class="s1">'* * * * * * '</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_blue</span>
+<span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+</code></pre></div>
+<p>And now... With the help of Bundler... And colorize... We present <strong>Happy Birthday America</strong>!</p>
+
+<p><img src=/assets/content/bundler_inline_gemfile/post_flag-baff153607eb0b1eaa8b2153fdee3c18.png alt="Colored Flag"></p>
+
+<h2 id="what-did-we-accomplish?">What did we accomplish?</h2>
+
+<p>We started with an example script that printed an American flag in black and white. We wanted to make it red, white and blue with the colorize gem. We did not want to add a Gemfile to our directory for this single file script. We declared our gem dependencies inline using the new <code>bundler/inline</code>. Now,  our gems will install when we run the script.</p>
+
+<h2 id="final-script">Final Script</h2>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#!/bin/env ruby</span>
+
+<span class="c1">#!/usr/bin/env ruby</span>
+<span class="nb">require</span> <span class="s1">'bundler/inline'</span>
+
+<span class="n">gemfile</span> <span class="kp">true</span> <span class="k">do</span>
+ <span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+ <span class="n">gem</span> <span class="s1">'colorize'</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="s1">'* * * * * * '</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_blue</span> <span class="o">+</span> <span class="s1">'1111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+<span class="nb">puts</span> <span class="s1">' * * * * *  '</span> <span class="o">+</span> <span class="s1">'0000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'* * * * * * '</span> <span class="o">+</span> <span class="s1">'1111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+<span class="nb">puts</span> <span class="s1">' * * * * *  '</span> <span class="o">+</span> <span class="s1">'0000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'* * * * * * '</span> <span class="o">+</span> <span class="s1">'1111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+<span class="nb">puts</span> <span class="s1">' * * * * *  '</span> <span class="o">+</span> <span class="s1">'0000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'* * * * * * '</span> <span class="o">+</span> <span class="s1">'1111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+<span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+<span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+<span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">.</span><span class="n">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
+</code></pre></div>
+<p>CustomInk is a proud supporter of <a href="https://rubytogether.org/">Ruby Together</a></p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Chris Mar" src="http://www.gravatar.com/avatar/7c9f4c37280d4cf26f9bda785478a09a?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-07-17T00:00:00-04:00">
+      17 Jul 2015
+    </time></br>
+    by Chris Mar
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/cmar"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/cmar"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/07/17/bundler-inline-gemfile-dependencies';
+    var disqus_title = "Bundler Inline Gemfile Dependencies";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2014 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-2958951a9a703a8335812d9aa35e8fe2.js"></script>
+  </body>
+</html>

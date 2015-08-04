@@ -7,6 +7,79 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Bundler Inline Gemfile Dependencies</title>
+        <description>&lt;p&gt;If you haven&amp;#39;t noticed, the &lt;a href=&quot;http://bundler.io/blog/2015/06/24/version-1-10-released.html&quot;&gt;Bundler&lt;/a&gt; team has been on a tear lately. It&amp;#39;s hard
+to keep up with the pace of the 1.10.x releases. Along with improvements, they have been adding features. One that you might have missed is the new &lt;a href=&quot;https://github.com/bundler/bundler/blob/master/lib/bundler/inline.rb&quot;&gt;bundler/inline&lt;/a&gt; and it&amp;#39;s &lt;code&gt;gemfile&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;Bundler Inline allows you declare your gem dependencies &amp;quot;inline&amp;quot; instead of a Gemfile. This is perfect for single file scripts. Everything can be contained in a single file, no Gemfile, no &lt;code&gt;bundle install&lt;/code&gt;, and you can run your script without a prefixing it with &lt;code&gt;bundle exec&lt;/code&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Recently at &lt;a href=&quot;http://rubyloco.com&quot;&gt;RubyLoCo Hack Night&lt;/a&gt;, we were challenged with creating an ASCII flag. Given a &lt;a href=&quot;https://github.com/rubyloco/hack-night/blob/master/meetings/2015-07-13/flag.rb&quot;&gt;starter script&lt;/a&gt; that printed out a simple ASCII art American flag, our  first thought was to print it in color. There is a gem for that named &lt;a href=&quot;https://github.com/fazibear/colorize&quot;&gt;colorize&lt;/a&gt;. But how do we install the gem and require it in our script? We wouldn&amp;#39;t be so pedestrian as to actually run &lt;code&gt;gem install colorize&lt;/code&gt;. We are proud bundlers.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/pre_flag-bb6cd10df42a3253a340d2f405360d68.png alt=&quot;Default Flag&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;inline-gemfile&quot;&gt;Inline Gemfile&lt;/h2&gt;
+
+&lt;p&gt;For a simple script, creating a Gemfile is too much ceremony. The new &lt;a href=&quot;https://github.com/bundler/bundler/blob/master/lib/bundler/inline.rb&quot;&gt;Bundler Inline&lt;/a&gt; will help us. We require &lt;code&gt;bundler/inline&lt;/code&gt; and then pass a block to &lt;code&gt;gemfile&lt;/code&gt;. Inside the block, we use the traditional Bundler DSL.&lt;/p&gt;
+
+&lt;p&gt;The gems declared inside the &lt;code&gt;gemfile&lt;/code&gt; block will automatically be required into our script. You can still pass the option to &lt;code&gt;require: false&lt;/code&gt;. At the top of our script, we declare our gemfile &lt;em&gt;inline&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bundler/inline&#39;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;gemfile&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;https://rubygems.org&#39;&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;colorize&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;By default, running your script will not install gems to your system. But, we can pass &amp;quot;true&amp;quot; as the first argument to check and install gems when our script is run.&lt;/p&gt;
+
+&lt;p&gt;Because this is all inline, we do not need to prefix our command line with &lt;code&gt;bundle exec&lt;/code&gt;. We can just run our script, Bundler will install the required gems and require them for us. Now that we have required the colorize gem, our strings have color changing methods like:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;* * * * * * &#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_blue&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And now... With the help of Bundler... And colorize... We present &lt;strong&gt;Happy Birthday America&lt;/strong&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/post_flag-baff153607eb0b1eaa8b2153fdee3c18.png alt=&quot;Colored Flag&quot;&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-did-we-accomplish?&quot;&gt;What did we accomplish?&lt;/h2&gt;
+
+&lt;p&gt;We started with an example script that printed an American flag in black and white. We wanted to make it red, white and blue with the colorize gem. We did not want to add a Gemfile to our directory for this single file script. We declared our gem dependencies inline using the new &lt;code&gt;bundler/inline&lt;/code&gt;. Now,  our gems will install when we run the script.&lt;/p&gt;
+
+&lt;h2 id=&quot;final-script&quot;&gt;Final Script&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#!/bin/env ruby&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env ruby&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bundler/inline&#39;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;gemfile&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;https://rubygems.org&#39;&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;colorize&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;* * * * * * &#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_blue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; * * * * *  &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;* * * * * * &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; * * * * *  &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;* * * * * * &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39; * * * * *  &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;* * * * * * &#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;0000000000000000000000000000000000000000000000000000000&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_white&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;1111111111111111111111111111111111111111111111111111111&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on_red&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;CustomInk is a proud supporter of &lt;a href=&quot;https://rubytogether.org/&quot;&gt;Ruby Together&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 17 Jul 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies</guid>
+      </item>
+    
+      <item>
         <title>Colorized SQL Log Backport for ActiveRecord</title>
         <description>&lt;p&gt;One of the &lt;a href=&quot;https://github.com/rails/rails/pull/20607&quot;&gt;new features&lt;/a&gt; of Rails 5 will be granular SQL logging so you can easily see &lt;code&gt;SELECT&lt;/code&gt;, &lt;code&gt;INSERT&lt;/code&gt;, &lt;code&gt;UPDATE&lt;/code&gt;, &lt;code&gt;DELETE&lt;/code&gt;, and &lt;code&gt;TRANSACTION&lt;/code&gt; statements in your log. For example:&lt;/p&gt;
 
