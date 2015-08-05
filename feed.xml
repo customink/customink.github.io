@@ -7,6 +7,54 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Ruby For Good</title>
+        <description>&lt;p&gt;This weekend I had the pleasure of co-hosting &lt;a href=&quot;http://rubyforgood.com/&quot;&gt;Ruby For Good&lt;/a&gt;, a conference that brings programmers together to work on projects for a variety of charities and non-profit organizations. This year, adorable kittens were involved.
+&lt;/br&gt;
+&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitten-eefaaf8d7a0d9f1f040703a589e88fb1.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;cute kitten&quot; /&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;how-it-works&quot;&gt;How it Works&lt;/h2&gt;
+
+&lt;p&gt;Conference attendees stayed in the dorms at &lt;a href=&quot;http://www.gmu.edu/&quot;&gt;George Mason University&lt;/a&gt; for three days. They assembled into teams and worked on projects throughout the day. They were also responsible for preparing meals for everyone. In the evening, folks relaxed by playing board games and hanging out.&lt;/br&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitchen-73c06739c7a060315ff08a98293c93c0.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;kitchen duty&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Although the format is very simple, attendees told us they got a lot out of participating, regardless of their experience levels. We are still going through the feedback surveys but here&amp;#39;s a great blog post by one of this year&amp;#39;s do-gooders &lt;a href=&quot;http://rolentle.com/ruby-for-good/&quot;&gt;http://rolentle.com/ruby-for-good/&lt;/a&gt;.
+&lt;/br&gt;
+&lt;img src=&quot;/assets/content/ruby_for_good_2015/pairing-b63b931f4eb7b6803ae739f8801e5120.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;pair programming&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;this-year&amp;#39;s-projects&quot;&gt;This Year&amp;#39;s Projects&lt;/h2&gt;
+
+&lt;p&gt;This year&amp;#39;s projects were all really exciting. The work ranged from building an entirely new web presence, to updating an existing Rails application, to contributing to open source projects.  Here&amp;#39;s the list of groups we worked with:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.hsfc.org/&quot;&gt;Humane Society of Fairfax&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.thegrowhaus.org/&quot;&gt;Denver GrowHaus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.worldwildlife.org/&quot;&gt;World Wildlife Fund&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.purpledoorcoffee.com/&quot;&gt;Purple Door&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ysiadf/AllIncomeFoods/&quot;&gt;All Income Foods&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.baltimorearts.org/&quot;&gt;Balitmore Arts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.usvotefoundation.org/&quot;&gt;US Vote Foundation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rspec/rspec-rails/&quot;&gt;RSpec-Rails&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It&amp;#39;s so cool to hear a junior developer talk about their opportunity to contribute to something as widly used as Rspec!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-hug-9a40cae939c88eef9fbfc51103fdf049.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group hug&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;you-can-get-involved-today!&quot;&gt;You Can Get Involved Today!&lt;/h2&gt;
+
+&lt;p&gt;Contribute to next year&amp;#39;s Ruby For Good by &lt;a href=&quot;https://www.booster.com/rubyforgood&quot;&gt;purchasing a t-shirt&lt;/a&gt; - proceeds go to scholarships for future attendees.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-heart-106102c0b86cd426da4d52e80219e390.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group heart&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 05 Aug 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/08/05/ruby-for-good</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/08/05/ruby-for-good</guid>
+      </item>
+    
+      <item>
         <title>Bundler Inline Gemfile Dependencies</title>
         <description>&lt;p&gt;If you haven&amp;#39;t noticed, the &lt;a href=&quot;http://bundler.io/blog/2015/06/24/version-1-10-released.html&quot;&gt;Bundler&lt;/a&gt; team has been on a tear lately. It&amp;#39;s hard
 to keep up with the pace of the 1.10.x releases. Along with improvements, they have been adding features. One that you might have missed is the new &lt;a href=&quot;https://github.com/bundler/bundler/blob/master/lib/bundler/inline.rb&quot;&gt;bundler/inline&lt;/a&gt; and it&amp;#39;s &lt;code&gt;gemfile&lt;/code&gt; method.&lt;/p&gt;
