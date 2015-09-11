@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>/blog/2015/09/11/how-to-dismantle-a-data-center</loc>
+    <lastmod>2015-09-11T00:00:00-04:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>/blog/2015/08/05/ruby-for-good</loc>
     <lastmod>2015-08-05T00:00:00-04:00</lastmod>
     <priority>0.8</priority>
@@ -449,14 +455,14 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2015-08-06T13:53:58-04:00</lastmod>
+    <lastmod>2015-09-11T09:07:37-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>/team/</loc>
-    <lastmod>2015-08-06T13:53:58-04:00</lastmod>
+    <lastmod>2015-09-11T09:07:37-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

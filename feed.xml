@@ -7,6 +7,27 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>How to Dismantle a Data Center</title>
+        <description>&lt;p&gt;Sorry for the bad reference to a &lt;a href=&quot;https://en.wikipedia.org/wiki/How_to_Dismantle_an_Atomic_Bomb&quot;&gt;great U2 Album&lt;/a&gt;, but taking out a data center was not as an easy endeavor as it seemed. It took too much planning, coordination, prioritization and sometimes resorted to endless begging for an engineer or developer to get applications moved, but that’s another story. I’m here to share the fun of finally getting a chance to tearing down the hard work, rip out all of the well routed networking cables and pull the dozens of racked servers that we carefully and thoughfully installed by my predecessors. &lt;a href=&quot;https://twitter.com/nathenharvey&quot;&gt;Mr. Harvey&lt;/a&gt;, AndrewD, Ramez and those before you, congrats on a very clean and well constructed set of cabinets.&lt;/p&gt;
+
+&lt;p&gt;A couple weeks back, Gerald, Vandad and I headed out to Nokesville Blvd. It became quite clear that we needed something more than a couple of cars to haul it out. What was I thinking? Luckily, the Home Depot had their hourly truck available across the street.&lt;/p&gt;
+
+&lt;p&gt;The 3PAR is in that stack. The desire to leave it hanging off the back of the truck was there, but we have one more event for that gear.
+&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/3par-3443237fb9571b4b0b3c17f168afbcf0.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;3par&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s been a while since we’ve moved so much gear. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/gerald-0457df42137d99cc48031fb2b3806666.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;gerald&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That looks like gas money for one lucky engineer. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/wires-b996091bcb40fb1ae745e9d4786f783a.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;wires&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt; It’s all out. That’s a full truckload of CustomInk.
+&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/truck-c757eb9d71eabc7a6eaaeff284563ad7.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;truck&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 11 Sep 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center</guid>
+      </item>
+    
+      <item>
         <title>Ruby For Good</title>
         <description>&lt;p&gt;This weekend I had the pleasure of co-hosting &lt;a href=&quot;http://rubyforgood.com/&quot;&gt;Ruby For Good&lt;/a&gt;, a conference that brings programmers together to work on projects for a variety of charities and non-profit organizations. This year, adorable kittens were involved.
 &lt;/br&gt;
