@@ -7,6 +7,40 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Inkovate 2015 Lightning Talks</title>
+        <description>&lt;p&gt;Each year, our engineers gather together for an internal conference we call Inkovate. This year, we started with a series of lightning talks. Topics included everything from emerging technologies to useful tool tips. We recorded the talks to share with the Ruby community.&lt;/p&gt;
+
+&lt;p&gt;Inkovate 2015 was a huge success. After the lightning talks, our engineers spent 2 days hacking on anything they fancied. The results exceeded our expectations. Unleashed creativity brings true inkovation. We’ll share more about the projects in the future.&lt;/p&gt;
+
+&lt;p&gt;Please enjoy the lightning talks from our team members, or as we like to call them, Inkers.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;playlist-of-all-lightning-talks&quot;&gt;Playlist of all Lightning Talks&lt;/h2&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/videoseries?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;individual-talks&quot;&gt;Individual Talks&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/SycIL-bWyow?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Karle Durante &amp;quot;Developer Communities&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/jEV-aNGsR1o?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;RJ Pittman &amp;quot;Our Boxen&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/7ThrvPV9mx4?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Dylan Pulliam &amp;quot;Semantic Web&amp;quot;&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/nb3GSHYoAtc?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;John B. Hall &amp;quot;Catching my Metro train with Raspberry PID&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/bh8egnmZ2g4?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Matt Thompson &amp;quot;Prototyping with Yeoman&amp;quot;&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/mvcfHdzEw0g?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Kalimar Maia &amp;quot;The Turtle and the Panther&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/8JxeR6V7-3A?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Howard Miller &amp;quot;How to Troll Your Own Code and Win&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/3ZcGrv5abxk?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Jeremy Weiland &amp;quot;#noestimates: because developers cannot predict the future&amp;quot;&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/VvIpdbUwvkI?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Michael Peteuil &amp;quot;A (very) Brief History of Web Performance Optimization&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/4qm6JqsYC1A?list=PLRp9jPf602CCu8xiaUwp-fZqAnMVAjIZ-&quot;&gt;Adam Maas &amp;quot;Delay Faster with a Sidekiq&amp;quot;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 07 Oct 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks</guid>
+      </item>
+    
+      <item>
         <title>How to Dismantle a Data Center</title>
         <description>&lt;p&gt;Sorry for the bad reference to a &lt;a href=&quot;https://en.wikipedia.org/wiki/How_to_Dismantle_an_Atomic_Bomb&quot;&gt;great U2 Album&lt;/a&gt;, but taking out a data center was not as an easy endeavor as it seemed. It took too much planning, coordination, prioritization and sometimes resorted to endless begging for an engineer or developer to get applications moved, but that’s another story. I’m here to share the fun of finally getting a chance to tearing down the hard work, rip out all of the well routed networking cables and pull the dozens of racked servers that we carefully and thoughfully installed by my predecessors. &lt;a href=&quot;https://twitter.com/nathenharvey&quot;&gt;Mr. Harvey&lt;/a&gt;, AndrewD, Ramez and those before you, congrats on a very clean and well constructed set of cabinets.&lt;/p&gt;
 
