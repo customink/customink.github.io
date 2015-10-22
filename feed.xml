@@ -7,6 +7,114 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Microsoft&#39;s First Open Source DataCamp</title>
+        <description>&lt;p&gt;Rarely do the words &amp;quot;open source&amp;quot; come to mind when the Microsoft Corporation is mentioned. As the maintainer of the SQL Server stack for both Ruby &amp;amp; Rails, and a long time Apple/UNIX fan, I have been engineering solutions to make working with SQL Server as easy as possible. Often times the work has required outside in hacks to a closed &amp;amp; proprietary set of technologies. That changed last week.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/meeting-97dde5e7a16d708362ce22217ba4946f.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;First day of introductions at Microsoft&#39;s OSSDataCamp&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Both &lt;a href=&quot;https://twitter.com/sgrif&quot;&gt;Sean Griffin&lt;/a&gt; and myself were invited to represent the Ruby/Rails community at Microsoft&amp;#39;s first &lt;a href=&quot;https://twitter.com/hashtag/OSSDataCamp&quot;&gt;#OSSDataCamp&lt;/a&gt;. The idea is simple; to open up and engage our community at an intimate level. The results so far are incredibly positive and these new relationships feel lasting and honest.&lt;/p&gt;
+
+&lt;p&gt;This post contains interesting details if you want to learn more about &lt;a href=&quot;http://azure.microsoft.com/&quot;&gt;Microsoft&amp;#39;s Azure&lt;/a&gt; platform. We were lucky enough to be exposed to some candid inner workings of their latest service offerings which look to be a strong competitor to Amazon&amp;#39;s Web Services.&lt;/p&gt;
+
+&lt;h2 id=&quot;we-want-to-learn-from-you&quot;&gt;We Want To Learn From You&lt;/h2&gt;
+
+&lt;p&gt;That sentiment was echoed by everyone I met. From engineers to leadership and various product managers in-between, Microsoft is hungry to learn and this time it does not feel like the old consume &amp;amp; conquer strategies from the &lt;a href=&quot;http://ironruby.net&quot;&gt;IronRuby&lt;/a&gt; days. Instead their new culture reflects closely that of &lt;a href=&quot;http://www.customink.com/about/our_story/&quot;&gt;CustomInk&amp;#39;s&lt;/a&gt; own Inkers. Our hosts were the most upbeat and polite folks I have seen.&lt;/p&gt;
+
+&lt;p&gt;&lt;aside class=&quot;tb-AsideQuote&quot;&gt;
+  Microsoft is hungry to learn and this time it does not feel like the old consume &amp;amp; conquer...
+&lt;/aside&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;windows-support---a-diversity-issue&quot;&gt;Windows Support - A Diversity Issue&lt;/h5&gt;
+
+&lt;p&gt;As Sean Griffin put it, we can not require new engineers to buy a MacBook Pro to learn Ruby. Be it a &lt;a href=&quot;http://railsgirls.com&quot;&gt;Rails Girls&lt;/a&gt; workshop or your local meetup group, a poor Windows experience can literally lose good, diverse talent in our community. Thanks to projects like RailsInstaller, and the modern replacement &lt;a href=&quot;http://rubyinstaller.org&quot;&gt;RubyInstaller&lt;/a&gt;, we are stronger than we have historically been. But we can do better.&lt;/p&gt;
+
+&lt;p&gt;To that end, Microsoft has kindly agreed to provide key projects like Rails, TinyTDS, and the ActiveRecord SQLServerAdapter with funded continuous integration using &lt;a href=&quot;http://www.appveyor.com&quot;&gt;AppVeyor&lt;/a&gt; services. Such a small cost can greatly impact our feedback loop and identify pain points quickly.&lt;/p&gt;
+
+&lt;h5 id=&quot;a-changing-culture&quot;&gt;A Changing Culture&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/learn-ruby-65c0146deac6925dd8447b9250913f92.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Jack Yang learns Ruby in 1 day!&quot; /&gt;Change is hard; on all sides. For me, getting into the mindset that Microsoft can help was a big step. When Sean found issues with &lt;a href=&quot;https://github.com/sstephenson/execjs&quot;&gt;execjs&lt;/a&gt; that led back to Windows Script Host, they introduced us to that team. Likewise, the SQL Server adapter has always needed a bullet-proof cross platform binary to dump the schema. &amp;quot;We can help and here are the engineers...&amp;quot; was the reply. Wow!&lt;/p&gt;
+
+&lt;p&gt;Some issues sit well in Microsoft&amp;#39;s sphere to solve. What most impressed me was how eager they were to address them. Being a large company, often times the immediate answer was to schedule a series of 1-on-1s with the team(s) responsible. Connections and conversations like this quickly led to even pondering if Ruby could be installed on Windows by default. Or maybe even build cross platform SQL Server development binaries! 😱&lt;/p&gt;
+
+&lt;h5 id=&quot;quid-pro-quo&quot;&gt;Quid Pro Quo&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/keepit-weird-56c84fd489dac91ae82492d7f7d5300b.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--half tb-Img--half--sm&quot; alt=&quot;Sean Griffin keeps it weird while helping you not blow up.&quot; style=&quot;float:left; margin-left:0; margin-right:1rem;&quot; /&gt;So what did Microsoft learn most from us? Other than Rubyist keep it weird? Likely their biggest takeaway was that Sean Griffin loves to play the &lt;a href=&quot;http://www.keeptalkinggame.com&quot;&gt;Keep Talking and Nobody Explodes&lt;/a&gt; game. I mean he &lt;em&gt;really&lt;/em&gt; loves to play this game.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s simple, use 2-way, fast-paced, verbal communication to quickly identify and defuse a virtual ticking time bomb. As it turned out, this is a great team building exercise. Becoming a bomb defusing expert is high on my list and I can not wait to play with a group of my fellow Inkers. Thanks Sean!&lt;/p&gt;
+
+&lt;h2 id=&quot;coming-soon-to-ruby/rails&quot;&gt;Coming Soon To Ruby/Rails&lt;/h2&gt;
+
+&lt;p&gt;We got a lot of work done along with establishing some big milestones for those using Windows and/or SQL Server with Ruby. Here are some things you can look forward to:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Upgrade TinyTDS to the latest FreeTDS v0.95 which supports the TDS v7.3 protocol.&lt;/li&gt;
+&lt;li&gt;Making the adapter pass all tests for Rails 5 under active development.&lt;/li&gt;
+&lt;li&gt;Allow TinyTDS to be statically compiled on every platform w/OpenSSL for easier Azure support.&lt;/li&gt;
+&lt;li&gt;ActiveRecord JSON support via a v4.2 update. Leverages SQL 16 Box/Azure built-in JSON.&lt;/li&gt;
+&lt;li&gt;Binstub wrappers for all statically compiled FreeTDS binaries.&lt;/li&gt;
+&lt;li&gt;First class Azure support for Rails which includes proper DB setup and clone tasks.&lt;/li&gt;
+&lt;li&gt;Allow the rails-sqlserver adapter to use an alternate jTDS connection mode.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These items are tracked in the &lt;a href=&quot;https://github.com/rails-sqlserver/tiny_tds/milestones&quot;&gt;TinyTDS&lt;/a&gt; and/or the &lt;a href=&quot;https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/milestones&quot;&gt;SQL Server Adapter&lt;/a&gt; milestones on GitHub. Follow along or contribute if anything interests you.&lt;/p&gt;
+
+&lt;h2 id=&quot;microsoft-azure-in-brief&quot;&gt;Microsoft Azure In Brief&lt;/h2&gt;
+
+&lt;p&gt;Azure != SQL Server, it is much more. Think AWS (Analytics, IoT, CDN, Etc) with a &lt;a href=&quot;https://portal.azure.com&quot;&gt;better frontend portal&lt;/a&gt;. Microsoft&amp;#39;s Azure platform and PaaS offerings are amazing and accessible for anyone looking to rapidly build out their new web application suite of microservices. Seriously, you really should consider it next time you are looking for a Heroku-style marketplace. Here is a quick brief:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1 out of 4 VMs are Linux.&lt;/li&gt;
+&lt;li&gt;7 million requests a second.&lt;/li&gt;
+&lt;li&gt;1.6 million SQL databases.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;command-line-&amp;amp;-application-interfaces&quot;&gt;Command Line &amp;amp; Application Interfaces&lt;/h5&gt;
+
+&lt;p&gt;Portal smortal, who wants GUIs? The real power is in the command line and automation. Just like Heroku&amp;#39;s toolbelt, Azure has cross platform binaries that are open source on GitHub. This client has rich 2FA and is packed with interfaces. Services can even be stood up with a simple JSON template hosted on GitHub. Need an application interface? They got a Ruby SDK too.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Azure/azure-xplat-cli&quot;&gt;Cross Platform Command Line&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Azure/azure-quickstart-templates&quot;&gt;Quickstart Templates&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Azure/azure-sdk-for-ruby&quot;&gt;SDK for Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;services-marketplace&quot;&gt;Services Marketplace&lt;/h5&gt;
+
+&lt;p&gt;Their marketplace and open source service offerings are seriously impressive. One that stood out is their Elasticsearch service and how well it can integrate with any data source. They literally built an entire frontend GUI than can help you build out super impressive search indexes.&lt;/p&gt;
+
+&lt;p&gt;Their message &amp;quot;We give you 99.99% uptime, you worry about how search works, and we take care of the rest.&amp;quot; really stood out to me as a market differentiator. Maintaining shard strategies and the complexities of Elasticsearch is not what I want to do.&lt;/p&gt;
+
+&lt;h5 id=&quot;sql-server-2016&quot;&gt;SQL Server 2016&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/sql-server-stretch-7fdb81e51dd6ade2d146ac6d9d483dc2.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Stretch On-Premises SQL Servers to Azure.&quot; /&gt;I can&amp;#39;t even begin to go into all the amazing features of SQL Server 2016 now available on Azure. A quick list includes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Built-In JSON Support.&lt;/li&gt;
+&lt;li&gt;Always encrypted data with transparent app/client usage.&lt;/li&gt;
+&lt;li&gt;Data Lake infinite storage with built-in Revolution-R analytics.&lt;/li&gt;
+&lt;li&gt;Diverse sharding and multi-tenant structures.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;One feature that stood out was SQL Server&amp;#39;s ability to &lt;a href=&quot;https://msdn.microsoft.com/en-us/library/dn935011.aspx&quot;&gt;stretch&lt;/a&gt; or archive historical data transparently and securely. This can be done entirely via their hosted service or coupled with your on-premises SQL Server databases. All without the application caring about managing that cold &amp;lt;=&amp;gt; hot data.&lt;/p&gt;
+
+&lt;h2 id=&quot;many-thanks!&quot;&gt;Many Thanks!&lt;/h2&gt;
+
+&lt;p&gt;Special thanks to Microsoft as a whole. Especially to Andrea Lam and Meet Bhagdev for their personal &amp;amp; professional support during our trip. You made us feel right at home. Also in attendance for the first #OSSDataCampe were &lt;a href=&quot;https://twitter.com/manfre&quot;&gt;Michael Manfre&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/michiyata&quot;&gt;Michiya Takahashi&lt;/a&gt;. Both of whom represented the Python/Django community and helped our open source cause.&lt;/p&gt;
+
+&lt;p&gt;This is a process and one that I hope continues with Ruby and other languages. It will succeed if Microsoft actively contributes back to open source and in some cases, champions certain projects with an earnest level of excellence.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/fetch-tobias-ternstrom-953929f79db1b2b1b41baa20e2e791e5.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Tobias Ternstrom helped make FETCH happen in SQL Server.&quot; /&gt;To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped &lt;a href=&quot;http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif&quot;&gt;make FETCH happen&lt;/a&gt; in SQL Server. Supporting a sane limit/offset model &lt;a href=&quot;http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/&quot;&gt;allowed projects&lt;/a&gt; like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.&lt;/p&gt;
+
+&lt;p&gt;And lastly, I want to give a shout out to &lt;a href=&quot;https://github.com/larskanis&quot;&gt;Lars Kanis&lt;/a&gt; who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Oct 2015 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp</guid>
+      </item>
+    
+      <item>
         <title>Inkovate 2015 Lightning Talks</title>
         <description>&lt;p&gt;Each year, our engineers gather together for an internal conference we call Inkovate. This year, we started with a series of lightning talks. Topics included everything from emerging technologies to useful tool tips. We recorded the talks to share with the Ruby community.&lt;/p&gt;
 
