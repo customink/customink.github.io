@@ -72,7 +72,7 @@
 
 &lt;h5 id=&quot;command-line-&amp;amp;-application-interfaces&quot;&gt;Command Line &amp;amp; Application Interfaces&lt;/h5&gt;
 
-&lt;p&gt;Portal smortal, who wants GUIs? The real power is in the command line and automation. Just like Heroku&amp;#39;s toolbelt, Azure has cross platform binaries that are open source on GitHub. This client has rich 2FA and is packed with interfaces. Services can even be stood up with a simple JSON template hosted on GitHub. Need an application interface? They got a Ruby SDK too.&lt;/p&gt;
+&lt;p&gt;Portal smortal, who wants GUIs? The real power is in the command line and automation. Just like Heroku&amp;#39;s toolbelt, Azure has cross platform binaries that are open source on GitHub. This client has rich 2FA and is packed with interfaces. Services can even be stood up with a simple JSON template hosted on GitHub. Need an application interface? They have a Ruby SDK too.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/Azure/azure-xplat-cli&quot;&gt;Cross Platform Command Line&lt;/a&gt;&lt;/li&gt;
