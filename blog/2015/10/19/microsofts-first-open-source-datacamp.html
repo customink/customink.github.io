@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Microsoft's First Open Source DataCamp - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Rarely do the words &quot;open source&quot; come to mind when the Microsoft Corporation is mentioned. As the maintainer of the SQL Server stack for...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Microsoft's First Open Source DataCamp</h1>
+        <p>Rarely do the words &quot;open source&quot; come to mind when the Microsoft Corporation is mentioned. As the maintainer of the SQL Server stack for both Ruby &amp; Rails, and a long time Apple/UNIX fan, I have been engineering solutions to make working with SQL Server as easy as possible. Often times the work has required outside in hacks to a closed &amp; proprietary set of technologies. That changed last week.</p>
+
+<!--more-->
+
+<p><img src="/assets/content/ossdatacamp/meeting-d54243935c69ee4c8b6c8174cd9a1c56.jpg" class="tb-Img tb-Img--fancy" alt="First day of introductions at Microsoft's OSSDataCamp" /></p>
+
+<p>Both <a href="https://twitter.com/sgrif">Sean Griffin</a> and I were invited to represent the Ruby/Rails community at Microsoft&#39;s first <a href="https://twitter.com/hashtag/OSSDataCamp">#OSSDataCamp</a>. The idea is simple; to open up and engage our community at an intimate level. The results so far are incredibly positive and these new relationships feel lasting and honest.</p>
+
+<p>This post contains interesting details if you want to learn more about <a href="http://azure.microsoft.com/">Microsoft&#39;s Azure</a> platform. We were lucky enough to be exposed to some candid inner workings of their latest service offerings which look to be a strong competitor to Amazon&#39;s Web Services.</p>
+
+<h2 id="we-want-to-learn-from-you">We Want To Learn From You</h2>
+
+<p>That sentiment was echoed by everyone I met. From engineers to leadership and various product managers in-between, Microsoft is hungry to learn and this time it does not feel like the old consume &amp; conquer strategies from the <a href="http://ironruby.net">IronRuby</a> days. Instead their new culture closely reflects that of <a href="http://www.customink.com/about/our_story/">CustomInk&#39;s</a> own Inkers. Our hosts were the most upbeat and polite folks I have seen.</p>
+
+<aside class="tb-AsideQuote">
+  Microsoft is hungry to learn and this time it does not feel like the old consume &amp; conquer...
+</aside>
+
+<h5 id="windows-support-a-diversity-issue">Windows Support - A Diversity Issue</h5>
+
+<p>As Sean Griffin put it, we cannot require new engineers to buy a MacBook Pro to learn Ruby. Be it a <a href="http://railsgirls.com">Rails Girls</a> workshop or your local meetup group, a poor Windows experience can literally lose good, diverse talent in our community. Thanks to projects like RailsInstaller, and the modern replacement <a href="http://rubyinstaller.org">RubyInstaller</a>, we are stronger than we have historically been. But we can do better.</p>
+
+<p>To that end, Microsoft has kindly agreed to provide key projects like Rails, TinyTDS, and the ActiveRecord SQLServerAdapter with funded continuous integration using <a href="http://www.appveyor.com">AppVeyor</a> services. Such a small cost can greatly impact our feedback loop and identify pain points quickly.</p>
+
+<h5 id="a-changing-culture">A Changing Culture</h5>
+
+<p><img src="/assets/content/ossdatacamp/learn-ruby-ceec9a9c74719e504abddd1996b74266.jpg" class="tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm" alt="Jack Yang learns Ruby in 1 day!" />Change is hard on all sides. For me, getting into the mindset that Microsoft can help was a big step. When Sean found issues with <a href="https://github.com/sstephenson/execjs">execjs</a> that led back to Windows Script Host, they introduced us to that team. Likewise, the SQL Server adapter has always needed a bullet-proof cross platform binary to dump the schema. &quot;We can help and here are the engineers...&quot; was the reply. Wow!</p>
+
+<p>Some issues sit well in Microsoft&#39;s sphere to solve. What most impressed me was how eager they were to address them. Being a large company, often times the immediate answer was to schedule a series of 1-on-1s with the team(s) responsible. Connections and conversations like this quickly led to even pondering if Ruby could be installed on Windows by default. Or maybe even build cross platform SQL Server development binaries! 😱</p>
+
+<h5 id="quid-pro-quo">Quid Pro Quo</h5>
+
+<p><img src="/assets/content/ossdatacamp/keepit-weird-58d991033565fd6e44fa0cbfa4451905.jpg" class="tb-Img tb-Img--fancy tb-Img--half tb-Img--half--sm" alt="Sean Griffin keeps it weird while helping you not blow up." style="float:left; margin-left:0; margin-right:1rem;" />So what did Microsoft learn most from us? Other than Rubyists keep it weird? Likely their biggest takeaway was that Sean Griffin loves to play the <a href="http://www.keeptalkinggame.com">Keep Talking and Nobody Explodes</a> game. I mean he <em>really</em> loves to play this game.</p>
+
+<p>It&#39;s simple, use 2-way, fast-paced, verbal communication to quickly identify and defuse a virtual ticking time bomb. As it turned out, this is a great team building exercise. Becoming a bomb defusing expert is high on my list and I can not wait to play with a group of my fellow Inkers. Thanks Sean!</p>
+
+<h2 id="coming-soon-to-ruby-rails">Coming Soon To Ruby/Rails</h2>
+
+<p>We got a lot of work done along with establishing some big milestones for those using Windows and/or SQL Server with Ruby. Here are some things you can look forward to:</p>
+
+<ul>
+<li>Upgrade TinyTDS to the latest FreeTDS v0.95 which supports the TDS v7.3 protocol.</li>
+<li>Making the adapter pass all tests for Rails 5 under active development.</li>
+<li>Allow TinyTDS to be statically compiled on every platform w/OpenSSL for easier Azure support.</li>
+<li>ActiveRecord JSON support via a v4.2 update. Leverages SQL 16 Box/Azure built-in JSON.</li>
+<li>Binstub wrappers for all statically compiled FreeTDS binaries.</li>
+<li>First class Azure support for Rails which includes proper DB setup and clone tasks.</li>
+<li>Allow the rails-sqlserver adapter to use an alternate jTDS connection mode.</li>
+</ul>
+
+<p>These items are tracked in the <a href="https://github.com/rails-sqlserver/tiny_tds/milestones">TinyTDS</a> and/or the <a href="https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/milestones">SQL Server Adapter</a> milestones on GitHub. Follow along or contribute if anything interests you.</p>
+
+<h2 id="microsoft-azure-in-brief">Microsoft Azure In Brief</h2>
+
+<p>Azure != SQL Server, it is much more. Think AWS (Analytics, IoT, CDN, Etc) with a <a href="https://portal.azure.com">better frontend portal</a>. Microsoft&#39;s Azure platform and PaaS offerings are amazing and accessible for anyone looking to rapidly build out their new web application suite of microservices. Seriously, you really should consider it next time you are looking for a Heroku-style marketplace. Here is a quick brief:</p>
+
+<ul>
+<li>1 out of 4 VMs are Linux.</li>
+<li>7 million requests a second.</li>
+<li>1.6 million SQL databases.</li>
+</ul>
+
+<h5 id="command-line-amp-application-interfaces">Command Line &amp; Application Interfaces</h5>
+
+<p>Portal smortal, who wants GUIs? The real power is in the command line and automation. Just like Heroku&#39;s toolbelt, Azure has cross platform binaries that are open source on GitHub. This client has rich 2FA and is packed with interfaces. Services can even be stood up with a simple JSON template hosted on GitHub. Need an application interface? They have a Ruby SDK too.</p>
+
+<ul>
+<li><a href="https://github.com/Azure/azure-xplat-cli">Cross Platform Command Line</a></li>
+<li><a href="https://github.com/Azure/azure-quickstart-templates">Quickstart Templates</a></li>
+<li><a href="https://github.com/Azure/azure-sdk-for-ruby">SDK for Ruby</a></li>
+</ul>
+
+<h5 id="services-marketplace">Services Marketplace</h5>
+
+<p>Their marketplace and open source service offerings are seriously impressive. One that stood out is their Elasticsearch service and how well it can integrate with any data source. They literally built an entire frontend GUI that can help you build out super impressive search indexes.</p>
+
+<p>The message, &quot;We give you 99.99% uptime, you worry about how search works, and we take care of the rest.&quot; really stood out to me as a market differentiator. Maintaining shard strategies and the complexities of Elasticsearch is not what I want to do.</p>
+
+<h5 id="sql-server-2016">SQL Server 2016</h5>
+
+<p><img src="/assets/content/ossdatacamp/sql-server-stretch-e5acb28ce8614a2011facee2b7ddd35a.png" class="tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm" alt="Stretch On-Premises SQL Servers to Azure." />I can&#39;t even begin to go into all the amazing features of SQL Server 2016 now available on Azure. A quick list includes:</p>
+
+<ul>
+<li>Built-In JSON Support.</li>
+<li>Always encrypted data with transparent app/client usage.</li>
+<li>Data Lake infinite storage with built-in Revolution-R analytics.</li>
+<li>Diverse sharding and multi-tenant structures.</li>
+</ul>
+
+<p>One feature that stood out was SQL Server&#39;s ability to <a href="https://msdn.microsoft.com/en-us/library/dn935011.aspx">stretch</a> or archive historical data transparently and securely. This can be done entirely via their hosted service or coupled with your on-premises SQL Server databases. All without the application caring about managing that cold &lt;=&gt; hot data.</p>
+
+<h2 id="many-thanks">Many Thanks!</h2>
+
+<p>Special thanks to Microsoft as a whole. Especially to Andrea Lam and Meet Bhagdev for their personal &amp; professional support during our trip. You made us feel right at home. Also in attendance for the first #OSSDataCamp were <a href="https://twitter.com/manfre">Michael Manfre</a>, <a href="https://twitter.com/michiyata">Michiya Takahashi</a>, and <a href="https://github.com/timgraham?tab=activity">Tim Graham</a>. All of whom represented the Python/Django community and helped our open source cause.</p>
+
+<p>This is a process and one that I hope continues with Ruby and other languages. It will succeed if Microsoft actively contributes back to open source and in some cases, champions certain projects with an earnest level of excellence.</p>
+
+<p><img src="/assets/content/ossdatacamp/fetch-tobias-ternstrom-5a5e378c7b34e4bf0bf8f2c4dda2d514.jpg" class="tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm" alt="Tobias Ternstrom helped make FETCH happen in SQL Server." />To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped <a href="http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif">make FETCH happen</a> in SQL Server. Supporting a sane limit/offset model <a href="http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/">allowed projects</a> like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.</p>
+
+<p>And lastly, I want to give a shout out to <a href="https://github.com/larskanis">Lars Kanis</a> who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-10-19T00:00:00-04:00">
+      19 Oct 2015
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/10/19/microsofts-first-open-source-datacamp';
+    var disqus_title = "Microsoft's First Open Source DataCamp";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

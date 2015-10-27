@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Why we chose Chef over Puppet at CustomInk - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to sp...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Why we chose Chef over Puppet at CustomInk</h1>
+        <p>Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to spark debate among opinionated technologists. There are certainly a number of choices available all of which have their own strengths and weaknesses. There are a number of things to consider as you select a tool.</p>
+
+<!--more-->
+
+<p>Before we get into any of the specifics, I want to make it clear that the &quot;right&quot; answer to this question is a simple, but emphatic &quot;yes!&quot; Yes, you should be using a tool that allows you to manage your infrastructure as code. That tool should NOT be a server.txt file that you keep on the machine that documents the installation, set-up, and configuration changes you&#39;ve made. Moving that text to somewhere other than the local server is a step in the right direction but isn&#39;t really the answer. Moving the server.txt file to your corporate wiki is going to suck just as bad.</p>
+
+<p>I think Mark Imbriaco summed it up quite nicely in 140 characters or less:</p>
+
+<blockquote>
+<p>Pro-tip: Nobody gives a shit about your opinion of Chef vs. Puppet. Seriously. Just fucking stop it already. #usewhatworksforyou</p>
+</blockquote>
+
+<p>As you consider which tool is right for you, you&#39;ll need to consider a number of questions. I think of these as the WIIFs, or &quot;what&#39;s in it for...&quot; questions:</p>
+
+<h3 id="wiifm-what-39-s-in-it-for-me">WIIFM - What&#39;s in it for me</h3>
+
+<p>You&#39;re going to want a tool that you&#39;re happy working with. You&#39;re going to make an investment in this tool. You&#39;ll need to learn to be proficient with the tool, master it, and use it in your everyday workflow. Pick something that you&#39;ll be happy working with for some time.</p>
+
+<h3 id="wiifc-what-39-s-in-it-for-my-customers">WIIFC - What&#39;s in it for my customers</h3>
+
+<p>It&#39;s highly unlikely that your customers know or care anything about how your infrastructure was built, provisioned, and managed. Why should they have any say about which tool you pick? Your customers are keenly interested in the services or products you offer. They also care about things like performance, availability, and how quickly you recover from an issue or outage. If they don&#39;t care about these things, they&#39;ll likely not be your customers for long. As you grow your business, you&#39;ll want to have more time for delivering value to customers. Spend less time building, provisioning, upgrading, and repairing your infrastructure.</p>
+
+<h3 id="wiifb-what-39-s-in-it-for-my-business">WIIFB - What&#39;s in it for my business</h3>
+
+<p>You may be the only one who has to build and manage the infrastructure in your company but it&#39;s likely you&#39;ll eventually move beyond a technology team of one. As your technology team grows, you&#39;ll want to include everyone in the process of managing your infrastructure. This includes the people you might not think of as typically having a say in the infrastructure: developers, quality assurance engineers, etc. You do not want to be the only person in your company who knows how to manage the infrastructure and use the tools you&#39;ve selected. Sure, it gives you a false sense of job security and feeds into your hero-complex but you need to be able to pass the on-call baton to someone else. Cost may also be a factor to consider when selecting a solution although it&#39;s likely it&#39;s more of a data-point than selection criteria, given the solutions that are on the market.</p>
+
+<p>I cannot tell you which tool is right for you. There are many factors including the ones I&#39;ve listed above. I have some experience with both Puppet and Chef. At <a href="http://www.customink.com">CustomInk</a>, we decided to switch to Chef after using Puppet for about two years.</p>
+
+<h2 id="why-did-we-switch">Why did we switch?</h2>
+
+<h3 id="we-39-re-a-rails-shop">We&#39;re a Rails shop</h3>
+
+<p>CustomInk is a Ruby on Rails shop and has been for many years. Being a Rails shop helped push us towards Chef in two ways. As a Rails shop, we suffer a bit from from the stereotypical &quot;newer and shinier is better&quot; syndrome that many people feel ails the Rails community. As a Rails shop, the domain-specific language (DSL) of Chef is a more comfortable way for us to work. Everyone on the technology team can easily understand the code.</p>
+
+<h3 id="we-started-with-puppet">We started with Puppet</h3>
+
+<p>We started with Puppet so, naturally, that&#39;s the one we switched from. Puppet was, and actually still is, working well for us. However, we found that working in Puppet was going a bit slower than we&#39;d like. Also, as we started learning more about Chef we started to see how we&#39;d be able to quickly benefit from some of the features it offers. To be fair, we were comparing the Puppet we were using (0.24.x) to the latest (at the time) version of Chef (0.9.x). There may well have been ways to do the things we wanted with Puppet but we weren&#39;t. Chef was intriguing and it looked like we&#39;d be able to get more from it. Instead of working to refactor our Puppet and get smarter with how to use it, we went with Chef.</p>
+
+<h3 id="search">Search</h3>
+
+<p>Chef&#39;s ability to search our environment and use that information at run time is very appealing. The ability for us to define a database.yml template that can have the &quot;host&quot; value populated at runtime based on which host is currently the primary database server is great. Using search in our capistrano recipes to determine where the code should be deployed is a huge win.</p>
+
+<h3 id="knife">Knife</h3>
+
+<p>Knife is Chef&#39;s powerful command line interface. There are many things you can do with knife, most of which fall outside of the scope of this article. Knife allows you to interact with your entire infrastructure and Chef code base. Use knife to bootstrap a server, build the scaffolding for a new cookbook, or apply a role to a set of nodes in your environment. You can use knife ssh to execute commands on any number of nodes in your environment. knife ssh + search is a very powerful combination. &quot;Run this command on all nodes with role X.&quot;</p>
+
+<h3 id="dependency-management">Dependency Management</h3>
+
+<p>We found that defining dependencies in Puppet was overly verbose and cumbersome. With Chef, order matters and we could rest assured that dependencies would be met if we specified them in the proper order.</p>
+
+<h3 id="strong-community">Strong Community</h3>
+
+<p>OpsCode has done a great job of keeping up a strong community. The community.opscode.com site, where hundreds of cookbooks are shared, is a great way to get started. OpsCode has also hosted numerous webinars, publishes all of their training material, and makes it very easy to contribute patches. Frankly, I don&#39;t have any experience with this in the Puppet world. However, my lack of experience with this in the Puppet world is likely attributed simply to the way my development habits have changed over time. At CustomInk, we&#39;ve been able to submit patches to chef, a number of cookbooks, and have also published some of our own cookbooks.</p>
+
+<h3 id="developer-happiness">Developer Happiness</h3>
+
+<p>As I mentioned previously, the DSL with Chef is much more comfortable than that of Puppet. The mental model and workflow suit us. I find that the time I spend working in Chef is when I feel most productive and happy.</p>
+
+<p>I often wonder if the reason Chef is the right tool is because it&#39;s the second one we&#39;ve used. Coming to infrastructure as code includes a learning curve. I feel that we&#39;re better Chef developers because we learned from our experience with Puppet. Some may even agree that Chef&#39;s a better tool because the developers of Chef learned from their experience with Puppet.</p>
+
+<h3 id="a-note-for-projects-that-are-just-getting-started">A note for projects that are just getting started</h3>
+
+<p>If your project is just getting started, the best choice for you is probably not to use any of the configuration management tools that allow you to manage your infrastructure as code. You should stay focused exclusively on delivering value to your customers. It&#39;s likely that the best solution for you is <a href="http://www.heroku.com/">Heroku</a>. Sure, Heroku puts some constraints on how you build your app, but they&#39;re a good way for you to think creatively. You can, and should, delay your choice of tools until you&#39;re ready to spin up your first server.</p>
+
+<h2 id="tl-dr">TL;DR</h2>
+
+<ul>
+<li>If the question is &quot;Chef or Puppet?&quot;, the answer is &quot;Yes.&quot; You need to manage you infrastructure as code</li>
+<li>Search, knife, dependency management, community, and developer happiness were the key reasons we switched</li>
+<li>Chef is the right tool for us and it might be the right one for you</li>
+<li>If you&#39;re new to the idea of &quot;Infrastructure as Code&quot;, understand that there&#39;s a learning curve but your efforts will be rewarded</li>
+</ul>
+
+<p>Did you have to make a similar choice? What were some of the deciding factors? Which tool or framework did you end up with?</p>
+
+<hr>
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/">Nathen Harvey&#39;s blog</a>.</sub></p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2011-11-21T03:29:00-05:00">
+      21 Nov 2011
+    </time></br>
+    by Nathen Harvery
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink';
+    var disqus_title = "Why we chose Chef over Puppet at CustomInk";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

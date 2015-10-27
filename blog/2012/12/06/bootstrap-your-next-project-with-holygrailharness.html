@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Bootstrap Your Next Project With The HolyGrailHarness - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="The HolyGrailHarness is a curated Rails application prototype that focuses on simple test patterns for Ruby &amp; JavaScript!
+
+Unlike normal Rails ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Bootstrap Your Next Project With The HolyGrailHarness</h1>
+        <p>The <a href="https://github.com/metaskills/holy_grail_harness">HolyGrailHarness</a> is a curated Rails application prototype that focuses on simple test patterns for Ruby &amp; JavaScript!</p>
+
+<p>Unlike normal <a href="http://guides.rubyonrails.org/rails_application_templates.html">Rails Application Templates</a> or more modern Rails application generators like <a href="http://railsapps.github.com/rails-composer/">Rails Composer</a>, the HolyGrailHarness is a basic Rails application that can be considered a prototype and customized via a simple setup script. It is also somewhat opinionated in that it promotes simple and powerful testing choices and focuses on using Ruby 1.9 and up, MiniTest::Spec, Capybara, Poltergeist/PhantomJS, and Konacha. More details on each component and what HolyGrailHarness provides are below.</p>
+
+<p>The HolyGrailHarness is perfect for any of the following:</p>
+
+<ul>
+<li>Bootstrapping your next Rails application.</li>
+<li>Learning and promoting MiniTest::Spec</li>
+<li>Modern JavaScript testing setups.</li>
+<li>Teaching Rails and/or JavaScript at your next meetup.</li>
+</ul>
+
+<!--more-->
+
+<h1 id="usage">Usage</h1>
+
+<ul>
+<li><a href="https://github.com/metaskills/holy_grail_harness/archive/master.zip">Download</a> the project.</li>
+<li>Now from the root of &quot;holy_grail_harness&quot; directory.</li>
+</ul>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>bundle install
+<span class="gp">$ </span>bundle <span class="nb">exec </span>thor setup my_app_name
+</code></pre></div>
+<p>Make sure to replace <code>my_app_name</code> above with the name of your new Rails application. The setup script has a few options, but the end result will be a new Rails application all ready to go. <strong>So why not a normal Rails application template?</strong> Although, Rails application templates provide a really nice feature set. It was much easier to bootstrap a new Rails application using this prototype method. The end result is a cleaner Gemfile and application setup that can be vetted and tested from within HolyGrailHarness itself.</p>
+
+<p>The script will rename your directory and prompt you to <code>cd</code> to that directory. Once you do that, run <code>rake test:all</code> to see that everything is working.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span><span class="nb">cd</span> ../my_app_name
+<span class="gp">$ </span>bundle <span class="nb">exec </span>rake <span class="nb">test</span>:all
+</code></pre></div>
+<h1 id="rails-3">Rails 3</h1>
+
+<p>This application prototype will focus on the latest Rails version. At this time, the bundle is locked down to v3.2.9. As Rails updates and is compatible with each component, so will this prototype application be updated. The bundle includes:</p>
+
+<ul>
+<li><a href="https://github.com/evrone/quiet_assets">QuietAssets</a> gem for silent pipeline logging.</li>
+<li><a href="https://github.com/macournoyer/thin/">Thin</a> webserver. Primarily to be automatically used by Konacha but also good for development if you are not using something like <a href="http://pow.cx">Pow</a>.</li>
+</ul>
+
+<h1 id="testing">Testing</h1>
+
+<h3 id="minitest-spec-all-the-way-across-the-sky">MiniTest::Spec All The Way Across The Sky!</h3>
+
+<p>Don&#39;t wait for Rails 4 to use MiniTest::Spec! This application is using the <a href="https://github.com/metaskills/minitest-spec-rails">minitest-spec-rails</a> gem which forces <code>ActiveSupport::TestCase</code> to subclass <code>MiniTest::Spec</code>. This means that you can start using the MiniTest&#39;s Spec or Unit structure and assertions directly within the familiar Rails unit, functional, or integration directories. For full details, check out the <a href="https://github.com/metaskills/minitest-spec-rails">minitest-spec-rails</a> documentation or some of the <a href="https://github.com/metaskills/holy_grail_harness/blob/master/test/functional/application_controller_test.rb">test shims</a> within HolyGrailHarness. For example, a <code>test/unit/user_test.rb</code> might look like this.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'test_helper'</span>
+
+<span class="k">class</span> <span class="nc">UserTest</span> <span class="o">&lt;</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:bob</span><span class="p">)</span>   <span class="p">{</span> <span class="n">users</span><span class="p">(</span><span class="ss">:bob</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">let</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="p">{</span> <span class="n">users</span><span class="p">(</span><span class="ss">:admin</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="n">it</span> <span class="s1">'must respond true to #admin? for administrators only'</span> <span class="k">do</span>
+    <span class="n">admin</span><span class="p">.</span><span class="nf">must_be</span> <span class="ss">:admin?</span>
+    <span class="n">bob</span><span class="p">.</span><span class="nf">wont_be</span>   <span class="ss">:admin?</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<h3 id="capybara-integration-tests-with-poltergeist-using-phantomjs">Capybara Integration Tests With Poltergeist Using PhantomJS</h3>
+
+<p>You don&#39;t need Cucumber to write good integration tests. Instead use the basic <a href="https://github.com/jnicklas/capybara#the-dsl">Capybara DSL</a> directly within a Rails integration tests with the most bad ass driver available, <a href="https://github.com/jonleighton/poltergeist">Poltergeist</a>, which is built on top of <a href="http://phantomjs.org">PhantomJS</a>. Never again worry about installing Qt so you can compile capybara-webkit, just go download a <a href="http://phantomjs.org/download.html">pre-compiled PhantomJS binary</a> for your specific platform and enjoy 20% faster integration test runs vs capybara-webkit.</p>
+
+<p>Integration tests are still within the <code>ActionDispatch::IntegrationTest</code> class and as promised, MiniTest::Spec is available here too. Each test file needs to require the <a href="https://github.com/metaskills/holy_grail_harness/blob/master/test/test_helper_integration.rb">test_helper_integration</a> which provides the following base features.</p>
+
+<ul>
+<li>Sets page size to that of a 13&quot; MacBook Air.</li>
+<li>Resets Capybara sessions after each test.</li>
+<li>Provides a <code>#save_and_open_page</code>, or <code>#page!</code> for short, screen shot method.</li>
+<li>Ensures a single ActiveRecord DB connection for transactional test runs.</li>
+<li>An <code>#execjs</code> helper for bridging Ruby and the JavaScript under test.</li>
+</ul>
+
+<p>HolyGrailHarness comes with a integration test example in the <a href="https://github.com/metaskills/holy_grail_harness/blob/master/test/integration/application_test.rb">test/integration/application_test.rb</a> file. An integration test might look something like this.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'test_helper_integration'</span>
+
+<span class="k">class</span> <span class="nc">ApplicationTest</span> <span class="o">&lt;</span> <span class="no">ActionDispatch</span><span class="o">::</span><span class="no">IntegrationTest</span>
+
+  <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">root_path</span> <span class="p">}</span>
+
+  <span class="n">let</span><span class="p">(</span><span class="ss">:h1</span><span class="p">)</span> <span class="p">{</span> <span class="n">find</span> <span class="s1">'h1'</span> <span class="p">}</span>
+
+  <span class="n">it</span> <span class="s1">'renders'</span> <span class="k">do</span>
+    <span class="n">h1</span><span class="p">.</span><span class="nf">must_be</span> <span class="ss">:present?</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<h3 id="konacha-javascript-tests-using-phantomjs">Konacha JavaScript Tests Using PhantomJS</h3>
+
+<p>Move over Jasmine(rice), <a href="https://github.com/jfirebaugh/konacha">Konacha</a> is the way to test your JavaScript now. Konacha is a Rails engine that allows you to test your JavaScript with the <a href="http://visionmedia.github.com/mocha/">Mocha</a> test framework and <a href="http://chaijs.com">Chai</a> assertion library. Konacha&#39;s killer feature is a sandboxed <code>&lt;iframe&gt;</code> for each test spec to run within as well as full Rails asset pipeline integration. The HolyGrailHarness does all the work to get your Konacha <a href="https://github.com/metaskills/holy_grail_harness/tree/master/spec/javascripts"><code>spec/javascripts</code></a> directory all setup and ready to go. Highlights include:</p>
+
+<ul>
+<li>An <a href="https://github.com/metaskills/holy_grail_harness/blob/master/config/initializers/konacha.rb">initializer</a> that sets up Poltergeist as the Capybara driver.</li>
+<li>A directory structure for model, view, and controller specs.</li>
+<li>A <a href="https://github.com/metaskills/holy_grail_harness/blob/master/spec/javascripts/spec_helper.js.coffee"><code>spec_helper.js.coffee</code></a> for your specs to require. Provides global setup, configurations and vendor requires.</li>
+</ul>
+
+<p>HolyGrailHarness also has a <a href="https://github.com/metaskills/holy_grail_harness/tree/master/spec/javascripts/spec_helper"><code>spec/javascripts/spec_helper</code></a> directory meant for helpers and extensions that should be available to all specs. We have included a <a href="https://github.com/metaskills/holy_grail_harness/blob/master/spec/javascripts/spec_helper/fixtures.js.coffee"><code>fixtures.js.coffee</code></a> file that demonstrates how to setup JSON data fixtures for use from anything to stubbing requests to instantiating new model objects. We also have a <a href="https://github.com/metaskills/holy_grail_harness/blob/master/spec/javascripts/spec_helper/helpers.js.coffee"><code>helpers.js.coffee</code></a> file that exposes a few top level functions that make debugging your JavaScript easy. Below are the vendored JavaScript libraries that are required by the <code>spec_helper</code>.</p>
+
+<ul>
+<li><a href="http://sinonjs.org">Sinon.JS</a> - For spies, stubs, faking time, etc.</li>
+<li><a href="https://github.com/appendto/jquery-mockjax">jQuery Mockjax</a> - Best way to mock jQuery&#39;s AJAX functions.</li>
+<li><a href="https://github.com/chaijs/chai-jquery">Chai jQuery</a> - Chai assertions for jQuery.</li>
+<li><a href="http://github.com/NV/jsDump">jsDump</a> - Used by the <code>myLog()</code> helper.</li>
+</ul>
+
+<p>Because your CI system should run all your tests, the HolyGrailHarness has added a Rake task to the test namespace that runs the default rails test task (units, functional, integrations) then your Konacha tests.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>rake <span class="nb">test</span>:all     <span class="c"># Runs all Rails tests, then Konacha tests.</span>
+</code></pre></div>
+<h3 id="guard">Guard</h3>
+
+<p>TDD in style and run your tests when you hit save! Both <a href="https://github.com/guard/guard-minitest">guard-minitest</a> and <a href="https://github.com/alexgb/guard-konacha">guard-konacha</a> are bundled and ready to go. A basic <code>Guardfile</code> is already setup too. Unlike most, this one is split into two groups <code>:ruby</code> or <code>:js</code>. This lets you focus on either everything or a specific language for your tests.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>guard             <span class="c"># Monitor both Ruby and JavaScript tests.</span>
+<span class="gp">$ </span>guard -g ruby     <span class="c"># Monitor Ruby tests.</span>
+<span class="gp">$ </span>guard -g js       <span class="c"># Monitor JavaScript tests.</span>
+</code></pre></div>
+<p>The Guardfile assumes you are running OS X and wish to use the Ruby GNTP (Growl Notification Transport Protocol). If this is not the case, consult the Guard documentation on different <a href="https://github.com/guard/guard#system-notifications">system notification</a> alternatives.</p>
+
+<h3 id="factories-and-fixtures">Factories And Fixtures</h3>
+
+<p>ActiveRecord YAML fixtures suck, but so do slow tests that rely on an empty database with excessive setups based on factories. The answer? Take advantage of the best each has to offer. Use factories to populate fixtures into the test database while leveraging database transactions during your test runs. The end result is a known factory story with the ability to create more test data as needed using the same factories. Allowing factories to properly hook into model logic means no more decomposing business logic into YAML text files. How?</p>
+
+<p>The HolyGrailHarness bundles the <a href="https://github.com/metaskills/named_seeds">named_seeds</a> gem along with the <a href="https://github.com/thoughtbot/factory_girl">factory_girl</a> gem. The NamedSeeds library checks for the existence of a <a href="https://github.com/metaskills/holy_grail_harness/blob/master/db/test/seeds.rb"><code>db/test/seeds.rb</code></a> file and if present, loads that file. Just like Rails&#39; own <code>db/seeds.rb</code> anything in this file goes. The only difference is that this seed file is populated right before you tests are run so they persist between transactions. You also get the benefit of using this same seed data in development as part of the normal Rails <code>db:setup</code> process. Read the <a href="https://github.com/metaskills/named_seeds#namedseeds">full documentationn</a> on their site on how to use it. Below is a brief example.</p>
+
+<p>Create factories in the <code>test/factories</code> directory. Note, factories are best when they make <code>valid garbage™</code>, so the HolyGrailHarness also requires the <a href="https://github.com/sevenwire/forgery">forgery</a> gem to help with that.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># In test/factories/user_factory.rb</span>
+
+<span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">define</span> <span class="k">do</span>
+
+  <span class="n">factory</span> <span class="ss">:user</span> <span class="k">do</span>
+    <span class="n">email</span>      <span class="p">{</span> <span class="no">Forgery</span><span class="o">::</span><span class="no">Email</span><span class="p">.</span><span class="nf">address</span> <span class="p">}</span>
+    <span class="n">first_name</span> <span class="p">{</span> <span class="no">Forgery</span><span class="o">::</span><span class="no">Name</span><span class="p">.</span><span class="nf">first_name</span> <span class="p">}</span>
+    <span class="n">last_name</span>  <span class="p">{</span> <span class="no">Forgery</span><span class="o">::</span><span class="no">Name</span><span class="p">.</span><span class="nf">first_name</span> <span class="p">}</span>
+    <span class="n">password</span>   <span class="s1">'test'</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>When making seed data, be explicit with your attributes that may be forged in the factory, database seeds should be consistent and have meaningful attributes. In this example we are creating an admin user. Note too how we are using <code>NamedSeeds.identify</code> which mimics AcctiveRecord&#39;s fixture identity. This gives us a handle to the fixture within our tests. We also create the <code>@admin</code> instance variable because we might want to use that user later on in the fixture story.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># In db/test/seeds.rb</span>
+
+<span class="nb">require</span> <span class="s1">'factory_girl'</span>
+<span class="no">FactoryGirl</span><span class="p">.</span><span class="nf">find_definitions</span> <span class="k">rescue</span> <span class="kp">true</span>
+<span class="kp">include</span> <span class="no">FactoryGirl</span><span class="o">::</span><span class="no">Syntax</span><span class="o">::</span><span class="no">Methods</span>
+
+<span class="vi">@admin</span> <span class="o">=</span> <span class="n">create</span> <span class="ss">:user</span><span class="p">,</span> <span class="ss">id: </span><span class="no">NamedSeeds</span><span class="p">.</span><span class="nf">identify</span><span class="p">(</span><span class="ss">:admin</span><span class="p">),</span>
+                       <span class="ss">first_name: </span><span class="s1">'Admin'</span><span class="p">,</span> <span class="ss">last_name: </span><span class="s1">'User'</span><span class="p">,</span> <span class="ss">email: </span><span class="s1">'admin@test.com'</span>
+</code></pre></div>
+<p>Lastly, in your <a href="https://github.com/metaskills/holy_grail_harness/blob/master/test/test_helper.rb"><code>test/test_helper.rb</code></a> file, declare that you have a named seed to the users model. This will allow your tests to act just like those with ActiveRecord fixtures and use the <code>users(:admin)</code> helper to get to that seeded fixture.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># In test/test_helper.rb</span>
+
+<span class="k">class</span> <span class="nc">ActiveSupport</span><span class="o">::</span><span class="no">TestCase</span>
+
+  <span class="n">named_seeds</span> <span class="ss">:users</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<h1 id="mvc-javascript">MVC JavaScript</h1>
+
+<p>The HolyGrailHarness wants you to use some type MV* structure for your JavaScript. The setup script supports <a href="http://spinejs.com">Spine.js</a> as an option, however you can decline and all traces of Spine.js will be removed. If so, the following features will still remain.</p>
+
+<p>A single JavaScript <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/javascripts/holy_grail_harness/lib/namespaces.js.coffee">namespace</a> on the window object. This namespace creates a model, view, controller object structure that direly matches to the <a href="https://github.com/metaskills/holy_grail_harness/tree/master/app/assets/javascripts/holy_grail_harness"><code>app/assets/javascripts/#{my_app_name}/(model|view|controller)</code></a> directory structure within the Rails asset pipeline. This JavaScript namespace and matching directories will be changed to your new application name as part of the setup task. Here is an example of a User model whose corresponding file would be found in the <code>app/assets/javascripts/my_app_name/models/user.js.coffee</code> file.</p>
+<div class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="k">class</span> <span class="vi">@</span><span class="na">MyAppName</span><span class="p">.</span><span class="na">App</span><span class="p">.</span><span class="na">Models</span><span class="p">.</span><span class="na">User</span> <span class="k">extends</span> <span class="nx">View</span>
+  <span class="vi">@</span><span class="na">configure</span> <span class="s">'User'</span><span class="p">,</span> <span class="s">'id'</span><span class="p">,</span> <span class="s">'email'</span>
+</code></pre></div>
+<p>The main <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/javascripts/application.js"><code>application.js</code></a> file requires all vendor frameworks, then the <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/javascripts/holy_grail_harness/index.js.coffee"><code>index.js.coffee</code></a> within your application name directory. Use this file to boot your JavaScript application and/or setup your root view controller.</p>
+
+<p>Also included is the <a href="https://github.com/nathansobo/space-pen">SpacePen</a> view framework. SpacePen is a powerful and minimalist client-side view framework authored in CoffeeScript. It is actually a jQuery subclass which makes your views really easy to traverse and respond to controller events. Read my <a href="http://metaskills.net/2012/05/22/view-controller-patterns-with-spine-js-and-spacepen/"><em>View Controller Patterns With Spine.js &amp; SpacePen</em></a> article to learn why views should not be dumb and how you can take advantage of SpacePen no matter what JavaScript MV* framework you use.</p>
+
+<h3 id="with-spine-js">With Spine.js</h3>
+
+<p>If you choose to use Spine.js as your JavaScript MVC structure, the setup script will create a git submodule to the Spine repository to the <code>vendor/assets/javascripts/spine</code> directory. This allows your project to use the the source CoffeeScript files, which makes for a wonderful <a href="http://metaskills.net/2012/01/15/rails-and-spine-js-using-the-coffeescript-source/">learning experience</a> to both Spine.js and idomatic CoffeeScript.</p>
+
+<p>By default the <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/javascripts/holy_grail_harness/index.js.coffee"><code>index.js.coffee</code></a> will require all Spine components. This includes manager (stacks), ajax, route, and relation. Remove anything that you do not need. This file also defines the root view controller along with a <code>MyAppName.App.Index.init()</code> class level initialization function. This is called in the main <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/views/layouts/application.html.erb"><code>application.html.erb</code></a> layout file for you too. Likewise, the application init is done in the Mocha before filters mentioned above in both the <a href="https://github.com/metaskills/holy_grail_harness/blob/master/spec/javascripts/spec_helper.js.coffee"><code>spec_helper.js.coffee</code></a> and <a href="https://github.com/metaskills/holy_grail_harness/blob/master/spec/javascripts/spec_helper/fixtures.js.coffee"><code>fixtures.js.coffee</code></a> files. If you examine these files closely, you will see how they make use of Mocha&#39;s <code>done()</code> callback so that you can cleanly abstract AJAX mocks and anything else related to your JavaScript application&#39;s boot process. Here is an example of how you might setup your <code>initApplication()</code>.</p>
+<div class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="vi">@</span><span class="na">initApplication</span> <span class="o">=</span> <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">bob</span> <span class="o">=</span> <span class="nx">MyAppName</span><span class="p">.</span><span class="na">Test</span><span class="p">.</span><span class="na">Seeds</span><span class="p">.</span><span class="na">users</span><span class="p">.</span><span class="na">bob</span>
+  <span class="nx">$</span><span class="p">.</span><span class="na">mockjax</span> <span class="na">url</span><span class="o">:</span> <span class="s">"/users/</span><span class="si">#{</span><span class="nx">bob</span><span class="p">.</span><span class="na">id</span><span class="si">}</span><span class="s">"</span><span class="p">,</span> <span class="na">responseText</span><span class="o">:</span> <span class="nx">MyAppName</span><span class="p">.</span><span class="na">Test</span><span class="p">.</span><span class="na">Response</span><span class="p">.</span><span class="na">bobInitial</span><span class="p">.</span><span class="na">responseText</span>
+  <span class="nx">MyAppName</span><span class="p">.</span><span class="na">App</span><span class="p">.</span><span class="na">Models</span><span class="p">.</span><span class="na">User</span><span class="p">.</span><span class="na">fetch</span> <span class="na">id</span><span class="o">:</span> <span class="nx">bob</span><span class="p">.</span><span class="na">id</span>
+  <span class="nx">MyAppName</span><span class="p">.</span><span class="na">App</span><span class="p">.</span><span class="na">Models</span><span class="p">.</span><span class="na">User</span><span class="p">.</span><span class="na">one</span> <span class="s">'refresh'</span><span class="p">,</span> <span class="nx">callback</span>
+</code></pre></div>
+<p>No JavaScript project should be without a local notification system to help keep disparate components up to date. Thankfully, Spine&#39;s event module makes a local PubSub system a breeze. The HolyGrailHarness has a <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/javascripts/holy_grail_harness/lib/notifications.js.coffee"><code>notifications.js.coffee</code></a> that exposes a class level <code>bind()</code> and <code>trigger()</code> to any event string/namespace you want. To make more simple, we recommend creating class level functions that expose the event name as the function name and pass the args to the <code>handle()</code> function. We have done this for the <code>MyAppName.Notifications.appReady()</code> to demonstrate. Calling this function will trigger the <code>app.ready</code> event and passing a function to this function will bind that function to the same event name.</p>
+
+<h1 id="sass-amp-compass">Sass &amp; Compass</h1>
+
+<p><a href="http://sass-lang.com">Sass</a> is the only way to write CSS for today&#39;s modern web applications. <a href="http://compass-style.org">Compass</a> is the CSS framework that no Sass user should go without. Together they provide a foundation for writing beautiful CSS using pre-built time saving functions. The HolyGrailHarness includes both the <a href="https://github.com/rails/sass-rails">sass-rails</a> and <a href="https://github.com/Compass/compass-rails">compass-rails</a> gems.</p>
+
+<p>To get you started on the right path, we have also created a basic structure within the <code>app/assets/stylesheets</code> asset pipeline directory to help you organize your Sass files. Here is the directory structure below.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">├── application.css
+├── application
+│   ├── _layout.scss
+│   ├── index.scss
+│   ├── components
+│   │   └── _foo.scss
+└── shared
+    ├── _animations.scss
+    ├── _fonts.scss
+    ├── _mixins.scss
+    ├── _placeholders.scss
+    ├── _variables.scss
+    └── base.scss
+</code></pre></div>
+<h3 id="the-application-css-file">The application.css file.</h3>
+
+<p>Never write CSS in <code>application.css</code>. Say what? I know right, but trust me. Just consider this file a top level bundle dependency that only requires other top level bundle assets. Here is the contents of that file. Notice how it requires a bundle called twitter and an index. One is for twitter bootstrap, see section below, and the other is the index to your own Sass framework.</p>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/*
+ *= require application/twitter
+ *= require application/index
+*/</span>
+</code></pre></div>
+<h3 id="the-shared-directory">The shared directory.</h3>
+
+<p>Think of this as your own Compass framework. The <a href="https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/stylesheets/shared/base.scss"><code>base.scss</code></a> is your single file to <code>@import</code> to get everything loaded and ready to go. <strong>Nothing in any of the shared files should generate CSS!</strong> Importing <code>shared/base</code> should act just like importing <code>compass</code>. Use these files for setting your own variables and creating misc helper functions &amp; mixins. There is a variables file for... variables! Another for animations, fonts and mixins too.</p>
+
+<p>Pay special attention to the <code>_placeholders.scss</code> file. If you do not know about Sass 3.2&#39;s placeholder selectors (silent classes) and how they make presentational classes efficiently extended by semantic ones, then I highly suggest you read Dale Sande&#39;s presentation titled <a href="https://speakerdeck.com/anotheruiguy/sass-32-silent-classes">Sass 3.2 Silent Classes</a> on Speaker Deck.</p>
+
+<p>Below is the contents of the <code>base.scss</code> file, take note of the order. See too how we import the entire Compass framework. This means that all of your Sass code in any of the shared files can take full advantage of both Bootstrap and Compass&#39; variables and mixins. Epic win!</p>
+<div class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="c1">// Think of this file as your own compass. Importing the base, never generates CSS.
+</span>
+<span class="k">@import</span> <span class="s">"shared/variables";</span>
+<span class="k">@import</span> <span class="s">"bootstrap/mixins";</span>
+<span class="k">@import</span> <span class="s">"compass";</span>
+<span class="k">@import</span> <span class="s">"compass/layout";</span>
+<span class="k">@import</span> <span class="s">"compass/css3/user-interface";</span>
+<span class="k">@import</span> <span class="s">"shared/fonts";</span>
+<span class="k">@import</span> <span class="s">"shared/mixins";</span>
+<span class="k">@import</span> <span class="s">"shared/animations";</span>
+<span class="k">@import</span> <span class="s">"shared/placeholders";</span>
+</code></pre></div>
+<h3 id="the-application-directory">The application directory.</h3>
+
+<p>Organize this as you see fit. We have started you off by creating a <code>_layout.scss</code> file for your general layout/structure styles. There is also a <code>components</code> directory which all sub files are imported via a glob. The idea is that components are not dependent upon another. Files that might go in here are things like datepicker, navigation, and general files named after components or widgets. Below is what the <code>application/index.scss</code> looks like.</p>
+<div class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@import</span> <span class="s">"shared/base";</span>
+<span class="k">@import</span> <span class="s">"./layout";</span>
+<span class="k">@import</span> <span class="s">"components/*";</span>
+</code></pre></div>
+<p>If you are more advanced with your CSS and like the idea of style guides, take a looks a the <a href="https://github.com/Anotheruiguy/toadstool">Toadstool</a> style guide framework.</p>
+
+<h1 id="twitter-bootstrap">Twitter Bootstrap</h1>
+
+<p><a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is awesome, but <a href="http://metaskills.net/2012/02/27/too-less-should-you-be-using-sass/">LESS is not</a>. That is why the HolyGrailHarness uses the <a href="https://github.com/thomas-mcdonald/bootstrap-sass">bootstrap-sass</a> gem that converts all the Bootstrap LESS files to Sass. Making them ready to import via the Rails asset pipeline.</p>
+
+<p>As shown above in the Sass section, we require the <code>application/twitter.scss</code> bundle asset from the top level <code>application.css</code> bundle file. This twitter bundle file, contents below, take advantage of your shared variables before importing bootstrap from the gem. In this way you can define variables that tweak bootstrap. A good example would be button colors, column widths, etc. Later on in the file you can extend bootstrap styles to your liking. For instance, add more padding to buttons.</p>
+<div class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@import</span> <span class="s">"shared/variables";</span>
+<span class="k">@import</span> <span class="s">"bootstrap";</span>
+<span class="k">@import</span> <span class="s">"font-awesome";</span>
+
+<span class="c1">// Tweak or redefine Twitter classes below.
+</span></code></pre></div>
+<h3 id="font-awesome">Font Awesome</h3>
+
+<p>The glyph icons included in Twitter Bootstrap are horrible for hi-resolution &quot;retina&quot; displays typically found on mobile devices. Thankfully the <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a> project provides a drop in replacement that instead uses icon fonts vs raster images.</p>
+
+<p>The HolyGrailHarness vendors these font files and the needed <code>font-awesome.scss</code> file and requires them as part of the Twitter Bootstrap bundle shown above. More advanced users may prefer to only include the icon fonts needed in their application or a few custom icons. If that is the case, check out <a href="http://endtwist.github.com/fontcustom/">Font Custom</a>, webfonts from the comfort of the command line.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-12-06T14:19:00-05:00">
+      06 Dec 2012
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness';
+    var disqus_title = "Bootstrap Your Next Project With The HolyGrailHarness";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

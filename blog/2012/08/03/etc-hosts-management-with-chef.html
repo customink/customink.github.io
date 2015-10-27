@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>/etc/hosts Management with Chef - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="We recently ran into a situation where we needed to use Chef Search to modify our /etc/hosts file dynamically on each Chef run. Originally seeming ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>/etc/hosts Management with Chef</h1>
+        <p>We recently ran into a situation where we needed to use Chef Search to modify our <code>/etc/hosts</code> file dynamically on each Chef run. Originally seeming to be a relatively simple task, managing the hosts file with Chef rose some interesting challenges. While there are a few existing <a href="http://community.opscode.com/search?query=hosts&amp;scope=home">community-maintained /etc/hosts management cookbooks</a> out there, none of them suited our needs. We wanted a highly customizable, easily expandable, simple, LWRP that was idempotent.</p>
+
+<p>In this post, I will discuss creating your own LWRP, as well as some of the challenges faced while writing this LWRP. There will also be links to the community LWRP that we&#39;ve created.</p>
+
+<!--more-->
+
+<h2 id="for-those-that-just-can-39-t-wait">For those that just can&#39;t wait!</h2>
+
+<p>Here are the links to the <a href="https://github.com/customink-webops/hostsfile">hostsfile github repo</a> and <a href="http://community.opscode.com/cookbooks/hostsfile">hostsfile on the Chef community website</a>.</p>
+
+<h2 id="working-backwards">Working Backwards</h2>
+
+<p>Before writing this LWRP, I knew <em>exactly</em> what I wanted the interface to look like. I knew that it needed to follow the patterns of resource built into Chef. I wanted it to be simple, yet configurable, yet still lightweight. This gave me a great opportunity to practice <a href="http://tom.preston-werner.com/2010/08/23/readme-driven-development.html">README-drive development</a>. There are a lot of advantages to RDD, especially on smaller projects:</p>
+
+<ol>
+<li>Ensure you have fully thought out your implementation</li>
+<li>Chooses your organization structure</li>
+<li>Ensures you have a great README</li>
+<li>Makes you really focus on usage over implementation</li>
+</ol>
+
+<p>The last option is, in my opinion, the most important. This LWRP would eventually end up on the Chef community site. I asked myself multiple times:</p>
+
+<blockquote>
+<p>How will people use this?</p>
+</blockquote>
+
+<p>And that question is king in open source development. If adding a few lines of code to your implementation allows people to more easily understand your &quot;product&quot;, then it&#39;s worth it. It&#39;s <strong>always</strong> worth it. This cookbook was written <em>for</em> the end-user.</p>
+
+<p>And yes, I actually did write the <a href="https://github.com/customink-webops/hostsfile/blob/master/README.md">README</a> <strong>first</strong>.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>With the README done and polished, it was time to start working forward. Luckily, I had a good, solid understanding of the implementation details as a result of the RDD I discussed earlier.</p>
+
+<p>To get started with a custom LWRP, you actually create a cookbook:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ knife cookbook create hostsfile
+</code></pre></div>
+<p>... and then delete everything until you&#39;re left with:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">|_libraries
+|_providers
+|_resources
+|_LICENSE
+|_metadata.rb
+|_README.md
+</code></pre></div>
+<p>Spend a few minutes adding all the LICENSE files and replacing &quot;YOUR NAME HERE&quot; where appropriate.</p>
+
+<p>Next, because I already know my implementation, I can actually start by writing the resource file first:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># List of all actions supported by the provider</span>
+<span class="n">actions</span> <span class="ss">:create</span><span class="p">,</span> <span class="ss">:create_if_missing</span><span class="p">,</span> <span class="ss">:update</span><span class="p">,</span> <span class="ss">:remove</span>
+
+<span class="c1"># Make create the default action</span>
+<span class="n">default_action</span> <span class="ss">:create</span>
+
+<span class="c1"># Required attributes</span>
+<span class="n">attribute</span> <span class="ss">:ip_address</span><span class="p">,</span> <span class="ss">:kind_of</span> <span class="o">=&gt;</span> <span class="no">String</span><span class="p">,</span> <span class="ss">:name_attribute</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:required</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="n">attribute</span> <span class="ss">:hostname</span><span class="p">,</span> <span class="ss">:kind_of</span> <span class="o">=&gt;</span> <span class="no">String</span>
+
+<span class="c1"># Optional attributes</span>
+<span class="n">attribute</span> <span class="ss">:aliases</span><span class="p">,</span> <span class="ss">:kind_of</span> <span class="o">=&gt;</span> <span class="no">Array</span>
+<span class="n">attribute</span> <span class="ss">:comment</span><span class="p">,</span> <span class="ss">:kind_of</span> <span class="o">=&gt;</span> <span class="no">String</span>
+</code></pre></div>
+<p>The design is so elegant and makes perfect sense based off our the README.</p>
+
+<p>Now it&#39;s time to move onto the more difficult part. Actually writing the provider code (the implementation):</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Creates a new hosts file entry. If an entry already exists, it will be</span>
+<span class="c1"># overwritten by this one.</span>
+<span class="n">action</span> <span class="ss">:create</span> <span class="k">do</span>
+  <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+<span class="nf">end</span>
+
+<span class="c1"># Create a new hosts file entry, only if one does not already exist for</span>
+<span class="c1"># the given IP address. If one exists, this does nothing.</span>
+<span class="n">action</span> <span class="ss">:create_if_missing</span> <span class="k">do</span>
+  <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+<span class="nf">end</span>
+
+<span class="c1"># Updates the given hosts file entry. Does nothing if the entry does not</span>
+<span class="c1"># exist.</span>
+<span class="n">action</span> <span class="ss">:update</span> <span class="k">do</span>
+  <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+<span class="nf">end</span>
+
+<span class="c1"># Removes an entry from the hosts file. Does nothing if the entry does</span>
+<span class="c1"># not exist.</span>
+<span class="n">action</span> <span class="ss">:remove</span> <span class="k">do</span>
+  <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+<span class="nf">end</span>
+</code></pre></div>
+<p>The <a href="https://github.com/customink-webops/hostsfile/blob/master/providers/entry.rb">full source for the provider entry</a> is available on github. I&#39;ve suppressed a lot here.</p>
+
+<h2 id="initial-roadblock">Initial Roadblock</h2>
+
+<p>My initial intention was to use the <a href="https://rubygems.org/gems/ghost">ghost gem</a> for managing the hosts file in Ruby. However, ghost did not support he features I needed, and it did not provide a great interface beyond the command line.</p>
+
+<p>So, I reinvented the wheel.</p>
+
+<h2 id="reinventing-the-wheel">Reinventing the Wheel</h2>
+
+<p>In short, I created my own <code>/etc/hosts</code> management library in Ruby. It&#39;s *nix specific, but it works. I spent significantly less time writing my own code than trying to make something like ghost suit my needs.</p>
+
+<p>The library consisted of two files:</p>
+
+<ul>
+<li><code>entry.rb</code> - represents a single line in the <code>/etc/hosts</code> file</li>
+<li><code>manipulator.rb</code> - contains commands for querying and manipulating the <code>/etc/hosts</code> file.</li>
+</ul>
+
+<p>It&#39;s a lot of file parsing and making things look pretty to be honest.</p>
+
+<p>The <code>Manipulate</code> class works a lot like a database object - you must call <code>save</code> or <code>save!</code> in order to write the changes out.</p>
+
+<p>Take a look at the <a href="https://github.com/customink-webops/hostsfile/tree/master/libraries">source on github</a> if your curious, but it&#39;s mostly Ruby code. There&#39;s actually no Chef magic going on. I could easily have packaged the library into a gem and used that instead...</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>The <code>hostsfile</code> LWRP comes equipped with 4 actions:</p>
+
+<h4 id="create"><code>create</code></h4>
+
+<p>Creates a new hosts file entry. If an entry already exists, it will be overwritten by this one.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">hostsfile_entry</span> <span class="s1">'1.2.3.4'</span> <span class="k">do</span>
+  <span class="n">hostname</span> <span class="s1">'example.com'</span>
+  <span class="n">action</span> <span class="ss">:create</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This will create an entry like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">1.2.3.4          example.com
+</code></pre></div>
+<h4 id="create_if_missing"><code>create_if_missing</code></h4>
+
+<p>Create a new hosts file entry, only if one does not already exist for the given IP address. If one exists, this does nothing.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">hostsfile_entry</span> <span class="s1">'1.2.3.4'</span> <span class="k">do</span>
+  <span class="n">hostname</span> <span class="s1">'example.com'</span>
+  <span class="n">action</span> <span class="ss">:create_if_missing</span>
+<span class="k">end</span>
+</code></pre></div>
+<h4 id="update"><code>update</code></h4>
+
+<p>Updates the given hosts file entry. Does nothing if the entry does not exist.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">hostsfile_entry</span> <span class="s1">'1.2.3.4'</span> <span class="k">do</span>
+  <span class="n">hostname</span> <span class="s1">'example.com'</span>
+  <span class="n">comment</span> <span class="s1">'Update by Chef'</span>
+  <span class="n">action</span> <span class="ss">:update</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This will create an entry like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">1.2.3.4           example # Updated by Chef
+</code></pre></div>
+<h4 id="remove"><code>remove</code></h4>
+
+<p>Removes an entry from the hosts file. Does nothing if the entry does not
+exist.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">hostsfile_entry</span> <span class="s1">'1.2.3.4'</span> <span class="k">do</span>
+  <span class="n">action</span> <span class="ss">:remove</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This will remove the entry for <code>1.2.3.4</code>.</p>
+
+<h2 id="i-want-it-now">I want it now!</h2>
+
+<p>Install it</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ knife cookbook site install hostsfile
+</code></pre></div>
+<p>Include it</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># recipes/my_recipe.rb</span>
+<span class="n">include_recipe</span> <span class="s1">'hostsfile'</span>
+</code></pre></div>
+<p>You&#39;re done!</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-08-03T21:19:00-04:00">
+      03 Aug 2012
+    </time></br>
+    by Seth Vargo
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/08/03/etc-hosts-management-with-chef';
+    var disqus_title = "/etc/hosts Management with Chef";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

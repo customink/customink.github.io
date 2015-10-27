@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Taking a peek at Active Record Proxies - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="If you&#39;ve worked in a Rails project before, you&#39;ve undoubtedly set up associations beteween your models. Active Record provides a clean and...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Taking a peek at Active Record Proxies</h1>
+        <p>If you&#39;ve worked in a Rails project before, you&#39;ve undoubtedly set up associations beteween your models. Active Record provides a clean and simple way in setting up these associations, while hiding a lot of the complexity behind the scenes.</p>
+
+<!--more-->
+
+<p>One thing that I found interesting is how method calls are forwarded between associated models. Let&#39;s take a look at a simple example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Team</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">has_many</span> <span class="ss">:players</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Players</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">belongs_to</span> <span class="ss">:team</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>When we say <code>team.players</code>, what are we really working with? One&#39;s first reaction might be to inspect it&#39;s class. When inspecting <code>team.players</code>, we get back an <code>Array</code>, but Rails is intentionally lying to us. It&#39;s actually an Active Record class called CollectionProxy!</p>
+
+<h3 id="association-proxies">Association Proxies</h3>
+
+<p>So what exactly is this proxy class? From the <a href="http://api.rubyonrails.org/classes/ActiveRecord/Associations/CollectionProxy.html">Rails documentation</a>:</p>
+
+<blockquote>
+<p>Association proxies in Active Record are middlemen between the object that holds the association, known as the @owner, and the actual associated object, known as the @target.</p>
+</blockquote>
+
+<p>In our case, the <code>@owner</code> is the team while the <code>@target</code> is the players collection. </p>
+
+<p>Back to the original question, how does <code>team.players.class</code> return an Array? The CollectionProxy class does some metaprogramming to make the magic happen. </p>
+
+<p>First it undefines it&#39;s own <code>#class</code> method using <code>undef_method</code> </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Rails 3.2</span>
+<span class="c1"># Associations::ActiveRecord::CollectionProxy</span>
+
+<span class="nb">instance_methods</span><span class="p">.</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span> <span class="n">undef_method</span> <span class="n">m</span> <span class="k">unless</span> <span class="n">m</span><span class="p">.</span><span class="nf">to_s</span> <span class="o">=~</span> <span class="sr">/^(?:nil\?|send|object_id|to_a)$|^__|^respond_to|proxy_/</span> <span class="p">}</span>
+</code></pre></div>
+<p>Secondly, it implements <code>#method_missing</code> to delegate unknown methods to the <code>@target</code>, or in our case, the players array.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Rails 3.2</span>
+<span class="c1"># Within def method_missing(method, *args, &amp;block)</span>
+
+<span class="k">elsif</span> <span class="n">target</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="o">!</span><span class="n">proxy_association</span><span class="p">.</span><span class="nf">klass</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="no">Class</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="nb">method</span><span class="p">))</span>
+  <span class="k">if</span> <span class="n">load_target</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="nb">method</span><span class="p">)</span>
+      <span class="n">target</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="nb">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="k">begin</span>
+        <span class="k">super</span>
+      <span class="k">rescue</span> <span class="no">NoMethodError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+        <span class="k">raise</span> <span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="p">.</span><span class="nf">sub</span><span class="p">(</span><span class="sr">/ for #&lt;.*$/</span><span class="p">,</span> <span class="s2">" via proxy for </span><span class="si">#{</span><span class="n">target</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+</code></pre></div>
+<p>Therefore, our call to <code>class</code> will be picked up by method_missing.</p>
+
+<p>By having this proxy class, ActiveRecord can hook into certain methods and determine whether to perform database queries or used cache records.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ryan Billings" src="http://www.gravatar.com/avatar/bf4516f0bcb00c2d7eb866a9bb05aea0?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-10-07T00:00:00-04:00">
+      07 Oct 2014
+    </time></br>
+    by Ryan Billings
+    <div class="tb-Author-icons">
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/ryanbillings"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2014/10/07/rails-association-proxies';
+    var disqus_title = "Taking a peek at Active Record Proxies";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

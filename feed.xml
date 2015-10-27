@@ -12,7 +12,7 @@
 
 &lt;!--more--&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/meeting-97dde5e7a16d708362ce22217ba4946f.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;First day of introductions at Microsoft&#39;s OSSDataCamp&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/meeting-d54243935c69ee4c8b6c8174cd9a1c56.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;First day of introductions at Microsoft&#39;s OSSDataCamp&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Both &lt;a href=&quot;https://twitter.com/sgrif&quot;&gt;Sean Griffin&lt;/a&gt; and I were invited to represent the Ruby/Rails community at Microsoft&amp;#39;s first &lt;a href=&quot;https://twitter.com/hashtag/OSSDataCamp&quot;&gt;#OSSDataCamp&lt;/a&gt;. The idea is simple; to open up and engage our community at an intimate level. The results so far are incredibly positive and these new relationships feel lasting and honest.&lt;/p&gt;
 
@@ -22,11 +22,11 @@
 
 &lt;p&gt;That sentiment was echoed by everyone I met. From engineers to leadership and various product managers in-between, Microsoft is hungry to learn and this time it does not feel like the old consume &amp;amp; conquer strategies from the &lt;a href=&quot;http://ironruby.net&quot;&gt;IronRuby&lt;/a&gt; days. Instead their new culture closely reflects that of &lt;a href=&quot;http://www.customink.com/about/our_story/&quot;&gt;CustomInk&amp;#39;s&lt;/a&gt; own Inkers. Our hosts were the most upbeat and polite folks I have seen.&lt;/p&gt;
 
-&lt;p&gt;&lt;aside class=&quot;tb-AsideQuote&quot;&gt;
+&lt;aside class=&quot;tb-AsideQuote&quot;&gt;
   Microsoft is hungry to learn and this time it does not feel like the old consume &amp;amp; conquer...
-&lt;/aside&gt;&lt;/p&gt;
+&lt;/aside&gt;
 
-&lt;h5 id=&quot;windows-support---a-diversity-issue&quot;&gt;Windows Support - A Diversity Issue&lt;/h5&gt;
+&lt;h5 id=&quot;windows-support-a-diversity-issue&quot;&gt;Windows Support - A Diversity Issue&lt;/h5&gt;
 
 &lt;p&gt;As Sean Griffin put it, we cannot require new engineers to buy a MacBook Pro to learn Ruby. Be it a &lt;a href=&quot;http://railsgirls.com&quot;&gt;Rails Girls&lt;/a&gt; workshop or your local meetup group, a poor Windows experience can literally lose good, diverse talent in our community. Thanks to projects like RailsInstaller, and the modern replacement &lt;a href=&quot;http://rubyinstaller.org&quot;&gt;RubyInstaller&lt;/a&gt;, we are stronger than we have historically been. But we can do better.&lt;/p&gt;
 
@@ -34,17 +34,17 @@
 
 &lt;h5 id=&quot;a-changing-culture&quot;&gt;A Changing Culture&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/learn-ruby-65c0146deac6925dd8447b9250913f92.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Jack Yang learns Ruby in 1 day!&quot; /&gt;Change is hard on all sides. For me, getting into the mindset that Microsoft can help was a big step. When Sean found issues with &lt;a href=&quot;https://github.com/sstephenson/execjs&quot;&gt;execjs&lt;/a&gt; that led back to Windows Script Host, they introduced us to that team. Likewise, the SQL Server adapter has always needed a bullet-proof cross platform binary to dump the schema. &amp;quot;We can help and here are the engineers...&amp;quot; was the reply. Wow!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/learn-ruby-ceec9a9c74719e504abddd1996b74266.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Jack Yang learns Ruby in 1 day!&quot; /&gt;Change is hard on all sides. For me, getting into the mindset that Microsoft can help was a big step. When Sean found issues with &lt;a href=&quot;https://github.com/sstephenson/execjs&quot;&gt;execjs&lt;/a&gt; that led back to Windows Script Host, they introduced us to that team. Likewise, the SQL Server adapter has always needed a bullet-proof cross platform binary to dump the schema. &amp;quot;We can help and here are the engineers...&amp;quot; was the reply. Wow!&lt;/p&gt;
 
 &lt;p&gt;Some issues sit well in Microsoft&amp;#39;s sphere to solve. What most impressed me was how eager they were to address them. Being a large company, often times the immediate answer was to schedule a series of 1-on-1s with the team(s) responsible. Connections and conversations like this quickly led to even pondering if Ruby could be installed on Windows by default. Or maybe even build cross platform SQL Server development binaries! 😱&lt;/p&gt;
 
 &lt;h5 id=&quot;quid-pro-quo&quot;&gt;Quid Pro Quo&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/keepit-weird-56c84fd489dac91ae82492d7f7d5300b.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--half tb-Img--half--sm&quot; alt=&quot;Sean Griffin keeps it weird while helping you not blow up.&quot; style=&quot;float:left; margin-left:0; margin-right:1rem;&quot; /&gt;So what did Microsoft learn most from us? Other than Rubyists keep it weird? Likely their biggest takeaway was that Sean Griffin loves to play the &lt;a href=&quot;http://www.keeptalkinggame.com&quot;&gt;Keep Talking and Nobody Explodes&lt;/a&gt; game. I mean he &lt;em&gt;really&lt;/em&gt; loves to play this game.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/keepit-weird-58d991033565fd6e44fa0cbfa4451905.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--half tb-Img--half--sm&quot; alt=&quot;Sean Griffin keeps it weird while helping you not blow up.&quot; style=&quot;float:left; margin-left:0; margin-right:1rem;&quot; /&gt;So what did Microsoft learn most from us? Other than Rubyists keep it weird? Likely their biggest takeaway was that Sean Griffin loves to play the &lt;a href=&quot;http://www.keeptalkinggame.com&quot;&gt;Keep Talking and Nobody Explodes&lt;/a&gt; game. I mean he &lt;em&gt;really&lt;/em&gt; loves to play this game.&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s simple, use 2-way, fast-paced, verbal communication to quickly identify and defuse a virtual ticking time bomb. As it turned out, this is a great team building exercise. Becoming a bomb defusing expert is high on my list and I can not wait to play with a group of my fellow Inkers. Thanks Sean!&lt;/p&gt;
 
-&lt;h2 id=&quot;coming-soon-to-ruby/rails&quot;&gt;Coming Soon To Ruby/Rails&lt;/h2&gt;
+&lt;h2 id=&quot;coming-soon-to-ruby-rails&quot;&gt;Coming Soon To Ruby/Rails&lt;/h2&gt;
 
 &lt;p&gt;We got a lot of work done along with establishing some big milestones for those using Windows and/or SQL Server with Ruby. Here are some things you can look forward to:&lt;/p&gt;
 
@@ -70,7 +70,7 @@
 &lt;li&gt;1.6 million SQL databases.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h5 id=&quot;command-line-&amp;amp;-application-interfaces&quot;&gt;Command Line &amp;amp; Application Interfaces&lt;/h5&gt;
+&lt;h5 id=&quot;command-line-amp-application-interfaces&quot;&gt;Command Line &amp;amp; Application Interfaces&lt;/h5&gt;
 
 &lt;p&gt;Portal smortal, who wants GUIs? The real power is in the command line and automation. Just like Heroku&amp;#39;s toolbelt, Azure has cross platform binaries that are open source on GitHub. This client has rich 2FA and is packed with interfaces. Services can even be stood up with a simple JSON template hosted on GitHub. Need an application interface? They have a Ruby SDK too.&lt;/p&gt;
 
@@ -88,7 +88,7 @@
 
 &lt;h5 id=&quot;sql-server-2016&quot;&gt;SQL Server 2016&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/sql-server-stretch-7fdb81e51dd6ade2d146ac6d9d483dc2.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Stretch On-Premises SQL Servers to Azure.&quot; /&gt;I can&amp;#39;t even begin to go into all the amazing features of SQL Server 2016 now available on Azure. A quick list includes:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/sql-server-stretch-e5acb28ce8614a2011facee2b7ddd35a.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Stretch On-Premises SQL Servers to Azure.&quot; /&gt;I can&amp;#39;t even begin to go into all the amazing features of SQL Server 2016 now available on Azure. A quick list includes:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Built-In JSON Support.&lt;/li&gt;
@@ -99,13 +99,13 @@
 
 &lt;p&gt;One feature that stood out was SQL Server&amp;#39;s ability to &lt;a href=&quot;https://msdn.microsoft.com/en-us/library/dn935011.aspx&quot;&gt;stretch&lt;/a&gt; or archive historical data transparently and securely. This can be done entirely via their hosted service or coupled with your on-premises SQL Server databases. All without the application caring about managing that cold &amp;lt;=&amp;gt; hot data.&lt;/p&gt;
 
-&lt;h2 id=&quot;many-thanks!&quot;&gt;Many Thanks!&lt;/h2&gt;
+&lt;h2 id=&quot;many-thanks&quot;&gt;Many Thanks!&lt;/h2&gt;
 
 &lt;p&gt;Special thanks to Microsoft as a whole. Especially to Andrea Lam and Meet Bhagdev for their personal &amp;amp; professional support during our trip. You made us feel right at home. Also in attendance for the first #OSSDataCamp were &lt;a href=&quot;https://twitter.com/manfre&quot;&gt;Michael Manfre&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/michiyata&quot;&gt;Michiya Takahashi&lt;/a&gt;, and &lt;a href=&quot;https://github.com/timgraham?tab=activity&quot;&gt;Tim Graham&lt;/a&gt;. All of whom represented the Python/Django community and helped our open source cause.&lt;/p&gt;
 
 &lt;p&gt;This is a process and one that I hope continues with Ruby and other languages. It will succeed if Microsoft actively contributes back to open source and in some cases, champions certain projects with an earnest level of excellence.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/fetch-tobias-ternstrom-953929f79db1b2b1b41baa20e2e791e5.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Tobias Ternstrom helped make FETCH happen in SQL Server.&quot; /&gt;To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped &lt;a href=&quot;http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif&quot;&gt;make FETCH happen&lt;/a&gt; in SQL Server. Supporting a sane limit/offset model &lt;a href=&quot;http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/&quot;&gt;allowed projects&lt;/a&gt; like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/fetch-tobias-ternstrom-5a5e378c7b34e4bf0bf8f2c4dda2d514.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Tobias Ternstrom helped make FETCH happen in SQL Server.&quot; /&gt;To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped &lt;a href=&quot;http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif&quot;&gt;make FETCH happen&lt;/a&gt; in SQL Server. Supporting a sane limit/offset model &lt;a href=&quot;http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/&quot;&gt;allowed projects&lt;/a&gt; like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.&lt;/p&gt;
 
 &lt;p&gt;And lastly, I want to give a shout out to &lt;a href=&quot;https://github.com/larskanis&quot;&gt;Lars Kanis&lt;/a&gt; who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests.&lt;/p&gt;
 </description>
@@ -155,14 +155,14 @@
 &lt;p&gt;A couple weeks back, Gerald, Vandad and I headed out to Nokesville Blvd. It became quite clear that we needed something more than a couple of cars to haul it out. What was I thinking? Luckily, the Home Depot had their hourly truck available across the street.&lt;/p&gt;
 
 &lt;p&gt;The 3PAR is in that stack. The desire to leave it hanging off the back of the truck was there, but we have one more event for that gear.
-&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/3par-3443237fb9571b4b0b3c17f168afbcf0.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;3par&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/3par-57bd90def4fa20fbc5eb3864e0c0dd36.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;3par&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;It’s been a while since we’ve moved so much gear. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/gerald-0457df42137d99cc48031fb2b3806666.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;gerald&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;It’s been a while since we’ve moved so much gear. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/gerald-f0623391d798eaaca9b6bb012dfe7c92.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;gerald&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;That looks like gas money for one lucky engineer. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/wires-b996091bcb40fb1ae745e9d4786f783a.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;wires&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;That looks like gas money for one lucky engineer. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/wires-2ca1a268708ff0659537580febc54e01.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;wires&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt; It’s all out. That’s a full truckload of CustomInk.
-&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/truck-c757eb9d71eabc7a6eaaeff284563ad7.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;truck&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/truck-919294b44185004f020bf93c73f4bb6b.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;truck&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Sep 2015 00:00:00 -0400</pubDate>
         <link>http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center</link>
@@ -173,7 +173,7 @@
         <title>Ruby For Good</title>
         <description>&lt;p&gt;This weekend I had the pleasure of co-hosting &lt;a href=&quot;http://rubyforgood.com/&quot;&gt;Ruby For Good&lt;/a&gt;, a conference that brings programmers together to work on projects for a variety of charities and non-profit organizations. This year, adorable kittens were involved.
 &lt;/br&gt;
-&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitten-8d2e29e35ea0d24c1d931272d13b6883.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;cute kitten&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitten-9838b9fae58192820daa0fd24bb91894.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;cute kitten&quot; /&gt;&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -181,13 +181,13 @@
 
 &lt;p&gt;Conference attendees stayed in the dorms at &lt;a href=&quot;http://www.gmu.edu/&quot;&gt;George Mason University&lt;/a&gt; for three days. They assembled into teams and worked on projects throughout the day. They were also responsible for preparing meals for everyone. In the evening, folks relaxed by playing board games and hanging out.&lt;/br&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitchen-8e249a504980fff4ad03d9230bcb8f82.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;kitchen duty&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitchen-608f04da372527a9ae81d8f1c2496170.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;kitchen duty&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Although the format is very simple, attendees told us they got a lot out of participating, regardless of their experience levels. We are still going through the feedback surveys but here&amp;#39;s a great blog post by one of this year&amp;#39;s do-gooders &lt;a href=&quot;http://rolentle.com/ruby-for-good/&quot;&gt;http://rolentle.com/ruby-for-good/&lt;/a&gt;.
 &lt;/br&gt;
-&lt;img src=&quot;/assets/content/ruby_for_good_2015/pairing-aa59a4726c5e328c98e57a9652eb8878.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;pair programming&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/ruby_for_good_2015/pairing-ad6bf11c1a543cea77084a59b244327e.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;pair programming&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;this-year&amp;#39;s-projects&quot;&gt;This Year&amp;#39;s Projects&lt;/h2&gt;
+&lt;h2 id=&quot;this-year-39-s-projects&quot;&gt;This Year&amp;#39;s Projects&lt;/h2&gt;
 
 &lt;p&gt;This year&amp;#39;s projects were all really exciting. The work ranged from building an entirely new web presence, to updating an existing Rails application, to contributing to open source projects.  Here&amp;#39;s the list of groups we worked with:&lt;/p&gt;
 
@@ -204,13 +204,13 @@
 
 &lt;p&gt;It&amp;#39;s so cool to hear a junior developer talk about their opportunity to contribute to something as widely used as Rspec!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-hug-25000a0acc95d2b3bc1818db24f10cf5.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group hug&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-hug-a43ad6bb513c41a9406b4678548266eb.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group hug&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;you-can-get-involved-today!&quot;&gt;You Can Get Involved Today!&lt;/h2&gt;
+&lt;h2 id=&quot;you-can-get-involved-today&quot;&gt;You Can Get Involved Today!&lt;/h2&gt;
 
 &lt;p&gt;Contribute to next year&amp;#39;s Ruby For Good by &lt;a href=&quot;https://www.booster.com/rubyforgood&quot;&gt;purchasing a t-shirt&lt;/a&gt; - proceeds go to scholarships for future attendees.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-heart-b6264c5e1c1654feace3821361db4cbe.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group heart&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-heart-ba7b83bcc1d782bed5a9839decaafb39.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group heart&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 05 Aug 2015 00:00:00 -0400</pubDate>
         <link>http://technology.customink.com//blog/2015/08/05/ruby-for-good</link>
@@ -228,7 +228,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 
 &lt;p&gt;Recently at &lt;a href=&quot;http://rubyloco.com&quot;&gt;RubyLoCo Hack Night&lt;/a&gt;, we were challenged with creating an ASCII flag. Given a &lt;a href=&quot;https://github.com/rubyloco/hack-night/blob/master/meetings/2015-07-13/flag.rb&quot;&gt;starter script&lt;/a&gt; that printed out a simple ASCII art American flag, our  first thought was to print it in color. There is a gem for that named &lt;a href=&quot;https://github.com/fazibear/colorize&quot;&gt;colorize&lt;/a&gt;. But how do we install the gem and require it in our script? We wouldn&amp;#39;t be so pedestrian as to actually run &lt;code&gt;gem install colorize&lt;/code&gt;. We are proud bundlers.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/pre_flag-bb6cd10df42a3253a340d2f405360d68.png alt=&quot;Default Flag&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/pre_flag-a5c14f8f01db59729e6248053cd326cb.png alt=&quot;Default Flag&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;inline-gemfile&quot;&gt;Inline Gemfile&lt;/h2&gt;
 
@@ -252,9 +252,9 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And now... With the help of Bundler... And colorize... We present &lt;strong&gt;Happy Birthday America&lt;/strong&gt;!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/post_flag-baff153607eb0b1eaa8b2153fdee3c18.png alt=&quot;Colored Flag&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/post_flag-f6f56afdd3d3c0809a612f41c0552e34.png alt=&quot;Colored Flag&quot;&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;what-did-we-accomplish?&quot;&gt;What did we accomplish?&lt;/h2&gt;
+&lt;h2 id=&quot;what-did-we-accomplish&quot;&gt;What did we accomplish?&lt;/h2&gt;
 
 &lt;p&gt;We started with an example script that printed an American flag in black and white. We wanted to make it red, white and blue with the colorize gem. We did not want to add a Gemfile to our directory for this single file script. We declared our gem dependencies inline using the new &lt;code&gt;bundler/inline&lt;/code&gt;. Now,  our gems will install when we run the script.&lt;/p&gt;
 
@@ -294,7 +294,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
         <title>Colorized SQL Log Backport for ActiveRecord</title>
         <description>&lt;p&gt;One of the &lt;a href=&quot;https://github.com/rails/rails/pull/20607&quot;&gt;new features&lt;/a&gt; of Rails 5 will be granular SQL logging so you can easily see &lt;code&gt;SELECT&lt;/code&gt;, &lt;code&gt;INSERT&lt;/code&gt;, &lt;code&gt;UPDATE&lt;/code&gt;, &lt;code&gt;DELETE&lt;/code&gt;, and &lt;code&gt;TRANSACTION&lt;/code&gt; statements in your log. For example:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/colored-logging-9ee3a092515c98bb8649774403f380fc.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;Colorized SQL Log Backport for Rails 5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/colored-logging-2858a7fe3841a44dba292efcad7055d3.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;Colorized SQL Log Backport for Rails 5&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;But why let Rails 5 have all the fun? Today I created a gem that allows you to leverage this feature now. The gem is currently compatible and tested for Rails 3.2 to 4.2. Get it here and happy logging!&lt;/p&gt;
 
@@ -342,7 +342,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
   &lt;span class=&quot;nl&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;18px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -375,7 +375,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
   &lt;span class=&quot;nl&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;18px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -403,7 +403,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
   &lt;span class=&quot;nl&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;18px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -439,7 +439,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 
 &lt;p&gt;The goal is simple! To give you the tools you need to keep your application running smoothly when connecting to multiple databases.&lt;/p&gt;
 
-&lt;h2 id=&quot;topics-&amp;amp;-scenarios&quot;&gt;Topics &amp;amp; Scenarios&lt;/h2&gt;
+&lt;h2 id=&quot;topics-amp-scenarios&quot;&gt;Topics &amp;amp; Scenarios&lt;/h2&gt;
 
 &lt;p&gt;Each topic or scenario below is tested within a demo Rails application that you can checkout on GitHub. See the &lt;a href=&quot;#resources&quot;&gt;resources section&lt;/a&gt; at the bottom of this post for more information. Examples assume that Rails 3.2.x to 4.2.x are the same behavior. When this is not the case, it will be explicitly pointed out.&lt;/p&gt;
 
@@ -447,7 +447,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 
 &lt;p&gt;To easily follow along, MySQL models will be prefixed as such and all ActiveRecord logs have been tagged with the database connection that executed the query. This setup will give us more than enough opportunity to explore and have fun. Lets go!&lt;/p&gt;
 
-&lt;h3 id=&quot;topic-1:-connection-management&quot;&gt;Topic 1: Connection Management&lt;/h3&gt;
+&lt;h3 id=&quot;topic-1-connection-management&quot;&gt;Topic 1: Connection Management&lt;/h3&gt;
 
 &lt;p&gt;First and foremost we are going to need a base class that champions a database connection. This is critical so that each subclass shares the same connection/pool. For example:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MysqlBase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
@@ -469,7 +469,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 &lt;li&gt;Single point for connection management.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;topic-2:-the-activerecord-query-cache&quot;&gt;Topic 2: The ActiveRecord Query Cache&lt;/h3&gt;
+&lt;h3 id=&quot;topic-2-the-activerecord-query-cache&quot;&gt;Topic 2: The ActiveRecord Query Cache&lt;/h3&gt;
 
 &lt;p&gt;ActiveRecord&amp;#39;s &lt;a href=&quot;http://guides.rubyonrails.org/caching_with_rails.html#sql-caching&quot;&gt;query cache&lt;/a&gt; can be a beneficial performance optimization. On by default, it caches SQL results for the same query during the request/response cycle. This caching really shines with child to parent associations where &lt;code&gt;n&lt;/code&gt; children find the same parent and only hit the database once.&lt;/p&gt;
 
@@ -488,7 +488,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Yup, it is that easy! If you had multiple database connections, just nest them in the outer block and yield once to the controller&amp;#39;s around filter.&lt;/p&gt;
 
-&lt;h3 id=&quot;scenario-1:-implicit-multi-db-transactions&quot;&gt;Scenario 1: Implicit Multi-DB Transactions&lt;/h3&gt;
+&lt;h3 id=&quot;scenario-1-implicit-multi-db-transactions&quot;&gt;Scenario 1: Implicit Multi-DB Transactions&lt;/h3&gt;
 
 &lt;p&gt;So what happens when a model for one database creates or updates another model?&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MysqlUser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MysqlBase&lt;/span&gt;
@@ -523,7 +523,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Not bad. We can see that ActiveRecord handles this simple setup quite well. Both the user and the account are rolled back.&lt;/p&gt;
 
-&lt;h3 id=&quot;topic-3:-the-activerecord::rollback-exception&quot;&gt;Topic 3: The ActiveRecord::Rollback Exception&lt;/h3&gt;
+&lt;h3 id=&quot;topic-3-the-activerecord-rollback-exception&quot;&gt;Topic 3: The ActiveRecord::Rollback Exception&lt;/h3&gt;
 
 &lt;p&gt;With our first scenario understood, it is time for another topic. Time to talk about the &lt;code&gt;ActiveRecord::Rollback&lt;/code&gt; exception object. Please take a moment to read the ActiveRecord documentation.&lt;/p&gt;
 
@@ -548,7 +548,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And there we go! The MySQL user just carries along on its happy way and commits the change. I will have more rollback examples below, but I might go so far as to say that you may never want to use &lt;code&gt;ActiveRecord::Rollback&lt;/code&gt; unless you have a very clear grasp on how to manage transactions.&lt;/p&gt;
 
-&lt;h3 id=&quot;scenario-2:-explicit-multi-db-transactions&quot;&gt;Scenario 2: Explicit Multi-DB Transactions&lt;/h3&gt;
+&lt;h3 id=&quot;scenario-2-explicit-multi-db-transactions&quot;&gt;Scenario 2: Explicit Multi-DB Transactions&lt;/h3&gt;
 
 &lt;p&gt;Implicit transactions are great for one or two model instances, but sooner are later you will need to orchestrate more objects within a larger commit. Explicit transactions give you this control. Here is a simple multi-database example:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;MysqlUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;transaction&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
@@ -600,7 +600,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now anytime you need to commit large changes, just wrap your code in &lt;code&gt;ActiveRecord::Base.multi_transaction { ... }&lt;/code&gt; and sleep better knowing that your data is clean. If you want to learn more about ActiveRecord&amp;#39;s transactions, please read the &lt;a href=&quot;http://apidock.com/rails/ActiveRecord/ConnectionAdapters/DatabaseStatements/transaction&quot;&gt;Rails API Docs&lt;/a&gt;. They cover advanced topics like isolation levels and savepoints. None of which are covered in this post.&lt;/p&gt;
 
-&lt;h3 id=&quot;topic-4:-explicit-transactions-are-serious!&quot;&gt;Topic 4: Explicit Transactions Are Serious!&lt;/h3&gt;
+&lt;h3 id=&quot;topic-4-explicit-transactions-are-serious&quot;&gt;Topic 4: Explicit Transactions Are Serious!&lt;/h3&gt;
 
 &lt;p&gt;If you are doing explicit transactions, you likely mean business. If so, make your code serious by using ActiveRecord&amp;#39;s bang methods. Doing so helps keep code explicit to the task at hand with automatic rollbacks to two or more databases. Examples include:&lt;/p&gt;
 
@@ -614,7 +614,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 
 &lt;p&gt;If you must raise exceptions during explicit transactions to multiple databases, please stay away from using &lt;code&gt;ActiveRecord::Rollback&lt;/code&gt;, this could complicate your code and in most cases need to be re-raised.&lt;/p&gt;
 
-&lt;h3 id=&quot;topic-5:-shared-connection/pools&quot;&gt;Topic 5: Shared Connection/Pools&lt;/h3&gt;
+&lt;h3 id=&quot;topic-5-shared-connection-pools&quot;&gt;Topic 5: Shared Connection/Pools&lt;/h3&gt;
 
 &lt;p&gt;Every now and then you may use a gem whose model(s) subclasses &lt;code&gt;ActiveRecord::Base&lt;/code&gt; and you want to force that connection to another database. The &lt;code&gt;Delayed::Job&lt;/code&gt; library is a good example. You could use &lt;code&gt;establish_connection&lt;/code&gt;, but that would generate a distinct connection pool and keep transactions from being shared. Here is a bullet proof freedom patch to use with any model.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# In config/initializers/delayed_job.rb&lt;/span&gt;
@@ -645,7 +645,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 
 &lt;p&gt;The patch works by overriding critical connection specification/handling class methods defined on ActiveRecord::Base. The first two methods &lt;code&gt;connection_pool&lt;/code&gt; and &lt;code&gt;retrieve_connection&lt;/code&gt; will make all your queries work. The second two will ensure all remaining connection management methods like &lt;code&gt;remove_connection&lt;/code&gt; and &lt;code&gt;clear_all_connections!&lt;/code&gt; do the same. But remember! If you need to do any connection management, you really only need do it on the connection class, in this case, &lt;code&gt;MysqlBase&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;topic-6:-forked-processes-&amp;amp;-clearing-connections&quot;&gt;Topic 6: Forked Processes &amp;amp; Clearing Connections&lt;/h3&gt;
+&lt;h3 id=&quot;topic-6-forked-processes-amp-clearing-connections&quot;&gt;Topic 6: Forked Processes &amp;amp; Clearing Connections&lt;/h3&gt;
 
 &lt;p&gt;Most libraries that fork your Rails application process know how to reset ActiveRecord&amp;#39;s base connections. This includes web servers like Passenger or Unicorn. However, it is up to you to do the same for any other database connections. This is easy to do by leveraging our connection class in the first topic.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;ActiveRecord&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;clear_all_connections!&lt;/span&gt;
@@ -653,7 +653,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;First we clear all connections. This is normally done before forking. Methods like &lt;code&gt;clear_all_connections!&lt;/code&gt; and &lt;code&gt;clear_active_connections!&lt;/code&gt; iterate across all connection pools. You only need to call this once, not per connection. Second, we call &lt;code&gt;establish_connection&lt;/code&gt; on our MySQL connection class using the same configuration method we did in the first topic.&lt;/p&gt;
 
-&lt;h3 id=&quot;topic-7:-rails-transactional-fixtures&quot;&gt;Topic 7: Rails Transactional Fixtures&lt;/h3&gt;
+&lt;h3 id=&quot;topic-7-rails-transactional-fixtures&quot;&gt;Topic 7: Rails Transactional Fixtures&lt;/h3&gt;
 
 &lt;p&gt;If you are using transactional fixtures and you have fixtures for each connection, then ActiveRecord will do all the work for you by making sure each test is wrapped with transactional savepoints to each database. However, if you do not have fixtures for all connections then it is up to you to start the first transaction for each additional connection. Again, using our MySQL connection class as an example:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Rails 3.2.x&lt;/span&gt;
@@ -859,7 +859,7 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 
 &lt;p&gt;When moving to Rails 4.2 I found that my integration tests were mixed together with everything else. This was a problem since I really wanted my slower integration tests to run after all my other tests. No matter what I tried, I could not get the setup I wanted. So like most problems, I solved this by diving into the code and learning.&lt;/p&gt;
 
-&lt;h2 id=&quot;deconstructing-rails::testtask&quot;&gt;Deconstructing Rails::TestTask&lt;/h2&gt;
+&lt;h2 id=&quot;deconstructing-rails-testtask&quot;&gt;Deconstructing Rails::TestTask&lt;/h2&gt;
 
 &lt;p&gt;So we already had a look at the new testing.rake file above. But looking closer, we can see how the default test task is defined right at the top. Also of interest to us is that &lt;code&gt;test:run&lt;/code&gt; task.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;rake/testtask&#39;&lt;/span&gt;
@@ -1125,23 +1125,23 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
 
 &lt;h2 id=&quot;our-speedy-engineer-and-5k-organizer-stafford-explaining-the-course&quot;&gt;Our speedy engineer and 5k organizer Stafford explaining the course&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/stafford-db1a644776b0d2f63d4b4616ee5f8d9c.jpg&quot; alt=&quot;Starting Line&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/stafford-519f68ac225c7ed223d0ea866373f099.jpg&quot; alt=&quot;Starting Line&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;t-shirts-the-participants&quot;&gt;T-Shirts the participants&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/shirts-a32adfd8bd38eaa9a4eda920a888c822.jpg&quot; alt=&quot;T-Shirts&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/shirts-3ebbfd69b967bca44c27fb8cb5a5f60a.jpg&quot; alt=&quot;T-Shirts&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;1st-place-kyle-peyton&quot;&gt;1st Place Kyle Peyton&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/kylepeyton-e35535dc8747e1338192054b751d2f59.jpg&quot; alt=&quot;Kyle Peyton&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/kylepeyton-75e94b0a6e9afc2f2f8b4610f56ffe2f.jpg&quot; alt=&quot;Kyle Peyton&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;1st-place-bridget-landis&quot;&gt;1st Place Bridget Landis&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/bridgetlandis-4e3ec7bae9a8888b5d81a71f33a7dfda.jpg&quot; alt=&quot;Bridget Landis&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/bridgetlandis-43864642573a1a75912e124bc07f301d.jpg&quot; alt=&quot;Bridget Landis&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;1st-place-justin-schumacher&quot;&gt;1st Place Justin Schumacher&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/justinschumacher-13b26d337d139f839a5a17ca48744208.jpg&quot; alt=&quot;Justin Schumacher&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/justinschumacher-58351d402d74c374bf304f7ee0b578eb.jpg&quot; alt=&quot;Justin Schumacher&quot;&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Nov 2014 08:00:00 -0500</pubDate>
         <link>http://technology.customink.com//blog/2014/11/19/rubyconf5k-2014</link>
@@ -1158,42 +1158,42 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
 
 &lt;p&gt;Early in the morning, we are very excited for everyone to arrive!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/first_attendees-3fd667dc4d601cb98bae1861013d3401.jpg alt=&quot;First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/first_attendees2-241c42e0f78f21a75e473e51f26fa4ba.jpg alt=&quot;More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/by_the_stairs-a35b83253c13987ee7c70f7ad2ddc023.jpg alt=&quot;Even More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/hanging_out-327cb3448c1917e38a80151b708a492c.jpg alt=&quot;Even Morest First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/first_attendees-6b7cd450101458d8cdf040cf9a20e96e.jpg alt=&quot;First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/first_attendees2-6ed1313eeab596e6c4499227e319c71e.jpg alt=&quot;More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/by_the_stairs-8bfd03563b97719abaa2cb7f10d9ca0b.jpg alt=&quot;Even More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/hanging_out-0436d2191359b2cf7512adcecc6be858.jpg alt=&quot;Even Morest First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;we-start-to-play&quot;&gt;We start to play&lt;/h4&gt;
 
 &lt;p&gt;Everyone is here!  We can&amp;#39;t contain ourselves, we must reveal our moves.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/gogopowerrangers-77f1188680cd1cb716e5e56bb549d138.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/rocket-ec8b32e35698cebe6b351b9679cbd598.jpg alt=&quot;Rocket Raccoon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/strength_test-44caf097131fceb210ceeae15cd2265b.jpg alt=&quot;Strength Test&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/drdoom_link-29f6107735c9a3885d613ded85dbb100.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/morhpin_lunch-7c3a4ea7cad33bf10f6e9228d3115f91.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/gogopowerrangers-9e31ff2def288a1fe7c91cb11233df7f.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/rocket-20fe58d194f1d71e593c95a3f2b23cfe.jpg alt=&quot;Rocket Raccoon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/strength_test-effbd4b7feb81de9b351f1e94b542673.jpg alt=&quot;Strength Test&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/drdoom_link-c587197538fb7b9c2fee8867d57b3478.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/morhpin_lunch-12f343e8fc557c8ce9779fe04de3d208.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;we-start-to-work&quot;&gt;We start to work&lt;/h4&gt;
 
 &lt;p&gt;Eventually, we realize there is work to do. At some point you forget you are even in costume.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/working_link-b43fd14efa9ad4d5d4732cb0bd8042a9.jpg alt=&quot;Saving Zelda?&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/super_meeting-ae9cb1ca311fa73ea74e866738685ab7.png alt=&quot;Super Meeting&quot; class=&quot;tb-Img tb-Img--fancy sb-ContentImg--left&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/kickass_thirsty-f9f106da1128c307755a9edd99bfe8d7.jpg alt=&quot;Kickass is Thirsty&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/working_riker-6d382f826b7f6f14670d7cdfcd91b912.jpg alt=&quot;Riker&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/working_link-cdba316410c3f0cdc768e70a81ba5c78.jpg alt=&quot;Saving Zelda?&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/super_meeting-dd038e4df4fb12f39099fce0f43b5557.png alt=&quot;Super Meeting&quot; class=&quot;tb-Img tb-Img--fancy sb-ContentImg--left&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/kickass_thirsty-764556f6de6d758bde2bf8f058600f27.jpg alt=&quot;Kickass is Thirsty&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/working_riker-f111925644df6ed809d23b240d6645e9.jpg alt=&quot;Riker&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;the-photo-shoot&quot;&gt;The Photo Shoot&lt;/h4&gt;
 
 &lt;p&gt;We pile into the photo studio and find our counterparts.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/photo_thrones-56a0bb68c59c7117d6a0e77e1307e7d3.jpg alt=&quot;Game of Thrones&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/photo_power-c75f480d68fc4d9e3fe0bcb92be8e783.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/photo_marvel-15d2e72878c54b4c3157f5a056deacd1.jpg alt=&quot;Marvel&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/photo_thrones-2506d77438bdbb4b03edbaa9ca61f3a0.jpg alt=&quot;Game of Thrones&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/photo_power-5b101f4cb74bcd89923a3a88ff9675a3.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/photo_marvel-b5a2b654bb21eb31d44b1835c2a5589a.jpg alt=&quot;Marvel&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;the-whole-team&quot;&gt;The Whole Team&lt;/h3&gt;
 
 &lt;p&gt;We put a lot of work into organizing our event and building our costumes. What a great day!
-&lt;img src=/assets/content/ecomiccon/all_of_ecomiccon-be7911f0a6177ee3614213e84e3bb4e3.jpg alt=&quot;All of eComiccon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;img src=/assets/content/ecomiccon/all_of_ecomiccon-eb8b179a0236cbaaa3999f5af1496de7.jpg alt=&quot;All of eComiccon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 31 Oct 2014 09:00:00 -0400</pubDate>
         <link>http://technology.customink.com//blog/2014/10/31/ecomic-con-2014</link>
@@ -1202,7 +1202,7 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
     
       <item>
         <title>Welcome Arild Shirazi!</title>
-        <description>&lt;p&gt;&lt;img src=/assets/content/arild-shirazi-9583f83ac640ae421ec98a76f4e1459b.jpg alt=&quot;Arild Shirazi&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=/assets/content/arild-shirazi-c1a5245f1876ee0e7fac755206cc66be.jpg alt=&quot;Arild Shirazi&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;He &lt;a href=&quot;http://technology.customink.com/blog/2014/09/26/ruby-meta-method-madness&quot;&gt;beat us to the punch&lt;/a&gt;, but we&amp;#39;d
 like to give &lt;a href=&quot;https://github.com/ashirazi&quot;&gt;Arild&lt;/a&gt; a warm welcome to CustomInk.&lt;/p&gt;
@@ -1240,7 +1240,7 @@ more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Pretty simple stuff. What&amp;#39;s next?&lt;/p&gt;
 
-&lt;h3 id=&quot;author/project-folder-structure&quot;&gt;Author/Project Folder Structure&lt;/h3&gt;
+&lt;h3 id=&quot;author-project-folder-structure&quot;&gt;Author/Project Folder Structure&lt;/h3&gt;
 
 &lt;p&gt;Whenever I clone a repo I create a folder for the author or organization name that matches up with github then clone the project into that. An easy example would be projects under my account that were created by me. I don&amp;#39;t put forked projects under my name, but I will get to that later.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-Terminal256&quot; data-lang=&quot;Terminal256&quot;&gt;  projects/
@@ -1418,7 +1418,7 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 
 &lt;p&gt;For those of you that are aware of the challenges using the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable and just want a solution to help manage and wire up the &lt;code&gt;SASS_PATH&lt;/code&gt;, the &lt;a href=&quot;https://rubygems.org/gems/sass_paths&quot;&gt;SassPaths gem&lt;/a&gt; provides utilities to easily include directories, Sass gems, and Bower Sass dependencies in the &lt;code&gt;SASS_PATH&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;why-do-load-paths-matter?&quot;&gt;Why do load paths matter?&lt;/h2&gt;
+&lt;h2 id=&quot;why-do-load-paths-matter&quot;&gt;Why do load paths matter?&lt;/h2&gt;
 
 &lt;p&gt;The Sass load paths let Sass know the directories it should look in when trying to import files. Correctly setting up the load paths allow us to import a Sass library with its name, rather than having to use the relative path to the resource.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sass&quot; data-lang=&quot;sass&quot;&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;susy&#39;;&lt;/span&gt;
@@ -1551,12 +1551,12 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;h3 id=&quot;sass-framework-extensions&quot;&gt;Sass Framework Extensions&lt;/h3&gt;
 
 &lt;p&gt;First, we need some Sass to test. Our awesome framework wants more Sass list power! So we created these two fancy Sass functions below for accessing the first or last item of a list.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-first&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-scss&quot; data-lang=&quot;scss&quot;&gt;&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;my-first&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;my-last&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;my-last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;@return&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;nth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;From here, let&amp;#39;s pretend that these extensions are loaded whenever you &lt;code&gt;@import &amp;quot;my_framework&amp;quot;;&lt;/code&gt;. With great power comes great responsibility, hence we need to test them. But how?&lt;/p&gt;
@@ -1803,7 +1803,7 @@ This allows us to deploy Rails 3.2 and rollback to Rails 3.0. If you deployed Ra
 persisted, then rolled back, those sessions would be corrupt. This implementation supports going forward and backward
 with only a loss of Flash notifications.&lt;/p&gt;
 
-&lt;h3 id=&quot;config/initializers/rails32_session_upgrade_patches.rb&quot;&gt;config/initializers/rails32_session_upgrade_patches.rb&lt;/h3&gt;
+&lt;h3 id=&quot;config-initializers-rails32_session_upgrade_patches-rb&quot;&gt;config/initializers/rails32_session_upgrade_patches.rb&lt;/h3&gt;
 
 &lt;p&gt;You can add this code to an initialization file. You may only need it for 30 days or until your sessions expire. We
 have a &lt;strong&gt;warn&lt;/strong&gt; so your reminded this monkey patch is still present in your code.&lt;/p&gt;
@@ -1874,7 +1874,7 @@ have a &lt;strong&gt;warn&lt;/strong&gt; so your reminded this monkey patch is s
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;bonus!-tests&quot;&gt;Bonus! Tests&lt;/h3&gt;
+&lt;h3 id=&quot;bonus-tests&quot;&gt;Bonus! Tests&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt; you will need to copy session from your application for these
 tests to pass. The session data below is invalid.&lt;/p&gt;
@@ -1909,7 +1909,7 @@ tests to pass. The session data below is invalid.&lt;/p&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=~&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/^3\.0/&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;pretty?&quot;&gt;Pretty?&lt;/h3&gt;
+&lt;h3 id=&quot;pretty&quot;&gt;Pretty?&lt;/h3&gt;
 
 &lt;p&gt;No, it&amp;#39;s not pretty. But it will help you overcome an unexpected &lt;strong&gt;dump format error&lt;/strong&gt; when deploying
 a Rails 3.2 upgrade.&lt;/p&gt;
@@ -1940,28 +1940,28 @@ a Rails 3.2 upgrade.&lt;/p&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;nc&quot;&gt;.Btn--disabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;grey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;nc&quot;&gt;.Btn-secondary&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;nc&quot;&gt;.Btn-secondary--disabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;light-grey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;a href=&quot;http://sassmeister.com/gist/ad10c8d57ac2807bcfc8&quot; class=&quot;sb-Btn sb-Btn--secondary sb-Btn--responsive&quot;&gt;Play with this example in Sassmeister&lt;/a&gt;&lt;/p&gt;
@@ -2034,7 +2034,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;h4 id=&quot;single-class-generated-css&quot;&gt;Single Class Generated CSS&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nc&quot;&gt;.Btn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.Btn--disabled&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.Btn-secondary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;.Btn-secondary--disabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;nc&quot;&gt;.Btn&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -2059,7 +2059,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.5rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.Btn-secondary&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -2159,7 +2159,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This makes updating these files in the future go much quicker. Here are some general notes I had when doing my entire mimesis process.&lt;/p&gt;
 
-&lt;h4 id=&quot;environments-&amp;amp;-initializers&quot;&gt;Environments &amp;amp; Initializers&lt;/h4&gt;
+&lt;h4 id=&quot;environments-amp-initializers&quot;&gt;Environments &amp;amp; Initializers&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Removed &lt;code&gt;config.filter_parameters&lt;/code&gt; from application.rb to config/initializers/filter_parameter_logging.rb&lt;/li&gt;
@@ -2172,7 +2172,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 
 &lt;p&gt;I fully embraced the new concern directories. I created both &lt;code&gt;app/controllers/concerns/.keep&lt;/code&gt; and &lt;code&gt;app/models/concerns/.keep&lt;/code&gt;. I found there were a few files in my lib directory that were actually concerns. For example, I moved both my AuthenticatedSystem and RenderInvalidRecord modules to the controller concerns. This allowed me to remove any hacks I had for setting the auto load path on the lib directory too.&lt;/p&gt;
 
-&lt;h4 id=&quot;bin-directory-&amp;amp;-spring&quot;&gt;Bin Directory &amp;amp; Spring&lt;/h4&gt;
+&lt;h4 id=&quot;bin-directory-amp-spring&quot;&gt;Bin Directory &amp;amp; Spring&lt;/h4&gt;
 
 &lt;p&gt;I have been using both bundler bin stubs and Spring in all of my 3.2 applications. Now that Rails supports both the local &lt;code&gt;bin&lt;/code&gt; directory and Spring in an integrated way, I wanted to follow the golden path of least resistance.&lt;/p&gt;
 
@@ -2231,10 +2231,10 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Lastly, the &lt;code&gt;all&lt;/code&gt; method no longer takes finder options.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Old&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conditions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;ken@metaskills.net&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conditions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&#39;ken@metaskills.net&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# New&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;ken@metaskills.net&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&#39;ken@metaskills.net&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;actionmailer&quot;&gt;ActionMailer&lt;/h4&gt;
 
@@ -2274,8 +2274,8 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;In closing, thanks for reading and I hope you found this information helpful. If you have any questions, feel free to ask in the comments. Cheers!&lt;/p&gt;
 </description>
         <pubDate>Tue, 16 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/16/from-rails-3.2-to-4.2</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/16/from-rails-3.2-to-4.2</guid>
+        <link>http://technology.customink.com//blog/2014/09/16/from-rails-3-2-to-4-2</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/16/from-rails-3-2-to-4-2</guid>
       </item>
     
       <item>
@@ -2331,7 +2331,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
     
       <item>
         <title>Open Sourcing a Gem: Part 1</title>
-        <description>&lt;h3 id=&quot;the-signalman-gem&amp;#39;s-origins&quot;&gt;The Signalman gem&amp;#39;s origins&lt;/h3&gt;
+        <description>&lt;h3 id=&quot;the-signalman-gem-39-s-origins&quot;&gt;The Signalman gem&amp;#39;s origins&lt;/h3&gt;
 
 &lt;p&gt;As any company grows, it reaches a point where it is no longer in the &amp;quot;startup phase&amp;quot;. No longer can the target market arbitrarily be redefined or features be pushed out at a whim. At this point, analytics and A/B testing become increasingly important. A few years ago, we found this to be a point of pain at CustomInk and sought to create a more robust solution to meet our needs. Thus Signalman was born.&lt;/p&gt;
 
@@ -2339,7 +2339,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 
 &lt;p&gt;Though Signalman has evolved since its conception, its primary function has remained to make A/B testing easier and easily repeatable.&lt;/p&gt;
 
-&lt;h3 id=&quot;why-are-we-open-sourcing-the-gem?&quot;&gt;Why are we open sourcing the gem?&lt;/h3&gt;
+&lt;h3 id=&quot;why-are-we-open-sourcing-the-gem&quot;&gt;Why are we open sourcing the gem?&lt;/h3&gt;
 
 &lt;p&gt;The real question is why not? We found that Signalman seemed to cover a general enough use case that it would be applicable to other teams outside of CustomInk. Since Signalman would be helpful to other teams doing split testing, then it is clear that open sourcing the gem would be beneficial to the community. As a team, we use a lot of open source software, in fact, most of our stack is composed of open source projects. We are heavy consumers of open source so we like to return the favor whenever we can. Open sourcing a project also can provide the benefit of users outside of the organization improving the gem itself, which is an added bonus.&lt;/p&gt;
 
@@ -2374,7 +2374,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 
 &lt;h4 id=&quot;event-update&quot;&gt;Event Update&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/like-a-ross-e421a05d733c41d6a41186348ae14f80.jpg&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; alt=&quot;Jonathan Lehman and Ken Collins presenting Like A Ross! - Building the CustomInk Living Style Guide.&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/like-a-ross-f403d95639463d94b1d28d23b5f8c1f9.jpg&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; alt=&quot;Jonathan Lehman and Ken Collins presenting Like A Ross! - Building the CustomInk Living Style Guide.&quot; /&gt;
 The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.com/mylifeasalllly&quot;&gt;Ally Palanzi&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/xiwcx&quot;&gt;Welch Canavan&lt;/a&gt; for organizing the SassyDC group and allowing us to present and share our experiences. Huge thanks to &lt;a href=&quot;http://www.voxmedia.com&quot;&gt;Vox Media&lt;/a&gt; for hosting the event. Check out the &lt;a href=&quot;https://www.flickr.com/photos/xiwcx/sets/72157647060090380/&quot;&gt;photos of the event&lt;/a&gt; on Flickr!&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://speakerdeck.com/metaskills/like-a-ross-building-the-customink-dot-com-living-style-guide&quot; class=&quot;sb-Btn sb-Btn--responsive sb-Btn--primary&quot;&gt;View Slides&lt;/a&gt;&lt;/p&gt;
@@ -2446,7 +2446,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 
 &lt;p&gt;While designing the third iteration of my personal &lt;a href=&quot;http://metaskills.net/&quot;&gt;MetaSkills.net&lt;/a&gt; blog, I decided to carry the retro space theme into the background of the fixed left navigation area. The design called for something like this image below. Besides the planet, it has three distinct types of stars that are scattered all over the place. Each has a different scale and opacity with plans to animate a few.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-0319932d2bc35a68a723534571b5e01a.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-784a99438e7115fdea750cdee7356bcd.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So where to start? We could export a final pre-designed SVG image from any type of vector program – but that would bloat the file size since it would copy and paste each star&amp;#39;s path. It would also make animating distinct stars tricky and require post production edits. Lastly, who has time to randomly scatter stars? Not me! So let&amp;#39;s program up a solution that solves all of this for us. Here is the base SVG structure that we are going to work with.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;svg&lt;/span&gt;
@@ -2479,7 +2479,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 
 &lt;p&gt;Adding these to our SVG is really easy. I started by creating a canvas in my favorite vector program, &lt;a href=&quot;http://bohemiancoding.com/sketch/&quot;&gt;Sketch&lt;/a&gt;. We want to make sure our exported paths start at 0,0 position and are are generally the size you expect to use them. This will help you later when translating these paths to different positions.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/svg-our-awesome-sketch-1490a58ac9b77cfe15b8e1a266ba1262.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;Setting up our base stars in the Sketch v3 application.&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/svg-our-awesome-sketch-28cd38501f559a39612f8af1bf70a57a.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;Setting up our base stars in the Sketch v3 application.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I exported each star type as an SVG and then copied the path into the &lt;code&gt;&amp;lt;defs&amp;gt;&lt;/code&gt; area of our template above. When you do this make sure that each path has its own unique id. Also, you may want to optimize your paths. Many programs export 6 or more decimal points for a path&amp;#39;s data. I recommend running them through some sort of &lt;a href=&quot;http://petercollingridge.appspot.com/svg_optimiser&quot;&gt;SVG optimiser&lt;/a&gt; or tweaking your export settings if your art program has them. Now we have our reusable path objects, see below. Examples have truncated &lt;code&gt;d&lt;/code&gt; attributes for brevity.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;defs&amp;gt;&lt;/span&gt;
@@ -2495,11 +2495,11 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;use&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xlink:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#burst&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;transform=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;translate(30,20) scale(1.0)&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;burst&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;use&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xlink:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#steeler&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;transform=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;translate(60,10) scale(1.5)&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;steeler&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-v1-0a702030ad99e0797508925b75e659dc.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-v1-09727e95a4462c6ca358f83b3de83ac6.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Still kind of boring... and who has time to stochastically place several dozen stars around the canvas? Time for some JavaScript automation.&lt;/p&gt;
 
-&lt;h3 id=&quot;svgs-&amp;amp;-javascript&quot;&gt;SVGs &amp;amp; JavaScript&lt;/h3&gt;
+&lt;h3 id=&quot;svgs-amp-javascript&quot;&gt;SVGs &amp;amp; JavaScript&lt;/h3&gt;
 
 &lt;p&gt;Yes! SVGs are distinct documents that can have their own CSS and JavaScript. But in order for this JavaScript to execute, we must embed it into the parent HTML document. Linking to an SVG via an &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; tag will not allow this due to security concerns. We can get around that issue by using an &lt;code&gt;&amp;lt;object&amp;gt;&lt;/code&gt; tag instead.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;object&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;our-awesome.svg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/svg+xml&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/object&amp;gt;&lt;/span&gt;
@@ -2684,18 +2684,18 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;span class=&quot;nc&quot;&gt;.my-AwesomeBox&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;black&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;1rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;250px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.my-AwesomeBox--small&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.my-AwesomeBox-title&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;1rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;white&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.my-AwesomeBox-title--large&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;2rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2rem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nc&quot;&gt;.my-AwesomeBox.is-selected&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;background-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;red&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -2707,7 +2707,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;a href=&quot;http://sassmeister.com/gist/a166888f44271c291c80&quot; class=&quot;sb-Btn sb-Btn--secondary sb-Btn--responsive&quot;&gt;Play with this example in Sassmeister&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;why?&quot;&gt;Why?&lt;/h3&gt;
+&lt;h3 id=&quot;why&quot;&gt;Why?&lt;/h3&gt;
 
 &lt;p&gt;While it might feel strange at first glance, give SUIT a shot (or at least another modular CSS variant like &lt;a href=&quot;http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/&quot;&gt;BEM&lt;/a&gt;). Writing CSS/Sass in this manner provides a number of great benefits:&lt;/p&gt;
 
@@ -2740,7 +2740,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
     
       <item>
         <title>Welcome John Dyer!</title>
-        <description>&lt;p&gt;&lt;img src=/assets/content/john-dyer-first-deploy-a40aad36a02236382fd0338d400a73e2.jpg alt=&quot;John Dyer&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=/assets/content/john-dyer-first-deploy-7dd0827aabb5e3a04f13f41a94f13c34.jpg alt=&quot;John Dyer&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;CustomInk technology is proud to announce that &lt;a href=&quot;https://github.com/lbrapid&quot;&gt;John Dyer&lt;/a&gt; is our newest Inker! Following the new hire tradition, John pushed his first deploy within a couple days of arrival.&lt;/p&gt;
 
@@ -2894,7 +2894,7 @@ Have you ever wondered how tools like New Relic are able to gain valuable metric
 
 &lt;p&gt;Today I want to share a working example of how you might use ActiveSupport::Notifications. Instead of presenting some contrived code, I thought it would be fun to &lt;a href=&quot;http://vimeo.com/17420638#t=27m27s&quot;&gt;freedom-patch&lt;/a&gt; a popular gem so that we can garner supernatural metrics that would have otherwise been lost or hidden deep in our log. For this exercise I have chosen the &lt;a href=&quot;https://github.com/nulayer/subexec&quot;&gt;Subexec&lt;/a&gt; gem. Subexec is a simple library that spawns an external command with an optional timeout parameter. It is used by other gems like &lt;a href=&quot;https://github.com/minimagick/minimagick&quot;&gt;MiniMagick&lt;/a&gt; – a popular minimal replacement for RMagick.&lt;/p&gt;
 
-&lt;h2 id=&quot;building-subexec::notifications&quot;&gt;Building Subexec::Notifications&lt;/h2&gt;
+&lt;h2 id=&quot;building-subexec-notifications&quot;&gt;Building Subexec::Notifications&lt;/h2&gt;
 
 &lt;p&gt;Our goal will be to build a new gem called subexec-notifications that instruments all commands run by the Subexec library. Once completed, third-party subscribers would be able collect these metrics thereby opening up developer/operational insights into how long certain commands were taking and on which server(s).&lt;/p&gt;
 
@@ -3218,7 +3218,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 
 &lt;h1 id=&quot;testing&quot;&gt;Testing&lt;/h1&gt;
 
-&lt;h3 id=&quot;minitest::spec-all-the-way-across-the-sky!&quot;&gt;MiniTest::Spec All The Way Across The Sky!&lt;/h3&gt;
+&lt;h3 id=&quot;minitest-spec-all-the-way-across-the-sky&quot;&gt;MiniTest::Spec All The Way Across The Sky!&lt;/h3&gt;
 
 &lt;p&gt;Don&amp;#39;t wait for Rails 4 to use MiniTest::Spec! This application is using the &lt;a href=&quot;https://github.com/metaskills/minitest-spec-rails&quot;&gt;minitest-spec-rails&lt;/a&gt; gem which forces &lt;code&gt;ActiveSupport::TestCase&lt;/code&gt; to subclass &lt;code&gt;MiniTest::Spec&lt;/code&gt;. This means that you can start using the MiniTest&amp;#39;s Spec or Unit structure and assertions directly within the familiar Rails unit, functional, or integration directories. For full details, check out the &lt;a href=&quot;https://github.com/metaskills/minitest-spec-rails&quot;&gt;minitest-spec-rails&lt;/a&gt; documentation or some of the &lt;a href=&quot;https://github.com/metaskills/holy_grail_harness/blob/master/test/functional/application_controller_test.rb&quot;&gt;test shims&lt;/a&gt; within HolyGrailHarness. For example, a &lt;code&gt;test/unit/user_test.rb&lt;/code&gt; might look like this.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;test_helper&#39;&lt;/span&gt;
@@ -3346,7 +3346,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 
 &lt;p&gt;Also included is the &lt;a href=&quot;https://github.com/nathansobo/space-pen&quot;&gt;SpacePen&lt;/a&gt; view framework. SpacePen is a powerful and minimalist client-side view framework authored in CoffeeScript. It is actually a jQuery subclass which makes your views really easy to traverse and respond to controller events. Read my &lt;a href=&quot;http://metaskills.net/2012/05/22/view-controller-patterns-with-spine-js-and-spacepen/&quot;&gt;&lt;em&gt;View Controller Patterns With Spine.js &amp;amp; SpacePen&lt;/em&gt;&lt;/a&gt; article to learn why views should not be dumb and how you can take advantage of SpacePen no matter what JavaScript MV* framework you use.&lt;/p&gt;
 
-&lt;h3 id=&quot;with-spine.js&quot;&gt;With Spine.js&lt;/h3&gt;
+&lt;h3 id=&quot;with-spine-js&quot;&gt;With Spine.js&lt;/h3&gt;
 
 &lt;p&gt;If you choose to use Spine.js as your JavaScript MVC structure, the setup script will create a git submodule to the Spine repository to the &lt;code&gt;vendor/assets/javascripts/spine&lt;/code&gt; directory. This allows your project to use the the source CoffeeScript files, which makes for a wonderful &lt;a href=&quot;http://metaskills.net/2012/01/15/rails-and-spine-js-using-the-coffeescript-source/&quot;&gt;learning experience&lt;/a&gt; to both Spine.js and idomatic CoffeeScript.&lt;/p&gt;
 
@@ -3359,7 +3359,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;No JavaScript project should be without a local notification system to help keep disparate components up to date. Thankfully, Spine&amp;#39;s event module makes a local PubSub system a breeze. The HolyGrailHarness has a &lt;a href=&quot;https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/javascripts/holy_grail_harness/lib/notifications.js.coffee&quot;&gt;&lt;code&gt;notifications.js.coffee&lt;/code&gt;&lt;/a&gt; that exposes a class level &lt;code&gt;bind()&lt;/code&gt; and &lt;code&gt;trigger()&lt;/code&gt; to any event string/namespace you want. To make more simple, we recommend creating class level functions that expose the event name as the function name and pass the args to the &lt;code&gt;handle()&lt;/code&gt; function. We have done this for the &lt;code&gt;MyAppName.Notifications.appReady()&lt;/code&gt; to demonstrate. Calling this function will trigger the &lt;code&gt;app.ready&lt;/code&gt; event and passing a function to this function will bind that function to the same event name.&lt;/p&gt;
 
-&lt;h1 id=&quot;sass-&amp;amp;-compass&quot;&gt;Sass &amp;amp; Compass&lt;/h1&gt;
+&lt;h1 id=&quot;sass-amp-compass&quot;&gt;Sass &amp;amp; Compass&lt;/h1&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://sass-lang.com&quot;&gt;Sass&lt;/a&gt; is the only way to write CSS for today&amp;#39;s modern web applications. &lt;a href=&quot;http://compass-style.org&quot;&gt;Compass&lt;/a&gt; is the CSS framework that no Sass user should go without. Together they provide a foundation for writing beautiful CSS using pre-built time saving functions. The HolyGrailHarness includes both the &lt;a href=&quot;https://github.com/rails/sass-rails&quot;&gt;sass-rails&lt;/a&gt; and &lt;a href=&quot;https://github.com/Compass/compass-rails&quot;&gt;compass-rails&lt;/a&gt; gems.&lt;/p&gt;
 
@@ -3378,7 +3378,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
     ├── _variables.scss
     └── base.scss
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;the-application.css-file.&quot;&gt;The application.css file.&lt;/h3&gt;
+&lt;h3 id=&quot;the-application-css-file&quot;&gt;The application.css file.&lt;/h3&gt;
 
 &lt;p&gt;Never write CSS in &lt;code&gt;application.css&lt;/code&gt;. Say what? I know right, but trust me. Just consider this file a top level bundle dependency that only requires other top level bundle assets. Here is the contents of that file. Notice how it requires a bundle called twitter and an index. One is for twitter bootstrap, see section below, and the other is the index to your own Sass framework.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;c&quot;&gt;/*
@@ -3386,7 +3386,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
  *= require application/index
 */&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;the-shared-directory.&quot;&gt;The shared directory.&lt;/h3&gt;
+&lt;h3 id=&quot;the-shared-directory&quot;&gt;The shared directory.&lt;/h3&gt;
 
 &lt;p&gt;Think of this as your own Compass framework. The &lt;a href=&quot;https://github.com/metaskills/holy_grail_harness/blob/master/app/assets/stylesheets/shared/base.scss&quot;&gt;&lt;code&gt;base.scss&lt;/code&gt;&lt;/a&gt; is your single file to &lt;code&gt;@import&lt;/code&gt; to get everything loaded and ready to go. &lt;strong&gt;Nothing in any of the shared files should generate CSS!&lt;/strong&gt; Importing &lt;code&gt;shared/base&lt;/code&gt; should act just like importing &lt;code&gt;compass&lt;/code&gt;. Use these files for setting your own variables and creating misc helper functions &amp;amp; mixins. There is a variables file for... variables! Another for animations, fonts and mixins too.&lt;/p&gt;
 
@@ -3405,7 +3405,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;shared/animations&quot;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;shared/placeholders&quot;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;the-application-directory.&quot;&gt;The application directory.&lt;/h3&gt;
+&lt;h3 id=&quot;the-application-directory&quot;&gt;The application directory.&lt;/h3&gt;
 
 &lt;p&gt;Organize this as you see fit. We have started you off by creating a &lt;code&gt;_layout.scss&lt;/code&gt; file for your general layout/structure styles. There is also a &lt;code&gt;components&lt;/code&gt; directory which all sub files are imported via a glob. The idea is that components are not dependent upon another. Files that might go in here are things like datepicker, navigation, and general files named after components or widgets. Below is what the &lt;code&gt;application/index.scss&lt;/code&gt; looks like.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sass&quot; data-lang=&quot;sass&quot;&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;shared/base&quot;;&lt;/span&gt;
@@ -3461,7 +3461,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 
 &lt;!--more--&gt;
 
-&lt;h2 id=&quot;for-those-that-just-can&amp;#39;t-wait!&quot;&gt;For those that just can&amp;#39;t wait!&lt;/h2&gt;
+&lt;h2 id=&quot;for-those-that-just-can-39-t-wait&quot;&gt;For those that just can&amp;#39;t wait!&lt;/h2&gt;
 
 &lt;p&gt;Here are the links to the &lt;a href=&quot;https://github.com/customink-webops/hostsfile&quot;&gt;hostsfile github repo&lt;/a&gt; and &lt;a href=&quot;http://community.opscode.com/cookbooks/hostsfile&quot;&gt;hostsfile on the Chef community website&lt;/a&gt;.&lt;/p&gt;
 
@@ -3515,7 +3515,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;span class=&quot;n&quot;&gt;attribute&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:hostname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:kind_of&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;String&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# Optional attributes&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;attribute&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:aliases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:kind_of&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Array&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;attribute&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:aliases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:kind_of&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Array&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;attribute&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:comment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:kind_of&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;String&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The design is so elegant and makes perfect sense based off our the README.&lt;/p&gt;
@@ -3615,7 +3615,7 @@ exist.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This will remove the entry for &lt;code&gt;1.2.3.4&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;i-want-it-now!&quot;&gt;I want it now!&lt;/h2&gt;
+&lt;h2 id=&quot;i-want-it-now&quot;&gt;I want it now!&lt;/h2&gt;
 
 &lt;p&gt;Install it&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ knife cookbook site install hostsfile
@@ -3701,7 +3701,7 @@ chefspec: bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;spec
 &lt;p&gt;This will mock out the default ubuntu node. You can use this in combination with Chefspec or other testing tools.&lt;/p&gt;
 
 &lt;p&gt;I recently released the first non-alpha version of fauxhai. In this edition, fauxhai is actually capable of mocking &amp;quot;real&amp;quot; nodes. It will SSH into your server, download the real Ohai data, and then run your tests against that Ohai data:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Fauxhai&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;node.example.com&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Fauxhai&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&#39;node.example.com&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Check out the &lt;a href=&quot;http://technology.customink.com/fauxhai/&quot;&gt;fauxhai github page&lt;/a&gt; or &lt;a href=&quot;https://github.com/customink/fauxhai&quot;&gt;fauxhai github repo&lt;/a&gt; for more information on how to use fauxhai.&lt;/p&gt;
 
@@ -3713,7 +3713,7 @@ chefspec: bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;spec
 
 &lt;span class=&quot;n&quot;&gt;describe&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;phantomjs::default&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
   &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;on ubuntu&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Fauxhai&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;platform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;ubuntu&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Fauxhai&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;platform&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:&#39;ubuntu&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:chef_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ChefSpec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ChefRunner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;converge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;phantomjs::default&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;should install the correct packages&#39;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
@@ -3729,13 +3729,13 @@ chefspec: bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;spec
 
 &lt;p&gt;There is one hang-up about ChefSpec - it has incredibly confusing documentation. Depending on where you look, some methods have changed, syntax is different, things have been removed, and there&amp;#39;s &lt;a href=&quot;https://github.com/acrmp/chefspec/issues/30&quot;&gt;a few different places for documentation&lt;/a&gt;. The solution - just dive into the source. It&amp;#39;s the easiest way, and you&amp;#39;ll have a better understanding from the start.&lt;/p&gt;
 
-&lt;h2 id=&quot;travis-&amp;amp;-jenkins&quot;&gt;Travis &amp;amp; Jenkins&lt;/h2&gt;
+&lt;h2 id=&quot;travis-amp-jenkins&quot;&gt;Travis &amp;amp; Jenkins&lt;/h2&gt;
 
 &lt;p&gt;Internally, we use &lt;a href=&quot;http://jenkins-ci.org&quot;&gt;Jenkins&lt;/a&gt; as our build server. However, for all our public-facing cookbooks, we use &lt;a href=&quot;http://travis-ci.org&quot;&gt;Travis&lt;/a&gt;. This causes somewhat of a gap between our build statuses - we have to look in two locations to see the status of all our builds...&lt;/p&gt;
 
 &lt;p&gt;Okay, I lied. We don&amp;#39;t. We actually use another project I wrote, &lt;a href=&quot;https://github.com/customink/stoplight&quot;&gt;stoplight&lt;/a&gt;, that shows the build status from multiple build servers in a single UI. It&amp;#39;s incredibly handy for these kinds of situations. And, for you hardcore Chef users, there&amp;#39;s even a &lt;a href=&quot;https://github.com/customink-webops/stoplight&quot;&gt;Chef cookbook for stoplight&lt;/a&gt; for installing stoplight on your infrastructure.&lt;/p&gt;
 
-&lt;h2 id=&quot;the-long-&amp;amp;-short-of-it&quot;&gt;The Long &amp;amp; Short of it&lt;/h2&gt;
+&lt;h2 id=&quot;the-long-amp-short-of-it&quot;&gt;The Long &amp;amp; Short of it&lt;/h2&gt;
 
 &lt;p&gt;Chef testing is a huge topic, and it&amp;#39;s going to be awhile until the community agrees on a single method for testing. Rails still has yet to figure it out... Here&amp;#39;s what is important - &lt;strong&gt;test your cookbooks&lt;/strong&gt;. Even if it&amp;#39;s just running foodcritic against all your cookbooks, you are making the cookbook-world a better place. And &lt;strong&gt;talk about it&lt;/strong&gt;. Tutorials like this one, as well as &lt;a href=&quot;/blog/our-team/seth-vargo&quot;&gt;some of the other posts I&amp;#39;ve written&lt;/a&gt; will help the community embrace testing :)!&lt;/p&gt;
 </description>
@@ -3896,7 +3896,7 @@ end
 
 &lt;p&gt;I created a quick Jenkins job for these specs and set them to run every 15 minutes. Super simple and reliable CI for our DNS entires. Now, we can easily spot outdated records or problem servers.&lt;/p&gt;
 
-&lt;h2 id=&quot;a-question-of-completeness?&quot;&gt;A Question of Completeness?&lt;/h2&gt;
+&lt;h2 id=&quot;a-question-of-completeness&quot;&gt;A Question of Completeness?&lt;/h2&gt;
 
 &lt;dl&gt;
   &lt;dt&gt;Q: Is this a complete solution?&lt;/dt&gt;
@@ -4083,7 +4083,7 @@ Then tell &lt;code&gt;set Desktop background&lt;/code&gt; to run immediately.&am
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;But what if you wanted to set the Desktop background for &lt;strong&gt;all&lt;/strong&gt; the users? Maybe you operate in an Enterprise that requires the company logo be on the Desktop background. Or maybe you just have OCD and like everything to be the same. Either way, there are a few possible solutions for accomplishing this. Let&amp;#39;s look at one way to do this.&lt;/p&gt;
 
-&lt;h4 id=&quot;using-node[&amp;#39;etc&amp;#39;][&amp;#39;password&amp;#39;]&quot;&gt;Using &lt;code&gt;node[&amp;#39;etc&amp;#39;][&amp;#39;password&amp;#39;]&lt;/code&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;using-node-39-etc-39-39-password-39&quot;&gt;Using &lt;code&gt;node[&amp;#39;etc&amp;#39;][&amp;#39;password&amp;#39;]&lt;/code&gt;&lt;/h4&gt;
 
 &lt;p&gt;You can iterate over all the local accounts on a given machine using the &lt;code&gt;node[&amp;#39;etc&amp;#39;][&amp;#39;passwd&amp;#39;]&lt;/code&gt; hash. It looks like this:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;etc&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;passwd&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
@@ -4490,7 +4490,7 @@ FATAL: /Users/nharvey/projects/chef-hosted/.chef/../cookbooks/very_basic/recipes
 
 &lt;p&gt;``` ruby Rakefile&lt;/p&gt;
 
-&lt;h1 id=&quot;!/usr/bin/env-rake&quot;&gt;!/usr/bin/env rake&lt;/h1&gt;
+&lt;h1 id=&quot;usr-bin-env-rake&quot;&gt;!/usr/bin/env rake&lt;/h1&gt;
 
 &lt;p&gt;desc &amp;quot;Runs knife cookbook test&amp;quot;
 task :knife do
@@ -4572,7 +4572,7 @@ script:
 
 &lt;p&gt;``` ruby Rakefile&lt;/p&gt;
 
-&lt;h1 id=&quot;!/usr/bin/env-rake&quot;&gt;!/usr/bin/env rake&lt;/h1&gt;
+&lt;h1 id=&quot;usr-bin-env-rake&quot;&gt;!/usr/bin/env rake&lt;/h1&gt;
 
 &lt;p&gt;task :default =&amp;gt; &amp;#39;foodcritic&amp;#39;&lt;/p&gt;
 
@@ -5119,7 +5119,7 @@ guard:    guard
 
 &lt;p&gt;There you have it! What was once a very isolated and less-than-configurable tool is now highly extensible and open to contributions by the community. If you are currently using Greenscreen or another build monitoring alternative, give Stoplight a try.&lt;/p&gt;
 
-&lt;h2 id=&quot;i-want-it!&quot;&gt;I Want it!&lt;/h2&gt;
+&lt;h2 id=&quot;i-want-it&quot;&gt;I Want it!&lt;/h2&gt;
 
 &lt;p&gt;Stoplight is available for &lt;a href=&quot;https://github.com/customink/stoplight&quot;&gt;download and forking on github&lt;/a&gt;. Pull requests are greatly welcome! There is also a highly-configurable &lt;a href=&quot;https://github.com/customink-webops/stoplight&quot;&gt;chef cookbook for installing Stoplight&lt;/a&gt; on Apache and Passenger on your own servers.&lt;/p&gt;
 </description>
@@ -5171,7 +5171,7 @@ guard:    guard
 &lt;/ul&gt;
 &lt;/blockquote&gt;
 
-&lt;h4 id=&quot;why-start-with-foodcritic?&quot;&gt;Why start with Foodcritic?&lt;/h4&gt;
+&lt;h4 id=&quot;why-start-with-foodcritic&quot;&gt;Why start with Foodcritic?&lt;/h4&gt;
 
 &lt;p&gt;Given the plethora of options available, why should you start with Foodcritic?  Well, you have to start somewhere.  We felt Foodcritic was a good choice because it was easy to get started with, the tests ran quickly, and we are working under the assumption that once we started some automated testing, we&amp;#39;ll start layering on more and more pieces as we go.  After some initial experiments, we found that we could get Foodcritic looking after our each cookbook in a matter of minutes and local tests running in seconds.&lt;/p&gt;
 
@@ -5189,7 +5189,7 @@ guard:    guard
 
 &lt;p&gt;Using Travis CI in conjunction with Foodcritic, we&amp;#39;d have a basic automated test foundation to build on.&lt;/p&gt;
 
-&lt;h3 id=&quot;automated-foodcritic-tests-with-travis-ci-&quot;&gt;Automated Foodcritic tests with Travis CI &lt;a name=&quot;steps&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&quot;automated-foodcritic-tests-with-travis-ci&quot;&gt;Automated Foodcritic tests with Travis CI &lt;a name=&quot;steps&quot;&gt;&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;Using Foodcritic and Travis CI, you can quickly set-up a &amp;quot;minimum viable testing&amp;quot; (MVT) environment.  The idea is that once you have some sort of tests running against your cookbooks, you&amp;#39;ll want to add more and doing so will be easy.  Let&amp;#39;s look at how to add Foodcritic and Travis CI to your cookbook workflow.&lt;/p&gt;
 
@@ -5278,7 +5278,7 @@ end
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;![Build Status]&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;https://secure.travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png&lt;span class=&quot;o&quot;&gt;)](&lt;/span&gt;http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME]&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;thanks-&amp;amp;-additional-resources&quot;&gt;Thanks &amp;amp; Additional Resources&lt;/h3&gt;
+&lt;h3 id=&quot;thanks-amp-additional-resources&quot;&gt;Thanks &amp;amp; Additional Resources&lt;/h3&gt;
 
 &lt;p&gt;A big &amp;quot;Thank You!&amp;quot; shout-out to &lt;a href=&quot;https://twitter.com/fnichol&quot;&gt;Fletcher Nichol&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/atomic_penguin&quot;&gt;Eric G. Wolfe&lt;/a&gt; from whom I &amp;#39;borrowed&amp;#39; the &lt;code&gt;Rakefile&lt;/code&gt; and &lt;code&gt;.travis.yml&lt;/code&gt; used in this post.&lt;/p&gt;
 
@@ -5311,11 +5311,11 @@ end
 
 &lt;!--more--&gt;
 
-&lt;h2 id=&quot;what-is-chef?&quot;&gt;What is Chef?&lt;/h2&gt;
+&lt;h2 id=&quot;what-is-chef&quot;&gt;What is Chef?&lt;/h2&gt;
 
 &lt;p&gt;One of the best things about Chef is that it is idempotent. Unlike a simple bash script or complex startup script, Chef can be applied to the same machine hundreds of times. Only the &amp;quot;changes&amp;quot; will be executed on each of the clients. This makes deploying and updating thousands of machines as easy as baking a cake!&lt;/p&gt;
 
-&lt;h2 id=&quot;understanding-chef-&amp;amp;-jargon&quot;&gt;Understanding Chef &amp;amp; Jargon&lt;/h2&gt;
+&lt;h2 id=&quot;understanding-chef-amp-jargon&quot;&gt;Understanding Chef &amp;amp; Jargon&lt;/h2&gt;
 
 &lt;p&gt;One of the most interesting and confusing parts about Chef is its lingo. Everything relates to &lt;strong&gt;food&lt;/strong&gt;. Be sure to grab a snack before diving in any further.&lt;/p&gt;
 
@@ -5387,7 +5387,7 @@ knife.rb
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;_knife_config   #=&amp;gt; knife.rb
 _regenerate_key #=&amp;gt; [your_organization_name]-validator.pem
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;install-ruby,-chef,-and-git&quot;&gt;Install Ruby, Chef, and Git&lt;/h2&gt;
+&lt;h2 id=&quot;install-ruby-chef-and-git&quot;&gt;Install Ruby, Chef, and Git&lt;/h2&gt;
 
 &lt;p&gt;Chef is written in Ruby. Therefore, you must have Ruby installed. Installing Ruby is beyond the scope of this topic, but here are some quick resources:&lt;/p&gt;
 
@@ -5701,18 +5701,18 @@ INFO: Report handlers complete
   &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;origin&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;new_feature&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:create&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&quot;I&#39;ve created rfe_new_feature.&quot;&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:build&lt;/span&gt;
   &lt;span class=&quot;s2&quot;&gt;&quot;I&#39;ve found rfe_new_feature and it&#39;s building now.&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now a build is running on our Jenkins server.  More importantly, Jenkins will use it&amp;#39;s Jedi powers to detect any changes to the remote branch and automatically kick off a new build.  When builds fail, the entire team is notified and Green Screen turns red.  We have a handful of other useful Jenkins tasks as well:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;# Kicks off a build for the current branch&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;console&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# Shows the job&#39;s console&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Create a job for the current branch&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;delete&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Deletes a job with name = rfe_[current_branch]&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;# Lists all jobs in jenkins&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Gets the status of a job with name = rfe_[current_branch]&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:build&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;# Kicks off a build for the current branch&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:console&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# Shows the job&#39;s console&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:create&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Create a job for the current branch&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:delete&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Deletes a job with name = rfe_[current_branch]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:list&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;# Lists all jobs in jenkins&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;cap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jenkins&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:status&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Gets the status of a job with name = rfe_[current_branch]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Continuous deployment can&amp;#39;t happen without automation.  I&amp;#39;d like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I&amp;#39;d also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.&lt;/p&gt;
 </description>
@@ -6252,23 +6252,23 @@ PassengerRuby /usr/local/bin/ruby_tuned
 
 &lt;p&gt;As you consider which tool is right for you, you&amp;#39;ll need to consider a number of questions. I think of these as the WIIFs, or &amp;quot;what&amp;#39;s in it for...&amp;quot; questions:&lt;/p&gt;
 
-&lt;h3 id=&quot;wiifm---what&amp;#39;s-in-it-for-me&quot;&gt;WIIFM - What&amp;#39;s in it for me&lt;/h3&gt;
+&lt;h3 id=&quot;wiifm-what-39-s-in-it-for-me&quot;&gt;WIIFM - What&amp;#39;s in it for me&lt;/h3&gt;
 
 &lt;p&gt;You&amp;#39;re going to want a tool that you&amp;#39;re happy working with. You&amp;#39;re going to make an investment in this tool. You&amp;#39;ll need to learn to be proficient with the tool, master it, and use it in your everyday workflow. Pick something that you&amp;#39;ll be happy working with for some time.&lt;/p&gt;
 
-&lt;h3 id=&quot;wiifc---what&amp;#39;s-in-it-for-my-customers&quot;&gt;WIIFC - What&amp;#39;s in it for my customers&lt;/h3&gt;
+&lt;h3 id=&quot;wiifc-what-39-s-in-it-for-my-customers&quot;&gt;WIIFC - What&amp;#39;s in it for my customers&lt;/h3&gt;
 
 &lt;p&gt;It&amp;#39;s highly unlikely that your customers know or care anything about how your infrastructure was built, provisioned, and managed. Why should they have any say about which tool you pick? Your customers are keenly interested in the services or products you offer. They also care about things like performance, availability, and how quickly you recover from an issue or outage. If they don&amp;#39;t care about these things, they&amp;#39;ll likely not be your customers for long. As you grow your business, you&amp;#39;ll want to have more time for delivering value to customers. Spend less time building, provisioning, upgrading, and repairing your infrastructure.&lt;/p&gt;
 
-&lt;h3 id=&quot;wiifb---what&amp;#39;s-in-it-for-my-business&quot;&gt;WIIFB - What&amp;#39;s in it for my business&lt;/h3&gt;
+&lt;h3 id=&quot;wiifb-what-39-s-in-it-for-my-business&quot;&gt;WIIFB - What&amp;#39;s in it for my business&lt;/h3&gt;
 
 &lt;p&gt;You may be the only one who has to build and manage the infrastructure in your company but it&amp;#39;s likely you&amp;#39;ll eventually move beyond a technology team of one. As your technology team grows, you&amp;#39;ll want to include everyone in the process of managing your infrastructure. This includes the people you might not think of as typically having a say in the infrastructure: developers, quality assurance engineers, etc. You do not want to be the only person in your company who knows how to manage the infrastructure and use the tools you&amp;#39;ve selected. Sure, it gives you a false sense of job security and feeds into your hero-complex but you need to be able to pass the on-call baton to someone else. Cost may also be a factor to consider when selecting a solution although it&amp;#39;s likely it&amp;#39;s more of a data-point than selection criteria, given the solutions that are on the market.&lt;/p&gt;
 
 &lt;p&gt;I cannot tell you which tool is right for you. There are many factors including the ones I&amp;#39;ve listed above. I have some experience with both Puppet and Chef. At &lt;a href=&quot;http://www.customink.com&quot;&gt;CustomInk&lt;/a&gt;, we decided to switch to Chef after using Puppet for about two years.&lt;/p&gt;
 
-&lt;h2 id=&quot;why-did-we-switch?&quot;&gt;Why did we switch?&lt;/h2&gt;
+&lt;h2 id=&quot;why-did-we-switch&quot;&gt;Why did we switch?&lt;/h2&gt;
 
-&lt;h3 id=&quot;we&amp;#39;re-a-rails-shop&quot;&gt;We&amp;#39;re a Rails shop&lt;/h3&gt;
+&lt;h3 id=&quot;we-39-re-a-rails-shop&quot;&gt;We&amp;#39;re a Rails shop&lt;/h3&gt;
 
 &lt;p&gt;CustomInk is a Ruby on Rails shop and has been for many years. Being a Rails shop helped push us towards Chef in two ways. As a Rails shop, we suffer a bit from from the stereotypical &amp;quot;newer and shinier is better&amp;quot; syndrome that many people feel ails the Rails community. As a Rails shop, the domain-specific language (DSL) of Chef is a more comfortable way for us to work. Everyone on the technology team can easily understand the code.&lt;/p&gt;
 
@@ -6302,7 +6302,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 
 &lt;p&gt;If your project is just getting started, the best choice for you is probably not to use any of the configuration management tools that allow you to manage your infrastructure as code. You should stay focused exclusively on delivering value to your customers. It&amp;#39;s likely that the best solution for you is &lt;a href=&quot;http://www.heroku.com/&quot;&gt;Heroku&lt;/a&gt;. Sure, Heroku puts some constraints on how you build your app, but they&amp;#39;re a good way for you to think creatively. You can, and should, delay your choice of tools until you&amp;#39;re ready to spin up your first server.&lt;/p&gt;
 
-&lt;h2 id=&quot;tl;dr&quot;&gt;TL;DR&lt;/h2&gt;
+&lt;h2 id=&quot;tl-dr&quot;&gt;TL;DR&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;If the question is &amp;quot;Chef or Puppet?&amp;quot;, the answer is &amp;quot;Yes.&amp;quot; You need to manage you infrastructure as code&lt;/li&gt;

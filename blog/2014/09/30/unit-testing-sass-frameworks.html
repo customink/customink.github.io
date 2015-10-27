@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Unit Testing Sass Frameworks - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Building the living style guide for CustomInk&#39;s new mobile/responsive sites required that we stand on the shoulders of other great frameworks. ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Unit Testing Sass Frameworks</h1>
+        <p>Building the <a href="/blog/2014/09/08/building-the-customink-living-style-guide">living style guide</a> for <a href="http://www.customink.com">CustomInk&#39;s</a> new mobile/responsive sites required that we stand on the shoulders of other great frameworks. All of them well authored and hence well tested. But as we built more tools on top of these giants, we felt the need to test our own framework&#39;s code and thus began the search for Sass/CSS testing methods. After surveying the current state of testing, I found myself let down.</p>
+
+<p>To be fair, there are some really clever solutions for this problem and some may work for you. One example is the <a href="https://github.com/ericam/true">True</a> unit test framework for Sass. This project is written by Eric Suzanne for his awesome <a href="https://github.com/ericam/susy">Susy</a> grid framework. True allows you to write assertions in Sass itself but is limited to only value-based assertions. Since our living style guide is built within a Ruby gem, we felt that a solution closer to Ruby would fit our needs. That said, the solutions I propose below can be used by any Sass framework if you choose to test that framework with Ruby.</p>
+
+<h3 id="sass-framework-extensions">Sass Framework Extensions</h3>
+
+<p>First, we need some Sass to test. Our awesome framework wants more Sass list power! So we created these two fancy Sass functions below for accessing the first or last item of a list.</p>
+<div class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="k">@function</span> <span class="nf">my-first</span><span class="p">(</span><span class="nv">$list</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">@return</span> <span class="nf">nth</span><span class="p">(</span><span class="nv">$list</span><span class="o">,</span> <span class="m">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">@function</span> <span class="nf">my-last</span><span class="p">(</span><span class="nv">$list</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">@return</span> <span class="nf">nth</span><span class="p">(</span><span class="nv">$list</span><span class="o">,</span> <span class="nf">length</span><span class="p">(</span><span class="nv">$list</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>From here, let&#39;s pretend that these extensions are loaded whenever you <code>@import &quot;my_framework&quot;;</code>. With great power comes great responsibility, hence we need to test them. But how?</p>
+
+<h3 id="enter-ruby-here-doc-strings">Enter Ruby Here-Doc Strings</h3>
+
+<p>I have always wanted to use one of the many Ruby <a href="http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code">here-doc</a> string methods and testing Sass felt like a great opportunity to pay closer attention to these. Here is what I mocked up for our ideal Minitest assertion syntax. It uses the <code>&lt;&lt;-FLAG</code> vs the <code>&lt;&lt;FLAG</code> here-doc termination sequence so that indentation is maintained.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">it</span> <span class="s1">'my-red'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    .test { color: $my-red; }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { color: #ee3524; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This looks really clean to me. It is easy to identify that we have some Sass at the top that we want to render to CSS below. If you are lucky, your editor will even syntax highlight each here-doc string too. Astute testing fans might complain that our fictional <code>assert_sass</code> arguments&#39; are backwards and that the expected CSS value needs to be the first parameter. I get it, but I think it looks and reads cleaner the other way around. And yes, I know it is <a href="http://sassnotsass.com">Sass not SASS</a> but I wanted to stick with here-doc conventions and uppercase my termination sequences.</p>
+
+<h3 id="implementation-time">Implementation Time</h3>
+
+<p>Now that the vision is out of the way, we need to make <code>assert_sass</code> work. Our project added the following Ruby methods to a <code>SassTestHelpers</code> module that was in turn mixed into our base spec case. The details of where you put them in your own project is up to you.</p>
+
+<p>That out of the way, the first thing we will need is a helper to render Sass.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">render_sass</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+  <span class="n">options</span><span class="p">[</span><span class="ss">:syntax</span><span class="p">]</span> <span class="o">=</span> <span class="ss">:scss</span> <span class="k">unless</span> <span class="n">options</span><span class="p">.</span><span class="nf">key?</span><span class="p">(</span><span class="ss">:syntax</span><span class="p">)</span>
+  <span class="n">options</span><span class="p">[</span><span class="ss">:style</span><span class="p">]</span> <span class="o">=</span> <span class="ss">:compact</span> <span class="k">unless</span> <span class="n">options</span><span class="p">.</span><span class="nf">key?</span><span class="p">(</span><span class="ss">:style</span><span class="p">)</span>
+  <span class="n">options</span><span class="p">[</span><span class="ss">:cache</span><span class="p">]</span> <span class="o">=</span> <span class="kp">false</span>
+  <span class="no">Sass</span><span class="o">::</span><span class="no">Engine</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">options</span><span class="p">).</span><span class="nf">render</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The first argument here is a template string to render and some options to pass down to the Sass rendering engine. Set the default syntax to your own needs. But I suggest keeping the <code>:style</code> option set to <code>:compact</code>. We felt this was the best output method for tests. Lastly, this method does not leverage the Sass cache for safety. Just say no to Heisenbugs!</p>
+
+<p>Now we need a method to render a string of Sass within our framework&#39;s context. Luckily our gem already adds itself to the Sass load path via the <code>SASS_PATH</code> environment variable. So all we have to do is import our awesome framework before whatever Sass we want to test. Again, Ruby&#39;s here-doc strings come in handy.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">render_my_framework</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+  <span class="n">render_sass</span> <span class="o">&lt;&lt;-</span><span class="no">TEMPLATE</span><span class="sh">
+    @import "my_framework";
+    </span><span class="si">#{</span><span class="n">template</span><span class="si">}</span><span class="sh">
+</span><span class="no">  TEMPLATE</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>So with only two helper methods, we can finally implement <code>assert_sass</code>. Since Minitest::Spec builds on top of unit style assertions, we delegate our assertion to <code>assert_equal</code>.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">assert_sass</span><span class="p">(</span><span class="n">sass_template</span><span class="p">,</span> <span class="n">expected_css</span><span class="p">)</span>
+  <span class="n">expected</span> <span class="o">=</span> <span class="n">expected_css</span><span class="p">.</span><span class="nf">squish</span>
+  <span class="n">actual</span> <span class="o">=</span> <span class="n">render_my_framework</span><span class="p">(</span><span class="n">sass_template</span><span class="p">).</span><span class="nf">squish</span>
+  <span class="n">assert_equal</span> <span class="n">expected</span><span class="p">,</span> <span class="n">actual</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This time we make sure to switch the expected and actual to line up with the proper expectation order. If we did not do this, the test error output would be backwards. Lastly, we are using ActiveSupport <a href="http://apidock.com/rails/ActiveSupport/CoreExtensions/String/Filters/squish">squish</a> string extension which removes consecutive whitespace not only from the ends of a string, but from within the middle too. This makes your CSS assertions tolerant to irrelevant white space introduced by indented here-doc strings.</p>
+
+<h3 id="final-sass-tests">Final Sass Tests</h3>
+
+<p>The final tests for our Sass framework&#39;s list extensions are below.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">it</span> <span class="s1">'my-first'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    $list: (one two three);
+    .test { content: my-first($list); }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { content: one; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+
+<span class="n">it</span> <span class="s1">'my-last'</span> <span class="k">do</span>
+  <span class="n">assert_sass</span> <span class="o">&lt;&lt;-</span><span class="no">SASS</span><span class="p">,</span> <span class="o">&lt;&lt;-</span><span class="no">CSS</span><span class="sh">
+    $list: (one two three);
+    .test { content: my-last($list); }
+</span><span class="no">  SASS</span><span class="sh">
+    .test { content: three; }
+</span><span class="no">  CSS</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The result is a simple declarative test style that boosts our confidence level as we move our living style guide&#39;s Sass framework forward. We can literally test anything from values to full expressions. Ruby is a great tool for testing and makes authoring Sass frameworks fun. I hope that you can use something like this within your own project and thanks for reading!</p>
+
+<h3 id="other-resources">Other Resources</h3>
+
+<ul>
+<li><a href="/blog/2014/09/08/building-the-customink-living-style-guide/">Building the CustomInk Living Style Guide</a></li>
+<li><a href="https://github.com/ericam/true">True Sass Unit Testing Framework</a></li>
+<li><a href="https://github.com/cburgmer/csscritic">CSS Critic Regression Testing</a></li>
+<li><a href="http://makandracards.com/makandra/1675-using-heredoc-for-prettier-ruby-code">Ruby here-doc Strings</a></li>
+</ul>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-09-30T00:00:00-04:00">
+      30 Sep 2014
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2014/09/30/unit-testing-sass-frameworks';
+    var disqus_title = "Unit Testing Sass Frameworks";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

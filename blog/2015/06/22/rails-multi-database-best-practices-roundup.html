@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Rails Multi-Database Best Practices Roundup - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often t...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Rails Multi-Database Best Practices Roundup</h1>
+        <p>Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often times these connections are both readable and writable. Collectively they represent a comprehensive business domain. Today I would like to cover everything I know about this topic, without going into the bike shed of micro services or schema management gems.</p>
+
+<p>The goal is simple! To give you the tools you need to keep your application running smoothly when connecting to multiple databases.</p>
+
+<h2 id="topics-amp-scenarios">Topics &amp; Scenarios</h2>
+
+<p>Each topic or scenario below is tested within a demo Rails application that you can checkout on GitHub. See the <a href="#resources">resources section</a> at the bottom of this post for more information. Examples assume that Rails 3.2.x to 4.2.x are the same behavior. When this is not the case, it will be explicitly pointed out.</p>
+
+<p>Reasons for multiple database connections vastly differ. To illustrate a common setup, this demo application will use PostgreSQL as the base &quot;legacy&quot; connection. Just imagine this base is something like Oracle or SQL Server. Our second connection is going to be MySQL. This is the database we want to migrate our primary new business logic onto.</p>
+
+<p>To easily follow along, MySQL models will be prefixed as such and all ActiveRecord logs have been tagged with the database connection that executed the query. This setup will give us more than enough opportunity to explore and have fun. Lets go!</p>
+
+<h3 id="topic-1-connection-management">Topic 1: Connection Management</h3>
+
+<p>First and foremost we are going to need a base class that champions a database connection. This is critical so that each subclass shares the same connection/pool. For example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MysqlBase</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">establish_connection</span> <span class="n">configurations</span><span class="p">[</span><span class="s1">'mysql'</span><span class="p">][</span><span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">]</span>
+  <span class="nb">self</span><span class="p">.</span><span class="nf">abstract_class</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><strong>Do not use establish_connection for other models.</strong> Only use it for the base connection class. Setting your base connection class as an <code>abstract_class</code> keeps ActiveRecord from querying the database for column information. Meaning this model has no attributes. Use this connection class as the superclass for each of your MySQL models. For example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">MysqlBase</span>
+<span class="k">end</span>
+<span class="k">class</span> <span class="nc">Order</span> <span class="o">&lt;</span> <span class="no">MysqlBase</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now, each model will will share the same connection pool. Benefits include:</p>
+
+<ul>
+<li>Shared transaction blocks.</li>
+<li>Reduced database connections.</li>
+<li>Single point for connection management.</li>
+</ul>
+
+<h3 id="topic-2-the-activerecord-query-cache">Topic 2: The ActiveRecord Query Cache</h3>
+
+<p>ActiveRecord&#39;s <a href="http://guides.rubyonrails.org/caching_with_rails.html#sql-caching">query cache</a> can be a beneficial performance optimization. On by default, it caches SQL results for the same query during the request/response cycle. This caching really shines with child to parent associations where <code>n</code> children find the same parent and only hit the database once.</p>
+
+<p>Unfortunately ActiveRecord can only cache your base connection. It knows not of other databases. So let&#39;s &quot;cash in&quot; on some of our simple code dividends and put that base connection class to work.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+
+  <span class="n">around_filter</span> <span class="ss">:cache_other_db_connections</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">cache_other_db_connections</span>
+    <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">cache</span> <span class="p">{</span> <span class="k">yield</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>Yup, it is that easy! If you had multiple database connections, just nest them in the outer block and yield once to the controller&#39;s around filter.</p>
+
+<h3 id="scenario-1-implicit-multi-db-transactions">Scenario 1: Implicit Multi-DB Transactions</h3>
+
+<p>So what happens when a model for one database creates or updates another model?</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">MysqlUser</span> <span class="o">&lt;</span> <span class="no">MysqlBase</span>
+  <span class="nb">self</span><span class="p">.</span><span class="nf">table_name</span> <span class="o">=</span> <span class="ss">:users</span>
+  <span class="n">after_save</span> <span class="ss">:account_create</span>
+
+  <span class="kp">private</span>
+  <span class="k">def</span> <span class="nf">account_create</span>
+    <span class="no">Account</span><span class="p">.</span><span class="nf">create_from_user!</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our <code>MysqlUser</code> model is going to save a legacy account model using the <code>after_save</code> callback. Remember, ActiveRecord runs creates or saves inside of a transaction.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">account_create</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">save</span>
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">MySQL</span><span class="p">:</span>  <span class="k">BEGIN</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">BEGIN</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">"accounts"</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span> <span class="n">RETURNING</span> <span class="nv">"id"</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">COMMIT</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">COMMIT</span>
+</code></pre></div>
+<p>So the outcome is pretty clear here. We have two distinct database transactions. One is not going to affect the other. What would happen if the account raised an exception when being created? Possibly due to a validation error?</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">account_create</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">account_fails_validation</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">save</span>
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">MySQL</span><span class="p">:</span>  <span class="k">BEGIN</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">BEGIN</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">ROLLBACK</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">ROLLBACK</span>
+</code></pre></div>
+<p>Not bad. We can see that ActiveRecord handles this simple setup quite well. Both the user and the account are rolled back.</p>
+
+<h3 id="topic-3-the-activerecord-rollback-exception">Topic 3: The ActiveRecord::Rollback Exception</h3>
+
+<p>With our first scenario understood, it is time for another topic. Time to talk about the <code>ActiveRecord::Rollback</code> exception object. Please take a moment to read the ActiveRecord documentation.</p>
+
+<blockquote>
+<p>Transaction uses this exception to distinguish a deliberate
+rollback from other exceptional situations. Normally, raising
+an exception will cause the transaction method to rollback
+the database transaction and pass on the exception. But if
+you raise an ActiveRecord::Rollback exception, then the database
+transaction will be rolled back, without passing on the exception.</p>
+</blockquote>
+
+<p>Did you see that? Using an <code>ActiveRecord::Rollback</code> will <strong>NOT</strong> pass the exception to a higher transaction block. To illustrate what happens, let&#39;s take our last scenario example and change the account to raise an <code>ActiveRecord::Rollback</code> vs a validation exception.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">account_create</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">account_raise_rollback</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">new_mysql_user</span><span class="p">.</span><span class="nf">save</span>
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">MySQL</span><span class="p">:</span>  <span class="k">BEGIN</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">BEGIN</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">ROLLBACK</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">COMMIT</span>
+</code></pre></div>
+<p>And there we go! The MySQL user just carries along on its happy way and commits the change. I will have more rollback examples below, but I might go so far as to say that you may never want to use <code>ActiveRecord::Rollback</code> unless you have a very clear grasp on how to manage transactions.</p>
+
+<h3 id="scenario-2-explicit-multi-db-transactions">Scenario 2: Explicit Multi-DB Transactions</h3>
+
+<p>Implicit transactions are great for one or two model instances, but sooner are later you will need to orchestrate more objects within a larger commit. Explicit transactions give you this control. Here is a simple multi-database example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MysqlUser</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+  <span class="no">MysqlUser</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'one@one.com'</span>
+  <span class="no">MysqlUser</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'two@two.com'</span>
+  <span class="no">Account</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'one@one.com'</span>
+  <span class="no">Account</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'two@two.com'</span>
+<span class="k">end</span>
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">MySQL</span><span class="p">:</span>  <span class="k">BEGIN</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">BEGIN</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">"accounts"</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span> <span class="n">RETURNING</span> <span class="nv">"id"</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">COMMIT</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">BEGIN</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">"accounts"</span> <span class="p">(...)</span> <span class="k">VALUES</span> <span class="p">(...)</span> <span class="n">RETURNING</span> <span class="nv">"id"</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">COMMIT</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">COMMIT</span>
+</code></pre></div>
+<p>The outer MySQL transaction was automatically joinable during the first two creates. This is because the model creates detected that the connection was already under a sharable transaction. The problem here is that the base connection had no joinable transaction block. Despite which connection we started the outer block with, the problem is the same. The solution is to open a transaction for each connection before doing any work.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">MysqlUser</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+  <span class="no">Account</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+    <span class="no">MysqlUser</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'one@one.com'</span>
+    <span class="no">MysqlUser</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'two@two.com'</span>
+    <span class="no">Account</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'one@one.com'</span>
+    <span class="no">Account</span><span class="p">.</span><span class="nf">create!</span> <span class="ss">email: </span><span class="s1">'two@two.com'</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div><div class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="n">MySQL</span><span class="p">:</span>  <span class="k">BEGIN</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">BEGIN</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">`users`</span> <span class="p">(...)</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">"accounts"</span> <span class="p">(...)</span> <span class="n">RETURNING</span> <span class="nv">"id"</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="nv">"accounts"</span> <span class="p">(...)</span> <span class="n">RETURNING</span> <span class="nv">"id"</span>
+ <span class="n">Base</span><span class="p">:</span>  <span class="k">COMMIT</span>
+<span class="n">MySQL</span><span class="p">:</span>  <span class="k">COMMIT</span>
+</code></pre></div>
+<p>Now we have a tidy atomic transaction across both databases. Any exception raised besides <code>ActiveRecord::Rollback</code> will automatically rollback both transactions. This pattern is so useful, I suggest making a helper that does the work for you. Again, this leverages the base connection class for the second database – I did promise it would come in handy.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">multi_transaction</span>
+    <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+      <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">transaction</span> <span class="p">{</span> <span class="k">yield</span> <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">multi_transaction</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">multi_transaction</span> <span class="p">{</span> <span class="k">yield</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now anytime you need to commit large changes, just wrap your code in <code>ActiveRecord::Base.multi_transaction { ... }</code> and sleep better knowing that your data is clean. If you want to learn more about ActiveRecord&#39;s transactions, please read the <a href="http://apidock.com/rails/ActiveRecord/ConnectionAdapters/DatabaseStatements/transaction">Rails API Docs</a>. They cover advanced topics like isolation levels and savepoints. None of which are covered in this post.</p>
+
+<h3 id="topic-4-explicit-transactions-are-serious">Topic 4: Explicit Transactions Are Serious!</h3>
+
+<p>If you are doing explicit transactions, you likely mean business. If so, make your code serious by using ActiveRecord&#39;s bang methods. Doing so helps keep code explicit to the task at hand with automatic rollbacks to two or more databases. Examples include:</p>
+
+<ul>
+<li><code>save!</code></li>
+<li><code>create!</code></li>
+<li><code>update_attributes!</code></li>
+<li><code>update!</code></li>
+<li><code>destroy!</code></li>
+</ul>
+
+<p>If you must raise exceptions during explicit transactions to multiple databases, please stay away from using <code>ActiveRecord::Rollback</code>, this could complicate your code and in most cases need to be re-raised.</p>
+
+<h3 id="topic-5-shared-connection-pools">Topic 5: Shared Connection/Pools</h3>
+
+<p>Every now and then you may use a gem whose model(s) subclasses <code>ActiveRecord::Base</code> and you want to force that connection to another database. The <code>Delayed::Job</code> library is a good example. You could use <code>establish_connection</code>, but that would generate a distinct connection pool and keep transactions from being shared. Here is a bullet proof freedom patch to use with any model.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># In config/initializers/delayed_job.rb</span>
+
+<span class="no">Delayed</span><span class="o">::</span><span class="no">Backend</span><span class="o">::</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Job</span><span class="p">.</span><span class="nf">class_eval</span> <span class="k">do</span>
+  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+
+    <span class="k">def</span> <span class="nf">connection_pool</span>
+      <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection_pool</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">retrieve_connection</span>
+      <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">retrieve_connection</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">connected?</span>
+      <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connected?</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">remove_connection</span><span class="p">(</span><span class="n">klass</span> <span class="o">=</span> <span class="nb">self</span><span class="p">)</span>
+      <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">remove_connection</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This would change Delayed::Job from using our base connection to using our second MySQL connection. It is best to do patches like this in a Rails initializer. This guarantees gems are already reqired and in most cases have not yet connected to the database. If your model connects before these patches are applied, you could end up with an orphaned connection pool to the wrong database.</p>
+
+<p>The patch works by overriding critical connection specification/handling class methods defined on ActiveRecord::Base. The first two methods <code>connection_pool</code> and <code>retrieve_connection</code> will make all your queries work. The second two will ensure all remaining connection management methods like <code>remove_connection</code> and <code>clear_all_connections!</code> do the same. But remember! If you need to do any connection management, you really only need do it on the connection class, in this case, <code>MysqlBase</code>.</p>
+
+<h3 id="topic-6-forked-processes-amp-clearing-connections">Topic 6: Forked Processes &amp; Clearing Connections</h3>
+
+<p>Most libraries that fork your Rails application process know how to reset ActiveRecord&#39;s base connections. This includes web servers like Passenger or Unicorn. However, it is up to you to do the same for any other database connections. This is easy to do by leveraging our connection class in the first topic.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">clear_all_connections!</span>
+<span class="no">MysqlBase</span><span class="p">.</span><span class="nf">establish_connection</span> <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">configurations</span><span class="p">[</span><span class="s1">'mysql'</span><span class="p">][</span><span class="no">Rails</span><span class="p">.</span><span class="nf">env</span><span class="p">]</span>
+</code></pre></div>
+<p>First we clear all connections. This is normally done before forking. Methods like <code>clear_all_connections!</code> and <code>clear_active_connections!</code> iterate across all connection pools. You only need to call this once, not per connection. Second, we call <code>establish_connection</code> on our MySQL connection class using the same configuration method we did in the first topic.</p>
+
+<h3 id="topic-7-rails-transactional-fixtures">Topic 7: Rails Transactional Fixtures</h3>
+
+<p>If you are using transactional fixtures and you have fixtures for each connection, then ActiveRecord will do all the work for you by making sure each test is wrapped with transactional savepoints to each database. However, if you do not have fixtures for all connections then it is up to you to start the first transaction for each additional connection. Again, using our MySQL connection class as an example:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Rails 3.2.x</span>
+<span class="n">before</span> <span class="k">do</span>
+  <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">increment_open_transactions</span>
+  <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">transaction_joinable</span> <span class="o">=</span> <span class="kp">false</span>
+  <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">begin_db_transaction</span>
+<span class="k">end</span>
+<span class="n">after</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">open_transactions</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">rollback_db_transaction</span>
+    <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">decrement_open_transactions</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># Rails 4.2.x</span>
+<span class="n">before</span> <span class="p">{</span> <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">begin_transaction</span> <span class="ss">joinable: </span><span class="kp">false</span> <span class="p">}</span>
+<span class="n">after</span>  <span class="p">{</span> <span class="no">MysqlBase</span><span class="p">.</span><span class="nf">connection</span><span class="p">.</span><span class="nf">rollback_transaction</span> <span class="p">}</span>
+</code></pre></div>
+<p>Please remember that ActiveRecord uses savepoints for nested transactions. Depending on your database, you will see <code>SAVEPOINT</code> and <code>RELEASE SAVEPOINT</code> for tests in your logs. Only the outer most transactions will use <code>BEGIN</code> and <code>ROLLBACK</code>.</p>
+
+<h2 id="resources">Resources</h2>
+
+<p>Thanks for reading this far. Did I miss anything important or maybe you would like to ask a question? If so, drop a comment and I would be more than happy to expand on any topic.</p>
+
+<p>Each topic or scenario here is fully tested in a demo rails application. Check it out on GitHub if you are interested in playing around with these or any other multi-database topics that interest you. If you find a new one or care to share your own, please drop a comment or a pull request.</p>
+
+<ul>
+<li><a href="https://github.com/customink/encom_dbs">Tested Multi-Database Rails Application</a></li>
+</ul>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2015-06-22T00:00:00-04:00">
+      22 Jun 2015
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2015/06/22/rails-multi-database-best-practices-roundup';
+    var disqus_title = "Rails Multi-Database Best Practices Roundup";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>
