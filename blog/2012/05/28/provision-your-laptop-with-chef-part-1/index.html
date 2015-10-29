@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Provision your laptop with Chef: Part 1 - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="If you have ever tried to follow the Opscode Getting Started Guide for Chef, you&#39;ll quickly be overtaken by Chef jargon, confusing instructions...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Provision your laptop with Chef: Part 1</h1>
+        <p>If you have ever tried to follow the <a href="http://wiki.opscode.com/display/chef/Getting+Started">Opscode Getting Started Guide for Chef</a>, you&#39;ll quickly be overtaken by Chef jargon, confusing instructions, many assumptions, and no clear direction. Even the most experienced developers had a difficult time following the Opscode Wiki. While it serves as a great reference resource, you pretty much have to know Chef before it is of any use.</p>
+
+<p>In Part 1 of this 2-part series, we will walk through setting up the Chef environment on your local machine. In Part 2, we will demonstrate how to provision your personal laptop using Chef.</p>
+
+<!--more-->
+
+<h2 id="what-is-chef">What is Chef?</h2>
+
+<p>One of the best things about Chef is that it is idempotent. Unlike a simple bash script or complex startup script, Chef can be applied to the same machine hundreds of times. Only the &quot;changes&quot; will be executed on each of the clients. This makes deploying and updating thousands of machines as easy as baking a cake!</p>
+
+<h2 id="understanding-chef-amp-jargon">Understanding Chef &amp; Jargon</h2>
+
+<p>One of the most interesting and confusing parts about Chef is its lingo. Everything relates to <strong>food</strong>. Be sure to grab a snack before diving in any further.</p>
+
+<h3 id="architecture">Architecture</h3>
+
+<p>One of the most dangerous practices when using Chef is applying prior knowledge. In Chef, everything is named relative to Chef. This means, even though your are provisioning a production <em>server</em>, it&#39;s still a Chef <em>client</em>. This can be very confusing at first, but once you start thinking in terms of Chef things will begin to make sense.</p>
+
+<ul>
+<li><code>(Chef) Server</code> [aka hosted chef] - refers a machines that stores cookbooks, roles, and other Chef configurations</li>
+<li><code>(Chef) Client</code> [aka node] - refers to a machine that connects to and is managed by a Chef Server</li>
+<li><code>(Chef) Workstation</code> - refers to a machine where recipes are developed, altered, deleted, and more</li>
+</ul>
+
+<p>This is the most simplistic picture. It&#39;s possible for a single machine to exist in all three of these roles simultaneously! There are subsets of Chef, such as <a href="http://wiki.opscode.com/display/chef/Chef+Solo">Chef-Solo</a>, but those will not be discussed here.</p>
+
+<p>A typical scenario begins at the workstation. A developer creates a cookbook, role, or other artifact on the local machine. When finished, that artifact is uploaded to the Chef Server. The Chef Clients receive these (new) instructions and execute them locally.</p>
+
+<h3 id="jargon">Jargon</h3>
+
+<p>We&#39;ve also been throwing around some other terms that we should take a second to define:</p>
+
+<ul>
+<li><code>cookbook</code> - collection of recipe, resources, attributes, templates, metadata, and other files</li>
+<li><code>recipe</code> - a set of instructions written in a Ruby DSL that tells a node what commands to execute</li>
+<li><code>metadata</code> - additional information, such as dependencies, for a given cookbook</li>
+<li><code>resource</code> - cross-platform abstraction of the &quot;thing&quot; you&#39;re configuring such as a package or a user</li>
+<li><code>provider</code> - a platform-specific implementation of a resource</li>
+<li><code>data bag</code> - JSON key-value store for storing data, attributes, and more</li>
+<li><code>environment</code> - provide a mechanism for managing different deployment locations such as production, staging, development, and testing</li>
+<li><code>template</code> - a file (like a config file) to be &quot;rendered&quot; on the server</li>
+</ul>
+
+<p>There are also a few tools:</p>
+
+<ul>
+<li><code>knife</code> - a command line tool for managing chef and chef recipes</li>
+<li><code>shef</code> - chef console. this is the equivalent of <code>rails console</code> for chef</li>
+</ul>
+
+<p>Before continuing, please make sure you understand that these are very over-simplified definitions and abstractions. Chef is much more powerful that these simplistic definitions allow.</p>
+
+<h2 id="set-up-your-opscode-account">Set up your Opscode Account</h2>
+
+<p>For the purposes of this tutorial, we will use Chef Hosted by Opscode (the creators of Chef). The service provides 5 free nodes for use. Go ahead and create your free account by heading over to the <a href="https://community.opscode.com/users/new">Hosted Chef Signup page</a>. You should see something like this:</p>
+
+<p><img src="http://technology-customink-com.s3.amazonaws.com/images/hosted-chef-signup.png" alt="Hosted Chef Signup page" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" /></p>
+
+<p>You&#39;ll need to confirm your email, but once that&#39;s done, head on over to the <a href="https://manage.opscode.com/organizations">Opscode Management Console</a>. It really doesn&#39;t matter what you call your organization - I used the same as my username. You should see a screen like this:</p>
+
+<p><img src="http://technology-customink-com.s3.amazonaws.com/images/hosted-chef-management-console.png" alt="Hosted Chef Management Console" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" /></p>
+
+<p>You probably only have one organization, but the image should give you a good idea. First thing you&#39;ll want to do is <strong>Regenerate validation key</strong> and <strong>Generate knife config</strong>. We will talk about this more in detail, but save these files in a handy place for later. These files should always be kept securely.</p>
+
+<p>Also, if you didn&#39;t get your private key when registering, you should do that now (for some reason, Opscode does not always stream the key). Go to the <a href="http://community.opscode.com/">Opscode Community Site</a> and login (if you aren&#39;t already). Click on your profile and then choose <strong>get private key</strong>.</p>
+
+<p><img src="http://technology-customink-com.s3.amazonaws.com/images/chef-community-user.png" alt="Chef Community User" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" /></p>
+
+<p>At this point you should have the following files:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[your_organization_name]-validator.pem
+[your_username].pem
+knife.rb
+</code></pre></div>
+<p>For example, mine would be:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">ci-validator.pem
+sethvargo.pem
+knife.rb
+</code></pre></div>
+<p>Sometimes Opscode doesn&#39;t stream the correct files, so you may need to do some renaming:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">_knife_config   #=&gt; knife.rb
+_regenerate_key #=&gt; [your_organization_name]-validator.pem
+</code></pre></div>
+<h2 id="install-ruby-chef-and-git">Install Ruby, Chef, and Git</h2>
+
+<p>Chef is written in Ruby. Therefore, you must have Ruby installed. Installing Ruby is beyond the scope of this topic, but here are some quick resources:</p>
+
+<ul>
+<li><a href="http://rubyinstaller.org/">Ruby Installer for Windows</a> (also install the <a href="https://github.com/oneclick/rubyinstaller/wiki/development-kit">Development Kit</a>)</li>
+<li><a href="http://rvm.io/">Installing Ruby with rvm</a></li>
+<li><a href="https://github.com/sstephenson/rbenv">Installing Ruby with rbenv</a></li>
+</ul>
+
+<p>You should also install <code>git</code>. Check out the <a href="http://help.github.com/set-up-git-redirect">Github tutorial for installing git</a>.</p>
+
+<p>Once you have Ruby and Git installed, you&#39;ll need to install chef:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">gem install chef
+</code></pre></div>
+<p>This command will install the Chef gem as well as some other dependencies.</p>
+
+<p>A this point, you should have a novice understand of Chef and Chef Jargon, have an account on Opscode Hosted Chef, and have a working version of Ruby, Git, and the Chef gem installed. The rest of this guide will assume you have completed all those steps correctly.</p>
+
+<h2 id="setup-your-workstation">Setup your Workstation</h2>
+
+<p>Find a working directory on your local machine where you plan to store your Chef cookbooks. For this tutorial, we will use <code>~/Development</code>. You&#39;ll need a skeleton chef repository. You could make your own or clone the Opscode one:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">git clone git@github.com:opscode/chef-repo.git
+</code></pre></div>
+<p>Take a few minutes to poke around the repository. You definitely won&#39;t understand everything, but look at a few READMEs (in subdirectories).</p>
+
+<p>Inside the <code>chef-repo</code> directory (<code>~/Development/chef-repo</code>), we need to create a hidden folder named <code>.chef</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">cd ~/Development/chef-repo
+mkdir .chef
+</code></pre></div>
+<p>This is where you should put the files we downloaded earlier:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">mv [location]/[your_username].pem ~/Development/chef-repo/.chef/
+mv [location]/[your_organization_name].pem ~/Development/chef-repo/.chef/
+mv [location]/knife.rb ~/Development/chef-repo/.chef/
+</code></pre></div>
+<p>For my case, it would be:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">mv ~/Desktop/sethvargo.pem ~/Development/chef-repo/.chef/
+mv ~/Desktop/ci-validator.pem ~/Development/chef-repo/.chef/
+mv ~/Desktop/knife.rp ~/Development/chef-repo/.chef/
+</code></pre></div>
+<p>To confirm everything is working, try and list all the clients (it should be empty):</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife client list
+</code></pre></div>
+<p>If this command succeeds without error, everything is set up correctly!</p>
+
+<p>This concludes setting up your workstation. Now we are ready to create our first cookbook.</p>
+
+<h2 id="create-your-first-cookbook">Create your first cookbook</h2>
+
+<p>Wash your hands, put on your Chef&#39;s Hat, and get ready to bake! We are going to create your very first cookbook. The cookbook will be very simple and is more for demonstrating working with <code>knife</code> and <code>chef-client</code>.</p>
+
+<p>Our cookbook will be named &quot;hello world&quot;. Let&#39;s start by using <code>knife</code> to create our cookbook skeleton:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">cd ~/Development/chef-repo
+knife cookbook create hello_world
+</code></pre></div>
+<p>You should see the following output:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">** Creating cookbook hello_world
+** Creating README for cookbook: hello_world
+** Creating metadata for cookbook: hello_world
+</code></pre></div>
+<p>Open up the project in your favorite text editor and look inside the <code>cookbooks</code> directory. You should see the following:</p>
+
+<p><img src="http://technology-customink-com.s3.amazonaws.com/images/chef-cookbook-structure.png" alt="Chef Cookbook Structure" class="tb-Img tb-Img--responsive-ctr tb-Img--fancy" /></p>
+
+<p>This cookbook will create a file <code>~/hello_world.txt</code> that says &quot;Hello World!&quot;.</p>
+
+<p>Let&#39;s first make the template. A template is like the &quot;view&quot; of MVC. It has access to instance variables and uses embedded ruby. Inside the <code>templates/default</code> directory, create a new file named <code>hello-world.txt.erb</code> and add some content:</p>
+<div class="highlight"><pre><code class="language-erb" data-lang="erb"><span class="cp">&lt;%</span> <span class="c1"># templates/default/hello-world.txt.erb </span><span class="cp">%&gt;</span>
+Hello World!
+
+Chef Version: <span class="cp">&lt;%=</span> <span class="n">node</span><span class="p">[</span><span class="ss">:chef_packages</span><span class="p">][</span><span class="ss">:chef</span><span class="p">][</span><span class="ss">:version</span><span class="p">]</span> <span class="cp">%&gt;</span>
+Platform: <span class="cp">&lt;%=</span> <span class="n">node</span><span class="p">[</span><span class="ss">:platform</span><span class="p">]</span> <span class="cp">%&gt;</span>
+Version: <span class="cp">&lt;%=</span> <span class="n">node</span><span class="p">[</span><span class="ss">:platform_version</span><span class="p">]</span> <span class="cp">%&gt;</span>
+</code></pre></div>
+<p>You can see we are referencing a <code>node</code> variable. This refers to the current client that Chef is running on.</p>
+
+<p>Now we need to create the actual recipe with instructions. You can think of the recipe as the &quot;controller&quot; of MVC. Open up the <code>recipes/default.rb</code> file and add the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># recipes/default.rb</span>
+<span class="n">template</span> <span class="s2">"</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'HOME'</span><span class="p">]</span><span class="si">}</span><span class="s2">/hello-world.txt"</span> <span class="k">do</span>
+  <span class="n">source</span> <span class="s1">'hello-world.txt.erb'</span>
+  <span class="n">mode</span> <span class="s1">'0644'</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The <code>template</code> keyword is a resource like we defined before. It tells the recipe to render the given template source to the given file. We also specify the file permissions using <code>mode</code>.</p>
+
+<p>That&#39;s it! Our cookbook is done and ready to be uploaded to Hosted Chef. We will use the <code>knife</code> command to do this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife cookbook upload hello_world
+</code></pre></div>
+<p>You should see output like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Uploading hello_world             [0.0.1]
+Uploaded 1 cookbook.
+</code></pre></div>
+<p>If you get a message like:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">WARNING: No knife configuration file found
+ERROR: Your private key could not be loaded from /etc/chef/client.pem
+Check your configuration file and ensure that your private key is readable
+</code></pre></div>
+<p>it means that your key is invalid. Regenerate your personal and/or organization keys and ensure everything is placed in the correct directories.</p>
+
+<p>Our cookbook is now on Hosted Chef and ready to be distributed to our nodes. Chef doesn&#39;t automatically tell nodes to update. You can do this with a cron job, running <code>chef-client</code> as a service, or by running <code>chef-client</code> manually on any node.</p>
+
+<p>For simplicity, let&#39;s just run this on our local workstation. Let&#39;s set up the local workstation as a client. Run the following command from the inside the repository:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">sudo knife configure client /etc/chef
+</code></pre></div>
+<p>If you&#39;re using <code>rvm</code>, use the <code>rvmsudo</code> command prefix:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">rvmsudo knife configure client /etc/chef
+</code></pre></div>
+<p>You should see output like:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">Creating client configuration
+Writing client.rb
+Writing validation.pem
+</code></pre></div>
+<p>That&#39;s it! Your workstation is now a client. Let&#39;s provision this server by running <code>chef-client</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">sudo chef-client
+</code></pre></div>
+<p>Or with RVM:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">rvmsudo chef-client
+</code></pre></div>
+<p>You should see output like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">INFO: *** Chef 0.10.10 ***
+INFO: Client key /etc/chef/client.pem is not present - registering
+INFO: Run List is []
+INFO: Run List expands to []
+INFO: Starting Chef Run for NODE
+INFO: Running start handlers
+INFO: Start handlers complete.
+INFO: Loading cookbooks []
+WARN: Node NODE has an empty run list.
+INFO: Chef Run complete in 0.988165 seconds
+INFO: Running report handlers
+INFO: Report handlers complete
+</code></pre></div>
+<p>Take a look inside your <code>$HOME</code> directory and see if the <code>hello-word.txt</code> file was created...</p>
+
+<p>It doesn&#39;t appear the file was created. We must have done something wrong! Actually, we did everything correctly. We just forgot one step - we never <strong>told</strong> our node to execute the recipe we just wrote. By default, Chef does not execute any of your recipes. You must explicitly require them. There are a variety of ways to do this. We will use a <code>run_list</code> here.</p>
+
+<p>First, we need to figure out what our node is named. Run <code>knife node list</code> and you should now see two nodes:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">NODE
+[your_organization_name]-validator
+</code></pre></div>
+<p>Mine looks like:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">seth
+sethvargo-validator
+</code></pre></div>
+<p>We obviously want <code>NODE</code>. In my case, it&#39;s <code>seth</code>. Now we can edit the <code>run_list</code> for that node:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife node run_list add NODE hello_world
+</code></pre></div>
+<p>For me, that command would look like:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife node run_list add seth hello_world
+</code></pre></div>
+<p>You should see the following output:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">run_list:  [recipe[hello_world]]
+</code></pre></div>
+<p>Let&#39;s inspect this node using the <code>show</code> command:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife node show NODE
+</code></pre></div>
+<p>You should now see <code>hello_world</code> in the <code>run_list</code>. Run the <code>chef-client</code> command again (remember you might need to use <code>sudo</code>) and you should get output like the following:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">INFO: *** Chef 0.10.10 ***
+INFO: Run List is [recipe[hello_world]]
+INFO: Run List expands to [hello_world]
+INFO: Starting Chef Run for seth
+INFO: Running start handlers
+INFO: Start handlers complete.
+INFO: Loading cookbooks [hello_world]
+INFO: Storing updated cookbooks/hello_world/recipes/default.rb in the cache.
+INFO: Processing template[/Users/seth/hello-world.txt] action create (hello_world::default line 10)
+INFO: template[/Users/seth/hello-world.txt] mode changed to 644
+INFO: template[/Users/seth/hello-world.txt] updated content
+INFO: Chef Run complete in 1.188536 seconds
+INFO: Running report handlers
+INFO: Report handlers complete
+</code></pre></div>
+<p>Open up your <code>$HOME</code> directory and you should see a file named <code>hello-world.txt</code>. Look inside and you&#39;ll see the those node variables were translated into plain text. Awesome!</p>
+
+<p>You can delete that file or leave it around as a reminder of how awesome Chef is. We have one last thing to do before we are done with this tutorial.</p>
+
+<p>Let&#39;s remove that recipe from the <code>run_list</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife node run_list remove NODE hello_world
+</code></pre></div>
+<p>Again, mine would be:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">knife node run_list remove seth hello_world
+</code></pre></div>
+<p>You should see output like the following:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">run_list:  [recipe[hello_world]]
+</code></pre></div>
+<p>Well, this concludes this (rather lengthy) tutorial on installing Chef, registering for Hosted Chef, creating your first cookbook, and provisioning your first machine.</p>
+
+<p>Part 2 of this series will cover more recipes and full provisioning and customization of your personal laptop using Chef.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-05-28T20:32:00-04:00">
+      28 May 2012
+    </time></br>
+    by Seth Vargo
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/05/28/provision-your-laptop-with-chef-part-1/';
+    var disqus_title = "Provision your laptop with Chef: Part 1";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

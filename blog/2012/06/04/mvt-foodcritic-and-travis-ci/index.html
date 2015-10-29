@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>MVT:  Foodcritic and Travis CI - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="One of the big themes that emerged during #ChefConf was that we should be testing our infrastructure code.  Software engineers have been practicing...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>MVT:  Foodcritic and Travis CI</h1>
+        <p>One of the big themes that emerged during <a href="http://chefconf.opscode.com/">#ChefConf</a> was that we should be testing our infrastructure code.  Software engineers have been practicing test-driven development, behavior-driven development, continuous integration, and many other testing-related practices for a long time.  It&#39;s becoming more important for the infrastructure engineers to learn from and apply these practices to our day-to-day workflow.  When it comes to testing Chef-driven infrastructure automation, there are a number of tools and practices that are starting to emerge.  In this article I&#39;ll look at a &quot;minimum viable testing&quot; (MVT) approach to this problem using <a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> and <a href="http://travis-ci.org/">Travis CI</a>.  <a href="/blog/2012/06/04/mvt-foodcritic-and-travis-ci/#steps">Follow the steps in this article</a> to get your public cookbooks tested after every <code>git push</code>.</p>
+
+<h3 id="testing-with-chef">Testing with Chef</h3>
+
+<p>The idea of building automated tests for your infrastructure code has been getting a lot of traction lately.  When it comes to <a href="http://www.opscode.com/chef/">Chef</a>, many tools are starting to emerge.</p>
+
+<!--more-->
+
+<p>The first tool in this area to get any significant traction, that I know of, was <a href="http://www.cucumber-chef.org/">cucumber-chef</a>.  I first learned of this tool when I saw a pre-release copy of <a href="http://shop.oreilly.com/product/0636920020042.do">Test-Driven Infrastructure with Chef</a> at the O&#39;Reilly booth at <a href="http://velocityconf.com/velocity2011">Velocity Conf 2011</a>.  <a href="http://twitter.com/lordcope">Stephen Nelson-Smith</a>, the book&#39;s author and framework&#39;s lead developer, proposes an outside-in approach to testing where your tests can also act as monitors that look after the health of your infrastructure.  I like the idea of this approach and feel it makes a lot of sense in a greenfield environment.  One benefit of this approach is that it blurs the line between testing and monitoring.  You can easily hook-up your monitoring system to your cucumber tests.</p>
+
+<p><a href="https://github.com/acrmp/chefspec">ChefSpec</a> is another tool for testing your Chef code.  It is a gem that makes it easy to write <a href="http://rspec.info/">RSpec</a> examples for Chef cookbooks.  This style of testing allows you to execute your tests without needing to converge the node that your tests are running on.  In other words, you can execute your tests without needing to provision a server.  One huge appeal to this style of testing is that the feedback loop is very small.  You&#39;ll get feedback about your cookbook changes within seconds or a very few minutes of saving your changes.</p>
+
+<p><a href="https://github.com/calavera/minitest-chef-handler">Minitest Chef Handler</a> is yet another tool for testing with Chef.  This runs a suite of <a href="https://github.com/seattlerb/minitest">minitest</a> tests as a report handler in your Chef-managed nodes.  As you may know, report handlers are run at the end of each <a href="http://wiki.opscode.com/display/chef/Anatomy+of+a+Chef+Run">chef run, or convergence</a>.</p>
+
+<h3 id="testing-at-chefconf">Testing at ChefConf</h3>
+
+<p>At the inaugural <a href="http://chefconf.opscode.com">#ChefConf</a> there were many sessions that included information about many companies&#39; approach to testing.  Here&#39;s a quick list of some of the sessions:</p>
+
+<ul>
+<li><p><a href="http://www.foodfightshow.org/2012/04/episode-10-testallthethings-testing.html">Food Fight Show Episode #10 - TESTALLTHETHINGS</a> -- This wasn&#39;t actually part of #ChefConf but is &#39;required listening&#39; for anyone interested in learning more about this space.</p></li>
+<li><p><a href="http://chefconf2012.sched.org/event/bfe13edac99e2b4d8582f0cd1005ee73?iframe=no&amp;w=700&amp;sidebar=no&amp;bg=no">#ChefConf Pre-event Hackday: TEST ALL THE THINGS!!!</a></p></li>
+<li><p><a href="https://github.com/atomic-penguin/ntp">NTP Cookbook with tests</a> - tests were added to this cookbook as part of the hackday event.</p></li>
+<li><p><a href="http://www.youtube.com/watch?v=o2e0aZUAVGw">Test-driven Development for Chef Practitioners</a> (video)</p></li>
+<li><p><a href="http://www.youtube.com/watch?v=dPaYfAIvqxw">Test Driven Development Roundtable</a> (video)</p></li>
+</ul>
+
+<!--more-->
+
+<h3 id="foodcritic">Foodcritic</h3>
+
+<p><a href="http://acrmp.github.com/foodcritic/">Foodcritic</a> is a lint tool for your Chef cookbooks.</p>
+
+<blockquote>
+<p>Foodcritic has two goals:</p>
+
+<ul>
+<li><p>To make it easier to flag problems in your Chef cookbooks that will cause Chef to blow up when you attempt to converge. This is about faster feedback. If you automate checks for common problems you can save a lot of time.</p></li>
+<li><p>To encourage discussion within the Chef community on the more subjective stuff - what does a good cookbook look like? Opscode have avoided being overly prescriptive which by and large I think is a good thing. Having a set of rules to base discussion on helps drive out what we as a community think is good style.</p></li>
+</ul>
+</blockquote>
+
+<h4 id="why-start-with-foodcritic">Why start with Foodcritic?</h4>
+
+<p>Given the plethora of options available, why should you start with Foodcritic?  Well, you have to start somewhere.  We felt Foodcritic was a good choice because it was easy to get started with, the tests ran quickly, and we are working under the assumption that once we started some automated testing, we&#39;ll start layering on more and more pieces as we go.  After some initial experiments, we found that we could get Foodcritic looking after our each cookbook in a matter of minutes and local tests running in seconds.</p>
+
+<p>The pseudo-converge approaches (like ChefSpec) initially feel like we&#39;ll need to do a lot of mocking that will take some time to get correct.  The post-converge approaches (like cucumber-chef and minitest) will take longer to run and are a bit more complex.</p>
+
+<p>One benefit of the post-converge approach is the ability to use your tests as health monitors.  We already have monitoring in place and use it as an indicator that a node is fully provisioned.  We call this &quot;monitor-driven development.&quot;  Given that, it was better for us to get started with something that runs without requiring a full converge.  Foodcritic fit the bill quite nicely.</p>
+
+<h3 id="travis-ci">Travis CI</h3>
+
+<p>Travis CI is:</p>
+
+<blockquote>
+<p>A hosted continuous integration service for the open source community.</p>
+</blockquote>
+
+<p>Using Travis CI in conjunction with Foodcritic, we&#39;d have a basic automated test foundation to build on.</p>
+
+<h3 id="automated-foodcritic-tests-with-travis-ci">Automated Foodcritic tests with Travis CI <a name="steps"></a></h3>
+
+<p>Using Foodcritic and Travis CI, you can quickly set-up a &quot;minimum viable testing&quot; (MVT) environment.  The idea is that once you have some sort of tests running against your cookbooks, you&#39;ll want to add more and doing so will be easy.  Let&#39;s look at how to add Foodcritic and Travis CI to your cookbook workflow.</p>
+
+<h4 id="initial-set-up">Initial set-up</h4>
+
+<p>Follow these steps to get everything set-up and ready for your first tests:</p>
+
+<ol>
+<li><code>gem install foodcritic</code></li>
+<li> Go to <a href="http://travis-ci.org/">Travis CI</a> and follow the Sign In link at the top.</li>
+<li> Activate the GitHub Service Hook for your cookbook&#39;s repository from your TravisCI profile page.  Each of your cookbooks has its own repository, right?!</li>
+</ol>
+
+<h4 id="configure-your-project">Configure your project</h4>
+
+<p>The next step is to add a .travis.yml file to your project.</p>
+
+<p>``` ruby .travis.yml
+language: ruby
+gemfile:</p>
+
+<ul>
+<li>test/support/Gemfile
+rvm:
+
+<ul>
+<li>1.9.2</li>
+<li>1.9.3
+script: bundle exec rake foodcritic
+```</li>
+</ul></li>
+</ul>
+
+<p>This file tells Travis CI how to build your project.  We&#39;ve specified the language (ruby) and the versions of ruby to use when testing this cookbook (1.9.2 and 1.9.3).  We&#39;ve also specified a Gemfile and script to execute when testing this project.  Let&#39;s add a Gemfile to a new directory in our cookbook, <code>test/support</code>.</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">mkdir -p <span class="nb">test</span>/support
+touch <span class="nb">test</span>/support/Gemfile
+</code></pre></div>
+<p>Our Gemfile is pretty simple, just include <code>rake</code> and <code>foodcritic</code>.</p>
+
+<p>``` ruby Gemfile
+source &quot;<a href="https://rubygems.org">https://rubygems.org</a>&quot;</p>
+
+<p>gem &#39;rake&#39;
+gem &#39;foodcritic&#39;</p>
+<div class="highlight"><pre><code class="language-" data-lang="">
+Finally, we'll need to add a Rake file that will be run each time Travis builds our project.
+
+``` ruby Rakefile
+#!/usr/bin/env rake
+
+desc "Runs foodcritic linter"
+task :foodcritic do
+  if Gem::Version.new("1.9.2") &lt;= Gem::Version.new(RUBY_VERSION.dup)
+    sandbox = File.join(File.dirname(__FILE__), %w{tmp foodcritic cookbook})
+    prepare_foodcritic_sandbox(sandbox)
+
+    sh "foodcritic --epic-fail any #{File.dirname(sandbox)}"
+  else
+    puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is &lt; 1.9.2."
+  end
+end
+
+task :default =&gt; 'foodcritic'
+
+private
+
+def prepare_foodcritic_sandbox(sandbox)
+  files = %w{*.md *.rb attributes definitions files libraries providers
+recipes resources templates}
+
+  rm_rf sandbox
+  mkdir_p sandbox
+  cp_r Dir.glob("{#{files.join(',')}}"), sandbox
+  puts "\n\n"
+end
+
+</code></pre></div>
+<p>This Rakefile will copy the contents of our cookbook to a temporary directory and run the foodcritic tests on the temporary directory.  Note the <code>--epic-fail</code> tag is used to fail the build (return a non-zero exit code) on <code>any</code> rule that does not pass.</p>
+
+<p>That&#39;s it!  When you push your commit to github, you should see Travis CI pick-up the changes, run your build, and report on status.</p>
+
+<h3 id="share-your-build-status">Share Your Build Status</h3>
+
+<p>One final step that you may consider is adding a build status indicator to your README.  This simple line in your README will let others know what the current build status is for your cookbook.</p>
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">
+<span class="o">[</span>![Build Status]<span class="o">(</span>https://secure.travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png<span class="o">)](</span>http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME]<span class="o">)</span>
+
+</code></pre></div>
+<h3 id="thanks-amp-additional-resources">Thanks &amp; Additional Resources</h3>
+
+<p>A big &quot;Thank You!&quot; shout-out to <a href="https://twitter.com/fnichol">Fletcher Nichol</a> and <a href="https://twitter.com/atomic_penguin">Eric G. Wolfe</a> from whom I &#39;borrowed&#39; the <code>Rakefile</code> and <code>.travis.yml</code> used in this post.</p>
+
+<p>More information on Foodcritic and Travis CI can be found here:</p>
+
+<ul>
+<li><a href="http://acrmp.github.com/foodcritic/">Foodcritic</a></li>
+<li><a href="http://about.travis-ci.org/docs/user/getting-started/">Travis CI: Getting started guide</a></li>
+<li><a href="http://about.travis-ci.org/docs/user/status-images/">Travis CI: Status Images</a></li>
+</ul>
+
+<h3 id="next-post">Next Post</h3>
+
+<p>Be sure to read the next post on this topic:  <a href="/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and Travis CI</a></p>
+
+<hr>
+
+<p><sub>Reposted from <a href="http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/">Nathen Harvey&#39;s blog</a><sub></p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-06-04T13:45:00-04:00">
+      04 Jun 2012
+    </time></br>
+    by Nathen Harvery
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/06/04/mvt-foodcritic-and-travis-ci/';
+    var disqus_title = "MVT:  Foodcritic and Travis CI";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

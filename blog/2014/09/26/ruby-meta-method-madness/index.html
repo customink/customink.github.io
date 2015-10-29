@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Ruby Meta - Method Madness - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Ruby metaprogramming is fun and very rewarding, but also a little bewildering. One of the great things about Ruby is that you can dynamically add m...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Ruby Meta - Method Madness</h1>
+        <p>Ruby metaprogramming is fun and very rewarding, but also a little bewildering. One of the great things about Ruby is that you can dynamically add methods to objects.  Ruby gives us <code>#eval</code>, <code>#instance_eval</code>, and <code>#class_eval</code> for this purpose, but the names aren’t as clear as one might expect, and can lead to some confusion. Hopefully the code examples below help clarify how each is used, and get on on the way to meta-mastery.</p>
+
+<!--more-->
+
+<p>One important thing to remember in Ruby is that objects are instances of a class, but classes are also objects... classes are instances of class <code>Class</code>!!</p>
+
+<p><code>class_eval(string)</code> means that we are defining a class, and we are eval&#39;ing in that context basically, the equivalent of:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ClassDemo</span>
+  <span class="nb">eval</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Demo 1 - <code>class_eval</code> on a class:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">speak_method</span> <span class="o">=</span> <span class="s1">'def speak; puts "hi"; end'</span>
+<span class="k">class</span> <span class="nc">ClassDemo</span><span class="p">;</span> <span class="k">end</span>
+<span class="no">ClassDemo</span><span class="p">.</span><span class="nf">class_eval</span> <span class="n">speak_method</span>
+
+<span class="no">ClassDemo</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">speak</span> <span class="c1"># hi</span>
+<span class="no">ClassDemo</span><span class="p">.</span><span class="nf">speak</span> <span class="c1"># NoMethodError: undefined method `speak' for ClassDemo:Class</span>
+</code></pre></div>
+<p>Demo 1 corollary - <code>class_eval</code> on an instance:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># No such thing!</span>
+<span class="n">cd</span> <span class="o">=</span> <span class="no">ClassDemo</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">cd</span><span class="p">.</span><span class="nf">class_eval</span> <span class="n">speak_method</span> <span class="c1"># NoMethodError: undefined method `class_eval' for #&lt;ClassDemo:0x...&gt;</span>
+</code></pre></div>
+<p><code>instance_eval(string)</code> means that we are eval&#39;ing for a specific instance when instance_eval&#39;ing on a class, that instance is the class&#39;s instance!!</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">InstanceDemo</span>
+  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+    <span class="nb">eval</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Demo 2 - <code>instance_eval</code> on an instance:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">speak_method</span> <span class="o">=</span> <span class="s1">'def speak; puts "hi"; end'</span>
+<span class="k">class</span> <span class="nc">InstanceDemo</span><span class="p">;</span> <span class="k">end</span>
+<span class="n">id1</span> <span class="o">=</span> <span class="no">InstanceDemo</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">id2</span> <span class="o">=</span> <span class="no">InstanceDemo</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">id1</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="n">speak_method</span>
+
+<span class="n">id1</span><span class="p">.</span><span class="nf">speak</span> <span class="c1"># hi</span>
+<span class="n">id2</span><span class="p">.</span><span class="nf">speak</span> <span class="c1"># NoMethodError: undefined method `speak' for #&lt;InstanceDemo:0x...&gt;</span>
+</code></pre></div>
+<p>Demo 2 corollary - <code>instance_eval</code> on a class:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">speak_method</span> <span class="o">=</span> <span class="s1">'def speak; puts "hi"; end'</span>
+<span class="k">class</span> <span class="nc">InstanceDemo</span><span class="p">;</span> <span class="k">end</span>
+<span class="no">InstanceDemo</span><span class="p">.</span><span class="nf">instance_eval</span> <span class="n">speak_method</span>
+
+<span class="no">InstanceDemo</span><span class="p">.</span><span class="nf">speak</span> <span class="c1"># hi</span>
+<span class="no">InstanceDemo</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">speak</span> <span class="c1"># NoMethodError: undefined method `speak' for #&lt;InstanceDemo:0x...&gt;</span>
+</code></pre></div>
+<p>So hopefully this helps clarify the distinctions between <code>#eval</code>, <code>#class_eval</code>, and <code>#instance_eval</code>. The next time you want to dynamically modify the methods to objects (and classes), you’ll know which of these methods to choose!</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Arild Shirazi" src="http://www.gravatar.com/avatar/27c9acfc1d54aaa00576dec93257d64e?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-09-26T00:00:00-04:00">
+      26 Sep 2014
+    </time></br>
+    by Arild Shirazi
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/ruby_slinger"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/ashirazi"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2014/09/26/ruby-meta-method-madness/';
+    var disqus_title = "Ruby Meta - Method Madness";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

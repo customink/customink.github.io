@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Managing Your Local Project Repos - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Git is great for managing a project. And Github is a great way to share your git managed project with your teammates and the world. But, how do you...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Managing Your Local Project Repos</h1>
+        <p><a href="http://www.git-scm.com/">Git</a> is great for managing a project. And <a href="http://github.com">Github</a> is a great way to share your git managed project with your teammates and the world. But, how do you manage all of those projects locally? I&#39;m not claiming this is the only way or even the best way. It&#39;s just my way of managing the repos I need to have locally. So let&#39;s get down to it.</p>
+
+<!--more-->
+
+<h3 id="projects-namespace">Projects Namespace</h3>
+
+<p>I like to put all of the projects under a main projects folder. I use the name projects, but you could use whatever you like: workspace, repos, code, gits, etc...</p>
+<div class="highlight"><pre><code class="language-Terminal256" data-lang="Terminal256">  projects/
+</code></pre></div>
+<p>Pretty simple stuff. What&#39;s next?</p>
+
+<h3 id="author-project-folder-structure">Author/Project Folder Structure</h3>
+
+<p>Whenever I clone a repo I create a folder for the author or organization name that matches up with github then clone the project into that. An easy example would be projects under my account that were created by me. I don&#39;t put forked projects under my name, but I will get to that later.</p>
+<div class="highlight"><pre><code class="language-Terminal256" data-lang="Terminal256">  projects/
+  └── nhessler/
+      ├── converserver/
+      └── hacknut-theme/
+</code></pre></div>
+<p>And I have projects at customink that I work on so let&#39;s add some of those projects in and see what things look like.</p>
+<div class="highlight"><pre><code class="language-Terminal256" data-lang="Terminal256">  projects/
+  ├── customink/
+  ¦    ├── fauxhai/
+  ¦    ├── gigo/
+  ¦    ├── secondbase/
+  ¦    └── stoplight/
+  └── nhessler/
+</code></pre></div>
+<p>This should be enough to see the basic structure of how I manage my projects. You can see that each project is located inside of a folder representing the originating author.</p>
+
+<h3 id="local-projects">Local Projects</h3>
+
+<p>This works great for projects on github, but what about projects you have only on your machine? Well, you could put them under the account you plan to push them to. But, that breaks the convention of projects living under their author namespace. And, it makes it hard to remember what has and hasn&#39;t been pushed up under that account. So, until I&#39;ve pushed a project to github I put them under the _local folder. The _ is added to make sure it&#39;s always at the top of the author list.</p>
+<div class="highlight"><pre><code class="language-Terminal256" data-lang="Terminal256">  projects/
+  ├── _local/
+  ¦    ├── dotfiles/
+  ¦    └── blog/
+  ├── customink/
+  └── nhessler/
+</code></pre></div>
+<p>I know, I know. I really should get those pushed to github. but at least I can easily see that they aren&#39;t on github yet and resolve that issue quickly. The _local folder is also great for playing around with projects you don&#39;t ever plan to push github. You can write some code, play around with it, and delete later. when it is time to push it to github then you can move it under the appropriate folder.</p>
+
+<h3 id="forked-projects">Forked Projects</h3>
+
+<p>As I said earlier, I deal with forked libraries a bit differently. Let&#39;s look at a couple of those projects. Specifically, we&#39;ll look at <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a> by Robby Russel, <a href="https://github.com/bbatsov/prelude">prelude</a> by Bozhidar Batsov, and <a href="https://github.com/oneKelvinSmith/monokai-emacs">monokai-emacs</a> by Kelvin Smith. First, let&#39;s just see the directory structure for these projects.</p>
+<div class="highlight"><pre><code class="language-Terminal256" data-lang="Terminal256">  projects/
+  ├── _local/
+  ├── bbatsov/
+  ¦   └── prelude/
+  ├── customink/
+  ├── nhessler/
+  ├── oneKelvinSmith/
+  ¦   └── monokai-emacs/
+  └── robbyrussel/
+      └── oh-my-zsh/
+</code></pre></div>
+<p>Note that each project is under the original author&#39;s name. Why do I do this? There are a couple reasons. First, I like to remember where the projects came from and this helps remind me who the original authors are. Second, project names are not unique. There are forks of projects, and there are projects with the same name that are completely different. Doing a search on github for rails turned up 138K repositories and on the first page 7 out of ten were named &#39;rails&#39; the only difference was author name. the first two projects were &#39;rails/rails&#39; and &#39;capistrano/rails&#39;. Two projects I can easily see people forking. You could complain that maybe capistrano should have used the project name capistrano-rails over rails, but is it worth it? Finally, prelude and oh-my-zsh are libraries that were meant to be used by cloning them to your local machine, and I don&#39;t need or want to fork them to use them. I can just clone them from the original repo.</p>
+
+<h3 id="final-thoughts">Final Thoughts</h3>
+
+<p>Here are some other things to think about that make this setup a little more useful.</p>
+
+<p>If you use ZSH it would be helpful to add your projects folder to the CDPATH environment variable. I also add the nhessler and customink folders. This way I can jump to my frequently used projects by name only.</p>
+
+<p>I also diverge a bit from how github recommends you <a href="https://help.github.com/articles/fork-a-repo/">fork and clone a repo</a>. I still fork the repo, but I then clone the original and set up a remote called &#39;fork&#39; which points at my fork of the repo. I find this matches how I think about forked projects better and seems to be in line with my folder structure as well.</p>
+
+<p>If you have a workflow that you like to use for managing your repos that differs from, this I would love to hear about it.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Nathan Hessler" src="http://www.gravatar.com/avatar/e3438b454f20ff1c7315e9786858fbfe?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-10-22T07:00:00-04:00">
+      22 Oct 2014
+    </time></br>
+    by Nathan Hessler
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/spune"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/nhessler"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2014/10/22/managing-your-local-project-repos/';
+    var disqus_title = "Managing Your Local Project Repos";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

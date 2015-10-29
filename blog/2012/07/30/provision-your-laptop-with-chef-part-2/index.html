@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Provision your laptop with Chef: Part 2 - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="In Provision your laptop with Chef: Part 1, I showed you how to setup your free Opscode Chef account and register your local development machine as...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Provision your laptop with Chef: Part 2</h1>
+        <p>In <a href="/blog/2012/05/28/provision-your-laptop-with-chef-part-1/">Provision your laptop with Chef: Part 1</a>, I showed you how to setup your free Opscode Chef account and register your local development machine as a client. In Part 2, we will explore a few handy ways to manage and provision your new or existing laptop with Chef. Whether it&#39;s creating users, installing applications, or always having the perfect desktop background, Chef can make it happen!</p>
+
+<p>Part 2 of this series assumes that you have successfully completed all of the steps in <a href="http://technology.customink.com/blog/2012/05/28/provision-your-laptop-with-chef-part-1/">Part 1</a>. If you have not yet completed Part I, please do so before continuing.</p>
+
+<!--more-->
+
+<h2 id="overview">Overview</h2>
+
+<p>In this blog post, we will be using an Ubuntu 12.04 Precise desktop environment. These steps may be tweaked to work on Windows or Mac (mainly just changing the file paths). You could even bake conditional logic into your cookbooks so that it will work on all your laptops, Mac, PC, Linux or otherwise!</p>
+
+<p>My local chef repository lives at <code>~/Development/chef-repo</code>. I will use this path throughout this blog post. You do not need to have your chef-repo in the same place - just replace my path with yours where appropriate.</p>
+
+<h2 id="starting-small">Starting Small</h2>
+
+<p>To get your feet wet, we will create a cookbook for a very simplistic task - setting the Desktop background.</p>
+
+<p>Before beginning anything with Chef, you should check the <a href="http://community.opscode.com">Chef Community Site</a> - someone may have already done the hard work for you! Even if you can&#39;t find exactly what you are looking for, explore a little. You may find small syntax shortcuts or new ways to solve problems from looking at various cookbooks.</p>
+
+<p>I did a quick search on the Chef Community Site for &quot;desktop&quot; and &quot;background&quot; and it doesn&#39;t look like there&#39;s anything we can use there, so we&#39;ll have to build our own.</p>
+
+<p>First, go into your local chef repository:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ cd ~/Development/chef-repo/
+</code></pre></div>
+<p>and make sure you have a clean working directory:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ git status
+# On branch master
+nothing to commit (working directory clean)
+</code></pre></div>
+<p>If you have unstaged commits, make sure to either stash or commit them before continuing.</p>
+
+<p>Before we create our first cookbook, let&#39;s add a couple of things to our <code>knife.rb</code> file to make the process go a little more smoothly. Open up your <code>knife.rb</code> file and add the following two lines to the end of the file replacing the sample values with your information. (NOTE:  if you set-up your chef-repo like the <a href="(/blog/2012/05/28/provision-your-laptop-with-chef-part-1/)">previous post</a>, you&#39;ll find the file at <code>~/Development/chef-repo/.chef/knife.rb</code>.)</p>
+<div class="highlight"><pre><code class="language-" data-lang="">cookbook_email      'email@example.com'
+cookbook_copyright  'Your Name'
+</code></pre></div>
+<p>With these new knife values, we&#39;re ready to create our first cookbook. This cookbook will manage our Desktop background. If we were creating a cookbook that installed a particular piece of software, like ImageMagick, convention would dictate that we name it after that software. However, in this case, we are free to choose any name we&#39;d like. You could be boring and pick something like &quot;desktop-background&quot;, but that&#39;s no fun. Let&#39;s name our cookbook &quot;major-tom&quot; (background-control =&gt; ground-control =&gt; major-tom for those following along at home). Use the <code>knife cookbook create</code> command to generate the cookbook skeleton:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ knife cookbook create major-tom
+</code></pre></div>
+<p><strong>Note:</strong> You may need to prefix the command with <code>bundle exec</code></p>
+
+<p>You should see output like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">** Creating cookbook major-tom
+** Creating README for cookbook: major-tom
+** Creating metadata for cookbook: major-tom
+</code></pre></div>
+<p>Take a moment to explore the new cookbook. You should have a directory structure like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">major-tom
+|_attributes
+|_definitions
+|_files
+  |_default
+|_libraries
+|_providers
+|_recipes
+  |_default.rb
+|_resources
+|_templates
+  |_default
+|_metadata.rb
+|_README.md
+</code></pre></div>
+<p>The <strong>first</strong> thing you should do before continuing is to create a <code>CHANGELOG.md</code> file in the cookbook root. This will be unnecessary if <a href="https://github.com/opscode/chef/pull/345">this pull request</a> is merged. Add an entry indicating our initial release:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CHANGELOG
+=========
+### v0.0.1
+- Initial release
+</code></pre></div>
+<p>Next, we need to fix up the <code>metadata.rb</code>. Update the description to include a bit more detail. Everything else should be OK.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">maintainer</span> <span class="s1">'Your Name'</span>
+<span class="n">maintainer_email</span> <span class="s1">'email@example.com'</span>
+<span class="n">license</span> <span class="s1">'All rights reserved'</span>
+<span class="n">description</span> <span class="s1">'Installs/Configures desktop background images'</span>
+<span class="n">long_description</span> <span class="no">IO</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">dirname</span><span class="p">(</span><span class="kp">__FILE__</span><span class="p">),</span> <span class="s1">'README.md'</span><span class="p">))</span>
+<span class="n">version</span> <span class="s1">'0.0.1'</span>
+</code></pre></div>
+<p>In this scenario, let&#39;s imagine that we want to download our desktop image from the Internet. We will use the <a href="http://wiki.opscode.com/display/chef/Resources#Resources-RemoteFile">Remote File</a> resource to fetch the remote image:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># recipes/default.rb</span>
+<span class="n">remote_file</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span> <span class="k">do</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Notice how we <strong>don&#39;t</strong> hardcode the temporary path. You may be tempted to do something like:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">remote_file</span> <span class="s1">'/tmp/background.png'</span> <span class="k">do</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>but this is generally considered bad practice and will not pass <a href="http://acrmp.github.com/foodcritic/#FC013">foodcritic</a> tests. Use Chef&#39;s <code>:file_cache_path</code> configuration option instead. This is especially important when developing a community cookbook.</p>
+
+<p>Next we need to give the background image a <code>source</code> url. For copyright reasons, I&#39;m going to use a <a href="http://placehold.it">placehold.it</a> to generate our image. You could use any image you&#39;d like, including one directly inside the cookbook (you would need to use the <code>cookbook_file</code> resource instead of <code>remote_file</code> in that case). I have a high resolution display, so I want a background image 1920x1080 (HD):</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">remote_file</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span> <span class="k">do</span>
+  <span class="n">source</span> <span class="s1">'http://placehold.it/1920x1080'</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This declaration says:</p>
+
+<blockquote>
+<p>&quot;Hey Chef, go out to <a href="http://placehold.it/1920x1080">http://placehold.it/1920x1080</a> and download
+and save whatever you get to your file cache path. kthxbye.&quot;</p>
+</blockquote>
+
+<p>If you&#39;re a super-nerd, this declaration says</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span><span class="nb">cd</span> /tmp <span class="o">&amp;&amp;</span> wget -O background.png http://placehold.it/1920x1080<span class="o">)</span>
+</code></pre></div>
+<p>Now that we have the remote file downloaded to the system, we need to programatically set it as the background. In your head, you may think:</p>
+
+<blockquote>
+<p>Okay, I need to right-click on that image and click on the <code>Set as Desktop Background</code> option...</p>
+</blockquote>
+
+<p>Unfortunately, Chef doesn&#39;t work quite that way :). All the commands you run are executed in the context of a command line or terminal. We need to find a way to use the command line to set the Desktop background. Fortunately, most of the GUI commands on your machine actually use underling command line tools to execute. A quick Google search turned up <a href="http://askubuntu.com/questions/51564/setting-desktop-wallpaper-via-terminal">Setting Desktop Wallpaper via Terminal</a> and <a href="http://askubuntu.com/questions/50019/how-do-i-change-the-desktop-background-from-command-line">How do I change the desktop background from command line?</a>.</p>
+
+<p>It turns out we need to do something like this:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">gconftool-2 -t string -s /desktop/gnome/background/picture_filename &lt;path&gt;
+</code></pre></div>
+<p>Because this is a bash command, we could use the <code>Bash</code> resource. However, I like the <code>execute</code> resource, because it is more Rubyesque in my opinion:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">execute</span> <span class="s1">'set Desktop background'</span> <span class="k">do</span>
+  <span class="n">command</span> <span class="s2">"gconftool-2 -t string -s /desktop/gnome/background/picture_filename </span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span>
+  <span class="n">action</span> <span class="ss">:nothing</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Notice how I set the <code>action :nothing</code>. This may seem strange. Don&#39;t we run this code to run? (Note, the default action is <code>:run</code>). Well, we only want to run this command once the <code>remote_file</code> has completed successfully. Otherwise, this command will fail. We need to modify our <code>remote_file</code> declaration to execute this command:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">remote_file</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span> <span class="k">do</span>
+  <span class="n">source</span> <span class="s1">'http://placehold.it/1920x1080'</span>
+  <span class="n">notifies</span> <span class="ss">:run</span><span class="p">,</span> <span class="s1">'execute[set Desktop background]'</span><span class="p">,</span> <span class="ss">:immediately</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This now says:</p>
+
+<blockquote>
+<p>&quot;Hey Chef, go out to <a href="http://placehold.it/1920x1080">http://placehold.it/1920x1080</a> and download
+and save whatever you get to your file cache path.
+Then tell <code>set Desktop background</code> to run immediately.&quot;</p>
+</blockquote>
+
+<p>This ensures that:</p>
+
+<ol>
+<li>The execute command won&#39;t be run before the remote file is downloaded.</li>
+<li>The execute command only executes if the remote file was downloaded successfully.</li>
+</ol>
+
+<p>Now we need to add this recipe to the node&#39;s <code>run_list</code>. I won&#39;t go into too much detail here. A quick solution is to do something like this:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">knife node edit NODE
+</code></pre></div>
+<p>In the <code>run_list</code> part of the JSON file, add <code>recipe[major-tom]</code>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="p">{</span>
+  <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"NODE"</span><span class="p">,</span>
+  <span class="s2">"chef_environment"</span><span class="p">:</span> <span class="s2">"_default"</span><span class="p">,</span>
+  <span class="s2">"run_list"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">"recipe[major-tom]"</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Save and close this file so that it is updated on the Chef Server.</p>
+
+<p>Upload the cookbook (<code>knife cookbook upload major-tom</code>) and run <code>sudo chef-client</code>. You should see that the command completes successfully. However, your Desktop background may not change. Why? Well, by default, Chef runs as the root user. We just set the root user&#39;s background, but we wanted to set our own! After a bit of research, it turns out that we need to set the <code>user</code> attribute on the <code>execute</code> block to tell Chef which user to run the command as:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">execute</span> <span class="s1">'set Desktop background'</span> <span class="k">do</span>
+  <span class="n">command</span> <span class="s2">"gconftool-2 -t string -s /desktop/gnome/background/picture_filename </span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span>
+  <span class="n">user</span> <span class="s1">'svargo'</span> <span class="c1"># replace with your user id</span>
+  <span class="n">action</span> <span class="ss">:nothing</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>But what if you wanted to set the Desktop background for <strong>all</strong> the users? Maybe you operate in an Enterprise that requires the company logo be on the Desktop background. Or maybe you just have OCD and like everything to be the same. Either way, there are a few possible solutions for accomplishing this. Let&#39;s look at one way to do this.</p>
+
+<h4 id="using-node-39-etc-39-39-password-39">Using <code>node[&#39;etc&#39;][&#39;password&#39;]</code></h4>
+
+<p>You can iterate over all the local accounts on a given machine using the <code>node[&#39;etc&#39;][&#39;passwd&#39;]</code> hash. It looks like this:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">node</span><span class="p">[</span><span class="s1">'etc'</span><span class="p">][</span><span class="s1">'passwd'</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
+  <span class="n">execute</span> <span class="s1">'set Desktop background'</span> <span class="k">do</span>
+    <span class="n">command</span> <span class="s2">"gconftool-2 -t string -s /desktop/gnome/background/picture_filename </span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span>
+    <span class="n">user</span> <span class="n">user</span>
+    <span class="n">action</span> <span class="ss">:nothing</span>
+    <span class="n">only_if</span> <span class="p">{</span> <span class="n">data</span><span class="p">[</span><span class="s1">'uid'</span><span class="p">].</span><span class="nf">to_i</span> <span class="o">&gt;</span> <span class="mi">1000</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Here, we iterate over each user and execute the command once for each user. Notice the <code>only_if</code> block as well. This tells Chef to only run for non-system accounts (&gt; 1000).</p>
+
+<p>Upload the cookbook and run <code>sudo chef-client</code> again and you should see you Desktop background change. Depending on your machine, you may need to logout and login for the changes to take effect.</p>
+
+<p>For those of you who cheated and read ahead, here&#39;s the full recipe:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: major-tom</span>
+<span class="c1"># Recipe:: default</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2012, Your Name</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved - Do Not Redistribute</span>
+<span class="c1">#</span>
+
+<span class="c1"># Download the remote file</span>
+<span class="n">remote_file</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span> <span class="k">do</span>
+  <span class="n">source</span> <span class="s1">'http://placehold.it/1920x1080'</span>
+  <span class="n">notifies</span> <span class="ss">:run</span><span class="p">,</span> <span class="s1">'execute[set Desktop background]'</span><span class="p">,</span> <span class="ss">:immediately</span>
+<span class="k">end</span>
+
+<span class="c1"># Set the Desktop background for each user</span>
+<span class="n">node</span><span class="p">[</span><span class="s1">'etc'</span><span class="p">][</span><span class="s1">'passwd'</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="p">,</span> <span class="n">data</span><span class="o">|</span>
+  <span class="n">execute</span> <span class="s1">'set Desktop background'</span> <span class="k">do</span>
+    <span class="n">command</span> <span class="s2">"gconftool-2 -t string -s /desktop/gnome/background/picture_filename </span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/background.png"</span>
+    <span class="n">user</span> <span class="n">user</span>
+    <span class="n">action</span> <span class="ss">:nothing</span>
+    <span class="n">only_if</span> <span class="p">{</span> <span class="n">data</span><span class="p">[</span><span class="s1">'uid'</span><span class="p">].</span><span class="nf">to_i</span> <span class="o">&gt;</span> <span class="mi">1000</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<h4 id="wrap-up">Wrap Up</h4>
+
+<p>There&#39;s definitely room for improvement on this cookbook. We could create attributes and allow the end user to customize it further. However, for the purpose of this tutorial, we are done working with this cookbook.</p>
+
+<h2 id="diving-head-first">Diving Head First</h2>
+
+<p>In this next step, I&#39;m going to switch over to a Mac because I personally use a Mac. Before beginning, let&#39;s take a step back and ask ourselves:</p>
+
+<blockquote>
+<p>&quot;What should I configure?&quot;</p>
+</blockquote>
+
+<p>This question has potentially endless number of answers and all depends on how much time you want to spend capturing your current configuration in Chef. For this tutorial, I&#39;m going to do the following:</p>
+
+<ol>
+<li>Install the following packages:
+
+<ul>
+<li><code>apple-gcc42</code></li>
+<li><code>aspell</code></li>
+<li><code>bash-completion</code></li>
+<li><code>elasticsearch</code></li>
+<li><code>erlang</code></li>
+<li><code>ghostscript</code></li>
+<li><code>git</code></li>
+<li><code>imagemagick</code></li>
+<li><code>jasper</code></li>
+<li><code>mongodb</code></li>
+<li><code>mysql</code></li>
+<li><code>node</code></li>
+<li><code>postgresql</code></li>
+<li><code>qt</code></li>
+<li><code>rabbitmq</code></li>
+<li><code>readline</code></li>
+<li><code>redis</code></li>
+<li><code>solr</code></li>
+<li><code>wget</code></li>
+</ul></li>
+<li>Clone a bunch of git repositories</li>
+<li>Install my dotfiles</li>
+</ol>
+
+<p>This is a very basic start and should cover many helpful topics for when you begin provisioning your own laptop.</p>
+
+<p>Just as important as before, the cookbook name should be descriptive and fun. I&#39;m going to call this cookbook <code>sethinator</code>, because my name is Seth, and I&#39;m &quot;Sethinating&quot; my laptop.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ knife cookbook create sethinator
+</code></pre></div>
+<p>Be sure to change the <code>metadata.rb</code>, add a <code>CHANGELOG.md</code>, and everything else we did in the &quot;Getting your Feet Wet&quot;.</p>
+
+<h3 id="installing-packages">Installing packages</h3>
+
+<p>As you already know, there is no &quot;built-in&quot; package manager for Mac. Instead, there are two popular alternatives - homebrew and MacPorts. I will be using homebrew in these examples.</p>
+
+<p>First, we need to tell Chef to use homebrew as the package manager:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ knife cookbook site install homebrew
+</code></pre></div>
+<p>This will download the homebrew cookbook from the <a href="http://community.opscode.com/cookbooks/homebrew">community site</a>.</p>
+
+<p>We should also list this cookbook as a <a href="http://wiki.opscode.com/display/chef/Cookbooks#Cookbooks-CookbookDependencies">dependency</a>. Open up the <code>metadata.rb</code> and add the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># metadata.rb</span>
+<span class="n">depends</span> <span class="s1">'homebrew'</span>
+</code></pre></div>
+<p>This way, if we choose to publish the cookbook to the community site, the homebrew cookbook will automatically be downloaded and installed with this cookbook.</p>
+
+<p>To keep things organized, I&#39;m going to create a separate recipe for each of the tasks above. Create a new recipe named <code>packages.rb</code> and add the following content:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: sethinator</span>
+<span class="c1"># Recipe:: packages</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2012, Seth Vargo</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved - Do Not Redistribute</span>
+<span class="c1">#</span>
+<span class="c1"># Configures and installs the following packages using homebrew:</span>
+<span class="c1">#   - apple-gcc42</span>
+<span class="c1">#   - aspell</span>
+<span class="c1">#   - bash-completion</span>
+<span class="c1">#   - elasticsearch</span>
+<span class="c1">#   - erlang</span>
+<span class="c1">#   - ghostscript</span>
+<span class="c1">#   - git</span>
+<span class="c1">#   - imagemagick</span>
+<span class="c1">#   - jasper</span>
+<span class="c1">#   - mongodb</span>
+<span class="c1">#   - mysql</span>
+<span class="c1">#   - node</span>
+<span class="c1">#   - postgresql</span>
+<span class="c1">#   - qt</span>
+<span class="c1">#   - rabbitmq</span>
+<span class="c1">#   - readline</span>
+<span class="c1">#   - redis</span>
+<span class="c1">#   - solr</span>
+<span class="c1">#   - wget</span>
+<span class="c1">#</span>
+
+<span class="c1"># Include homebrew as the default package manager.</span>
+<span class="c1"># (default is MacPorts)</span>
+<span class="n">include_recipe</span> <span class="s1">'homebrew'</span>
+
+<span class="c1"># Install each of the packages using the `package` resource</span>
+<span class="sx">%w(apple-gcc42 aspell bash-completion elasticsearch erlang ghostscript git imagemagick jasper mongodb mysql node postgresql qt rabbitmq readline redis solr wget)</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">package</span><span class="o">|</span>
+  <span class="n">package</span> <span class="n">package</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><strong>That&#39;s it!</strong> See how simple that was?</p>
+
+<h3 id="cloning-git-repositories">Cloning git repositories</h3>
+
+<p>I have a very particular setup for my development workflow. Additionally, I regularly use a bunch of repositories. I could manually clone them, but why would I do that when I could manage them with Chef?</p>
+
+<p>Create another cookbook named &#39;git.rb&#39; in the recipes directory and add the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: sethinator</span>
+<span class="c1"># Recipe:: git</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2012, Seth Vargo</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved - Do Not Redistribute</span>
+<span class="c1">#</span>
+<span class="c1"># Creates the ~/Development directory and installs git repositories</span>
+<span class="c1"># specified as attributes on the node.</span>
+<span class="c1">#</span>
+
+<span class="n">node</span><span class="p">[</span><span class="s1">'etc'</span><span class="p">][</span><span class="s1">'passwd'</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="p">,</span> <span class="n">userdata</span><span class="o">|</span>
+  <span class="c1"># Create the ~/Development directory</span>
+  <span class="n">directory</span> <span class="s2">"</span><span class="si">#{</span><span class="n">userdata</span><span class="p">[</span><span class="s1">'dir'</span><span class="p">]</span><span class="si">}</span><span class="s2">/Development"</span> <span class="k">do</span>
+    <span class="n">owner</span> <span class="n">user</span>
+    <span class="n">group</span> <span class="n">userdata</span><span class="p">[</span><span class="s1">'gid'</span><span class="p">]</span>
+    <span class="n">mode</span> <span class="s1">'0755'</span>
+    <span class="n">not_if</span> <span class="p">{</span> <span class="n">userdata</span><span class="p">[</span><span class="s1">'dir'</span><span class="p">].</span><span class="nf">nil?</span> <span class="o">||</span> <span class="n">userdata</span><span class="p">[</span><span class="s1">'dir'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'/var/empty'</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Clone each git repository from the node's attributes</span>
+  <span class="c1">#</span>
+  <span class="c1"># We are using the `checkout` action because it will only checkout the</span>
+  <span class="c1"># repository if it is not already there. We don't want a Chef run overwriting</span>
+  <span class="c1"># local changes, but we do want an initial clone, so this is the best option.</span>
+  <span class="n">node</span><span class="p">[</span><span class="s1">'sethinator'</span><span class="p">][</span><span class="s1">'git'</span><span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">repository</span><span class="o">|</span>
+    <span class="n">git</span> <span class="s2">"</span><span class="si">#{</span><span class="n">userdata</span><span class="p">[</span><span class="s1">'dir'</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">repository</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span> <span class="k">do</span>
+      <span class="n">repository</span> <span class="n">repository</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span>
+      <span class="n">reference</span> <span class="n">repository</span><span class="p">[</span><span class="s1">'reference'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'master'</span>
+      <span class="n">revision</span> <span class="n">repository</span><span class="p">[</span><span class="s1">'revision'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'HEAD'</span>
+      <span class="n">user</span> <span class="n">user</span>
+      <span class="n">group</span> <span class="n">userdata</span><span class="p">[</span><span class="s1">'gid'</span><span class="p">]</span>
+      <span class="n">mode</span> <span class="s1">'0755'</span>
+      <span class="n">action</span> <span class="ss">:checkout</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Slightly more complex than the last example, but still just a few lines of code. Notice that we haven&#39;t defined the git repositories inside the recipe. Instead they are attributes on the node itself. Create the default attributes file in <code>attributes/default.rb</code> and this is where I&#39;m going to add all my repositories like so:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># attributes/default.rb</span>
+<span class="n">default</span><span class="p">[</span><span class="s1">'sethinator'</span><span class="p">][</span><span class="s1">'git'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">'chef-hosted'</span><span class="p">,</span>
+    <span class="ss">:url</span> <span class="o">=&gt;</span> <span class="s1">'git@github.com:customink/...'</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">'autotomy'</span><span class="p">,</span>
+    <span class="ss">:url</span> <span class="o">=&gt;</span> <span class="s1">'git@github.com:customink/...'</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">'knife-spork'</span><span class="p">,</span>
+    <span class="ss">:url</span> <span class="o">=&gt;</span> <span class="s1">'git@github.com:jonlives/knife-spork'</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>I&#39;ve suppressed the URLs to our private repositories, but you get the general idea. Notice there are additional options such as <code>reference</code> and <code>revision</code> that I have left out because I&#39;m okay with their default values. If you use another CVS such as SVN, you may want to support additional attributes and tweak accordingly. Specifying the attribute values in the cookbook works but there are lots of other places that are more appropriate for managing these attributes. Checkout the <a href="http://wiki.opscode.com/display/chef/Attributes">Attributes page on the Opscode wiki</a> for more details.</p>
+
+<h3 id="installing-dotfiles">Installing dotfiles</h3>
+
+<p>Since I spend 90% of my time working in Terminal, I have a small <a href="https://github.com/sethvargo/dotfiles">collection of dotfiles</a> that I&#39;ve accumulated over the years. Everything from my bash prompt to RVM setup.</p>
+
+<p>First, create a new cookbook named <code>dotfiles.rb</code> and add the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: sethinator</span>
+<span class="c1"># Recipe:: dotfiles</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2012, Seth Vargo</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved - Do Not Redistribute</span>
+<span class="c1">#</span>
+
+<span class="c1"># Clone the remote dotfiles</span>
+<span class="c1">#</span>
+<span class="c1"># Again, only use :checkout because we don't want to clone on future attempts.</span>
+<span class="c1"># We also don't plan on working with this repository, so we don't need the entire</span>
+<span class="c1"># git history. Setting the depth to `1` makes a shallow clone. We use the git://</span>
+<span class="c1"># url here because this computer (assuming it's new) does not have access to</span>
+<span class="c1"># clone using its public key yet.</span>
+<span class="c1">#</span>
+<span class="c1"># Lastly, we only want to clone these if we haven't already installed our dotfiles.</span>
+<span class="c1"># There are a few ways to do this, such as checking for the existence of a file,</span>
+<span class="c1"># creating a file, checking the contents of a file, etc. Here we are just going to check</span>
+<span class="c1"># and see if the `.gitconfig` file exists. That isn't created automatically with a new</span>
+<span class="c1"># user, so it's a reasonable file to choose.</span>
+<span class="n">git</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/dotfiles"</span> <span class="k">do</span>
+  <span class="n">source</span> <span class="s1">'git://github.com/sethvargo/dotfiles.git'</span>
+  <span class="n">user</span> <span class="s1">'svargo'</span>
+  <span class="n">gid</span> <span class="s1">'wheel'</span>
+  <span class="n">mode</span> <span class="s1">'0755'</span>
+  <span class="n">action</span> <span class="ss">:checkout</span>
+  <span class="n">depth</span> <span class="mi">1</span>
+  <span class="n">not_if</span> <span class="p">{</span> <span class="o">::</span><span class="no">File</span><span class="p">.</span><span class="nf">exists?</span><span class="p">(</span><span class="s1">'/Users/svargo/.gitconfig'</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">notifies</span> <span class="ss">:run</span><span class="p">,</span> <span class="s1">'execute[install dotfiles]'</span>
+<span class="k">end</span>
+
+<span class="c1"># Run the dotfile rake task to install the files</span>
+<span class="n">gem</span> <span class="s1">'rake'</span>
+<span class="n">execute</span> <span class="s1">'install dotfiles'</span> <span class="k">do</span>
+  <span class="n">cwd</span> <span class="s2">"</span><span class="si">#{</span><span class="no">Chef</span><span class="o">::</span><span class="no">Config</span><span class="p">[</span><span class="ss">:file_cache_path</span><span class="p">]</span><span class="si">}</span><span class="s2">/dotfiles"</span>
+  <span class="n">command</span> <span class="s1">'rake install'</span>
+  <span class="n">action</span> <span class="ss">:nothing</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>That rake task will copy all the dotfiles into their proper locations. That&#39;s it!</p>
+
+<h3 id="put-it-all-together">Put it all together</h3>
+
+<p>Open up the default recipe (<code>recipes/default.rb</code>) and add the following:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1">#</span>
+<span class="c1"># Cookbook Name:: sethinator</span>
+<span class="c1"># Recipe:: default</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2012, Seth Vargo</span>
+<span class="c1">#</span>
+<span class="c1"># All rights reserved - Do Not Redistribute</span>
+<span class="c1">#</span>
+
+<span class="n">include_recipe</span> <span class="s1">'sethinator::packages'</span>
+<span class="n">include_recipe</span> <span class="s1">'sethinator::git'</span>
+<span class="n">include_recipe</span> <span class="s1">'sethinator::dotfiles'</span>
+</code></pre></div>
+<p>Now add <code>sethinator</code> (or whatever you called your cookbook) to your node&#39;s <code>run_list</code> and run <code>sudo chef-client</code>. You should have your bash prompt, configuration, aliases, and more right at your fingertips!</p>
+
+<p>If you&#39;re looking for a more complete and customizable solution that you don&#39;t need to write from scratch, head on over to <a href="http://jtimberman.housepub.org/blog/2012/07/29/os-x-workstation-management-with-chef/">Joshua Timberman&#39;s blog post</a>. He goes into much more detail about MacOSX provisioning.</p>
+
+<h2 id="caveats">Caveats</h2>
+
+<h3 id="croning-chef">Croning Chef</h3>
+
+<p>At <a href="http://www.customink.com">CustomInk</a>, we create a cron task to run Chef at a regular interval (on a randomly generated seed). This is great because we need only update a cookbook and all our servers will receive the change without having to touch them. However, when provisioning your local laptop, I do <strong>not</strong> recommend setting up a cron task for Chef. Because you are using the same machine for both writing Chef stuff and running Chef stuff, you could potentially brick your computer if you aren&#39;t careful. Because of this, I recommend running <code>chef-client</code> manually on your local machine.</p>
+
+<h3 id="development">Development</h3>
+
+<p>Along similar lines as Croning Chef, I do not recommend that you &quot;test&quot; cookbooks on your local machine. Instead, replicate your current environment in a Virtual Machine. There are great tools out there like <a href="https://www.virtualbox.org/">Oracle&#39;s VirtualBox</a> + <a href="http://vagrantup.com">Vagrant</a>. Run your cookbooks against a machine that you can easily snapshot and restore should something go awry, before pushing to &quot;production&quot; (your local machine).</p>
+
+<h3 id="workflow">Workflow</h3>
+
+<p>If this is your first time using Chef, the workflow will feel awkward. There&#39;s a major disconnect between what is on your local box, what is on your CVS, and what is on the Chef Server (Opscode). Even if you are using semantic versioning, you may have different cookbook versions in different environments. First of all, don&#39;t worry. Chef is a big piece of software, and you can&#39;t expect to master it in a weekend. Secondly, there are a few tools that help you manage your workflow.</p>
+
+<h5 id="opscode-workflow-wiki"><a href="http://wiki.opscode.com/display/chef/Cookbook+Workflows">Opscode Workflow Wiki</a></h5>
+
+<p>The official Opscode wiki detailing various workflow implementations.</p>
+
+<h5 id="knife-spork"><a href="https://github.com/jonlives/knife-spork">knife-spork</a></h5>
+
+<p>Created by <a href="https://github.com/jonlives">Jon Cowie</a> over at <a href="http://www.etsy.com/">Etsy</a>, KnifeSpork makes bumping, uploading, and sharing cookbooks a breeze, especially in collaborative environments.</p>
+
+<h5 id="librarian"><a href="https://github.com/applicationsonline/librarian">Librarian</a></h5>
+
+<p>Librarian is a tool for managing cookbooks. If you&#39;re familiar with Ruby, it&#39;s the equivalent of a <code>Gemfile</code>.</p>
+
+<h5 id="berkshelf"><a href="https://github.com/RiotGames/berkshelf">Berkshelf</a></h5>
+
+<p>Berkshelf allows you to manage a cookbook or an application&#39;s cookbook dependencies. Check-out this <a href="http://christian-trabold.de/librarian-chef-vs-berkshelf">comparison of Librarian and Berkshelf</a>.</p>
+
+<h3 id="testing">Testing</h3>
+
+<p>I will not go into cookbook testing extensively here, but it&#39;s very important that your cookbooks follow some standard. At the time of this writing, there are a few solutions for testing cookbooks - <a href="https://github.com/acrmp/chefspec">chefspec</a>, <a href="http://www.cucumber-chef.org/">cucumber-chef</a>, <a href="https://github.com/calavera/minitest-chef-handler">minitest-chef-handler</a>, and <a href="https://github.com/calavera/rspec-chef">rspec-chef</a> – and they each have their own distinct advantages. At the very least, you should run <code>knife cookbook test</code> and <code>foodcritic</code> against all your cookbooks. Nathen Harvey covered this in his <a href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a> blog post.</p>
+
+<p>When running foodcritic, I recommend adding both <a href="https://github.com/customink-webops/foodcritic-rules">CustomInk foodcritic rules</a> and <a href="https://github.com/etsy/foodcritic-rules">Etsy foodcritic rules</a>. Clone the repositories (or use submodules) into a <code>foodcritic</code> directory in the root of your chef-repo:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">chef-repo
+  |_cookbooks
+  |_environments
+  ...
+  |_foodcritic
+    |_customink
+    |_etsy
+</code></pre></div>
+<p>Then you can run <code>foodcritic</code> like so:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>foodcritic -I foodcritic/<span class="k">*</span> cookbooks/COOKBOOK
+</code></pre></div>
+<p>For more information on the rules provided, see the individual repos.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-07-30T20:43:00-04:00">
+      30 Jul 2012
+    </time></br>
+    by Seth Vargo
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/07/30/provision-your-laptop-with-chef-part-2/';
+    var disqus_title = "Provision your laptop with Chef: Part 2";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

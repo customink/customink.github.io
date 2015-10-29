@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Welcome Interns! - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Seth Vargo.  Nolan and Seth are joining us for the summer from Carneg...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Welcome Interns!</h1>
+        <p>Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Seth Vargo.  Nolan and Seth are joining us for the summer from Carnegie Mellon University where they are both majoring in Information Systems.</p>
+
+<p>Nolan and Seth wasted no time hopping on our <a href="/blog/2012/05/14/welcome-josh-born">deploy train</a> last week, but they couldn&#39;t have done it without the help of our (semi) automated build process.  A while ago, Nathen Harvey talked about our <a href="/blog/2012/01/02/green-screen/">Green Screen</a> build monitor.  While this serves as a great motivator for us to keep our builds passing, the ability for us to quickly create builds for any branch is what keeps us moving fast.</p>
+
+<!--more-->
+
+<p>Using some home grown capistrano scripts, any developer can easily create and manage an automated Jenkins build, which will automatically be monitored by Green Screen.  A developer&#39;s typical workflow might look something like:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">branch</span> <span class="n">new_feature</span>
+  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">checkout</span> <span class="n">new_feature</span>
+  <span class="p">.</span><span class="nf">.</span><span class="p">.</span><span class="nf">.</span> <span class="n">code</span> <span class="n">changes</span><span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+  <span class="nf">&gt;</span><span class="o">&gt;</span> <span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">"added new feature"</span>
+  <span class="o">&gt;&gt;</span> <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">new_feature</span>
+</code></pre></div>
+<p>Now that a new feature branch is available in our remote repository, the developer can create and start their own Jenkins build:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="o">&gt;&gt;</span> <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:create</span>
+  <span class="s2">"I've created rfe_new_feature."</span>
+  <span class="o">&gt;&gt;</span> <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:build</span>
+  <span class="s2">"I've found rfe_new_feature and it's building now."</span>
+</code></pre></div>
+<p>Now a build is running on our Jenkins server.  More importantly, Jenkins will use it&#39;s Jedi powers to detect any changes to the remote branch and automatically kick off a new build.  When builds fail, the entire team is notified and Green Screen turns red.  We have a handful of other useful Jenkins tasks as well:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:build</span>     <span class="c1"># Kicks off a build for the current branch</span>
+  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:console</span>   <span class="c1"># Shows the job's console</span>
+  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:create</span>    <span class="c1"># Create a job for the current branch</span>
+  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:delete</span>    <span class="c1"># Deletes a job with name = rfe_[current_branch]</span>
+  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:list</span>      <span class="c1"># Lists all jobs in jenkins</span>
+  <span class="n">cap</span> <span class="n">jenkins</span><span class="ss">:status</span>    <span class="c1"># Gets the status of a job with name = rfe_[current_branch]</span>
+</code></pre></div>
+<p>Continuous deployment can&#39;t happen without automation.  I&#39;d like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I&#39;d also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Karle Durante" src="http://www.gravatar.com/avatar/ccaeb0336801e0015145ad901d879377?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-05-24T16:01:00-04:00">
+      24 May 2012
+    </time></br>
+    by Karle Durante
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/karledurante"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/karledurante"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/05/24/welcome-interns/';
+    var disqus_title = "Welcome Interns!";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

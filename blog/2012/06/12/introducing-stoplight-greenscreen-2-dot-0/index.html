@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Introducing Stoplight: Greenscreen 2.0 - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="
+At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was Greenscreen. In fact, we even wrote a blog post abo...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Introducing Stoplight: Greenscreen 2.0</h1>
+        <p><a href="http://technology-customink-com.s3.amazonaws.com/images/stoplight.png"><img src="http://technology-customink-com.s3.amazonaws.com/images/stoplight.png" class="tb-Img tb-Img--responsive tb-Img--fancy" /></a>
+At CustomInk, we use a variety of tools to monitor the status of our builds. One such tool was <a href="https://github.com/customink-webops/greenscreen">Greenscreen</a>. In fact, we even wrote <a href="/blog/2012/01/02/green-screen/">a blog post about how we use Greenscreen at CustomInk</a> not too long ago.</p>
+
+<p>One of the biggest problems with Greenscreen was its extensibility. By default, Greenscreen only works with Hudson and Jenkins servers. With <a href="http://travis-ci.org">Travis CI</a> becoming quite popular in the open-source community, Greenscreen needed a major upgrade. Furthermore, Greenscreen was not very extensible.</p>
+
+<p>After some significant refactoring, Greenscreen evolved into <a href="https://github.com/customink/stoplight">Stoplight</a>...</p>
+
+<!--more-->
+
+<h2 id="significant-improvements">Significant Improvements</h2>
+
+<p>There are a number of improvements in Stoplight. These are the most critical or useful to the end-user:</p>
+
+<ul>
+<li>Support for multiple (any) continuous integration server</li>
+<li>Highly configurable yaml files</li>
+<li>Cross-browser beautiful UI</li>
+<li>More informative build statuses</li>
+<li>Extensibility</li>
+<li>Usability</li>
+<li>Full test suite</li>
+</ul>
+
+<h2 id="refactoring">Refactoring</h2>
+
+<p>Originally, I was just going to add Travis CI support to Greenscreen. However, I quickly asked myself, &quot;why stop at Travis CI?&quot;; we should allow developers to connect Greenscreen to any continuous integration server. After cleaning up the code a bit, I introduced the concept of a <code>Provider</code>. Simply put, a <code>Provider</code> is an abstract Ruby class that maps server-data into Greenscreen data. It looks like this:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Provider is an abstract class that all providers inherit from. It requires that a specified format be returned. This way, stoplight</span>
+<span class="c1"># doesn't care who it's talking to, as long as it guarantees certain information.</span>
+<span class="k">module</span> <span class="nn">Stoplight::Providers</span>
+  <span class="k">class</span> <span class="nc">Provider</span>
+    <span class="kp">attr_reader</span> <span class="ss">:options</span><span class="p">,</span> <span class="ss">:response</span>
+
+    <span class="c1"># Initializes a hash `@options` of default options</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+      <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+    <span class="nf">end</span>
+
+    <span class="c1"># `projects` must return an array of Stoplight::Project</span>
+    <span class="c1"># see Stoplight::Project for more information on the spec</span>
+    <span class="k">def</span> <span class="nf">projects</span>
+      <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+    <span class="nf">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>On the front-end, now we don&#39;t have to worry about parsing different server responses; we know that any provider will respond to the <code>Provider#projects</code> instance method. This makes refactoring our front-end code much easier.</p>
+
+<p>The <code>Stoplight::Project</code> clearly defines a schema and method-set that must be adhered to. In the front-end, we can simply call <code>.projects</code> on any provider and know with 100% certainty that the given objects respond to a certain set of methods. Those methods are defined in the <code>Stoplight::Project</code> class:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Stoplight</span>
+  <span class="k">class</span> <span class="nc">Project</span>
+    <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:build_url</span><span class="p">,</span> <span class="ss">:last_build_id</span><span class="p">,</span> <span class="ss">:last_build_time</span><span class="p">,</span> <span class="ss">:last_build_status</span><span class="p">,</span> <span class="ss">:current_status</span>
+
+    <span class="c1"># Initialize (new) takes in a hash of options in the following format:</span>
+    <span class="c1">#</span>
+    <span class="c1"># {</span>
+    <span class="c1">#   :name =&gt; 'my_project',</span>
+    <span class="c1">#   :build_url =&gt; 'http://ci.jenkins.org/job/my_project',</span>
+    <span class="c1">#   :web_url =&gt; 'http://github.com/username/my_project', # optional</span>
+    <span class="c1">#   :last_build_id =&gt; '7',</span>
+    <span class="c1">#   :last_build_time =&gt; '2012-05-24T03:19:53Z',</span>
+    <span class="c1">#   :last_build_status =&gt; 0,</span>
+    <span class="c1">#   :current_status =&gt; 1,</span>
+    <span class="c1"># }</span>
+    <span class="c1">#</span>
+    <span class="c1"># - `name` - the name of this project</span>
+    <span class="c1"># - `build_url` - the url where the build came from</span>
+    <span class="c1"># - `build_id` - the unique build_id for this project</span>
+    <span class="c1"># - `last_build_time` - last successful build</span>
+    <span class="c1"># - `last_build_status` - integer representing the exit code of the last build:</span>
+    <span class="c1">#   - -1: unknown</span>
+    <span class="c1">#   -  0: passed (success)</span>
+    <span class="c1">#   -  1: failed (error, failure)</span>
+    <span class="c1"># - `current_status` - the current status of the build:</span>
+    <span class="c1">#   - -1: unknwon</span>
+    <span class="c1">#   -  0: done (sleeping, waiting)</span>
+    <span class="c1">#   -  1: building (building, working, compiling)</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+      <span class="p">.</span><span class="nf">.</span><span class="p">.</span>
+    <span class="nf">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This set of simple instructions tells a provider how it must format data. Essentially this makes <code>Provider</code> a micro-data-mapper, massaging data from remote APIs into a standard format. Stoplight then uses that standard format to create a unified user experience.</p>
+
+<h3 id="adding-tests">Adding Tests</h3>
+
+<p>Since Stoplight is destined to become an open-source project, it needs a comprehensive test suite. Furthermore, during our refactoring, it&#39;s important that we don&#39;t break existing functionality. As such, I added a full test suite with RSpec. To make development easier, I also use Spork, Guard, and Growl-Ruby to automatically run tests in the background while I&#39;m coding. This makes TDD much more exciting.</p>
+
+<h3 id="foreman">Foreman</h3>
+
+<p>With all those dependencies, plus running the server, it only made sense to use <a href="https://github.com/ddollar/foreman">Foreman</a> to manage all those processes. What used to be (in three different terminal tabs):</p>
+<div class="highlight"><pre><code class="language-" data-lang="">bundle exec shotgun -p 4567
+bundle exec compass watch -c config/compass.rb
+bundle exec guard
+</code></pre></div>
+<p>simply became:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">bundle exec foreman start
+</code></pre></div>
+<p>with a tiny <code>Procfile</code>:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">web:      shotgun -p 4567
+compass:  compass watch -c config/compass.rb
+guard:    guard
+</code></pre></div>
+<h3 id="compass">Compass</h3>
+
+<p>Under the hood, all the styles for Stoplight are generated by a framework called <a href="http://compass-style.org">Compass</a>. Compass allows us to leverage the power of SCSS and easily create a cross-browser compliant application. Stoplight uses Compass and SCSS for all it&#39;s styles. This ensures a consistent user experience.</p>
+
+<h3 id="abap-text">ABAP Text</h3>
+
+<p>ABAP stands for &quot;As Big As Possible&quot;. A tiny snippet of jQuery dynamically sizes text to fit in its bounds. Whether you&#39;re displaying on a 60&quot; LED TV or a 13&quot; Monitor, the text will be as big and clear as possible.</p>
+
+<h3 id="adding-travis">Adding Travis</h3>
+
+<p>Brace yourself for a meta-moment. Since I wanted Stoplight to become a popular open-source project, I added the build on Travis CI. With <a href="http://travis-ci.org/#!/customink/stoplight">Stoplight on Travis CI</a> we can use Stoplight to monitor the build status of Stoplight.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>There you have it! What was once a very isolated and less-than-configurable tool is now highly extensible and open to contributions by the community. If you are currently using Greenscreen or another build monitoring alternative, give Stoplight a try.</p>
+
+<h2 id="i-want-it">I Want it!</h2>
+
+<p>Stoplight is available for <a href="https://github.com/customink/stoplight">download and forking on github</a>. Pull requests are greatly welcome! There is also a highly-configurable <a href="https://github.com/customink-webops/stoplight">chef cookbook for installing Stoplight</a> on Apache and Passenger on your own servers.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-06-12T17:48:00-04:00">
+      12 Jun 2012
+    </time></br>
+    by Seth Vargo
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/';
+    var disqus_title = "Introducing Stoplight: Greenscreen 2.0";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Testing Chef Cookbooks - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Throughout my internship at CustomInk, I&#39;ve put a significant focus on Chef cookbook testing. At the time of this writing, there are a few solu...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Testing Chef Cookbooks</h1>
+        <p>Throughout my internship at CustomInk, I&#39;ve put a significant focus on Chef cookbook testing. At the time of this writing, there are a few solutions for testing cookbooks - <a href="https://github.com/acrmp/chefspec">ChefSpec</a>, <a href="http://www.cucumber-chef.org/">cucumber-chef</a>, <a href="https://github.com/calavera/minitest-chef-handler">minitest-chef-handler</a>, and <a href="https://github.com/calavera/rspec-chef">rspec-chef</a> – and they each have their own distinct advantages. At the very least, you should run <code>knife cookbook test</code> and <code>foodcritic</code> against all your cookbooks. Nathen Harvey covered this in his <a href="http://technology.customink.com/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a> blog post.</p>
+
+<p>At CustomInk, we test using <a href="https://github.com/acrmp/chefspec">ChefSpec</a>. Additionally, we use some home-grown gems such as <a href="https://github.com/customink/fauxhai">fauxhai</a> and <a href="https://github.com/customink/strainer">Strainer</a> to make testing easier.</p>
+
+<!--more-->
+
+<h2 id="foodcritic">Foodcritic</h2>
+
+<p>Foodcritic is a linting tool for your cookbooks. Although technically not a &quot;test&quot;, linting tools are frequently grouped with testing. Foodcritic is like jslint for cookbooks. <strong>At the bare minimum, you should run <code>foodcritic</code> against all your cookbooks.</strong></p>
+
+<p>As mentioned in <a href="/blog/our-team/nathen-harvey.html">Nathen Harvey&#39;s</a> <a href="/blog/2012/07/06/mvt-knife-test-and-travisci/">MVT: knife test and TravisCI</a>, foodcritic does not verify that you have proper Ruby code. It is only a linting tool.</p>
+
+<p>When running foodcritic, I recommend adding both <a href="https://github.com/customink-webops/foodcritic-rules">CustomInk foodcritic rules</a> and <a href="https://github.com/etsy/foodcritic-rules">Etsy foodcritic rules</a>. Clone the repositories (or use submodules) into a <code>foodcritic</code> directory in the root of your chef-repo:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">|_cookbooks
+|_data_bags
+|_environments
+|_foodcritic
+  |_customink
+  |_etsy
+</code></pre></div>
+<p>Now, you can run <code>foodcritic</code> like so:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ bundle exec foodcritic -I foodcritic/* cookbooks/my_cookbook
+</code></pre></div>
+<p>There are more details about the <a href="https://github.com/customink-webops/foodcritic-rules">CustomInk foodcritic rules</a> and <a href="https://github.com/etsy/foodcritic-rules">Etsy foodcritic rules</a> in their respective repositories on github.</p>
+
+<h2 id="strainer">Strainer</h2>
+
+<p>Very quickly, you can see the need to run multiple commands against every cookbook:</p>
+
+<ul>
+<li><code>knife cookbook test</code> for ruby syntax</li>
+<li><code>foodcritic</code> to lint your code</li>
+<li><p><code>chefspec</code>, <code>minitest</code>, or <code>cucumber</code> for your actual unit, function, or integration tests
+<br></p>
+
+<p>$ bundle exec knife cookbook test COOKBOOK
+$ bundle exec foodcritic -I foodcritic/* cookbooks/COOKBOOK
+$ bundle exec spec</p></li>
+</ul>
+
+<p>This is why I wrote <a href="https://github.com/customink/strainer">Strainer</a>. Strainer uses a <code>Colanderfile</code> at either the project-level or cookbook-level to run isolated tests on your cookbooks. The cookbook is actually copied to a temporary location and then the tests are run against it. To get started, create a Colander file in your editor and enter the following:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">knife <span class="nb">test</span>: bundle <span class="nb">exec </span>knife cookbook <span class="nb">test</span> <span class="nv">$COOKBOOK</span>
+foodcritic: bundle <span class="nb">exec </span>foodcritic -I foodcritic/<span class="k">*</span> cookbooks/<span class="nv">$COOKBOOK</span>
+chefspec: bundle <span class="nb">exec </span>spec
+</code></pre></div>
+<p>Notice that we have this <code>$COOKBOOK</code> variable. There&#39;s also a <code>$ENVIRONMENT</code> variable provided. These are replaced with the cookbook or cookbooks you are straining.</p>
+
+<p>If you&#39;ve used <a href="https://github.com/ddollar/foreman">foreman</a>, you should be familiar with this syntax.</p>
+
+<p>Next, we want to <code>strain</code> out the cookbook we want to test:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">$ bundle exec strain my_cookbook
+</code></pre></div>
+<p>Strainer is also useful for setting up multiple builds or jobs against your single chef repository. You can create a separate job (on Jenkins for example), with the same base repository, but change the script (or use environment variables) to only run the cookbooks you want to test!</p>
+
+<p>I recommend also checking out <a href="https://github.com/customink/strainer">Strainer on github</a> for the most up-to-date documentation. There&#39;s still a lot of work to be done. Get the bottom of the README for the most up-to-date list of features that need your help!</p>
+
+<h2 id="fauxhai">Fauxhai</h2>
+
+<p><strong>Problem</strong>: Ohai is awesome. Ohai does a LOT. I don&#39;t want to type out all my ohai data for a single test.</p>
+
+<p><strong>Solution</strong>: <a href="http://technology.customink.com/fauxhai/">Fauxhai</a></p>
+
+<p><a href="http://technology.customink.com/fauxhai/">Fauxhai</a> is &quot;fake ohai&quot;, as it&#39;s name implies. Fauxhai, as featured on the <a href="http://foodfightshow.org/index.html">foodfight show</a> multiple times is a community-backed node-mocking utility. In short, it looks like this.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Fauxhai</span><span class="p">.</span><span class="nf">mock</span><span class="p">(</span><span class="ss">platform: </span><span class="s1">'ubuntu'</span><span class="p">)</span>
+</code></pre></div>
+<p>This will mock out the default ubuntu node. You can use this in combination with Chefspec or other testing tools.</p>
+
+<p>I recently released the first non-alpha version of fauxhai. In this edition, fauxhai is actually capable of mocking &quot;real&quot; nodes. It will SSH into your server, download the real Ohai data, and then run your tests against that Ohai data:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Fauxhai</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="ss">:'node.example.com'</span><span class="p">)</span>
+</code></pre></div>
+<p>Check out the <a href="http://technology.customink.com/fauxhai/">fauxhai github page</a> or <a href="https://github.com/customink/fauxhai">fauxhai github repo</a> for more information on how to use fauxhai.</p>
+
+<h2 id="chefspec">ChefSpec</h2>
+
+<p>At CustomInk, we test our cookbooks with <a href="https://github.com/acrmp/chefspec">ChefSpec</a> by <a href="https://github.com/acrmp">Andrew Crump</a>. There are a lot of great testing solutions out there, but ChefSpec is what works for us and our needs as a company. We also rarely use ChefSpec without fauxhai, so here&#39;s an example from <a href="https://github.com/customink-webops/phantomjs">our phantomjs cookbook</a>:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'chefspec'</span>
+<span class="nb">require</span> <span class="s1">'fauxhai'</span>
+
+<span class="n">describe</span> <span class="s1">'phantomjs::default'</span> <span class="k">do</span>
+  <span class="n">context</span> <span class="s1">'on ubuntu'</span> <span class="k">do</span>
+    <span class="n">before</span><span class="p">{</span> <span class="no">Fauxhai</span><span class="p">.</span><span class="nf">mock</span><span class="p">(</span><span class="n">platform</span><span class="ss">:'ubuntu'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:chef_run</span><span class="p">){</span> <span class="no">ChefSpec</span><span class="o">::</span><span class="no">ChefRunner</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">converge</span><span class="p">(</span><span class="s1">'phantomjs::default'</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="s1">'should install the correct packages'</span> <span class="k">do</span>
+      <span class="n">chef_run</span><span class="p">.</span><span class="nf">should</span> <span class="n">install_package</span> <span class="s1">'fontconfig'</span>
+      <span class="n">chef_run</span><span class="p">.</span><span class="nf">should</span> <span class="n">install_package</span> <span class="s1">'libfreetype6'</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>It&#39;s simple, it&#39;s explicit, and it reads a whole lot easier than TestUnit or MiniTest (shhh, don&#39;t tell DHH).</p>
+
+<h4 id="the-catch">The Catch</h4>
+
+<p>There is one hang-up about ChefSpec - it has incredibly confusing documentation. Depending on where you look, some methods have changed, syntax is different, things have been removed, and there&#39;s <a href="https://github.com/acrmp/chefspec/issues/30">a few different places for documentation</a>. The solution - just dive into the source. It&#39;s the easiest way, and you&#39;ll have a better understanding from the start.</p>
+
+<h2 id="travis-amp-jenkins">Travis &amp; Jenkins</h2>
+
+<p>Internally, we use <a href="http://jenkins-ci.org">Jenkins</a> as our build server. However, for all our public-facing cookbooks, we use <a href="http://travis-ci.org">Travis</a>. This causes somewhat of a gap between our build statuses - we have to look in two locations to see the status of all our builds...</p>
+
+<p>Okay, I lied. We don&#39;t. We actually use another project I wrote, <a href="https://github.com/customink/stoplight">stoplight</a>, that shows the build status from multiple build servers in a single UI. It&#39;s incredibly handy for these kinds of situations. And, for you hardcore Chef users, there&#39;s even a <a href="https://github.com/customink-webops/stoplight">Chef cookbook for stoplight</a> for installing stoplight on your infrastructure.</p>
+
+<h2 id="the-long-amp-short-of-it">The Long &amp; Short of it</h2>
+
+<p>Chef testing is a huge topic, and it&#39;s going to be awhile until the community agrees on a single method for testing. Rails still has yet to figure it out... Here&#39;s what is important - <strong>test your cookbooks</strong>. Even if it&#39;s just running foodcritic against all your cookbooks, you are making the cookbook-world a better place. And <strong>talk about it</strong>. Tutorials like this one, as well as <a href="/blog/our-team/seth-vargo">some of the other posts I&#39;ve written</a> will help the community embrace testing :)!</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2012-08-03T10:39:00-04:00">
+      03 Aug 2012
+    </time></br>
+    by Seth Vargo
+    <div class="tb-Author-icons">
+      
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2012/08/03/testing-chef-cookbooks/';
+    var disqus_title = "Testing Chef Cookbooks";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

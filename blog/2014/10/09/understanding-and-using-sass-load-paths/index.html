@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Understanding and Using Sass Load Paths - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="One of the biggest hurdles in effectively using Sass is correctly setting the load path when using Sass libraries. Surprisingly not all libraries s...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-f98ce8eeaf4dba2bb0f5d33a39c8d94c.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Understanding and Using Sass Load Paths</h1>
+        <p>One of the biggest hurdles in effectively using <a href="http://sass-lang.com/">Sass</a> is correctly setting the load path when using Sass libraries. Surprisingly not all libraries set up the load paths correctly. Some libraries add themselves to the <code>Sass.load_paths</code> or the <code>SASS_PATH</code> environment variable, but stomp on paths that were already loaded, which introduces problems like requirements for the order dependencies are loaded. It is clear that the current state of things could use improvement.</p>
+
+<!--more-->
+
+<p>For those of you that are aware of the challenges using the <code>SASS_PATH</code> environment variable and just want a solution to help manage and wire up the <code>SASS_PATH</code>, the <a href="https://rubygems.org/gems/sass_paths">SassPaths gem</a> provides utilities to easily include directories, Sass gems, and Bower Sass dependencies in the <code>SASS_PATH</code>.</p>
+
+<h2 id="why-do-load-paths-matter">Why do load paths matter?</h2>
+
+<p>The Sass load paths let Sass know the directories it should look in when trying to import files. Correctly setting up the load paths allow us to import a Sass library with its name, rather than having to use the relative path to the resource.</p>
+<div class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@import</span> <span class="s">'susy';</span>
+
+<span class="c1">// versus
+</span>
+<span class="k">@import</span> <span class="s">'bundle/ruby/2.1.0/gems/susy-2.1.3/sass/susy';</span>
+</code></pre></div>
+<p>It is important to write libraries such that they append to the Sass load paths, assuming that other libraries may be loaded before or after them, instead of overwriting any libraries that might have appended to the load paths first.</p>
+
+<h2 id="where-sass-is-headed">Where Sass is headed</h2>
+
+<p>To help solve the load path problem, Sass 3.2 introduced the <code>SASS_PATH</code> environment variable, an environment variable that can be hooked into to set the load paths for Sass. As first specified in the <a href="https://github.com/sass/sass/blob/stable/doc-src/SASS_CHANGELOG.md#smaller-improvements-2">3.2 change log</a>:</p>
+
+<blockquote>
+<p><em>Sass.load_paths is initialized to the value of the SASS_PATH environment variable. This variable should contain a colon-separated list of load paths (semicolon-separated on Windows).</em></p>
+</blockquote>
+
+<p>The <code>SASS_PATH</code> environment variable is not just an optional alternative, it is at the core of where Sass is headed regarding setting up/managing its load paths. In fact, Sass 3.4 introduces a backwards incompatibility with how the load path was handled before. As specified in the <a href="https://github.com/sass/sass/blob/stable/doc-src/SASS_CHANGELOG.md#backwards-incompatibilities----must-read">Sass 3.4 change log</a>:</p>
+
+<blockquote>
+<p><em>The current working directory will no longer be placed onto the Sass load path by default. If you need the current working directory to be available, set SASS_PATH=. in your shell&#39;s environment.</em></p>
+</blockquote>
+
+<p>Another significant change occurring in the Sass community is that Sass no longer requires Ruby. <a href="http://libsass.org/">LibSass</a> brings a C implementation of Sass to the table to remove the requirement of Ruby as well as provide a significant performance increase in compilation. LibSass also <a href="https://github.com/sass/libsass/issues/90">implements</a> the <code>SASS_PATH</code> environment variable so there is no denying that the <code>SASS_PATH</code> is the accepted way forward. This is where the <code>SASS_PATH</code> environment variable really shines, it can be configured to provide a common interface for setting up Sass load paths despite the implementation of Sass (Ruby, C, or otherwise).</p>
+
+<p>The problem with LibSass is that it currently only implements features up to Sass 3.2, meaning most notably, it does not support Sass maps. The good news is that the core team recently <a href="https://github.com/sass/libsass/wiki/The-LibSass-Compatibility-Plan">announced</a> that they plan on getting LibSass to be 100% compatible with Ruby Sass.</p>
+
+<h2 id="all-your-sass-paths-are-belong-to-us">All Your Sass Paths Are Belong To Us</h2>
+
+<p>If <code>SASS_PATH</code> is the way to go, why does it seem that so many projects are having difficulties setting the path correctly? While I cannot give a definitive answer, my guess is that it takes time for change to permeate through all resources and despites Sass&#39; newfound maturity, users have grown accustomed to hacking their own paths together. We no longer need to hack together the load paths, these should just work as long as we use the provided environment variable as an interface.</p>
+
+<p>Though the environment variable provides a common interface to hook into, there are many ways Sass libraries might be pulled into a project. How do we rectify setting up the <code>SASS_PATH</code> correctly when these paths might come via Ruby gems, Bower dependencies, or the file directory? We are releasing the <a href="https://rubygems.org/gems/sass_paths">SassPaths gem</a> to provide a set of easy to use utility methods to include any Sass dependency, whether it comes from Bower, Ruby gems, or elsewhere. SassPaths also plays nicely with Ruby on Rails. You can read the <a href="https://github.com/customink/sass_paths/blob/master/README.md">documentation</a> on GitHub, but I will provide a quick overview below.</p>
+
+<h3 id="sasspaths-primer">SassPaths Primer</h3>
+
+<p>First you will need to <code>bundle install</code> the SassPaths gem in your application.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Gemfile.rb</span>
+<span class="n">gem</span> <span class="s1">'sass_paths'</span>
+</code></pre></div>
+<p>Now all you need is an initialization file that will run when your application starts, which will make use of the SassPaths utilities to setup the <code>SASS_PATH</code>. If you are using Rails, you can simply add this file to your initializers directory.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># sass_paths_init.rb</span>
+<span class="nb">require</span> <span class="s1">'sass_paths'</span>
+
+<span class="c1"># append a directory, or list of directories to SASS_PATH</span>
+<span class="no">SassPaths</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s1">'/my/first/sass/path'</span><span class="p">,</span> <span class="s1">'/my/second/sass/path'</span><span class="p">,</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span><span class="p">)</span>
+
+<span class="c1"># append a Ruby gem</span>
+<span class="no">SassPaths</span><span class="p">.</span><span class="nf">append_gem_path</span><span class="p">(</span><span class="n">gem_name</span><span class="p">,</span> <span class="n">directory_in_gem_that_contains_sass</span><span class="p">)</span>
+
+<span class="c1"># append all Sass Bower components' directories</span>
+<span class="no">SassPaths</span><span class="p">.</span><span class="nf">append_bower_components</span><span class="p">(</span><span class="n">bower_components_directory</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="acknowledgements">Acknowledgements</h4>
+
+<p>Many thanks to my fellow CustomInk teammates, Stafford Brunk and Ken Collins. Stafford co-authored the gem with me and Ken has been a driving force in adopting the <code>SASS_PATH</code> environment variable as well as <a href="https://github.com/at-import/Sassy-Maps/pull/6">epic pull requests</a> to fix the problems existing repositories have with the <code>SASS_PATH</code>.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Jonathan Lehman" src="http://www.gravatar.com/avatar/f536f0fa21e9c9be534642bb52293946?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2014-10-09T00:00:00-04:00">
+      09 Oct 2014
+    </time></br>
+    by Jonathan Lehman
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/inLehmans_Terms"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/jdlehman"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://inlehmansterms.net"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2014/10/09/understanding-and-using-sass-load-paths/';
+    var disqus_title = "Understanding and Using Sass Load Paths";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2015 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>
