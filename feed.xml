@@ -107,7 +107,7 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/fetch-tobias-ternstrom-5a5e378c7b34e4bf0bf8f2c4dda2d514.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Tobias Ternstrom helped make FETCH happen in SQL Server.&quot; /&gt;To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped &lt;a href=&quot;http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif&quot;&gt;make FETCH happen&lt;/a&gt; in SQL Server. Supporting a sane limit/offset model &lt;a href=&quot;http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/&quot;&gt;allowed projects&lt;/a&gt; like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.&lt;/p&gt;
 
-&lt;p&gt;And lastly, I want to give a shout out to &lt;a href=&quot;https://github.com/larskanis&quot;&gt;Lars Kanis&lt;/a&gt; who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests.&lt;/p&gt;
+&lt;p&gt;And lastly, I want to give a shout out to &lt;a href=&quot;https://github.com/larskanis&quot;&gt;Lars Kanis&lt;/a&gt; who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests!&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Oct 2015 00:00:00 -0400</pubDate>
         <link>http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp/</link>
