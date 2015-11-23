@@ -3,7 +3,7 @@
   <channel>
     <title>CustomInk Technology Blog</title>
     <description></description>
-    <link>http://technology.customink.com/</link>
+    <link>http:///</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
@@ -12,7 +12,7 @@
 
 &lt;!--more--&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/meeting-d54243935c69ee4c8b6c8174cd9a1c56.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;First day of introductions at Microsoft&#39;s OSSDataCamp&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/meeting.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;First day of introductions at Microsoft&#39;s OSSDataCamp&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Both &lt;a href=&quot;https://twitter.com/sgrif&quot;&gt;Sean Griffin&lt;/a&gt; and I were invited to represent the Ruby/Rails community at Microsoft&amp;#39;s first &lt;a href=&quot;https://twitter.com/hashtag/OSSDataCamp&quot;&gt;#OSSDataCamp&lt;/a&gt;. The idea is simple; to open up and engage our community at an intimate level. The results so far are incredibly positive and these new relationships feel lasting and honest.&lt;/p&gt;
 
@@ -34,13 +34,13 @@
 
 &lt;h5 id=&quot;a-changing-culture&quot;&gt;A Changing Culture&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/learn-ruby-ceec9a9c74719e504abddd1996b74266.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Jack Yang learns Ruby in 1 day!&quot; /&gt;Change is hard on all sides. For me, getting into the mindset that Microsoft can help was a big step. When Sean found issues with &lt;a href=&quot;https://github.com/sstephenson/execjs&quot;&gt;execjs&lt;/a&gt; that led back to Windows Script Host, they introduced us to that team. Likewise, the SQL Server adapter has always needed a bullet-proof cross platform binary to dump the schema. &amp;quot;We can help and here are the engineers...&amp;quot; was the reply. Wow!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/learn-ruby.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Jack Yang learns Ruby in 1 day!&quot; /&gt;Change is hard on all sides. For me, getting into the mindset that Microsoft can help was a big step. When Sean found issues with &lt;a href=&quot;https://github.com/sstephenson/execjs&quot;&gt;execjs&lt;/a&gt; that led back to Windows Script Host, they introduced us to that team. Likewise, the SQL Server adapter has always needed a bullet-proof cross platform binary to dump the schema. &amp;quot;We can help and here are the engineers...&amp;quot; was the reply. Wow!&lt;/p&gt;
 
 &lt;p&gt;Some issues sit well in Microsoft&amp;#39;s sphere to solve. What most impressed me was how eager they were to address them. Being a large company, often times the immediate answer was to schedule a series of 1-on-1s with the team(s) responsible. Connections and conversations like this quickly led to even pondering if Ruby could be installed on Windows by default. Or maybe even build cross platform SQL Server development binaries! 😱&lt;/p&gt;
 
 &lt;h5 id=&quot;quid-pro-quo&quot;&gt;Quid Pro Quo&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/keepit-weird-58d991033565fd6e44fa0cbfa4451905.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--half tb-Img--half--sm&quot; alt=&quot;Sean Griffin keeps it weird while helping you not blow up.&quot; style=&quot;float:left; margin-left:0; margin-right:1rem;&quot; /&gt;So what did Microsoft learn most from us? Other than Rubyists keep it weird? Likely their biggest takeaway was that Sean Griffin loves to play the &lt;a href=&quot;http://www.keeptalkinggame.com&quot;&gt;Keep Talking and Nobody Explodes&lt;/a&gt; game. I mean he &lt;em&gt;really&lt;/em&gt; loves to play this game.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/keepit-weird.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--half tb-Img--half--sm&quot; alt=&quot;Sean Griffin keeps it weird while helping you not blow up.&quot; style=&quot;float:left; margin-left:0; margin-right:1rem;&quot; /&gt;So what did Microsoft learn most from us? Other than Rubyists keep it weird? Likely their biggest takeaway was that Sean Griffin loves to play the &lt;a href=&quot;http://www.keeptalkinggame.com&quot;&gt;Keep Talking and Nobody Explodes&lt;/a&gt; game. I mean he &lt;em&gt;really&lt;/em&gt; loves to play this game.&lt;/p&gt;
 
 &lt;p&gt;It&amp;#39;s simple, use 2-way, fast-paced, verbal communication to quickly identify and defuse a virtual ticking time bomb. As it turned out, this is a great team building exercise. Becoming a bomb defusing expert is high on my list and I can not wait to play with a group of my fellow Inkers. Thanks Sean!&lt;/p&gt;
 
@@ -88,7 +88,7 @@
 
 &lt;h5 id=&quot;sql-server-2016&quot;&gt;SQL Server 2016&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/sql-server-stretch-e5acb28ce8614a2011facee2b7ddd35a.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Stretch On-Premises SQL Servers to Azure.&quot; /&gt;I can&amp;#39;t even begin to go into all the amazing features of SQL Server 2016 now available on Azure. A quick list includes:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/sql-server-stretch.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Stretch On-Premises SQL Servers to Azure.&quot; /&gt;I can&amp;#39;t even begin to go into all the amazing features of SQL Server 2016 now available on Azure. A quick list includes:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Built-In JSON Support.&lt;/li&gt;
@@ -105,13 +105,13 @@
 
 &lt;p&gt;This is a process and one that I hope continues with Ruby and other languages. It will succeed if Microsoft actively contributes back to open source and in some cases, champions certain projects with an earnest level of excellence.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/fetch-tobias-ternstrom-5a5e378c7b34e4bf0bf8f2c4dda2d514.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Tobias Ternstrom helped make FETCH happen in SQL Server.&quot; /&gt;To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped &lt;a href=&quot;http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif&quot;&gt;make FETCH happen&lt;/a&gt; in SQL Server. Supporting a sane limit/offset model &lt;a href=&quot;http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/&quot;&gt;allowed projects&lt;/a&gt; like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ossdatacamp/fetch-tobias-ternstrom.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; alt=&quot;Tobias Ternstrom helped make FETCH happen in SQL Server.&quot; /&gt;To the right is Tobias Ternstrom and myself. The reason I am so happy in that photo is that Tobias literally helped &lt;a href=&quot;http://style.mtv.com//wp-content/uploads/style/2014/03/so-fetch.gif&quot;&gt;make FETCH happen&lt;/a&gt; in SQL Server. Supporting a sane limit/offset model &lt;a href=&quot;http://metaskills.net/2015/01/25/activerecord-sqlserver-v4.2.0---code-name-kantishna/&quot;&gt;allowed projects&lt;/a&gt; like the ActiveRecord adapter to delete hundreds of lines of code while becoming more maintainable. Thanks so much Tobias! All ORMs everywhere love you.&lt;/p&gt;
 
 &lt;p&gt;And lastly, I want to give a shout out to &lt;a href=&quot;https://github.com/larskanis&quot;&gt;Lars Kanis&lt;/a&gt; who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests!&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Oct 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp/</guid>
+        <link>http:////blog/2015/10/19/microsofts-first-open-source-datacamp/</link>
+        <guid isPermaLink="true">http:////blog/2015/10/19/microsofts-first-open-source-datacamp/</guid>
       </item>
     
       <item>
@@ -144,8 +144,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 07 Oct 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks/</guid>
+        <link>http:////blog/2015/10/07/inkovate-2015-lightning-talks/</link>
+        <guid isPermaLink="true">http:////blog/2015/10/07/inkovate-2015-lightning-talks/</guid>
       </item>
     
       <item>
@@ -155,25 +155,25 @@
 &lt;p&gt;A couple weeks back, Gerald, Vandad and I headed out to Nokesville Blvd. It became quite clear that we needed something more than a couple of cars to haul it out. What was I thinking? Luckily, the Home Depot had their hourly truck available across the street.&lt;/p&gt;
 
 &lt;p&gt;The 3PAR is in that stack. The desire to leave it hanging off the back of the truck was there, but we have one more event for that gear.
-&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/3par-57bd90def4fa20fbc5eb3864e0c0dd36.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;3par&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/3par.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;3par&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;It’s been a while since we’ve moved so much gear. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/gerald-f0623391d798eaaca9b6bb012dfe7c92.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;gerald&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;It’s been a while since we’ve moved so much gear. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/gerald.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;gerald&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;That looks like gas money for one lucky engineer. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/wires-2ca1a268708ff0659537580febc54e01.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;wires&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;That looks like gas money for one lucky engineer. &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/wires.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;wires&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt; It’s all out. That’s a full truckload of CustomInk.
-&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/truck-919294b44185004f020bf93c73f4bb6b.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;truck&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/how_dismantle_a_data_center/truck.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;truck&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Sep 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center/</guid>
+        <link>http:////blog/2015/09/11/how-to-dismantle-a-data-center/</link>
+        <guid isPermaLink="true">http:////blog/2015/09/11/how-to-dismantle-a-data-center/</guid>
       </item>
     
       <item>
         <title>Ruby For Good</title>
         <description>&lt;p&gt;This weekend I had the pleasure of co-hosting &lt;a href=&quot;http://rubyforgood.com/&quot;&gt;Ruby For Good&lt;/a&gt;, a conference that brings programmers together to work on projects for a variety of charities and non-profit organizations. This year, adorable kittens were involved.
 &lt;/br&gt;
-&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitten-9838b9fae58192820daa0fd24bb91894.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;cute kitten&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitten.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;cute kitten&quot; /&gt;&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -181,11 +181,11 @@
 
 &lt;p&gt;Conference attendees stayed in the dorms at &lt;a href=&quot;http://www.gmu.edu/&quot;&gt;George Mason University&lt;/a&gt; for three days. They assembled into teams and worked on projects throughout the day. They were also responsible for preparing meals for everyone. In the evening, folks relaxed by playing board games and hanging out.&lt;/br&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitchen-608f04da372527a9ae81d8f1c2496170.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;kitchen duty&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/kitchen.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;kitchen duty&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Although the format is very simple, attendees told us they got a lot out of participating, regardless of their experience levels. We are still going through the feedback surveys but here&amp;#39;s a great blog post by one of this year&amp;#39;s do-gooders &lt;a href=&quot;http://rolentle.com/ruby-for-good/&quot;&gt;http://rolentle.com/ruby-for-good/&lt;/a&gt;.
 &lt;/br&gt;
-&lt;img src=&quot;/assets/content/ruby_for_good_2015/pairing-ad6bf11c1a543cea77084a59b244327e.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;pair programming&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/assets/content/ruby_for_good_2015/pairing.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;pair programming&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;this-year-39-s-projects&quot;&gt;This Year&amp;#39;s Projects&lt;/h2&gt;
 
@@ -204,17 +204,17 @@
 
 &lt;p&gt;It&amp;#39;s so cool to hear a junior developer talk about their opportunity to contribute to something as widely used as Rspec!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-hug-a43ad6bb513c41a9406b4678548266eb.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group hug&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-hug.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group hug&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;you-can-get-involved-today&quot;&gt;You Can Get Involved Today!&lt;/h2&gt;
 
 &lt;p&gt;Contribute to next year&amp;#39;s Ruby For Good by &lt;a href=&quot;https://www.booster.com/rubyforgood&quot;&gt;purchasing a t-shirt&lt;/a&gt; - proceeds go to scholarships for future attendees.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-heart-ba7b83bcc1d782bed5a9839decaafb39.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group heart&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-heart.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group heart&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 05 Aug 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/08/05/ruby-for-good/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/08/05/ruby-for-good/</guid>
+        <link>http:////blog/2015/08/05/ruby-for-good/</link>
+        <guid isPermaLink="true">http:////blog/2015/08/05/ruby-for-good/</guid>
       </item>
     
       <item>
@@ -228,7 +228,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 
 &lt;p&gt;Recently at &lt;a href=&quot;http://rubyloco.com&quot;&gt;RubyLoCo Hack Night&lt;/a&gt;, we were challenged with creating an ASCII flag. Given a &lt;a href=&quot;https://github.com/rubyloco/hack-night/blob/master/meetings/2015-07-13/flag.rb&quot;&gt;starter script&lt;/a&gt; that printed out a simple ASCII art American flag, our  first thought was to print it in color. There is a gem for that named &lt;a href=&quot;https://github.com/fazibear/colorize&quot;&gt;colorize&lt;/a&gt;. But how do we install the gem and require it in our script? We wouldn&amp;#39;t be so pedestrian as to actually run &lt;code&gt;gem install colorize&lt;/code&gt;. We are proud bundlers.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/pre_flag-a5c14f8f01db59729e6248053cd326cb.png alt=&quot;Default Flag&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/pre_flag.png alt=&quot;Default Flag&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;inline-gemfile&quot;&gt;Inline Gemfile&lt;/h2&gt;
 
@@ -252,7 +252,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And now... With the help of Bundler... And colorize... We present &lt;strong&gt;Happy Birthday America&lt;/strong&gt;!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/post_flag-f6f56afdd3d3c0809a612f41c0552e34.png alt=&quot;Colored Flag&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/bundler_inline_gemfile/post_flag.png alt=&quot;Colored Flag&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;what-did-we-accomplish&quot;&gt;What did we accomplish?&lt;/h2&gt;
 
@@ -286,15 +286,15 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 &lt;p&gt;CustomInk is a proud supporter of &lt;a href=&quot;https://rubytogether.org/&quot;&gt;Ruby Together&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 17 Jul 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies/</guid>
+        <link>http:////blog/2015/07/17/bundler-inline-gemfile-dependencies/</link>
+        <guid isPermaLink="true">http:////blog/2015/07/17/bundler-inline-gemfile-dependencies/</guid>
       </item>
     
       <item>
         <title>Colorized SQL Log Backport for ActiveRecord</title>
         <description>&lt;p&gt;One of the &lt;a href=&quot;https://github.com/rails/rails/pull/20607&quot;&gt;new features&lt;/a&gt; of Rails 5 will be granular SQL logging so you can easily see &lt;code&gt;SELECT&lt;/code&gt;, &lt;code&gt;INSERT&lt;/code&gt;, &lt;code&gt;UPDATE&lt;/code&gt;, &lt;code&gt;DELETE&lt;/code&gt;, and &lt;code&gt;TRANSACTION&lt;/code&gt; statements in your log. For example:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/colored-logging-2858a7fe3841a44dba292efcad7055d3.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;Colorized SQL Log Backport for Rails 5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/colored-logging.png&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;Colorized SQL Log Backport for Rails 5&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;But why let Rails 5 have all the fun? Today I created a gem that allows you to leverage this feature now. The gem is currently compatible and tested for Rails 3.2 to 4.2. Get it here and happy logging!&lt;/p&gt;
 
@@ -310,8 +310,8 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 16 Jul 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</guid>
+        <link>http:////blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</link>
+        <guid isPermaLink="true">http:////blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</guid>
       </item>
     
       <item>
@@ -429,8 +429,8 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 &lt;p&gt;Thoughtbot has excellent resources for developers and the &lt;a href=&quot;https://github.com/thoughtbot/guides/tree/master/code-review&quot;&gt;guidelines for code reviews&lt;/a&gt; are no exception.&lt;/p&gt;
 </description>
         <pubDate>Tue, 07 Jul 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/07/07/i-have-the-pr/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/07/i-have-the-pr/</guid>
+        <link>http:////blog/2015/07/07/i-have-the-pr/</link>
+        <guid isPermaLink="true">http:////blog/2015/07/07/i-have-the-pr/</guid>
       </item>
     
       <item>
@@ -686,8 +686,8 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Mon, 22 Jun 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/06/22/rails-multi-database-best-practices-roundup/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/22/rails-multi-database-best-practices-roundup/</guid>
+        <link>http:////blog/2015/06/22/rails-multi-database-best-practices-roundup/</link>
+        <guid isPermaLink="true">http:////blog/2015/06/22/rails-multi-database-best-practices-roundup/</guid>
       </item>
     
       <item>
@@ -770,8 +770,8 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;p&gt;There are no mention of classes at all, which explains a lot. The private keyword in Ruby only exists to declare methods as private, not classes.&lt;/p&gt;
 </description>
         <pubDate>Fri, 19 Jun 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/06/19/rubys-private-is-for-methods-only/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/19/rubys-private-is-for-methods-only/</guid>
+        <link>http:////blog/2015/06/19/rubys-private-is-for-methods-only/</link>
+        <guid isPermaLink="true">http:////blog/2015/06/19/rubys-private-is-for-methods-only/</guid>
       </item>
     
       <item>
@@ -816,8 +816,8 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;p&gt;see &lt;a href=&quot;https://github.com/rails/rails/blob/2-3-stable/activesupport/lib/active_support/core_ext/symbol.rb&quot;&gt;https://github.com/rails/rails/blob/2-3-stable/activesupport/lib/active_support/core_ext/symbol.rb&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 08 Jun 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/06/08/ruby-pretzels/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/08/ruby-pretzels/</guid>
+        <link>http:////blog/2015/06/08/ruby-pretzels/</link>
+        <guid isPermaLink="true">http:////blog/2015/06/08/ruby-pretzels/</guid>
       </item>
     
       <item>
@@ -843,8 +843,8 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;p&gt;I do have one regret. I am no longer invited to Dell’s suite at the Capitals games. Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Fri, 13 Feb 2015 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/02/13/to-the-cloud/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/02/13/to-the-cloud/</guid>
+        <link>http:////blog/2015/02/13/to-the-cloud/</link>
+        <guid isPermaLink="true">http:////blog/2015/02/13/to-the-cloud/</guid>
       </item>
     
       <item>
@@ -971,8 +971,8 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;p&gt;And it all just works! Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Sun, 08 Feb 2015 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</guid>
+        <link>http:////blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</link>
+        <guid isPermaLink="true">http:////blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</guid>
       </item>
     
       <item>
@@ -1101,8 +1101,8 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 06 Jan 2015 03:29:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/01/06/activerecord-42s-type-casting/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2015/01/06/activerecord-42s-type-casting/</guid>
+        <link>http:////blog/2015/01/06/activerecord-42s-type-casting/</link>
+        <guid isPermaLink="true">http:////blog/2015/01/06/activerecord-42s-type-casting/</guid>
       </item>
     
       <item>
@@ -1125,27 +1125,27 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
 
 &lt;h2 id=&quot;our-speedy-engineer-and-5k-organizer-stafford-explaining-the-course&quot;&gt;Our speedy engineer and 5k organizer Stafford explaining the course&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/stafford-519f68ac225c7ed223d0ea866373f099.jpg&quot; alt=&quot;Starting Line&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/stafford.jpg&quot; alt=&quot;Starting Line&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;t-shirts-the-participants&quot;&gt;T-Shirts the participants&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/shirts-3ebbfd69b967bca44c27fb8cb5a5f60a.jpg&quot; alt=&quot;T-Shirts&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/shirts.jpg&quot; alt=&quot;T-Shirts&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;1st-place-kyle-peyton&quot;&gt;1st Place Kyle Peyton&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/kylepeyton-75e94b0a6e9afc2f2f8b4610f56ffe2f.jpg&quot; alt=&quot;Kyle Peyton&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/kylepeyton.jpg&quot; alt=&quot;Kyle Peyton&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;1st-place-bridget-landis&quot;&gt;1st Place Bridget Landis&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/bridgetlandis-43864642573a1a75912e124bc07f301d.jpg&quot; alt=&quot;Bridget Landis&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/bridgetlandis.jpg&quot; alt=&quot;Bridget Landis&quot;&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;1st-place-justin-schumacher&quot;&gt;1st Place Justin Schumacher&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/justinschumacher-58351d402d74c374bf304f7ee0b578eb.jpg&quot; alt=&quot;Justin Schumacher&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/justinschumacher.jpg&quot; alt=&quot;Justin Schumacher&quot;&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Nov 2014 08:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2014/11/19/rubyconf5k-2014/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/11/19/rubyconf5k-2014/</guid>
+        <link>http:////blog/2014/11/19/rubyconf5k-2014/</link>
+        <guid isPermaLink="true">http:////blog/2014/11/19/rubyconf5k-2014/</guid>
       </item>
     
       <item>
@@ -1158,51 +1158,51 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
 
 &lt;p&gt;Early in the morning, we are very excited for everyone to arrive!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/first_attendees-6b7cd450101458d8cdf040cf9a20e96e.jpg alt=&quot;First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/first_attendees2-6ed1313eeab596e6c4499227e319c71e.jpg alt=&quot;More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/by_the_stairs-8bfd03563b97719abaa2cb7f10d9ca0b.jpg alt=&quot;Even More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/hanging_out-0436d2191359b2cf7512adcecc6be858.jpg alt=&quot;Even Morest First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/first_attendees.jpg alt=&quot;First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/first_attendees2.jpg alt=&quot;More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/by_the_stairs.jpg alt=&quot;Even More First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/hanging_out.jpg alt=&quot;Even Morest First Attendees&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;we-start-to-play&quot;&gt;We start to play&lt;/h4&gt;
 
 &lt;p&gt;Everyone is here!  We can&amp;#39;t contain ourselves, we must reveal our moves.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/gogopowerrangers-9e31ff2def288a1fe7c91cb11233df7f.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/rocket-20fe58d194f1d71e593c95a3f2b23cfe.jpg alt=&quot;Rocket Raccoon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/strength_test-effbd4b7feb81de9b351f1e94b542673.jpg alt=&quot;Strength Test&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/drdoom_link-c587197538fb7b9c2fee8867d57b3478.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/morhpin_lunch-12f343e8fc557c8ce9779fe04de3d208.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/gogopowerrangers.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/rocket.jpg alt=&quot;Rocket Raccoon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/strength_test.jpg alt=&quot;Strength Test&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/drdoom_link.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/morhpin_lunch.jpg alt=&quot;DrDoom Link&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;we-start-to-work&quot;&gt;We start to work&lt;/h4&gt;
 
 &lt;p&gt;Eventually, we realize there is work to do. At some point you forget you are even in costume.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/working_link-cdba316410c3f0cdc768e70a81ba5c78.jpg alt=&quot;Saving Zelda?&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/super_meeting-dd038e4df4fb12f39099fce0f43b5557.png alt=&quot;Super Meeting&quot; class=&quot;tb-Img tb-Img--fancy sb-ContentImg--left&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/kickass_thirsty-764556f6de6d758bde2bf8f058600f27.jpg alt=&quot;Kickass is Thirsty&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/working_riker-f111925644df6ed809d23b240d6645e9.jpg alt=&quot;Riker&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/working_link.jpg alt=&quot;Saving Zelda?&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/super_meeting.png alt=&quot;Super Meeting&quot; class=&quot;tb-Img tb-Img--fancy sb-ContentImg--left&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/kickass_thirsty.jpg alt=&quot;Kickass is Thirsty&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/working_riker.jpg alt=&quot;Riker&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;the-photo-shoot&quot;&gt;The Photo Shoot&lt;/h4&gt;
 
 &lt;p&gt;We pile into the photo studio and find our counterparts.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/ecomiccon/photo_thrones-2506d77438bdbb4b03edbaa9ca61f3a0.jpg alt=&quot;Game of Thrones&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/photo_power-5b101f4cb74bcd89923a3a88ff9675a3.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
-&lt;img src=/assets/content/ecomiccon/photo_marvel-b5a2b654bb21eb31d44b1835c2a5589a.jpg alt=&quot;Marvel&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/ecomiccon/photo_thrones.jpg alt=&quot;Game of Thrones&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/photo_power.jpg alt=&quot;Power Rangers&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;
+&lt;img src=/assets/content/ecomiccon/photo_marvel.jpg alt=&quot;Marvel&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;the-whole-team&quot;&gt;The Whole Team&lt;/h3&gt;
 
 &lt;p&gt;We put a lot of work into organizing our event and building our costumes. What a great day!
-&lt;img src=/assets/content/ecomiccon/all_of_ecomiccon-eb8b179a0236cbaaa3999f5af1496de7.jpg alt=&quot;All of eComiccon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+&lt;img src=/assets/content/ecomiccon/all_of_ecomiccon.jpg alt=&quot;All of eComiccon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 31 Oct 2014 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/31/ecomic-con-2014/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/31/ecomic-con-2014/</guid>
+        <link>http:////blog/2014/10/31/ecomic-con-2014/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/31/ecomic-con-2014/</guid>
       </item>
     
       <item>
         <title>Welcome Arild Shirazi!</title>
-        <description>&lt;p&gt;&lt;img src=/assets/content/arild-shirazi-c1a5245f1876ee0e7fac755206cc66be.jpg alt=&quot;Arild Shirazi&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=/assets/content/arild-shirazi.jpg alt=&quot;Arild Shirazi&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;He &lt;a href=&quot;http://technology.customink.com/blog/2014/09/26/ruby-meta-method-madness&quot;&gt;beat us to the punch&lt;/a&gt;, but we&amp;#39;d
 like to give &lt;a href=&quot;https://github.com/ashirazi&quot;&gt;Arild&lt;/a&gt; a warm welcome to CustomInk.&lt;/p&gt;
@@ -1223,8 +1223,8 @@ promise of new technologies with the safety of proven implementations?&lt;/p&gt;
 more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 </description>
         <pubDate>Thu, 23 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/23/welcome-arild-shirazi/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/23/welcome-arild-shirazi/</guid>
+        <link>http:////blog/2014/10/23/welcome-arild-shirazi/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/23/welcome-arild-shirazi/</guid>
       </item>
     
       <item>
@@ -1298,8 +1298,8 @@ more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 &lt;p&gt;If you have a workflow that you like to use for managing your repos that differs from, this I would love to hear about it.&lt;/p&gt;
 </description>
         <pubDate>Wed, 22 Oct 2014 07:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos/</guid>
+        <link>http:////blog/2014/10/22/managing-your-local-project-repos/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/22/managing-your-local-project-repos/</guid>
       </item>
     
       <item>
@@ -1342,8 +1342,8 @@ more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;/blog/2014/09/12/open-sourcing-a-gem-pt-1/&quot;&gt;Part 1&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 20 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/20/open-sourcing-a-gem-pt-2/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/20/open-sourcing-a-gem-pt-2/</guid>
+        <link>http:////blog/2014/10/20/open-sourcing-a-gem-pt-2/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/20/open-sourcing-a-gem-pt-2/</guid>
       </item>
     
       <item>
@@ -1406,8 +1406,8 @@ ourselves and revealing our intentions. Next time you have to reduce an Array to
 the #inject trap. Use Enumerable#each_with_object and impress your friends and family.&lt;/p&gt;
 </description>
         <pubDate>Tue, 14 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/14/better-hash-injection-using-each-with-object/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/14/better-hash-injection-using-each-with-object/</guid>
+        <link>http:////blog/2014/10/14/better-hash-injection-using-each-with-object/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/14/better-hash-injection-using-each-with-object/</guid>
       </item>
     
       <item>
@@ -1477,8 +1477,8 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;p&gt;Many thanks to my fellow CustomInk teammates, Stafford Brunk and Ken Collins. Stafford co-authored the gem with me and Ken has been a driving force in adopting the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable as well as &lt;a href=&quot;https://github.com/at-import/Sassy-Maps/pull/6&quot;&gt;epic pull requests&lt;/a&gt; to fix the problems existing repositories have with the &lt;code&gt;SASS_PATH&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 09 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/09/understanding-and-using-sass-load-paths/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/09/understanding-and-using-sass-load-paths/</guid>
+        <link>http:////blog/2014/10/09/understanding-and-using-sass-load-paths/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/09/understanding-and-using-sass-load-paths/</guid>
       </item>
     
       <item>
@@ -1538,8 +1538,8 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;p&gt;By having this proxy class, ActiveRecord can hook into certain methods and determine whether to perform database queries or used cache records.&lt;/p&gt;
 </description>
         <pubDate>Tue, 07 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/07/rails-association-proxies/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/07/rails-association-proxies/</guid>
+        <link>http:////blog/2014/10/07/rails-association-proxies/</link>
+        <guid isPermaLink="true">http:////blog/2014/10/07/rails-association-proxies/</guid>
       </item>
     
       <item>
@@ -1638,8 +1638,8 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 30 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks/</guid>
+        <link>http:////blog/2014/09/30/unit-testing-sass-frameworks/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/30/unit-testing-sass-frameworks/</guid>
       </item>
     
       <item>
@@ -1696,8 +1696,8 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;p&gt;So hopefully this helps clarify the distinctions between &lt;code&gt;#eval&lt;/code&gt;, &lt;code&gt;#class_eval&lt;/code&gt;, and &lt;code&gt;#instance_eval&lt;/code&gt;. The next time you want to dynamically modify the methods to objects (and classes), you’ll know which of these methods to choose!&lt;/p&gt;
 </description>
         <pubDate>Fri, 26 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness/</guid>
+        <link>http:////blog/2014/09/26/ruby-meta-method-madness/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/26/ruby-meta-method-madness/</guid>
       </item>
     
       <item>
@@ -1915,8 +1915,8 @@ tests to pass. The session data below is invalid.&lt;/p&gt;
 a Rails 3.2 upgrade.&lt;/p&gt;
 </description>
         <pubDate>Tue, 23 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</guid>
+        <link>http:////blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</guid>
       </item>
     
       <item>
@@ -2084,8 +2084,8 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://inlehmansterms.net/2014/09/19/single-class-vs-multi-class-css/&quot; rel=&quot;canonical&quot;&gt;Jonathan&amp;#39;s blog- In Lehman&amp;#39;s Terms&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 19 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/19/single-class-vs-multi-class-css/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/19/single-class-vs-multi-class-css/</guid>
+        <link>http:////blog/2014/09/19/single-class-vs-multi-class-css/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/19/single-class-vs-multi-class-css/</guid>
       </item>
     
       <item>
@@ -2274,8 +2274,8 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;In closing, thanks for reading and I hope you found this information helpful. If you have any questions, feel free to ask in the comments. Cheers!&lt;/p&gt;
 </description>
         <pubDate>Tue, 16 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/16/from-rails-3-2-to-4-2/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/16/from-rails-3-2-to-4-2/</guid>
+        <link>http:////blog/2014/09/16/from-rails-3-2-to-4-2/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/16/from-rails-3-2-to-4-2/</guid>
       </item>
     
       <item>
@@ -2325,8 +2325,8 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 12 Sep 2014 13:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/12/fall-college-recruiting-schedule/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/12/fall-college-recruiting-schedule/</guid>
+        <link>http:////blog/2014/09/12/fall-college-recruiting-schedule/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/12/fall-college-recruiting-schedule/</guid>
       </item>
     
       <item>
@@ -2350,8 +2350,8 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;/blog/2014/10/20/open-sourcing-a-gem-pt-2/&quot;&gt;Part 2&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 12 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/12/open-sourcing-a-gem-pt-1/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/12/open-sourcing-a-gem-pt-1/</guid>
+        <link>http:////blog/2014/09/12/open-sourcing-a-gem-pt-1/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/12/open-sourcing-a-gem-pt-1/</guid>
       </item>
     
       <item>
@@ -2374,7 +2374,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 
 &lt;h4 id=&quot;event-update&quot;&gt;Event Update&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/like-a-ross-f403d95639463d94b1d28d23b5f8c1f9.jpg&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; alt=&quot;Jonathan Lehman and Ken Collins presenting Like A Ross! - Building the CustomInk Living Style Guide.&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/like-a-ross.jpg&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; alt=&quot;Jonathan Lehman and Ken Collins presenting Like A Ross! - Building the CustomInk Living Style Guide.&quot; /&gt;
 The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.com/mylifeasalllly&quot;&gt;Ally Palanzi&lt;/a&gt; and &lt;a href=&quot;https://twitter.com/xiwcx&quot;&gt;Welch Canavan&lt;/a&gt; for organizing the SassyDC group and allowing us to present and share our experiences. Huge thanks to &lt;a href=&quot;http://www.voxmedia.com&quot;&gt;Vox Media&lt;/a&gt; for hosting the event. Check out the &lt;a href=&quot;https://www.flickr.com/photos/xiwcx/sets/72157647060090380/&quot;&gt;photos of the event&lt;/a&gt; on Flickr!&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://speakerdeck.com/metaskills/like-a-ross-building-the-customink-dot-com-living-style-guide&quot; class=&quot;sb-Btn sb-Btn--responsive sb-Btn--primary&quot;&gt;View Slides&lt;/a&gt;&lt;/p&gt;
@@ -2409,8 +2409,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;/ul&gt;
 </description>
         <pubDate>Mon, 08 Sep 2014 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/08/building-the-customink-living-style-guide/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/08/building-the-customink-living-style-guide/</guid>
+        <link>http:////blog/2014/09/08/building-the-customink-living-style-guide/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/08/building-the-customink-living-style-guide/</guid>
       </item>
     
       <item>
@@ -2434,8 +2434,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;From there we had the tools in place to begin building our new living style guide. This living style guide will be used by the UX team when mocking out new responsive layouts, and of course by our engineers to build our new responsive experience.&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Sep 2014 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/01/a-new-living-style-guide/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/01/a-new-living-style-guide/</guid>
+        <link>http:////blog/2014/09/01/a-new-living-style-guide/</link>
+        <guid isPermaLink="true">http:////blog/2014/09/01/a-new-living-style-guide/</guid>
       </item>
     
       <item>
@@ -2446,7 +2446,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 
 &lt;p&gt;While designing the third iteration of my personal &lt;a href=&quot;http://metaskills.net/&quot;&gt;MetaSkills.net&lt;/a&gt; blog, I decided to carry the retro space theme into the background of the fixed left navigation area. The design called for something like this image below. Besides the planet, it has three distinct types of stars that are scattered all over the place. Each has a different scale and opacity with plans to animate a few.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-784a99438e7115fdea750cdee7356bcd.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So where to start? We could export a final pre-designed SVG image from any type of vector program – but that would bloat the file size since it would copy and paste each star&amp;#39;s path. It would also make animating distinct stars tricky and require post production edits. Lastly, who has time to randomly scatter stars? Not me! So let&amp;#39;s program up a solution that solves all of this for us. Here is the base SVG structure that we are going to work with.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;svg&lt;/span&gt;
@@ -2479,7 +2479,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 
 &lt;p&gt;Adding these to our SVG is really easy. I started by creating a canvas in my favorite vector program, &lt;a href=&quot;http://bohemiancoding.com/sketch/&quot;&gt;Sketch&lt;/a&gt;. We want to make sure our exported paths start at 0,0 position and are are generally the size you expect to use them. This will help you later when translating these paths to different positions.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/content/svg-our-awesome-sketch-28cd38501f559a39612f8af1bf70a57a.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;Setting up our base stars in the Sketch v3 application.&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/svg-our-awesome-sketch.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;Setting up our base stars in the Sketch v3 application.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I exported each star type as an SVG and then copied the path into the &lt;code&gt;&amp;lt;defs&amp;gt;&lt;/code&gt; area of our template above. When you do this make sure that each path has its own unique id. Also, you may want to optimize your paths. Many programs export 6 or more decimal points for a path&amp;#39;s data. I recommend running them through some sort of &lt;a href=&quot;http://petercollingridge.appspot.com/svg_optimiser&quot;&gt;SVG optimiser&lt;/a&gt; or tweaking your export settings if your art program has them. Now we have our reusable path objects, see below. Examples have truncated &lt;code&gt;d&lt;/code&gt; attributes for brevity.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;defs&amp;gt;&lt;/span&gt;
@@ -2495,7 +2495,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;use&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xlink:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#burst&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;transform=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;translate(30,20) scale(1.0)&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;burst&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;use&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xlink:href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;#steeler&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;transform=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;translate(60,10) scale(1.5)&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;steeler&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-v1-09727e95a4462c6ca358f83b3de83ac6.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/svg-planet-stars-v1.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;MetaSkills.net Planet &amp; Stars SVG Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Still kind of boring... and who has time to stochastically place several dozen stars around the canvas? Time for some JavaScript automation.&lt;/p&gt;
 
@@ -2593,8 +2593,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 29 Aug 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</guid>
+        <link>http:////blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</link>
+        <guid isPermaLink="true">http:////blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</guid>
       </item>
     
       <item>
@@ -2734,13 +2734,13 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://inlehmansterms.net/2014/08/25/modular-css-with-suitcss/&quot; rel=&quot;canonical&quot;&gt;Jonathan&amp;#39;s blog- In Lehman&amp;#39;s Terms&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 26 Aug 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/26/modular-css-with-suit/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/26/modular-css-with-suit/</guid>
+        <link>http:////blog/2014/08/26/modular-css-with-suit/</link>
+        <guid isPermaLink="true">http:////blog/2014/08/26/modular-css-with-suit/</guid>
       </item>
     
       <item>
         <title>Welcome John Dyer!</title>
-        <description>&lt;p&gt;&lt;img src=/assets/content/john-dyer-first-deploy-7dd0827aabb5e3a04f13f41a94f13c34.jpg alt=&quot;John Dyer&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=/assets/content/john-dyer-first-deploy.jpg alt=&quot;John Dyer&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;CustomInk technology is proud to announce that &lt;a href=&quot;https://github.com/lbrapid&quot;&gt;John Dyer&lt;/a&gt; is our newest Inker! Following the new hire tradition, John pushed his first deploy within a couple days of arrival.&lt;/p&gt;
 
@@ -2753,8 +2753,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;Welcome to the team John!&lt;/p&gt;
 </description>
         <pubDate>Fri, 22 Aug 2014 15:30:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/22/welcome-john-dyer/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/22/welcome-john-dyer/</guid>
+        <link>http:////blog/2014/08/22/welcome-john-dyer/</link>
+        <guid isPermaLink="true">http:////blog/2014/08/22/welcome-john-dyer/</guid>
       </item>
     
       <item>
@@ -2774,8 +2774,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;A happy team is a team that learns together.&lt;/p&gt;
 </description>
         <pubDate>Fri, 15 Aug 2014 15:24:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/15/tapas-time/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/15/tapas-time/</guid>
+        <link>http:////blog/2014/08/15/tapas-time/</link>
+        <guid isPermaLink="true">http:////blog/2014/08/15/tapas-time/</guid>
       </item>
     
       <item>
@@ -2801,8 +2801,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;Is my method of learning rails correct? No. People have different learning styles; therefore, no approach is perfect. You must tailor the learning process to meet your needs and ensure your success. In my case, using code school, extra resources, analyzing well written code, and building simple rails applications has allowed me to learn and apply my knowledge. In no form am I a solid Ruby on Rails developer. However, using these tools I can make great efforts to become better as I continue my journey.&lt;/p&gt;
 </description>
         <pubDate>Tue, 12 Aug 2014 11:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/12/learning-ruby-on-rails/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/12/learning-ruby-on-rails/</guid>
+        <link>http:////blog/2014/08/12/learning-ruby-on-rails/</link>
+        <guid isPermaLink="true">http:////blog/2014/08/12/learning-ruby-on-rails/</guid>
       </item>
     
       <item>
@@ -2822,8 +2822,8 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;Overall, I could not have asked for a more challenging, educating, and enjoyable summer internship experience. I feel that this experience has left me well prepared  for the next steps of my career after my senior year at Carnegie Mellon. A huge thanks to everyone on the team who has made this an amazing summer!&lt;/p&gt;
 </description>
         <pubDate>Fri, 25 Jul 2014 11:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/07/25/anthcor-summer-internship/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/07/25/anthcor-summer-internship/</guid>
+        <link>http:////blog/2014/07/25/anthcor-summer-internship/</link>
+        <guid isPermaLink="true">http:////blog/2014/07/25/anthcor-summer-internship/</guid>
       </item>
     
       <item>
@@ -2845,8 +2845,8 @@ become an important metric to watch.  Hunter is currently working on a utility t
 &lt;p&gt;Welcome to the team Hunter!&lt;/p&gt;
 </description>
         <pubDate>Tue, 08 Jul 2014 07:18:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/07/08/welcome-hunter-madison/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/07/08/welcome-hunter-madison/</guid>
+        <link>http:////blog/2014/07/08/welcome-hunter-madison/</link>
+        <guid isPermaLink="true">http:////blog/2014/07/08/welcome-hunter-madison/</guid>
       </item>
     
       <item>
@@ -2866,8 +2866,8 @@ aggregate the data, and share it with your team.&lt;/p&gt;
 data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Tue, 17 Jun 2014 07:18:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/06/17/build-better-teams-with-dashing-dashboards/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/06/17/build-better-teams-with-dashing-dashboards/</guid>
+        <link>http:////blog/2014/06/17/build-better-teams-with-dashing-dashboards/</link>
+        <guid isPermaLink="true">http:////blog/2014/06/17/build-better-teams-with-dashing-dashboards/</guid>
       </item>
     
       <item>
@@ -2881,8 +2881,8 @@ data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed
 &lt;p&gt;Welcome to the team Anthony!&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 May 2014 07:18:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/05/19/welcome-anthony-corletti/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2014/05/19/welcome-anthony-corletti/</guid>
+        <link>http:////blog/2014/05/19/welcome-anthony-corletti/</link>
+        <guid isPermaLink="true">http:////blog/2014/05/19/welcome-anthony-corletti/</guid>
       </item>
     
       <item>
@@ -3008,8 +3008,8 @@ Have you ever wondered how tools like New Relic are able to gain valuable metric
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 19 Dec 2013 13:36:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</guid>
+        <link>http:////blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</link>
+        <guid isPermaLink="true">http:////blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</guid>
       </item>
     
       <item>
@@ -3023,8 +3023,8 @@ Have you ever wondered how tools like New Relic are able to gain valuable metric
 &lt;p&gt;Welcome to the team Michael!&lt;/p&gt;
 </description>
         <pubDate>Sun, 01 Dec 2013 07:18:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2013/12/01/welcome-michael-peteuil/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/12/01/welcome-michael-peteuil/</guid>
+        <link>http:////blog/2013/12/01/welcome-michael-peteuil/</link>
+        <guid isPermaLink="true">http:////blog/2013/12/01/welcome-michael-peteuil/</guid>
       </item>
     
       <item>
@@ -3049,8 +3049,8 @@ relief of a clean shave, the heartfelt joy of charity and the planning for next 
 &lt;img src=&quot;http://technology-customink-com.s3.amazonaws.com/images/2013-12-02_movember_portraits158.jpg&quot; alt=&quot;upperlipsters&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 30 Nov 2013 13:36:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2013/11/30/upper-lipsters/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/11/30/upper-lipsters/</guid>
+        <link>http:////blog/2013/11/30/upper-lipsters/</link>
+        <guid isPermaLink="true">http:////blog/2013/11/30/upper-lipsters/</guid>
       </item>
     
       <item>
@@ -3067,8 +3067,8 @@ or project.&lt;/p&gt;
 &lt;p&gt;Welcome to the team Jonathan!&lt;/p&gt;
 </description>
         <pubDate>Thu, 31 Oct 2013 13:36:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/31/welcome-jonathan-lehman/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/31/welcome-jonathan-lehman/</guid>
+        <link>http:////blog/2013/10/31/welcome-jonathan-lehman/</link>
+        <guid isPermaLink="true">http:////blog/2013/10/31/welcome-jonathan-lehman/</guid>
       </item>
     
       <item>
@@ -3085,8 +3085,8 @@ UX designers and product managers took first place.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://technology-customink-com.s3.amazonaws.com/images/halloween2013.jpg&quot; alt=&quot;Halloween Winners&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 31 Oct 2013 07:08:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/31/halloween-costume-winners/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/31/halloween-costume-winners/</guid>
+        <link>http:////blog/2013/10/31/halloween-costume-winners/</link>
+        <guid isPermaLink="true">http:////blog/2013/10/31/halloween-costume-winners/</guid>
       </item>
     
       <item>
@@ -3115,8 +3115,8 @@ had refactored correctly.&lt;/p&gt;
 &lt;p&gt;Welcome to the team, Ryan! We’re glad you’re here.&lt;/p&gt;
 </description>
         <pubDate>Tue, 15 Oct 2013 13:36:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/15/welcome-ryan-billings/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/15/welcome-ryan-billings/</guid>
+        <link>http:////blog/2013/10/15/welcome-ryan-billings/</link>
+        <guid isPermaLink="true">http:////blog/2013/10/15/welcome-ryan-billings/</guid>
       </item>
     
       <item>
@@ -3133,8 +3133,8 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;If you missed Chris at &lt;a href=&quot;http://rubydcamp.org/&quot;&gt;Ruby DCamp&lt;/a&gt; last weekend, then be sure to look out for him at &lt;a href=&quot;http://rubyconf.org&quot;&gt;RubyConf&lt;/a&gt; this November.&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Oct 2013 08:38:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/01/chris-mar-is-an-inker/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/01/chris-mar-is-an-inker/</guid>
+        <link>http:////blog/2013/10/01/chris-mar-is-an-inker/</link>
+        <guid isPermaLink="true">http:////blog/2013/10/01/chris-mar-is-an-inker/</guid>
       </item>
     
       <item>
@@ -3152,8 +3152,8 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;Welcome to the team, Lisa. We&amp;#39;re looking forward to great things!&lt;/p&gt;
 </description>
         <pubDate>Mon, 24 Jun 2013 10:43:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/06/24/welcome-lisa-pourkhomami/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/06/24/welcome-lisa-pourkhomami/</guid>
+        <link>http:////blog/2013/06/24/welcome-lisa-pourkhomami/</link>
+        <guid isPermaLink="true">http:////blog/2013/06/24/welcome-lisa-pourkhomami/</guid>
       </item>
     
       <item>
@@ -3171,8 +3171,8 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;This is our third year hosting &lt;a href=&quot;http://technology.customink.com/blog/2012/05/24/welcome-interns/&quot;&gt;interns&lt;/a&gt; from Carnegie Mellon and we&amp;#39;re are looking forward to many more.&lt;/p&gt;
 </description>
         <pubDate>Wed, 05 Jun 2013 21:35:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/06/05/welcome-sukhada-kulkarni/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2013/06/05/welcome-sukhada-kulkarni/</guid>
+        <link>http:////blog/2013/06/05/welcome-sukhada-kulkarni/</link>
+        <guid isPermaLink="true">http:////blog/2013/06/05/welcome-sukhada-kulkarni/</guid>
       </item>
     
       <item>
@@ -3432,8 +3432,8 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;The HolyGrailHarness vendors these font files and the needed &lt;code&gt;font-awesome.scss&lt;/code&gt; file and requires them as part of the Twitter Bootstrap bundle shown above. More advanced users may prefer to only include the icon fonts needed in their application or a few custom icons. If that is the case, check out &lt;a href=&quot;http://endtwist.github.com/fontcustom/&quot;&gt;Font Custom&lt;/a&gt;, webfonts from the comfort of the command line.&lt;/p&gt;
 </description>
         <pubDate>Thu, 06 Dec 2012 14:19:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</guid>
+        <link>http:////blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</link>
+        <guid isPermaLink="true">http:////blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</guid>
       </item>
     
       <item>
@@ -3449,8 +3449,8 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;Ken spent the week with us here in our Tyson&amp;#39;s Corner headquarters, but he will continue to work from his Norfolk, VA home as a remote developer.&lt;/p&gt;
 </description>
         <pubDate>Fri, 14 Sep 2012 15:34:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/09/14/welcome-ken-collins/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/09/14/welcome-ken-collins/</guid>
+        <link>http:////blog/2012/09/14/welcome-ken-collins/</link>
+        <guid isPermaLink="true">http:////blog/2012/09/14/welcome-ken-collins/</guid>
       </item>
     
       <item>
@@ -3627,8 +3627,8 @@ exist.&lt;/p&gt;
 &lt;p&gt;You&amp;#39;re done!&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Aug 2012 21:19:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/08/03/etc-hosts-management-with-chef/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/08/03/etc-hosts-management-with-chef/</guid>
+        <link>http:////blog/2012/08/03/etc-hosts-management-with-chef/</link>
+        <guid isPermaLink="true">http:////blog/2012/08/03/etc-hosts-management-with-chef/</guid>
       </item>
     
       <item>
@@ -3740,8 +3740,8 @@ chefspec: bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;spec
 &lt;p&gt;Chef testing is a huge topic, and it&amp;#39;s going to be awhile until the community agrees on a single method for testing. Rails still has yet to figure it out... Here&amp;#39;s what is important - &lt;strong&gt;test your cookbooks&lt;/strong&gt;. Even if it&amp;#39;s just running foodcritic against all your cookbooks, you are making the cookbook-world a better place. And &lt;strong&gt;talk about it&lt;/strong&gt;. Tutorials like this one, as well as &lt;a href=&quot;/blog/our-team/seth-vargo&quot;&gt;some of the other posts I&amp;#39;ve written&lt;/a&gt; will help the community embrace testing :)!&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Aug 2012 10:39:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/08/03/testing-chef-cookbooks/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/08/03/testing-chef-cookbooks/</guid>
+        <link>http:////blog/2012/08/03/testing-chef-cookbooks/</link>
+        <guid isPermaLink="true">http:////blog/2012/08/03/testing-chef-cookbooks/</guid>
       </item>
     
       <item>
@@ -3914,8 +3914,8 @@ end
 &lt;p&gt;This post was written using Ruby 1.9.3. It should work on Ruby 1.9.x, but I guarantee it won&amp;#39;t work on 1.8.7.&lt;/p&gt;
 </description>
         <pubDate>Tue, 31 Jul 2012 01:31:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/31/easily-test-your-dns/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/31/easily-test-your-dns/</guid>
+        <link>http:////blog/2012/07/31/easily-test-your-dns/</link>
+        <guid isPermaLink="true">http:////blog/2012/07/31/easily-test-your-dns/</guid>
       </item>
     
       <item>
@@ -4411,8 +4411,8 @@ Then tell &lt;code&gt;set Desktop background&lt;/code&gt; to run immediately.&am
 &lt;p&gt;For more information on the rules provided, see the individual repos.&lt;/p&gt;
 </description>
         <pubDate>Mon, 30 Jul 2012 20:43:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/30/provision-your-laptop-with-chef-part-2/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/30/provision-your-laptop-with-chef-part-2/</guid>
+        <link>http:////blog/2012/07/30/provision-your-laptop-with-chef-part-2/</link>
+        <guid isPermaLink="true">http:////blog/2012/07/30/provision-your-laptop-with-chef-part-2/</guid>
       </item>
     
       <item>
@@ -4432,8 +4432,8 @@ Then tell &lt;code&gt;set Desktop background&lt;/code&gt; to run immediately.&am
 &lt;p&gt;I&amp;#39;m proud to be apart of such a great support system.  I have no gripes about the 16 hours I spent at my computer yesterday because I was helping our customers.  More importantly, I was helping my friends.&lt;/p&gt;
 </description>
         <pubDate>Tue, 10 Jul 2012 19:15:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/10/stay-cool/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/10/stay-cool/</guid>
+        <link>http:////blog/2012/07/10/stay-cool/</link>
+        <guid isPermaLink="true">http:////blog/2012/07/10/stay-cool/</guid>
       </item>
     
       <item>
@@ -4623,8 +4623,8 @@ gem &#39;chef&#39;, &#39;~&amp;gt; 10.12.0&#39;
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;&lt;sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 06 Jul 2012 22:52:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/06/mvt-knife-test-and-travisci/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/06/mvt-knife-test-and-travisci/</guid>
+        <link>http:////blog/2012/07/06/mvt-knife-test-and-travisci/</link>
+        <guid isPermaLink="true">http:////blog/2012/07/06/mvt-knife-test-and-travisci/</guid>
       </item>
     
       <item>
@@ -4641,8 +4641,8 @@ gem &#39;chef&#39;, &#39;~&amp;gt; 10.12.0&#39;
 &lt;p&gt;I&amp;#39;ll finish by saying it has been a joy to work with Dan on TheNewHotness. And, I&amp;#39;m looking forward to working with him on future projects. Glad to have you aboard at CustomInk.&lt;/p&gt;
 </description>
         <pubDate>Wed, 27 Jun 2012 16:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/27/welcome-dan-hensgen/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/27/welcome-dan-hensgen/</guid>
+        <link>http:////blog/2012/06/27/welcome-dan-hensgen/</link>
+        <guid isPermaLink="true">http:////blog/2012/06/27/welcome-dan-hensgen/</guid>
       </item>
     
       <item>
@@ -4969,8 +4969,8 @@ lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.40
 &lt;/script&gt;
 </description>
         <pubDate>Mon, 18 Jun 2012 21:32:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</guid>
+        <link>http:////blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</link>
+        <guid isPermaLink="true">http:////blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</guid>
       </item>
     
       <item>
@@ -4994,8 +4994,8 @@ lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.40
 &lt;p&gt;Since we work on tickets one at a time, we can follow a simple process to continuously deploy new features to our site and tools:  Branch, build, verify, deploy.&lt;/p&gt;
 </description>
         <pubDate>Fri, 15 Jun 2012 10:47:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/15/welcome-jason-gilbertson/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/15/welcome-jason-gilbertson/</guid>
+        <link>http:////blog/2012/06/15/welcome-jason-gilbertson/</link>
+        <guid isPermaLink="true">http:////blog/2012/06/15/welcome-jason-gilbertson/</guid>
       </item>
     
       <item>
@@ -5124,8 +5124,8 @@ guard:    guard
 &lt;p&gt;Stoplight is available for &lt;a href=&quot;https://github.com/customink/stoplight&quot;&gt;download and forking on github&lt;/a&gt;. Pull requests are greatly welcome! There is also a highly-configurable &lt;a href=&quot;https://github.com/customink-webops/stoplight&quot;&gt;chef cookbook for installing Stoplight&lt;/a&gt; on Apache and Passenger on your own servers.&lt;/p&gt;
 </description>
         <pubDate>Tue, 12 Jun 2012 17:48:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</guid>
+        <link>http:////blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</link>
+        <guid isPermaLink="true">http:////blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</guid>
       </item>
     
       <item>
@@ -5299,8 +5299,8 @@ end
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;&lt;sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 04 Jun 2012 13:45:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/04/mvt-foodcritic-and-travis-ci/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/04/mvt-foodcritic-and-travis-ci/</guid>
+        <link>http:////blog/2012/06/04/mvt-foodcritic-and-travis-ci/</link>
+        <guid isPermaLink="true">http:////blog/2012/06/04/mvt-foodcritic-and-travis-ci/</guid>
       </item>
     
       <item>
@@ -5577,8 +5577,8 @@ INFO: Report handlers complete
 &lt;p&gt;Part 2 of this series will cover more recipes and full provisioning and customization of your personal laptop using Chef.&lt;/p&gt;
 </description>
         <pubDate>Mon, 28 May 2012 20:32:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/28/provision-your-laptop-with-chef-part-1/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/28/provision-your-laptop-with-chef-part-1/</guid>
+        <link>http:////blog/2012/05/28/provision-your-laptop-with-chef-part-1/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/28/provision-your-laptop-with-chef-part-1/</guid>
       </item>
     
       <item>
@@ -5621,8 +5621,8 @@ INFO: Report handlers complete
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;4fb532f2850667001f0008f8&quot; data-ratio=&quot;1.2945638432364097&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Sat, 26 May 2012 21:51:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</guid>
+        <link>http:////blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</guid>
       </item>
     
       <item>
@@ -5658,8 +5658,8 @@ INFO: Report handlers complete
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;4fb421272cf6f5001f00ba85&quot; data-ratio=&quot;1.2945638432364097&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Fri, 25 May 2012 14:59:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</guid>
+        <link>http:////blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</guid>
       </item>
     
       <item>
@@ -5681,8 +5681,8 @@ INFO: Report handlers complete
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;4f96da12947c45001f018683&quot; data-ratio=&quot;1.2945638432364097&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Fri, 25 May 2012 14:31:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</guid>
+        <link>http:////blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</guid>
       </item>
     
       <item>
@@ -5717,8 +5717,8 @@ INFO: Report handlers complete
 &lt;p&gt;Continuous deployment can&amp;#39;t happen without automation.  I&amp;#39;d like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I&amp;#39;d also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.&lt;/p&gt;
 </description>
         <pubDate>Thu, 24 May 2012 16:01:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/24/welcome-interns/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/24/welcome-interns/</guid>
+        <link>http:////blog/2012/05/24/welcome-interns/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/24/welcome-interns/</guid>
       </item>
     
       <item>
@@ -5817,8 +5817,8 @@ INFO: Report handlers complete
 &lt;p&gt;I hope to see you at one some day!&lt;/p&gt;
 </description>
         <pubDate>Wed, 16 May 2012 15:27:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/16/coderetreat-floyd-2012/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/16/coderetreat-floyd-2012/</guid>
+        <link>http:////blog/2012/05/16/coderetreat-floyd-2012/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/16/coderetreat-floyd-2012/</guid>
       </item>
     
       <item>
@@ -5842,8 +5842,8 @@ INFO: Report handlers complete
 &lt;p&gt;&lt;img src=&quot;http://technology-customink-com.s3.amazonaws.com/images/josh_born_first_deploy.png&quot; alt=&quot;Josh releases his first code&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 14 May 2012 13:17:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/14/welcome-josh-born/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/14/welcome-josh-born/</guid>
+        <link>http:////blog/2012/05/14/welcome-josh-born/</link>
+        <guid isPermaLink="true">http:////blog/2012/05/14/welcome-josh-born/</guid>
       </item>
     
       <item>
@@ -5881,8 +5881,8 @@ INFO: Report handlers complete
 &lt;p&gt;Of course, if you don&amp;#39;t think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it&amp;#39;s too late.&lt;/p&gt;
 </description>
         <pubDate>Fri, 27 Apr 2012 11:48:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/04/27/critical-oversight-indexes/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/04/27/critical-oversight-indexes/</guid>
+        <link>http:////blog/2012/04/27/critical-oversight-indexes/</link>
+        <guid isPermaLink="true">http:////blog/2012/04/27/critical-oversight-indexes/</guid>
       </item>
     
       <item>
@@ -5913,8 +5913,8 @@ Chris Strom&amp;#39;s talk on &lt;a href=&quot;http://speakerdeck.com/u/chris/p/
 &lt;p&gt;Thanks to all the people who made RubyNation such a great event this year.  See you all next year.&lt;/p&gt;
 </description>
         <pubDate>Mon, 26 Mar 2012 13:36:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/03/26/rubynation-2012/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/03/26/rubynation-2012/</guid>
+        <link>http:////blog/2012/03/26/rubynation-2012/</link>
+        <guid isPermaLink="true">http:////blog/2012/03/26/rubynation-2012/</guid>
       </item>
     
       <item>
@@ -6012,8 +6012,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 16 Mar 2012 08:07:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</guid>
+        <link>http:////blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</link>
+        <guid isPermaLink="true">http:////blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</guid>
       </item>
     
       <item>
@@ -6135,8 +6135,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;Abstracting concepts (or remembering the &lt;a href=&quot;http://en.wikipedia.org/wiki/Single_responsibility_principle&quot;&gt;single responsibility principle&lt;/a&gt;) will always benefit you in the future.&lt;/p&gt;
 </description>
         <pubDate>Fri, 02 Mar 2012 15:35:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/03/02/simple-data-mapper/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/03/02/simple-data-mapper/</guid>
+        <link>http:////blog/2012/03/02/simple-data-mapper/</link>
+        <guid isPermaLink="true">http:////blog/2012/03/02/simple-data-mapper/</guid>
       </item>
     
       <item>
@@ -6162,8 +6162,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Feb 2012 15:38:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/02/03/organizing-your-rails-models/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/02/03/organizing-your-rails-models/</guid>
+        <link>http:////blog/2012/02/03/organizing-your-rails-models/</link>
+        <guid isPermaLink="true">http:////blog/2012/02/03/organizing-your-rails-models/</guid>
       </item>
     
       <item>
@@ -6183,8 +6183,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;One of the big wins of using the Nagios plugins is that if a service recovers the PagerDuty incident gets resolved automatically so it doesn&amp;#39;t continue to escalate the problem.  Also if you acknowledge a problem in Nagios the acknowledgment flows through to PagerDuty.&lt;/p&gt;
 </description>
         <pubDate>Tue, 31 Jan 2012 10:14:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/01/31/pagerduty/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/01/31/pagerduty/</guid>
+        <link>http:////blog/2012/01/31/pagerduty/</link>
+        <guid isPermaLink="true">http:////blog/2012/01/31/pagerduty/</guid>
       </item>
     
       <item>
@@ -6232,8 +6232,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2012/01/02/green-screen/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 02 Jan 2012 14:17:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/01/02/green-screen/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2012/01/02/green-screen/</guid>
+        <link>http:////blog/2012/01/02/green-screen/</link>
+        <guid isPermaLink="true">http:////blog/2012/01/02/green-screen/</guid>
       </item>
     
       <item>
@@ -6318,8 +6318,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 21 Nov 2011 03:29:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</guid>
+        <link>http:////blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</link>
+        <guid isPermaLink="true">http:////blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</guid>
       </item>
     
       <item>
@@ -6344,8 +6344,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 16 Jul 2010 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</guid>
+        <link>http:////blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</link>
+        <guid isPermaLink="true">http:////blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</guid>
       </item>
     
   </channel>
