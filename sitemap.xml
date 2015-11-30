@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/blog/2015/11/23/the-art-of-ruby-technical-interviews/</loc>
+    <lastmod>2015-11-23T00:00:00-05:00</lastmod>
+  </url>
+  <url>
     <loc>/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
     <lastmod>2015-10-19T00:00:00-04:00</lastmod>
   </url>
@@ -544,5 +548,8 @@
     </url>
     <url>
       <loc>/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
+    </url>
+    <url>
+      <loc>/blog/2015/11/23/the-art-of-ruby-technical-interviews/</loc>
     </url>
 </urlset>
