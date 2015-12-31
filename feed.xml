@@ -60,78 +60,364 @@
 &lt;p&gt;Congratulations to all the participants. Just showing up for an
 early morning race at the conference was a victory.&lt;/p&gt;
 
-&lt;p&gt;| Place | Name | Time |
-| --- | --- | --- |
-| 1. | Patrick Sinclair | &lt;strong&gt;20:18.6&lt;/strong&gt; |
-| 2. | Jed Prentice | &lt;strong&gt;20:54.2&lt;/strong&gt; |
-| 3. | Carlos Mateos | &lt;strong&gt;21:11.8&lt;/strong&gt; |
-| 4. | Britt Ballard | &lt;strong&gt;21:38.8&lt;/strong&gt; |
-| 5. | John Fadgen | &lt;strong&gt;21:54.7&lt;/strong&gt; |
-| 6. | Joshua Flanagan | &lt;strong&gt;21:57.8&lt;/strong&gt; |
-| 7. | Marty Haught | &lt;strong&gt;22:16.8&lt;/strong&gt; |
-| 8. | Bibek Shrestha | &lt;strong&gt;22:28.2&lt;/strong&gt; |
-| 9. | Lukas Maciulis | &lt;strong&gt;22:34.1&lt;/strong&gt; |
-| 10. | Erik Krietsch | &lt;strong&gt;22:41.2&lt;/strong&gt; |
-| 11. | Lucas Florio | &lt;strong&gt;23:00.3&lt;/strong&gt; |
-| 12. | Ralph Churchill | &lt;strong&gt;23:07.5&lt;/strong&gt; |
-| 13. | Isura Edirisinghe | &lt;strong&gt;23:16.6&lt;/strong&gt; |
-| 14. | John Cinnamond | &lt;strong&gt;23:47.6&lt;/strong&gt; |
-| 15. | Nathaniel Talbott | &lt;strong&gt;24:03.7&lt;/strong&gt; |
-| 16. | Paul Thiebauth | &lt;strong&gt;24:19.1&lt;/strong&gt; |
-| 17. | Aaron Patterson | &lt;strong&gt;24:35.0&lt;/strong&gt; |
-| 18. | Thomas Enebo | &lt;strong&gt;24:35.8&lt;/strong&gt; |
-| 19. | Danny Guinther | &lt;strong&gt;24:47.8&lt;/strong&gt; |
-| 20. | Damir Zekic | &lt;strong&gt;25:01.0&lt;/strong&gt; |
-| 21. | Nadia Odunayo | &lt;strong&gt;25:06.5&lt;/strong&gt; |
-| 22. | Barrett Clark | &lt;strong&gt;25:17.3&lt;/strong&gt; |
-| 23. | Tieg Zaharia | &lt;strong&gt;25:26.0&lt;/strong&gt; |
-| 24. | Hsing-Hui Hsu | &lt;strong&gt;25:38.9&lt;/strong&gt; |
-| 25. | Joey Chamberlin | &lt;strong&gt;25:48.3&lt;/strong&gt; |
-| 26. | Julie Swoope | &lt;strong&gt;25:53.9&lt;/strong&gt; |
-| 27. | Kayla Kahl | &lt;strong&gt;25:54.9&lt;/strong&gt; |
-| 28. | Terence Lee | &lt;strong&gt;26:06.0&lt;/strong&gt; |
-| 29. | Thomas Powell | &lt;strong&gt;26:35.1&lt;/strong&gt; |
-| 30. | Andy Bettisworth | &lt;strong&gt;26:40.7&lt;/strong&gt; |
-| 31. | Jason Kaskel | &lt;strong&gt;27:05.5&lt;/strong&gt; |
-| 32. | Michael Shpa | &lt;strong&gt;27:06.5&lt;/strong&gt; |
-| 33. | Jean Bahnik | &lt;strong&gt;27:07.1&lt;/strong&gt; |
-| 34. | Emmanuel Sambo | &lt;strong&gt;27:19.5&lt;/strong&gt; |
-| 35. | Tyler Boyd | &lt;strong&gt;28:01.9&lt;/strong&gt; |
-| 36. | John Landes | &lt;strong&gt;28:04.3&lt;/strong&gt; |
-| 37. | Jordan Bach | &lt;strong&gt;28:07.4&lt;/strong&gt; |
-| 38. | Tracie D&amp;#39;Antonio | &lt;strong&gt;28:08.9&lt;/strong&gt; |
-| 39. | Jerry D&amp;#39;Antonio | &lt;strong&gt;28:11.0&lt;/strong&gt; |
-| 40. | Emma Colner | &lt;strong&gt;28:14.9&lt;/strong&gt; |
-| 41. | Laura Kinson | &lt;strong&gt;28:30.9&lt;/strong&gt; |
-| 42. | Mike Perham | &lt;strong&gt;28:56.7&lt;/strong&gt; |
-| 43. | Angel Huezo | &lt;strong&gt;29:03.6&lt;/strong&gt; |
-| 44. | Dylan Fitzgerald | &lt;strong&gt;27:55.3&lt;/strong&gt; |
-| 45. | Ian Whitney | &lt;strong&gt;29:18.2&lt;/strong&gt; |
-| 46. | Leah Goldberg | &lt;strong&gt;29:48.7&lt;/strong&gt; |
-| 47. | Britney Wright | &lt;strong&gt;29:49.6&lt;/strong&gt; |
-| 48. | Rodrigo DeJuana | &lt;strong&gt;29:58.9&lt;/strong&gt; |
-| 49. | Mike Vormwald | &lt;strong&gt;29:59.7&lt;/strong&gt; |
-| 50. | Bella Woo | &lt;strong&gt;30:05.9&lt;/strong&gt; |
-| 51. | Nicole Lopez | &lt;strong&gt;30:32.1&lt;/strong&gt; |
-| 52. | Adriana Amelia Padua | &lt;strong&gt;30:55.1&lt;/strong&gt; |
-| 53. | Jason Toy | &lt;strong&gt;32:44.5&lt;/strong&gt; |
-| 54. | Fernando Seror | &lt;strong&gt;33:05.4&lt;/strong&gt; |
-| 55. | Kirk Haines | &lt;strong&gt;33:20.6&lt;/strong&gt; |
-| 56. | Spencer Winegar | &lt;strong&gt;33:33.2&lt;/strong&gt; |
-| 57. | Adam Cuppy | &lt;strong&gt;34:13.5&lt;/strong&gt; |
-| 58. | Miki Rezentes | &lt;strong&gt;34:58.4&lt;/strong&gt; |
-| 59. | Kevin Menard | &lt;strong&gt;35:04.3&lt;/strong&gt; |
-| 60. | Chad Moran | &lt;strong&gt;35:18.8&lt;/strong&gt; |
-| 61. | Jennie Chamberlin | &lt;strong&gt;35:52.9&lt;/strong&gt; |
-| 62. | Zoee Silcock | &lt;strong&gt;36:07.1&lt;/strong&gt; |
-| 63. | Ernie Miller | &lt;strong&gt;36:39.6&lt;/strong&gt; |
-| 64. | Brandon Byers | &lt;strong&gt;37:30.5&lt;/strong&gt; |
-| 65. | Rashmi Yadav | &lt;strong&gt;40:16.4&lt;/strong&gt; |
-| 66. | Theeba Rajan | &lt;strong&gt;42:09.2&lt;/strong&gt; |
-| 67. | Jeffrey ODell | &lt;strong&gt;42:23.7&lt;/strong&gt; |
-| 68. | Ben Ward | |
-| 69. | Emily Golden | |
-| 70. | Sam Livingston-Gray | |&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Place&lt;/th&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Time&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1.&lt;/td&gt;
+&lt;td&gt;Patrick Sinclair&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;20:18.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2.&lt;/td&gt;
+&lt;td&gt;Jed Prentice&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;20:54.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3.&lt;/td&gt;
+&lt;td&gt;Carlos Mateos&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;21:11.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4.&lt;/td&gt;
+&lt;td&gt;Britt Ballard&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;21:38.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5.&lt;/td&gt;
+&lt;td&gt;John Fadgen&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;21:54.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6.&lt;/td&gt;
+&lt;td&gt;Joshua Flanagan&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;21:57.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;7.&lt;/td&gt;
+&lt;td&gt;Marty Haught&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;22:16.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;8.&lt;/td&gt;
+&lt;td&gt;Bibek Shrestha&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;22:28.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;9.&lt;/td&gt;
+&lt;td&gt;Lukas Maciulis&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;22:34.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;10.&lt;/td&gt;
+&lt;td&gt;Erik Krietsch&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;22:41.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;11.&lt;/td&gt;
+&lt;td&gt;Lucas Florio&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;23:00.3&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;12.&lt;/td&gt;
+&lt;td&gt;Ralph Churchill&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;23:07.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;13.&lt;/td&gt;
+&lt;td&gt;Isura Edirisinghe&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;23:16.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;14.&lt;/td&gt;
+&lt;td&gt;John Cinnamond&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;23:47.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;15.&lt;/td&gt;
+&lt;td&gt;Nathaniel Talbott&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;24:03.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;16.&lt;/td&gt;
+&lt;td&gt;Paul Thiebauth&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;24:19.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;17.&lt;/td&gt;
+&lt;td&gt;Aaron Patterson&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;24:35.0&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;18.&lt;/td&gt;
+&lt;td&gt;Thomas Enebo&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;24:35.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;19.&lt;/td&gt;
+&lt;td&gt;Danny Guinther&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;24:47.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20.&lt;/td&gt;
+&lt;td&gt;Damir Zekic&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:01.0&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;21.&lt;/td&gt;
+&lt;td&gt;Nadia Odunayo&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:06.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;22.&lt;/td&gt;
+&lt;td&gt;Barrett Clark&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:17.3&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;23.&lt;/td&gt;
+&lt;td&gt;Tieg Zaharia&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:26.0&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;24.&lt;/td&gt;
+&lt;td&gt;Hsing-Hui Hsu&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:38.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25.&lt;/td&gt;
+&lt;td&gt;Joey Chamberlin&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:48.3&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;26.&lt;/td&gt;
+&lt;td&gt;Julie Swoope&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:53.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;27.&lt;/td&gt;
+&lt;td&gt;Kayla Kahl&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;25:54.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;28.&lt;/td&gt;
+&lt;td&gt;Terence Lee&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;26:06.0&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;29.&lt;/td&gt;
+&lt;td&gt;Thomas Powell&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;26:35.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30.&lt;/td&gt;
+&lt;td&gt;Andy Bettisworth&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;26:40.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;31.&lt;/td&gt;
+&lt;td&gt;Jason Kaskel&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;27:05.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;32.&lt;/td&gt;
+&lt;td&gt;Michael Shpa&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;27:06.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;33.&lt;/td&gt;
+&lt;td&gt;Jean Bahnik&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;27:07.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;34.&lt;/td&gt;
+&lt;td&gt;Emmanuel Sambo&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;27:19.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;35.&lt;/td&gt;
+&lt;td&gt;Tyler Boyd&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:01.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;36.&lt;/td&gt;
+&lt;td&gt;John Landes&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:04.3&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;37.&lt;/td&gt;
+&lt;td&gt;Jordan Bach&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:07.4&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;38.&lt;/td&gt;
+&lt;td&gt;Tracie D&amp;#39;Antonio&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:08.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;39.&lt;/td&gt;
+&lt;td&gt;Jerry D&amp;#39;Antonio&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:11.0&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;40.&lt;/td&gt;
+&lt;td&gt;Emma Colner&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:14.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;41.&lt;/td&gt;
+&lt;td&gt;Laura Kinson&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:30.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;42.&lt;/td&gt;
+&lt;td&gt;Mike Perham&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;28:56.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;43.&lt;/td&gt;
+&lt;td&gt;Angel Huezo&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;29:03.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;44.&lt;/td&gt;
+&lt;td&gt;Dylan Fitzgerald&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;27:55.3&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;45.&lt;/td&gt;
+&lt;td&gt;Ian Whitney&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;29:18.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;46.&lt;/td&gt;
+&lt;td&gt;Leah Goldberg&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;29:48.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;47.&lt;/td&gt;
+&lt;td&gt;Britney Wright&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;29:49.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;48.&lt;/td&gt;
+&lt;td&gt;Rodrigo DeJuana&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;29:58.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;49.&lt;/td&gt;
+&lt;td&gt;Mike Vormwald&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;29:59.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;50.&lt;/td&gt;
+&lt;td&gt;Bella Woo&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;30:05.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;51.&lt;/td&gt;
+&lt;td&gt;Nicole Lopez&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;30:32.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;52.&lt;/td&gt;
+&lt;td&gt;Adriana Amelia Padua&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;30:55.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;53.&lt;/td&gt;
+&lt;td&gt;Jason Toy&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;32:44.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;54.&lt;/td&gt;
+&lt;td&gt;Fernando Seror&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;33:05.4&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;55.&lt;/td&gt;
+&lt;td&gt;Kirk Haines&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;33:20.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;56.&lt;/td&gt;
+&lt;td&gt;Spencer Winegar&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;33:33.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;57.&lt;/td&gt;
+&lt;td&gt;Adam Cuppy&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;34:13.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;58.&lt;/td&gt;
+&lt;td&gt;Miki Rezentes&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;34:58.4&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;59.&lt;/td&gt;
+&lt;td&gt;Kevin Menard&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;35:04.3&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;60.&lt;/td&gt;
+&lt;td&gt;Chad Moran&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;35:18.8&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;61.&lt;/td&gt;
+&lt;td&gt;Jennie Chamberlin&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;35:52.9&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;62.&lt;/td&gt;
+&lt;td&gt;Zoee Silcock&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;36:07.1&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;63.&lt;/td&gt;
+&lt;td&gt;Ernie Miller&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;36:39.6&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;64.&lt;/td&gt;
+&lt;td&gt;Brandon Byers&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;37:30.5&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;65.&lt;/td&gt;
+&lt;td&gt;Rashmi Yadav&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;40:16.4&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;66.&lt;/td&gt;
+&lt;td&gt;Theeba Rajan&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;42:09.2&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;67.&lt;/td&gt;
+&lt;td&gt;Jeffrey ODell&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;42:23.7&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;68.&lt;/td&gt;
+&lt;td&gt;Ben Ward&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;69.&lt;/td&gt;
+&lt;td&gt;Emily Golden&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;70.&lt;/td&gt;
+&lt;td&gt;Sam Livingston-Gray&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
 </description>
         <pubDate>Mon, 16 Nov 2015 00:00:00 -0500</pubDate>
         <link>http://technology.customink.com//blog/2015/11/16/rubyconf-5k-2015/</link>
