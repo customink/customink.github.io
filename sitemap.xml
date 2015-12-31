@@ -5,6 +5,10 @@
     <lastmod>2015-11-23T00:00:00-05:00</lastmod>
   </url>
   <url>
+    <loc>/blog/2015/11/16/rubyconf-5k-2015/</loc>
+    <lastmod>2015-11-16T00:00:00-05:00</lastmod>
+  </url>
+  <url>
     <loc>/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
     <lastmod>2015-10-19T00:00:00-04:00</lastmod>
   </url>
@@ -318,6 +322,39 @@
   <url>
     <loc>/</loc>
   </url>
+  <url>
+    <loc>/page2/</loc>
+  </url>
+  <url>
+    <loc>/page3/</loc>
+  </url>
+  <url>
+    <loc>/page4/</loc>
+  </url>
+  <url>
+    <loc>/page5/</loc>
+  </url>
+  <url>
+    <loc>/page6/</loc>
+  </url>
+  <url>
+    <loc>/page7/</loc>
+  </url>
+  <url>
+    <loc>/page8/</loc>
+  </url>
+  <url>
+    <loc>/page9/</loc>
+  </url>
+  <url>
+    <loc>/page10/</loc>
+  </url>
+  <url>
+    <loc>/page11/</loc>
+  </url>
+  <url>
+    <loc>/page12/</loc>
+  </url>
     <url>
       <loc>/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
     </url>
@@ -548,6 +585,9 @@
     </url>
     <url>
       <loc>/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
+    </url>
+    <url>
+      <loc>/blog/2015/11/16/rubyconf-5k-2015/</loc>
     </url>
     <url>
       <loc>/blog/2015/11/23/the-art-of-ruby-technical-interviews/</loc>
