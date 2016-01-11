@@ -7,6 +7,64 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Two Headed Cat! Using Secondbase to provide some level of sanity in a two-database Rails application.</title>
+        <description>&lt;p&gt;Rails has never played nice with using multiple databases. While it is very easy to go and set up a new connection via &lt;code&gt;ActiveRecord.establish_connection&lt;/code&gt;,
+the niceties that rails provides just don&amp;#39;t exist for your second database. Fixtures don&amp;#39;t work without explicitly calling &lt;code&gt;set_fixture_class&lt;/code&gt; and you do not have
+access to any of the database tasks or generators that are provided by rails. To help alleviate this pain point for us at CustomInk, &lt;a href=&quot;https://twitter.com/karledurante&quot;&gt;Karle Durante&lt;/a&gt; wrote &lt;a href=&quot;https://github.com/customink/secondbase&quot;&gt;SecondBase&lt;/a&gt;
+five years ago to provide database task support and migration generation to Rails applications. Between then and now the internals of Rails changed significantly. &lt;code&gt;DatabaseTasks&lt;/code&gt; took over much of the responsibility for the rake tasks we come to depend on for managing databases. While this refactor is a nice addition.
+It required changing the internals of Secondbase to support newer versions of Rails. To this end, &lt;a href=&quot;https://twitter.com/metaskills&quot;&gt;Ken Collins&lt;/a&gt; and I set out to upgrade and modernize SecondBase.
+The solution we settled on is to &lt;a href=&quot;https://github.com/customink/secondbase/blob/master/lib/second_base/databases.rake&quot;&gt;wrap and enhance&lt;/a&gt; the existing Rails database tasks and subclass the &lt;a href=&quot;https://github.com/customink/secondbase/blob/master/lib/rails/second_base/generators/migration_generator.rb&quot;&gt;migration generator&lt;/a&gt;. This provides us with almost all of the tools that
+Rails gives the original database in a somewhat future proof fashion and does what &lt;a href=&quot;http://technology.customink.com/blog/2015/06/22/rails-multi-database-best-practices-roundup/#comment-2101344338&quot;&gt;Ken alluded to&lt;/a&gt; in his &lt;a href=&quot;http://technology.customink.com/blog/2015/06/22/rails-multi-database-best-practices-roundup&quot;&gt;Multi-Database practices article&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-secondbase&quot;&gt;Using SecondBase&lt;/h2&gt;
+
+&lt;p&gt;In your Gemfile add the SecondBase gem:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;secondbase&#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then in your &lt;code&gt;config/database.yml&lt;/code&gt; add your SecondBase configuration:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;s&quot;&gt;secondbase&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;development&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;adapter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myapp_development&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;adapter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;myapp_test&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This configuration block supports any options that your regular database supports including &lt;code&gt;url&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now any model that inherits from &lt;code&gt;SecondBase::Base&lt;/code&gt; will connect to and use the database like a regular ActiveRecord model. You can also use associations between your primary database&amp;#39;s
+and secondary database&amp;#39;s models.&lt;/p&gt;
+
+&lt;h2 id=&quot;tasks-and-generators&quot;&gt;Tasks and Generators&lt;/h2&gt;
+
+&lt;p&gt;SecondBase enhances key rake tasks to make having two databases as seamless as possible. All create, drop, purge and test tasks will run across both databases by invoking the original.
+The only time you will need to call a &lt;code&gt;db:second_base&lt;/code&gt; namespace task is to run a migration on the secondary database exclusively.&lt;/p&gt;
+
+&lt;p&gt;Rails&amp;#39; migration generator is  subclassed to provide the same features as the original. Simply invoke &lt;code&gt;second_base:migration&lt;/code&gt; and a new migration will be created targeting your
+secondary database.&lt;/p&gt;
+
+&lt;h2 id=&quot;extra-helpers&quot;&gt;Extra Helpers&lt;/h2&gt;
+
+&lt;p&gt;We provide a &lt;code&gt;SecondBase::Forced&lt;/code&gt; helper to allow you to force a class that inherits from ActiveRecord::Base to use your secondary database.
+For example, &lt;code&gt;ActiveRecord::SessionStore::Session.extend SecondBase::Forced&lt;/code&gt; will make &lt;code&gt;SessionStore&lt;/code&gt; use your secondary database.&lt;/p&gt;
+
+&lt;p&gt;We also provide a &lt;code&gt;Secondbase.on_base&lt;/code&gt; helper for situations where you need to temporarily force ActiveRecord::Base to be your secondary database.
+The helper is used internally by SecondBase  to help deal with the global mutable state issues the migrator and database task objects suffer from.
+For instance, you can combo this with DatabaseCleaner&amp;#39;s truncation strategy to clean out your database for each test.&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing Thoughts&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#39;ve provided a brief overview of SecondBase here. For a longer explanation of the features provided &lt;a href=&quot;https://github.com/customink/secondbase#readme&quot;&gt;check out the readme&lt;/a&gt;.
+If you would like to see a demo of this gem in action, &lt;a href=&quot;https://github.com/customink/encom_dbs/tree/secondbase&quot;&gt;check out this demo project&lt;/a&gt;.
+To get a better understanding of multi-database rails applications, I would recommend you check out &lt;a href=&quot;http://technology.customink.com/blog/2015/06/22/rails-multi-database-best-practices-roundup/&quot;&gt;this post by Ken Collins&lt;/a&gt;.
+Finally, if your still running into issues with any of this, please feel free to open an issue on &lt;a href=&quot;https://github.com/customink/secondbase/issues&quot;&gt;the SecondBase repo&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 10 Jan 2016 00:00:00 -0500</pubDate>
+        <link>http://technology.customink.com//blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</guid>
+      </item>
+    
+      <item>
         <title>The Art of Ruby Technical Interviews</title>
         <description>&lt;p&gt;This is an exciting time in the Ruby Community. We are welcoming many new developers from bootcamps and online code schools. We need more developers. We want to hire more developers. We want to hire you.&lt;/p&gt;
 

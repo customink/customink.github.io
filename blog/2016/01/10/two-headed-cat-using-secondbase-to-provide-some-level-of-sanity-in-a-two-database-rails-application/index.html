@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Two Headed Cat! Using Secondbase to provide some level of sanity in a two-database Rails application. - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Rails has never played nice with using multiple databases. While it is very easy to go and set up a new connection via ActiveRecord.establish_conne...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-7a7fb873c5e7b8b21b53bd3a2ee6444a.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Two Headed Cat! Using Secondbase to provide some level of sanity in a two-database Rails application.</h1>
+        <p>Rails has never played nice with using multiple databases. While it is very easy to go and set up a new connection via <code>ActiveRecord.establish_connection</code>,
+the niceties that rails provides just don&#39;t exist for your second database. Fixtures don&#39;t work without explicitly calling <code>set_fixture_class</code> and you do not have
+access to any of the database tasks or generators that are provided by rails. To help alleviate this pain point for us at CustomInk, <a href="https://twitter.com/karledurante">Karle Durante</a> wrote <a href="https://github.com/customink/secondbase">SecondBase</a>
+five years ago to provide database task support and migration generation to Rails applications. Between then and now the internals of Rails changed significantly. <code>DatabaseTasks</code> took over much of the responsibility for the rake tasks we come to depend on for managing databases. While this refactor is a nice addition.
+It required changing the internals of Secondbase to support newer versions of Rails. To this end, <a href="https://twitter.com/metaskills">Ken Collins</a> and I set out to upgrade and modernize SecondBase.
+The solution we settled on is to <a href="https://github.com/customink/secondbase/blob/master/lib/second_base/databases.rake">wrap and enhance</a> the existing Rails database tasks and subclass the <a href="https://github.com/customink/secondbase/blob/master/lib/rails/second_base/generators/migration_generator.rb">migration generator</a>. This provides us with almost all of the tools that
+Rails gives the original database in a somewhat future proof fashion and does what <a href="http://technology.customink.com/blog/2015/06/22/rails-multi-database-best-practices-roundup/#comment-2101344338">Ken alluded to</a> in his <a href="http://technology.customink.com/blog/2015/06/22/rails-multi-database-best-practices-roundup">Multi-Database practices article</a>.</p>
+
+<h2 id="using-secondbase">Using SecondBase</h2>
+
+<p>In your Gemfile add the SecondBase gem:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'secondbase'</span>
+</code></pre></div>
+<p>Then in your <code>config/database.yml</code> add your SecondBase configuration:</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">secondbase</span><span class="pi">:</span>
+  <span class="s">development</span><span class="pi">:</span>
+    <span class="s">adapter</span><span class="pi">:</span> <span class="s">mysql</span>
+    <span class="s">database</span><span class="pi">:</span> <span class="s">myapp_development</span>
+  <span class="s">test</span><span class="pi">:</span>
+    <span class="s">adapter</span><span class="pi">:</span> <span class="s">mysql</span>
+    <span class="s">database</span><span class="pi">:</span> <span class="s">myapp_test</span>
+</code></pre></div>
+<p>This configuration block supports any options that your regular database supports including <code>url</code>.</p>
+
+<p>Now any model that inherits from <code>SecondBase::Base</code> will connect to and use the database like a regular ActiveRecord model. You can also use associations between your primary database&#39;s
+and secondary database&#39;s models.</p>
+
+<h2 id="tasks-and-generators">Tasks and Generators</h2>
+
+<p>SecondBase enhances key rake tasks to make having two databases as seamless as possible. All create, drop, purge and test tasks will run across both databases by invoking the original.
+The only time you will need to call a <code>db:second_base</code> namespace task is to run a migration on the secondary database exclusively.</p>
+
+<p>Rails&#39; migration generator is  subclassed to provide the same features as the original. Simply invoke <code>second_base:migration</code> and a new migration will be created targeting your
+secondary database.</p>
+
+<h2 id="extra-helpers">Extra Helpers</h2>
+
+<p>We provide a <code>SecondBase::Forced</code> helper to allow you to force a class that inherits from ActiveRecord::Base to use your secondary database.
+For example, <code>ActiveRecord::SessionStore::Session.extend SecondBase::Forced</code> will make <code>SessionStore</code> use your secondary database.</p>
+
+<p>We also provide a <code>Secondbase.on_base</code> helper for situations where you need to temporarily force ActiveRecord::Base to be your secondary database.
+The helper is used internally by SecondBase  to help deal with the global mutable state issues the migrator and database task objects suffer from.
+For instance, you can combo this with DatabaseCleaner&#39;s truncation strategy to clean out your database for each test.</p>
+
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+
+<p>I&#39;ve provided a brief overview of SecondBase here. For a longer explanation of the features provided <a href="https://github.com/customink/secondbase#readme">check out the readme</a>.
+If you would like to see a demo of this gem in action, <a href="https://github.com/customink/encom_dbs/tree/secondbase">check out this demo project</a>.
+To get a better understanding of multi-database rails applications, I would recommend you check out <a href="http://technology.customink.com/blog/2015/06/22/rails-multi-database-best-practices-roundup/">this post by Ken Collins</a>.
+Finally, if your still running into issues with any of this, please feel free to open an issue on <a href="https://github.com/customink/secondbase/issues">the SecondBase repo</a>.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Hunter Madison" src="http://www.gravatar.com/avatar/783bb0bb05dd4d4485b4707c0bf3854a?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2016-01-10T00:00:00-05:00">
+      10 Jan 2016
+    </time></br>
+    by Hunter Madison
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/355E3B"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/hmadison"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/';
+    var disqus_title = "Two Headed Cat! Using Secondbase to provide some level of sanity in a two-database Rails application.";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2016 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>
