@@ -6,7 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often t...">
+  <meta name="description" content="
+  
+    
+  
+  
+    Seamless second database integration for Rails.
+    
+      2016-01-11: We just finished a new version of SecondBase, our own gem...">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
   <link rel="stylesheet" href="/assets/app-7a7fb873c5e7b8b21b53bd3a2ee6444a.css">
   <script type="text/javascript">
@@ -48,7 +55,19 @@
     <div class="tb-Post-main sb-Wrapper">
       <div class="tb-Post-content">
         <h1>Rails Multi-Database Best Practices Roundup</h1>
-        <p>Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often times these connections are both readable and writable. Collectively they represent a comprehensive business domain. Today I would like to cover everything I know about this topic, without going into the bike shed of micro services or schema management gems.</p>
+        <div class="sb-Dialog sb-Dialog--info">
+  <div class="sb-Dialog-icon">
+    <i class="sb-Icon--info"></i>
+  </div>
+  <div class="sb-Dialog-message">
+    <h3>Seamless second database integration for Rails.</h3>
+    <p>
+      2016-01-11: We just finished a new version of SecondBase, our own gem that provides support for Rails to manage dual databases by extending ActiveRecord tasks that create, migrate, and test your application. It supports Rails 4.x and up. <a href="https://github.com/customink/secondbase">Check it out on GitHub.</a>
+    </p>
+   </div>
+</div>
+
+<p>Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often times these connections are both readable and writable. Collectively they represent a comprehensive business domain. Today I would like to cover everything I know about this topic, without going into the bike shed of micro services or schema management gems.</p>
 
 <p>The goal is simple! To give you the tools you need to keep your application running smoothly when connecting to multiple databases.</p>
 

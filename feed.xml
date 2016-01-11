@@ -911,7 +911,19 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
     
       <item>
         <title>Rails Multi-Database Best Practices Roundup</title>
-        <description>&lt;p&gt;Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often times these connections are both readable and writable. Collectively they represent a comprehensive business domain. Today I would like to cover everything I know about this topic, without going into the bike shed of micro services or schema management gems.&lt;/p&gt;
+        <description>&lt;div class=&quot;sb-Dialog sb-Dialog--info&quot;&gt;
+  &lt;div class=&quot;sb-Dialog-icon&quot;&gt;
+    &lt;i class=&quot;sb-Icon--info&quot;&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;sb-Dialog-message&quot;&gt;
+    &lt;h3&gt;Seamless second database integration for Rails.&lt;/h3&gt;
+    &lt;p&gt;
+      2016-01-11: We just finished a new version of SecondBase, our own gem that provides support for Rails to manage dual databases by extending ActiveRecord tasks that create, migrate, and test your application. It supports Rails 4.x and up. &lt;a href=&quot;https://github.com/customink/secondbase&quot;&gt;Check it out on GitHub.&lt;/a&gt;
+    &lt;/p&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Since landing my first job programming with Ruby, most Rails applications I have worked with have managed two or more database connections. Often times these connections are both readable and writable. Collectively they represent a comprehensive business domain. Today I would like to cover everything I know about this topic, without going into the bike shed of micro services or schema management gems.&lt;/p&gt;
 
 &lt;p&gt;The goal is simple! To give you the tools you need to keep your application running smoothly when connecting to multiple databases.&lt;/p&gt;
 
