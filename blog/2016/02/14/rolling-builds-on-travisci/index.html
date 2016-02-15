@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Rolling Builds on TravisCI - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Work on the Ruby SQL Server stack often requires long build times. Dependencies need to be downloaded, native extensions build, followed by long te...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-7a7fb873c5e7b8b21b53bd3a2ee6444a.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Rolling Builds on TravisCI</h1>
+        <p>Work on the Ruby SQL Server stack often requires long build times. Dependencies need to be downloaded, native extensions build, followed by long test runs to remote services. One feature I have come to rely on with <a href="http://www.appveyor.com">Appveyor</a> are their <a href="https://www.appveyor.com/docs/build-configuration#rolling-builds">rolling builds</a> - where commits to the same branch cancel previous running builds. Though Appveyor is great for Windows builds, my 💖 belongs to TravisCI. They are my goto for continuous integration due to their GitHub integration and open source presence.</p>
+
+<!--more-->
+
+<p>Making rolling builds work on TravisCI led me to <a href="https://git.io/wpo7Tw">open GitHub issues</a> where instead I had hoped for a simple configuration option. I did find great work done by <a href="https://github.com/grosser/travis_dedup#readme">Michael Grosser</a> which allowed use of his open server to a) receive GitHub webhooks and b) make subsequent TravisCI API calls on your behalf. For us at CustomInk, we wanted something to host ourselves while ensuring GitHub payloads were verified to originate from our private repositories. All while ensuring that API calls to Travis are only our own.</p>
+
+<h2 id="enter-the-rolling-travis-app">Enter The Rolling Travis App</h2>
+
+<p><img src="/assets/content/rolling-travisci-builds-703e75ca9378b0732648b6414d67c0c5.gif" width="125" style="float:right;" alt="Rolling TravisCI Builds" />With an emphasis on TravisCI pro accounts and your company&#39;s security, we build a simple Rails 5 API application that you can configure and deploy to Heroku.</p>
+
+<p><a href="https://github.com/customink/rolling_travis_builds">https://github.com/customink/rolling_travis_builds</a></p>
+
+<p>Without duplicating that projects README, here are a few highlights of what this application does and how it can accomplish rolling builds for your repos.</p>
+
+<ul>
+<li>Responds to GitHub webhooks for repository activity.</li>
+<li>Verifies the webhook payload using a SHA1 signature.</li>
+<li>Makes API calls to TravisCI to cancel duplicate builds.</li>
+</ul>
+
+<h4 id="verify-github-payloads">Verify GitHub Payloads</h4>
+
+<p>The most important part of this process is <a href="https://developer.github.com/webhooks/securing/">verifying the GitHub payloads</a> are indeed from your repositories. Here is an excerpt from the application&#39;s root controller.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">API</span>
+
+  <span class="n">before_filter</span> <span class="ss">:webhook_verify!</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">webhook_verify!</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="s2">"sha1="</span> <span class="o">+</span> <span class="no">OpenSSL</span><span class="o">::</span><span class="no">HMAC</span><span class="p">.</span><span class="nf">hexdigest</span><span class="p">(</span>
+      <span class="no">OpenSSL</span><span class="o">::</span><span class="no">Digest</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'sha1'</span><span class="p">),</span>
+      <span class="no">WEBHOOK_SECRET</span><span class="p">,</span>
+      <span class="n">request</span><span class="p">.</span><span class="nf">body</span><span class="p">.</span><span class="nf">read</span>
+    <span class="p">)</span>
+    <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">SecurityUtils</span><span class="p">.</span><span class="nf">secure_compare</span><span class="p">(</span>
+      <span class="n">signature</span><span class="p">,</span>
+      <span class="n">request</span><span class="p">.</span><span class="nf">headers</span><span class="p">[</span><span class="s1">'X-Hub-Signature'</span><span class="p">]</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</code></pre></div>
+<p>As you can see, GitHub signs the JSON payload using the <code>X-Hub-Signature</code>. All we need to do is check the signature against the payload. Using a before filter will ensure that if the secure compare returns false, no further actions are taken.</p>
+
+<h4 id="async-with-sucker-punch-2-0">Async With Sucker Punch 2.0</h4>
+
+<p>API calls to Travis could take a second or two. If your organization is big and repositories are numerous, this could block your the webhook application from responding. In order to solve this, we bundle the latest version of <a href="https://github.com/brandonhilkert/sucker_punch">Sucker Punch</a> which uses concurrent-ruby to asynchronously process work.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">API</span>
+  <span class="k">def</span> <span class="nf">webhook</span>
+    <span class="no">CancelDuplicateBuildsJob</span><span class="p">.</span><span class="nf">perform_in</span> <span class="mi">5</span><span class="p">,</span> <span class="n">webhook_repo</span>
+    <span class="n">head</span> <span class="ss">:ok</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">CancelDuplicateBuildsJob</span>
+  <span class="kp">include</span> <span class="no">SuckerPunch</span><span class="o">::</span><span class="no">Job</span>
+  <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="n">webhook_repo</span><span class="p">)</span>
+    <span class="no">TravisApi</span><span class="p">.</span><span class="nf">cancel_duplicate_builds!</span><span class="p">(</span><span class="n">webhook_repo</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Here we are using the <code>perform_in</code> set to 5 seconds to give TravisCI a shot at first scheduling new builds before looking for duplicates.</p>
+
+<p><a href="https://github.com/customink/rolling_travis_builds">https://github.com/customink/rolling_travis_builds</a></p>
+
+<p>We hope you enjoy the Rolling Travis Builds application and help make it better. Thanks!</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+<li><a href="https://github.com/customink/rolling_travis_builds">Rolling TravisCI builds GitHub Webhook Template Application</a></li>
+<li><a href="https://git.io/wpo7Tw">TravisCI GitHub Issue To Cancel Builds</a></li>
+<li><a href="https://github.com/brandonhilkert/sucker_punch">Sucker Punch - Async Ruby processing using concurrent-ruby</a></li>
+</ul>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2016-02-14T00:00:00-05:00">
+      14 Feb 2016
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2016/02/14/rolling-builds-on-travisci/';
+    var disqus_title = "Rolling Builds on TravisCI";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2016 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

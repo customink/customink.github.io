@@ -7,6 +7,89 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Rolling Builds on TravisCI</title>
+        <description>&lt;p&gt;Work on the Ruby SQL Server stack often requires long build times. Dependencies need to be downloaded, native extensions build, followed by long test runs to remote services. One feature I have come to rely on with &lt;a href=&quot;http://www.appveyor.com&quot;&gt;Appveyor&lt;/a&gt; are their &lt;a href=&quot;https://www.appveyor.com/docs/build-configuration#rolling-builds&quot;&gt;rolling builds&lt;/a&gt; - where commits to the same branch cancel previous running builds. Though Appveyor is great for Windows builds, my 💖 belongs to TravisCI. They are my goto for continuous integration due to their GitHub integration and open source presence.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Making rolling builds work on TravisCI led me to &lt;a href=&quot;https://git.io/wpo7Tw&quot;&gt;open GitHub issues&lt;/a&gt; where instead I had hoped for a simple configuration option. I did find great work done by &lt;a href=&quot;https://github.com/grosser/travis_dedup#readme&quot;&gt;Michael Grosser&lt;/a&gt; which allowed use of his open server to a) receive GitHub webhooks and b) make subsequent TravisCI API calls on your behalf. For us at CustomInk, we wanted something to host ourselves while ensuring GitHub payloads were verified to originate from our private repositories. All while ensuring that API calls to Travis are only our own.&lt;/p&gt;
+
+&lt;h2 id=&quot;enter-the-rolling-travis-app&quot;&gt;Enter The Rolling Travis App&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/rolling-travisci-builds-703e75ca9378b0732648b6414d67c0c5.gif&quot; width=&quot;125&quot; style=&quot;float:right;&quot; alt=&quot;Rolling TravisCI Builds&quot; /&gt;With an emphasis on TravisCI pro accounts and your company&amp;#39;s security, we build a simple Rails 5 API application that you can configure and deploy to Heroku.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/customink/rolling_travis_builds&quot;&gt;https://github.com/customink/rolling_travis_builds&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Without duplicating that projects README, here are a few highlights of what this application does and how it can accomplish rolling builds for your repos.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Responds to GitHub webhooks for repository activity.&lt;/li&gt;
+&lt;li&gt;Verifies the webhook payload using a SHA1 signature.&lt;/li&gt;
+&lt;li&gt;Makes API calls to TravisCI to cancel duplicate builds.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;verify-github-payloads&quot;&gt;Verify GitHub Payloads&lt;/h4&gt;
+
+&lt;p&gt;The most important part of this process is &lt;a href=&quot;https://developer.github.com/webhooks/securing/&quot;&gt;verifying the GitHub payloads&lt;/a&gt; are indeed from your repositories. Here is an excerpt from the application&amp;#39;s root controller.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;API&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;before_filter&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:webhook_verify!&lt;/span&gt;
+
+  &lt;span class=&quot;kp&quot;&gt;private&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;webhook_verify!&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;signature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;sha1=&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;OpenSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HMAC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;hexdigest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;OpenSSL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Digest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;sha1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;no&quot;&gt;WEBHOOK_SECRET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;ActiveSupport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SecurityUtils&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;secure_compare&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;signature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;X-Hub-Signature&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As you can see, GitHub signs the JSON payload using the &lt;code&gt;X-Hub-Signature&lt;/code&gt;. All we need to do is check the signature against the payload. Using a before filter will ensure that if the secure compare returns false, no further actions are taken.&lt;/p&gt;
+
+&lt;h4 id=&quot;async-with-sucker-punch-2-0&quot;&gt;Async With Sucker Punch 2.0&lt;/h4&gt;
+
+&lt;p&gt;API calls to Travis could take a second or two. If your organization is big and repositories are numerous, this could block your the webhook application from responding. In order to solve this, we bundle the latest version of &lt;a href=&quot;https://github.com/brandonhilkert/sucker_punch&quot;&gt;Sucker Punch&lt;/a&gt; which uses concurrent-ruby to asynchronously process work.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;API&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;webhook&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;CancelDuplicateBuildsJob&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;perform_in&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webhook_repo&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:ok&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CancelDuplicateBuildsJob&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;SuckerPunch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Job&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webhook_repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;TravisApi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cancel_duplicate_builds!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webhook_repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here we are using the &lt;code&gt;perform_in&lt;/code&gt; set to 5 seconds to give TravisCI a shot at first scheduling new builds before looking for duplicates.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/customink/rolling_travis_builds&quot;&gt;https://github.com/customink/rolling_travis_builds&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We hope you enjoy the Rolling Travis Builds application and help make it better. Thanks!&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/rolling_travis_builds&quot;&gt;Rolling TravisCI builds GitHub Webhook Template Application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://git.io/wpo7Tw&quot;&gt;TravisCI GitHub Issue To Cancel Builds&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/brandonhilkert/sucker_punch&quot;&gt;Sucker Punch - Async Ruby processing using concurrent-ruby&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 14 Feb 2016 00:00:00 -0500</pubDate>
+        <link>http://technology.customink.com//blog/2016/02/14/rolling-builds-on-travisci/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/02/14/rolling-builds-on-travisci/</guid>
+      </item>
+    
+      <item>
         <title>Two Headed Cat! Using Secondbase to provide some level of sanity in a two-database Rails application.</title>
         <description>&lt;p&gt;Rails has never played nice with using multiple databases. While it is very easy to go and set up a new connection via &lt;code&gt;ActiveRecord.establish_connection&lt;/code&gt;,
 the niceties that rails provides just don&amp;#39;t exist for your second database. Fixtures don&amp;#39;t work without explicitly calling &lt;code&gt;set_fixture_class&lt;/code&gt; and you do not have
