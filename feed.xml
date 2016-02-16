@@ -8,7 +8,7 @@
     
       <item>
         <title>Rolling Builds on TravisCI</title>
-        <description>&lt;p&gt;Work on the Ruby SQL Server stack often requires long build times. Dependencies need to be downloaded, native extensions build, followed by long test runs to remote services. One feature I have come to rely on with &lt;a href=&quot;http://www.appveyor.com&quot;&gt;Appveyor&lt;/a&gt; are their &lt;a href=&quot;https://www.appveyor.com/docs/build-configuration#rolling-builds&quot;&gt;rolling builds&lt;/a&gt; - where commits to the same branch cancel previous running builds. Though Appveyor is great for Windows builds, my 💖 belongs to TravisCI. They are my goto for continuous integration due to their GitHub integration and open source presence.&lt;/p&gt;
+        <description>&lt;p&gt;Work on the Ruby SQL Server stack often requires long build times. Dependencies need to be downloaded, native extensions built, followed by long test runs to remote services. One feature I have come to rely on with &lt;a href=&quot;http://www.appveyor.com&quot;&gt;Appveyor&lt;/a&gt; are their &lt;a href=&quot;https://www.appveyor.com/docs/build-configuration#rolling-builds&quot;&gt;rolling builds&lt;/a&gt; - where commits to the same branch cancel previous running builds. Though Appveyor is great for Windows builds, my 💖 belongs to TravisCI. They are my goto for continuous integration due to their GitHub integration and open source presence.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
