@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/blog/2016/03/16/outrunning-a-hurricane/</loc>
+    <lastmod>2016-03-16T00:00:00-04:00</lastmod>
+  </url>
+  <url>
     <loc>/blog/2016/02/14/rolling-builds-on-travisci/</loc>
     <lastmod>2016-02-14T00:00:00-05:00</lastmod>
   </url>
@@ -330,39 +334,6 @@
   <url>
     <loc>/</loc>
   </url>
-  <url>
-    <loc>/page2/</loc>
-  </url>
-  <url>
-    <loc>/page3/</loc>
-  </url>
-  <url>
-    <loc>/page4/</loc>
-  </url>
-  <url>
-    <loc>/page5/</loc>
-  </url>
-  <url>
-    <loc>/page6/</loc>
-  </url>
-  <url>
-    <loc>/page7/</loc>
-  </url>
-  <url>
-    <loc>/page8/</loc>
-  </url>
-  <url>
-    <loc>/page9/</loc>
-  </url>
-  <url>
-    <loc>/page10/</loc>
-  </url>
-  <url>
-    <loc>/page11/</loc>
-  </url>
-  <url>
-    <loc>/page12/</loc>
-  </url>
     <url>
       <loc>/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
     </url>
@@ -605,5 +576,8 @@
     </url>
     <url>
       <loc>/blog/2016/02/14/rolling-builds-on-travisci/</loc>
+    </url>
+    <url>
+      <loc>/blog/2016/03/16/outrunning-a-hurricane/</loc>
     </url>
 </urlset>

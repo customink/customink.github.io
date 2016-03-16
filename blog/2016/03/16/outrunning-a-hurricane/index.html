@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Outrunning a Hurricane - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Two guys are walking thru the woods when they see a charging Grizzly Bear. First guy says &quot;Run for it!&quot; Second guy says, &quot;You can&#3...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-7a7fb873c5e7b8b21b53bd3a2ee6444a.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Outrunning a Hurricane</h1>
+        <p><em>Two guys are walking thru the woods when they see a charging Grizzly Bear. First guy says &quot;Run for it!&quot; Second guy says, &quot;You can&#39;t outrun a Grizzly!&quot; First guy says &quot;I don&#39;t have to outrun the bear, I just have to outrun YOU.&quot;</em></p>
+
+<p><img src="/assets/content/outrunning-a-hurricane-d4beea035ad0ef0032a386ffc0b326c4.jpg" class="tb-Img tb-Img--responsive tb-Img--fancy" alt="Eye on the tropics, tracking Joaquin on the East coast." />This past Fall, <a href="https://en.wikipedia.org/wiki/Hurricane_Joaquin">Hurricane Joaquin</a> was threatening to hit the East Coast. Many models had Northern Va (also known as US East-1) in its crosshairs. The Derecho of 2012 showed that AWS Regions are vulnerable to weather related events. The derecho knocked out big names like <a href="http://www.forbes.com/sites/anthonykosner/2012/06/30/amazon-cloud-goes-down-friday-night-taking-netflix-instagram-and-pinterest-with-it/#14b0305b12ce">Netflix, Instagram and Pinterest</a> for up to three days. It was our first look at who the big players that were using AWS.</p>
+
+<!--more-->
+
+<p>3 years later, there are a LOT more large companies in the cloud. When an event like this happens again, and unfortunately it will, there will be a mad scramble for resources in other AWS Regions. A <a href="http://news.netcraft.com/archives/2013/05/20/amazon-web-services-growth-unrelenting.html">2013 report</a> by Netcraft showed that 60% of all web facing instances were in the US East Region. There are not enough instances in both US West Regions to absorb the inevitable load that would come.</p>
+
+<p>We made the call on Wednesday night, 5 days prior to the arrival of Joaquin, to put on our running shoes. We weren&#39;t interested in outrunning Joaquin, but to outrun the rest of you. If you are running in a data center there was nothing you could do other than to dust off that DR binder, start sandbagging and print your resume before the power goes out.</p>
+
+<p>With a team of 6, we had the frontend site and a functioning backend system up and running in 8 hours. By Friday afternoon, we had 90% of our systems running in two regions. You read that right. In less than 2 days, with no one working overtime, we had fully migrated CustomInk across the United States. The other 10% were Tier 2 applications that could afford a 3-5 day outage and not critical to the business.</p>
+
+<p>This was our true test of the cloud&#39;s abilities but it also reinforced the groundwork laid down by my team years earlier. CustomInk is truly a DevOps organization. We have fully embraced Infrastructure as a Service in WebOps and everyone has bought into our cloud environment. We have daily standups, blameless postmortems and the team shares the workload and on-call. No one is siloed as the infrastructure guy or supports a single company org. One for all...!</p>
+
+<p>In regards to our infrastructure, Infrastructure as Code is a working principle of the WebOps team.IaC is a great buzzword and many of my peers claim this. If you can&#39;t build your applications in less than 5 Chef/Ansible/Puppet commands please move aside. This single principle allowed us to deploy 90 applications across 200 load balanced servers in two availability zones in a new AWS Region. Our engineers are able to literally fire off the commands to build out an application and then move on to the next application. Rather than futzing with servers, we could focus on database replication, networking and security groups.</p>
+
+<p>The conclusion was a bit anti-climatic. There were a few high fives and congrats by senior management.  The systems ran over the weekend and we scaled them back on Monday. Our applications are now multi-region and and we treat US West-2A as a 4th AZ. At the end of the day, we proved that our cloud infrastructure was elastic and dynamic and  our WebOps Team was agile and able to respond to what we believe is our biggest threat.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="John Peterson" src="http://www.gravatar.com/avatar/fda84d4db2e66f4ff7cf616b7cee09b2?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2016-03-16T00:00:00-04:00">
+      16 Mar 2016
+    </time></br>
+    by John Peterson
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/jcpetrson"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/jcpetrson"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2016/03/16/outrunning-a-hurricane/';
+    var disqus_title = "Outrunning a Hurricane";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2016 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>
