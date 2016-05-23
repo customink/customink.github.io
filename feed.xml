@@ -7,6 +7,87 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Configuring Atom</title>
+        <description>&lt;p&gt;I&amp;#39;ve been using Atom for a while now, and I thought I&amp;#39;d write a blog post describing some quick ways to modify Atom to work better for you. GitHub describes Atom as &amp;quot;modern, approachable, yet hackable to the core&amp;quot;. This post will focus mostly on the &amp;quot;approachable&amp;quot; side of customizing your editor. We&amp;#39;ll first look at editor and package settings before moving to configuration files you can modify, with a few small examples of how you can use them.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: As of writing, Atom is on version 1.7.4, and the beta build is 1.8.0-beta4.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;settings&quot;&gt;Settings&lt;/h3&gt;
+
+&lt;h4 id=&quot;editor-settings&quot;&gt;Editor Settings&lt;/h4&gt;
+
+&lt;p&gt;This is a good place to look when starting to use Atom. There aren&amp;#39;t too many settings here, and the options available to you can be very useful. One of the more common options you might look at here is the &lt;code&gt;font-family&lt;/code&gt; that will be applied to your editor&amp;#39;s text. Another option that is important to know about is &lt;code&gt;Exclude VCS Ignored Paths&lt;/code&gt;. With this option enabled, files ignored from version control will not show up when using the &lt;a href=&quot;https://atom.io/packages/fuzzy-finder&quot;&gt;&lt;code&gt;fuzzy-finder&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;https://atom.io/packages/find-and-replace&quot;&gt;&lt;code&gt;find-and-replace&lt;/code&gt;&lt;/a&gt; packages. This can help eliminate search results that may be irrelevant while also improving performance. For an example of how this can help, try toggling the setting and using &lt;code&gt;fuzzy-finder&lt;/code&gt; and &lt;code&gt;find-and-replace&lt;/code&gt; on a project with a large &lt;code&gt;node_modules&lt;/code&gt; folder. Enabling this behavior may be detrimental to your workflow if you routinely edit files you have ignored by your VCS, so knowing about this option can help avoid some frustration.&lt;/p&gt;
+
+&lt;h4 id=&quot;package-settings&quot;&gt;Package Settings&lt;/h4&gt;
+
+&lt;p&gt;The majority of the modifications you can make to Atom will come from packages. There are a ton of &lt;a href=&quot;https://atom.io/packages&quot;&gt;community made packages&lt;/a&gt; to browse through, but a fresh install of Atom will still contain many core packages that you&amp;#39;ll find useful. Navigate to your Preferences and select &amp;quot;Packages&amp;quot; from the menu on the left. You can search through your installed packages here. There will be a settings button next to the package name if that package has settings you are able to configure.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;d recommend browsing through your package list for the things you use most often. If you use autocomplete a lot, check out the settings for &lt;a href=&quot;https://atom.io/packages/autocomplete-plus&quot;&gt;&lt;code&gt;autocomplete-plus&lt;/code&gt;&lt;/a&gt;. Language support is also contained in packages. The language support packages that ship with Atom usually follow the naming convention of &lt;code&gt;language-&amp;lt;name&amp;gt;&lt;/code&gt;. Be sure to check out the packages for the languages you work with to see settings for things like maximum line length and indentation preferences. These settings allow you to keep style preferences in line with your team&amp;#39;s style guide. Language packages may also include available keybindings, and snippets used in conjunction with autocomplete.&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-files&quot;&gt;Configuration Files&lt;/h3&gt;
+
+&lt;h4 id=&quot;init-script&quot;&gt;Init Script&lt;/h4&gt;
+
+&lt;p&gt;You can open your init script by opening the command palette with &lt;code&gt;cmd-shift-p&lt;/code&gt; and searching for the command &lt;code&gt;Application: Open Your Init Script&lt;/code&gt;. This CoffeeScript or JavaScript file will be evaluated after all of your packages are loaded. This is a good place to write some code to hack together custom commands and modifications that aren&amp;#39;t limited to a single package you have installed, and aren&amp;#39;t suited to be its own package. This file is also great for prototyping new package ideas or modifications you are thinking of developing.&lt;/p&gt;
+
+&lt;p&gt;Recently I&amp;#39;ve been learning React, and found myself frequently changing the grammar for a file from regular &lt;code&gt;JavaScript&lt;/code&gt; to &lt;code&gt;JavaScript (JSX)&lt;/code&gt; for better syntax highlighting and autocomplete behavior. This was a perfect use case for the init script. I changed this process from 3 commands to 1 by creating a custom command in my init script.
+The code for this is below if you&amp;#39;d like to try it out yourself, but I won&amp;#39;t dive into the Atom API in this post. Check the &lt;a href=&quot;https://atom.io/docs/api/v1.7.3/AtomEnvironment&quot;&gt;documentation&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot; data-lang=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;atom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commands&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;atom-text-editor&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;custom:js-to-jsx&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;grammars&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;atom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;grammars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getGrammars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;grammar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;grammars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;JavaScript (JSX)&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;editor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;atom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;workspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getActiveTextEditor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;editor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setGrammar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;grammar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;keymap&quot;&gt;Keymap&lt;/h4&gt;
+
+&lt;p&gt;Are you sick of accidentally quitting Atom instead of closing a tab? Let&amp;#39;s override the &lt;code&gt;cmd-q&lt;/code&gt; keybinding! We can do this by editing our keymap file. Open your keymap the same way you opened your init script, but this time looking for the &lt;code&gt;Application: Open Your Keymap&lt;/code&gt; command. This is a CSON or JSON file that you can use to map a keybinding to a command. Your first step when creating a new keybinding is finding the selector you want to apply the keybinding to. For example, you can use &lt;code&gt;atom-text-editor&lt;/code&gt; to refer to your text editing area, or &lt;code&gt;body&lt;/code&gt; for just about everything in the application window. Atom includes Chrome&amp;#39;s developer tools (View -&amp;gt; Developer -&amp;gt; Toggle Developer Tools), which can help you find the right selector. The next option is the keybinding you wish to apply. We want to override &lt;code&gt;cmd-q&lt;/code&gt; to save, and make sure we can still quit Atom with a second press. In this case we will have two keybindings: &lt;code&gt;cmd-q&lt;/code&gt; and &lt;code&gt;cmd-q cmd-q&lt;/code&gt;.
+The last step is the name of the command we want to dispatch. Command names are usually in the format &lt;code&gt;package-name:command-name&lt;/code&gt;. The quit command, like the commands used to open the keymap and init files, is part of &lt;code&gt;Application&lt;/code&gt; and is called &lt;code&gt;application:quit&lt;/code&gt;. Saving is part of Atom Core, and is attached to the command &lt;code&gt;core:save&lt;/code&gt;. Putting all this together, we would get the following:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cson&quot; data-lang=&quot;cson&quot;&gt;&#39;body&#39;:
+  &#39;cmd-q&#39;: &#39;core:save&#39;
+  &#39;cmd-q cmd-q&#39;: &#39;application:quit&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This overrides &lt;code&gt;cmd-q&lt;/code&gt; to save, and allows you to confirm quitting with another &lt;code&gt;cmd-q&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;stylesheet&quot;&gt;Stylesheet&lt;/h4&gt;
+
+&lt;p&gt;Your stylesheet, &lt;code&gt;styles.less&lt;/code&gt;, is used to customize how your editor looks. You can open this file by running the &amp;quot;Application: Open Your Stylesheet&amp;quot; command. You can use this to apply styles to the core editor, as well as views created by third party packages. You can even modify styles set by your syntax theme to get it just right.&lt;/p&gt;
+
+&lt;p&gt;I use panes often, and sometimes lose track of which pane I&amp;#39;m focused on. I was able to solve this small but annoying problem by adding a blue border around my active pane.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-less&quot; data-lang=&quot;less&quot;&gt;atom-pane {
+  border: 1px solid #000000;
+  &amp;amp;.active {
+    border: 1px solid #3fcef4;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;snippets&quot;&gt;Snippets&lt;/h4&gt;
+
+&lt;p&gt;Snippets are your way of adding custom autocomplete options. You can edit your snippets by running the &amp;#39;Application: Open Your Snippets&amp;#39; command. Snippets are defined using CSON or JSON. The outer most key is the language scope. You can find this by looking at the package settings for a language. For &lt;a href=&quot;https://atom.io/packages/language-ruby&quot;&gt;&lt;code&gt;language-ruby&lt;/code&gt;&lt;/a&gt; this is &lt;code&gt;source.ruby&lt;/code&gt;, and for &lt;a href=&quot;https://atom.io/packages/language-ruby&quot;&gt;&lt;code&gt;language-javascript&lt;/code&gt;&lt;/a&gt; it&amp;#39;s &lt;code&gt;source.js&lt;/code&gt;. Each key within this source is the short description of what this snippet is for. There are two attributes that you should add inside of that description. The first is a prefix, used as the &amp;quot;trigger&amp;quot; for autocomplete. The next is the body, which will be the text inserted when the snippet is confirmed. An example I use to set up a &lt;code&gt;describe&lt;/code&gt; method when testing ruby is below.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cson&quot; data-lang=&quot;cson&quot;&gt;&#39;.source.ruby&#39;:
+  &#39;describe block&#39;:
+    &#39;prefix&#39;: &#39;describe&#39;
+    &#39;body&#39;: &quot;&quot;&quot;
+      describe &#39;${1:message}&#39; do
+        $2
+      end
+    &quot;&quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The dollar signs are Tab Stops, used to signal which part of the snippets are supposed to be edited after the snippet is confirmed.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;This is a very high level overview of where different settings can be found and modified. The Atom team has written much more detailed documentation for these settings and more. The main documentation can be found &lt;a href=&quot;http://flight-manual.atom.io/&quot;&gt;here&lt;/a&gt;. It includes entire sections on &lt;a href=&quot;http://flight-manual.atom.io/using-atom/sections/atom-packages/&quot;&gt;Packages&lt;/a&gt;, &lt;a href=&quot;http://flight-manual.atom.io/using-atom/sections/snippets/&quot;&gt;Snippets&lt;/a&gt;, &lt;a href=&quot;http://flight-manual.atom.io/hacking-atom/sections/the-init-file/&quot;&gt;The Init File&lt;/a&gt;, and &lt;a href=&quot;http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/&quot;&gt;Keymaps&lt;/a&gt; if you would like to learn more about the specific topics covered in this blog post.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 May 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/05/23/configuring-atom/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/05/23/configuring-atom/</guid>
+      </item>
+    
+      <item>
         <title>Introducing the activerecord-collection_cache_key Gem</title>
         <description>&lt;p&gt;Today we&amp;#39;re releasing a backport gem of a new feature in Rails 5—cache keys for ActiveRecord collections. It tracks fairly closely with the implementation seen &lt;a href=&quot;https://github.com/rails/rails/pull/20884&quot;&gt;in the Rails source&lt;/a&gt; but has a few minor differences arising from support back to AR 3. We&amp;#39;ve certainly been missing this feature for a long time and hope it comes in handy.&lt;/p&gt;
 
