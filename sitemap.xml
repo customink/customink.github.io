@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/blog/2016/06/23/2016-06-21-ruby-for-good/</loc>
+    <lastmod>2016-06-23T00:00:00-04:00</lastmod>
+  </url>
+  <url>
     <loc>/blog/2016/05/23/configuring-atom/</loc>
     <lastmod>2016-05-23T00:00:00-04:00</lastmod>
   </url>
@@ -375,6 +379,9 @@
   <url>
     <loc>/page12/</loc>
   </url>
+  <url>
+    <loc>/page13/</loc>
+  </url>
     <url>
       <loc>/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
     </url>
@@ -626,5 +633,8 @@
     </url>
     <url>
       <loc>/blog/2016/05/23/configuring-atom/</loc>
+    </url>
+    <url>
+      <loc>/blog/2016/06/23/2016-06-21-ruby-for-good/</loc>
     </url>
 </urlset>

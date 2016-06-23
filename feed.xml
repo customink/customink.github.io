@@ -7,6 +7,124 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>2016-06-21-ruby-for-good</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/smithsonian-4f3098c0c15cf6d84fa56f36857cf58e.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campus&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This past weekend  was the third installment of &lt;a href=&quot;http://rubyforgood.org&quot;&gt;Ruby For Good&lt;/a&gt;. As clichéd as it sounds, this
+was the best one yet! The conference was held at the picturesque &lt;a href=&quot;http://smconservation.gmu.edu/&quot;&gt;Smithsonian George Mason School of Conservation&lt;/a&gt;. Get ready for lots of photos!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campus-58cbaa199fa0cb26c8f75c1da20b73bc.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campus&quot; /&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;what-is-ruby-for-good&quot;&gt;What is Ruby For Good&lt;/h3&gt;
+
+&lt;p&gt;Ruby For Good is an annual conference that brings together software developers and designers for a weekend to work on technology projects for a variety of community driven non-profits. This year attendees came from Australia, Germany, and all across the United States. Participants spent their days working and their evenings bonding through board games, karaoke and conversation. We also got to experience a beautiful campfire with smores and a beautiful view.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campfire-4-67655a33ef5ce1a59c5d14b533073847.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campfire&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campfire-5-ea078b32e04b75d30c493d0346722f60.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campfire&quot; /&gt;
+ &lt;a href=&quot;http://technology.customink.com/blog/2015/08/05/ruby-for-good/&quot;&gt;Last year&lt;/a&gt; everyone took turns helping out in the kitchen preparing meals. This year we were spoiled by the wonderful meals provided by the campus staff. Not worrying about meals meant more time to code and have fun.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/board-games-d5629365563a28ad7248f99d546d7136.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;board games&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/working-8f13682599df88ba2ffed8c48266ae75.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campus&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;the-location&quot;&gt;The Location&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://smconservation.gmu.edu/&quot;&gt;Smithsonian George Mason School of Conservation&lt;/a&gt; is the closest thing to a real life Jurassic Park! Their research is focused on bringing back animals and plants that are on the brink of extinction. We were very fortunate to go on the special Friends of the National Zoo (FONZ) tour. They showed us cheetahs, Przewalski&amp;#39;s horses, red-crowned cranes, and more. We heard interesting stories about work done to make the American chestnut blight resistant and about a Saudi prince who is helping to bring back the Scimitar-horned oryx. The tour turned out to be an important motivator for some of the projects and participants. &lt;em&gt;Chris Mar, CustomInk software engineer&lt;/em&gt; said it well:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;After learning about the plight of the Scimitar-horned Oryx on our tour of the Smithsonian-Mason facility, I was excited to build software to help the scientists with their efforts to return these animals to their native home.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/working-2-4bf085fd3f3a5fb55bbbaf3f55b1c6e0.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;working&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campfire-2-1fe39f2d6c5b16d58d3f9422041f3f4a.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campfire&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2016-community-projects&quot;&gt;2016 Community Projects&lt;/h3&gt;
+
+&lt;p&gt;This year&amp;#39;s projects included:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/habitat_humanity&quot;&gt;New Orleans Habitat For Humanity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://Manjia.org&quot;&gt;Manjia&lt;/a&gt; - a DC non-profit that collects unused food distributes it to those in need.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.pdxdiaperbank.org/&quot;&gt;Portland Diaper Bank&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/share_christmas&quot;&gt;Share Christmas&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://vaworkinglandscapes.org/&quot;&gt;Virginia Working Landscapes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Smithsonian projects:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/scimitar_oryx&quot;&gt;Studying the Scimitar Oryx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/loggerhead_shrike&quot;&gt;Logging the Loggerhead Shrike&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/panda_app&quot;&gt;Red Pandas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;inkers-at-ruby-for-good&quot;&gt;Inkers at Ruby For Good&lt;/h3&gt;
+
+&lt;p&gt;This year &lt;a href=&quot;http://booster.com&quot;&gt;Booster&lt;/a&gt; and &lt;a href=&quot;http://customink.com&quot;&gt;CustomInk&lt;/a&gt; were well represented with eight engineers.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/inkers-117bc17ba2243073a0556a61333dc675.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;inkers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/shirts-ed89fae3831be1cb0539f6a529f91889.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;shirts&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Max Tedford&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I found Ruby for Good to be an incredibly fun and valuable experience. It seems to me that it&amp;#39;s a great place to meet up with some of the DC Ruby community&amp;#39;s stalwarts, and get to build connections with other programmers who share a mutual interest. One of my goals for the year was to use my programming skills to make an impact on something that&amp;#39;s important to me—the environment—and Ruby for Good provided me a perfect opportunity to meet that goal, and I&amp;#39;m very thankful I was able to make new friends and have some fun while doing it. Also, I found the site particularly stimulating both for its physical beauty, and as an animal-lover, and it didn&amp;#39;t hurt that all my meals were accounted for the duration of the weekend.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Brandon Lawrence&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;One of the most rewarding weekends I&amp;#39;ve ever had. ~80 developers together building software for non profits. Not only were the applications exciting, but the people rocked too!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Alex Egan&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;My favorite part about Ruby for Good is how welcoming it is to people of all skill levels. It allows everyone to contribute to a project, teach, and learn while making new friends and helping a great cause.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Chris Mar&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The unexpected benefit of attending Ruby for Good was working with an uncommon team with gender diversity and a range of skill levels. Everyone was able to contribute to the project bringing their unique perspective. I’m grateful for the experience.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Tien Nguyen&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I was constantly impressed that so many people with different skill sets and backgrounds were able to come together to accomplish so much in such a short amount of time. It was a pleasure working with a group so dedicated to donating their time to make a positive impact.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Howard Miller&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;One great thing about Ruby for Good is that, year after year, everyone rises to the occasion. I’ve consistently seen people nervous about whether they were skilled enough or had enough experience for the work at hand, and they’ve gone on to surprise themselves and everyone else with how much they can accomplish in a few days.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Dylan Pulliam&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Ruby for good was a great experience. I got to work on some cool non-profit projects and learned about some technologies I hadn’t touched before. I also enjoyed meeting ruby-ists from around the country.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.customink.com/about/three_hearts/&quot;&gt;Three Hearts&lt;/a&gt; played a part too! They sponsored and designed the shirt.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-to-get-involved&quot;&gt;How to Get Involved&lt;/h3&gt;
+
+&lt;p&gt;The hardest part of Ruby For Good is finding projects. This is where you can come in. If you are involved with a non-profit or know of a non-profit that needs help implementing technology we&amp;#39;d love to hear about it. Please email us at &lt;a href=&quot;mailto:info@rubyforgood.com&quot;&gt;info@rubyforgood.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/gooders-703a79991544d3a8e063fbee75daeb2a.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;gooders&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 23 Jun 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/06/23/2016-06-21-ruby-for-good/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/06/23/2016-06-21-ruby-for-good/</guid>
+      </item>
+    
+      <item>
         <title>Configuring Atom</title>
         <description>&lt;p&gt;I&amp;#39;ve been using Atom for a while now, and I thought I&amp;#39;d write a blog post describing some quick ways to modify Atom to work better for you. GitHub describes Atom as &amp;quot;modern, approachable, yet hackable to the core&amp;quot;. This post will focus mostly on the &amp;quot;approachable&amp;quot; side of customizing your editor. We&amp;#39;ll first look at editor and package settings before moving to configuration files you can modify, with a few small examples of how you can use them.&lt;/p&gt;
 
