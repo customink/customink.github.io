@@ -7,6 +7,349 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Contributing to Open-Source</title>
+        <description>&lt;p&gt;Over the last six months here at CustomInk we’ve been building an internal Content Management System (CMS) named Inkpress to help various company stakeholders design and publish a wide array of landing pages that drive overall business objectives. Inkpress makes heavy use of &lt;a href=&quot;http://alchemy-cms.com/about&quot;&gt;AlchemyCMS&lt;/a&gt; - an open-source Rails engine - to help power the user interface and manage much of the back-end page template and element data. It’s a fantastic piece of software, but there was one small issue: we rely heavily on using Sass frameworks that are compatible with SassC and hence &lt;a href=&quot;https://github.com/sass/sassc-rails&quot;&gt;SassC::Rails&lt;/a&gt;. Unfortunately, because AlchemyCMS was using the SassyButtons and Compass libraries, we were unable to make use of the super fast SassC pre-processor to make Inkpress as quick and snappy as the rest of the site. As a result, my colleague &lt;a href=&quot;twitter.com/metaskills&quot;&gt;Ken&lt;/a&gt; and I decided to reach out to the project’s primary maintainer to get his thoughts on making some contributions that we felt would improve not only his software, but also improve ours in the process. He agreed, and we decided to use this year’s &lt;a href=&quot;http://technology.customink.com/blog/2015/10/07/inkovate-2015-lightning-talks/&quot;&gt;Inkovate&lt;/a&gt; as an opportunity to take the initial leap.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;why-open-source-is-important&quot;&gt;Why Open Source is Important&lt;/h3&gt;
+
+&lt;p&gt;Before jumping into my specific experience contributing to AlchemyCMS, it makes sense to discuss a little bit about why we, at CustomInk, believe that contributing to open source is important. Here are just a few reasons:&lt;/p&gt;
+
+&lt;h4 id=&quot;1-it-builds-community&quot;&gt;1. It Builds Community&lt;/h4&gt;
+
+&lt;p&gt;At CustomInk we put a maaaaajor emphasis on building communities. So much of the work we do as a company orbits around the idea of creating bonds, building bridges, and uniting people around the things they care about. Heck, even our &lt;a href=&quot;http://www.customink.com/&quot;&gt;homepage&lt;/a&gt; proclaims that “We Believe T-shirts Unite!” It’s right there, next to our primary call-to-action. This core business philosophy also happens to line up perfectly with the open-source software model’s very core. The idea (and you can find much of this and more from the &lt;a href=&quot;https://en.wikipedia.org/wiki/Open-source_software&quot;&gt;Open-source software wikipedia page&lt;/a&gt;) is that “collaborative development from multiple independent sources generates an increasingly more diverse scope of design perspective than any one company is capable of developing and sustaining long term.” In other words, community-driven projects are often more useful to more people in more ways for longer amounts of time than those developed by individual entities. As believers in the power of community, it only makes sense that we at CustomInk stay involved in contributing to these types of open-source projects.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-it-39-s-great-practice&quot;&gt;2. It&amp;#39;s great practice!&lt;/h4&gt;
+
+&lt;p&gt;Taking some time to redirect your attention away from your day-to-day projects to take on an open-source contribution really helps to hone your skill set. In my case, it forced me to crack open a library we use for one of our company apps and deeply explore its unfamiliar insides. In doing so, I gained even more perspective into the way the library is structured, how the code flows, and what other abilities or limitations might exist. Developing that amount of familiarity with a library we rely on daily has been extremely rewarding and given me even more insight into the context of the entire app-to-engine relationship between Inkpress and AlchemyCMS.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-it’s-incredibly-rewarding&quot;&gt;3. It’s incredibly rewarding&lt;/h4&gt;
+
+&lt;p&gt;This is likely one of the main reasons any of us decided to become software developers in the first place, but it holds particularly true when working in an open-source environment. We all know it’s rewarding to tap on a few keys, click a button, and see our work come to to life and make business impacts, but it’s even more rewarding when the problems we solve and the impacts we make reverberate beyond our immediate environment and extend into the community at large. I may have no idea who else out there is using the AlchemyCMS library, but knowing that the hard work I put into improving its speed also means improving the speed of all those developers’ apps too, really enhances the reward.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-work&quot;&gt;The Work&lt;/h3&gt;
+
+&lt;p&gt;I really want to focus this post more on what I learned as opposed to what Ken and I actually did, but I also feel it makes sense to provide at the very least a basic context of the work involved, so here’s a brief rundown:&lt;/p&gt;
+
+&lt;p&gt;As I mentioned above, the AlchemyCMS engine was depending on two Sass libraries that were prohibitive to moving Inkpress off of the Sass::Rails pre-processor to its new and faster equivalent, SassC::Rails. Our contribution involved removing those two dependencies and rewriting the css with Sass mixins to replace the styles that they provided originally. We ended up using &lt;a href=&quot;http://bourbon.io/&quot;&gt;Bourbon&lt;/a&gt; for a chunk of this. Then we created a helper file required from AlchemyCMS’s &lt;code&gt;engine.rb&lt;/code&gt; that would check for either a &lt;code&gt;sass-rails&lt;/code&gt; or &lt;code&gt;sassc-rails&lt;/code&gt; pre-processor in the parent app and alert the its developer in the event it didn’t find one, thus allowing the flexibility for the developer to choose between either Sass or SassC in the main application. Feel free to check out the &lt;a href=&quot;https://github.com/AlchemyCMS/alchemy_cms/issues/1037&quot;&gt;initial issue&lt;/a&gt; we opened to the maintainers, as well as the &lt;a href=&quot;https://github.com/AlchemyCMS/alchemy_cms/pull/1052&quot;&gt;resulting PR&lt;/a&gt;, which was ultimately merged into the master codebase.&lt;/p&gt;
+
+&lt;p&gt;Ken and I working on our AlchemyCMS contribution during Inkovate:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.giphy.com/3oEjHJPAMv5dUnK8Sc.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;impressions-from-contributing&quot;&gt;Impressions from Contributing&lt;/h3&gt;
+
+&lt;h4 id=&quot;1-getting-started-is-hard-but-totally-worth-it&quot;&gt;1. Getting started is hard, but totally worth it.&lt;/h4&gt;
+
+&lt;p&gt;It’s sometimes difficult to know how and where to start when considering contributing to open-source projects. As an early-career developer myself I’ve heard all kinds of advice on this topic, from tracking down and correcting typos in documentation to suggesting and implementing new features. My personal belief is that it doesn’t make sense to contribute to open-source just for the sake of contributing, but rather that it should be meaningful to you and purpose-driven. Is there a library you use regularly that could use an improvement? Is there an issue that’s important to you that needs open-source support? Maybe you see a problem that needs a solution and you start your own open-source project from scratch! Contributing in a meaningful way to a project that matters to you is the key to getting involved in the open-source world.&lt;/p&gt;
+
+&lt;h4 id=&quot;2-there’s-more-reward-in-familiarity&quot;&gt;2. There’s more reward in familiarity.&lt;/h4&gt;
+
+&lt;p&gt;Similar to the above, I found this PR to the AlchemyCMS project particularly rewarding because it had an effect on an app that I work on regularly, and will improve the quality of our project here at CustomInk. Having some sort of personal familiarity with the problems that your contribution solves can really help bring that extra motivation and result to your work.&lt;/p&gt;
+
+&lt;h4 id=&quot;3-grab-a-buddy&quot;&gt;3. Grab a buddy.&lt;/h4&gt;
+
+&lt;p&gt;Having a partner in crime when you’re contributing to an open-source project really goes a long way. We’ve all heard about the benefits of pair programming, and carrying those same benefits to an open-source contribution can not only enhance the quality of your output, but it drives the project forward faster and enhances the community feeling that’s at the heart of open-source in the first place. I was fortunate enough to team up with my colleague Ken, who was always available to correspond with the maintainers, contribute some code of his own to push the project forward, or just offer an extra set of eyes and new approach to our work when necessary. Teamwork is at the heart of what open-source software is all about, anyway. Why not practice the same when contributing?&lt;/p&gt;
+
+&lt;h4 id=&quot;4-respect-goes-a-long-way&quot;&gt;4. Respect goes a long way.&lt;/h4&gt;
+
+&lt;p&gt;Don’t let your ego get the best of you. Remember that the project’s maintainers have their own vision for the project and that your contribution is a small part of that vision. Your code may be the cleanest most perfect code ever written (by decree of the code gods), but if it doesn’t fit the vision for the project, it likely won’t get accepted. Make sure you respect the maintainers’ guidance and feedback. You’re doing them a favor by contributing some code, but they have the most knowledge of the code base and should be the project leads. Ultimately you need them to green-light your work if it’s ever going to get accepted, so be respectful of that and the whole experience will be much more pleasant.&lt;/p&gt;
+
+&lt;p&gt;We did our best with our issue and PR &lt;a href=&quot;https://github.com/AlchemyCMS/alchemy_cms/issues/1037&quot;&gt;to explain what we were doing&lt;/a&gt; as we did it, provide screenshots and/or animated gifs explaining what we were seeing or changing, and asked as many questions as we could of the maintainers to make sure that the work we were doing fit within the framework of the project and was the most logical and practical approach in their minds. Having a good rapport with the maintainers isn’t just common courtesy. It’s critical to the success of your work and builds trust for the future if you plan to continue contributing going forward.&lt;/p&gt;
+
+&lt;h3 id=&quot;more-resources&quot;&gt;More Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.firsttimersonly.com/&quot;&gt;Contributing to open source for the first time&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://help.github.com/articles/where-can-i-find-open-source-projects-to-work-on/&quot;&gt;Finding a project to contribute to on GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://thoughtbot.com/open-source-code-of-conduct&quot;&gt;Thoughtbot&amp;#39;s open source code of conduct&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.codeship.com/why-your-employees-should-be-contributing-to-open-source/&quot;&gt;Why companies should encourage employees to get involved in open source&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.smartbear.com/programming/14-ways-to-contribute-to-open-source-without-being-a-programming-genius-or-a-rock-star/&quot;&gt;14 ways to contribute to open source without being a genius&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 11 Jul 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/07/11/contributing-to-open-source/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/07/11/contributing-to-open-source/</guid>
+      </item>
+    
+      <item>
+        <title>ruby-for-good-2016</title>
+        <description>&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/smithsonian-4f3098c0c15cf6d84fa56f36857cf58e.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campus&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This past weekend  was the third installment of &lt;a href=&quot;http://rubyforgood.org&quot;&gt;Ruby For Good&lt;/a&gt;. As clichéd as it sounds, this
+was the best one yet! The conference was held at the picturesque &lt;a href=&quot;http://smconservation.gmu.edu/&quot;&gt;Smithsonian George Mason School of Conservation&lt;/a&gt;. Get ready for lots of photos!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campus-58cbaa199fa0cb26c8f75c1da20b73bc.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campus&quot; /&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;what-is-ruby-for-good&quot;&gt;What is Ruby For Good&lt;/h3&gt;
+
+&lt;p&gt;Ruby For Good is an annual conference that brings together software developers and designers for a weekend to work on technology projects for a variety of community driven non-profits. This year attendees came from Australia, Germany, and all across the United States. Participants spent their days working and their evenings bonding through board games, karaoke and conversation. We also got to experience a beautiful campfire with smores and a beautiful view.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campfire-4-67655a33ef5ce1a59c5d14b533073847.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campfire&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campfire-5-ea078b32e04b75d30c493d0346722f60.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campfire&quot; /&gt;
+ &lt;a href=&quot;http://technology.customink.com/blog/2015/08/05/ruby-for-good/&quot;&gt;Last year&lt;/a&gt; everyone took turns helping out in the kitchen preparing meals. This year we were spoiled by the wonderful meals provided by the campus staff. Not worrying about meals meant more time to code and have fun.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/board-games-d5629365563a28ad7248f99d546d7136.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;board games&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/working-8f13682599df88ba2ffed8c48266ae75.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campus&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;the-location&quot;&gt;The Location&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://smconservation.gmu.edu/&quot;&gt;Smithsonian George Mason School of Conservation&lt;/a&gt; is the closest thing to a real life Jurassic Park! Their research is focused on bringing back animals and plants that are on the brink of extinction. We were very fortunate to go on the special Friends of the National Zoo (FONZ) tour. They showed us cheetahs, Przewalski&amp;#39;s horses, red-crowned cranes, and more. We heard interesting stories about work done to make the American chestnut blight resistant and about a Saudi prince who is helping to bring back the Scimitar-horned oryx. The tour turned out to be an important motivator for some of the projects and participants. &lt;em&gt;Chris Mar, CustomInk software engineer&lt;/em&gt; said it well:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;After learning about the plight of the Scimitar-horned Oryx on our tour of the Smithsonian-Mason facility, I was excited to build software to help the scientists with their efforts to return these animals to their native home.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/working-2-4bf085fd3f3a5fb55bbbaf3f55b1c6e0.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;working&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/campfire-2-1fe39f2d6c5b16d58d3f9422041f3f4a.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;campfire&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2016-community-projects&quot;&gt;2016 Community Projects&lt;/h3&gt;
+
+&lt;p&gt;This year&amp;#39;s projects included:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/habitat_humanity&quot;&gt;New Orleans Habitat For Humanity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://Manjia.org&quot;&gt;Manjia&lt;/a&gt; - a DC non-profit that collects unused food distributes it to those in need.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.pdxdiaperbank.org/&quot;&gt;Portland Diaper Bank&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/share_christmas&quot;&gt;Share Christmas&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://vaworkinglandscapes.org/&quot;&gt;Virginia Working Landscapes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Smithsonian projects:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/scimitar_oryx&quot;&gt;Studying the Scimitar Oryx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/loggerhead_shrike&quot;&gt;Logging the Loggerhead Shrike&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rubyforgood/panda_app&quot;&gt;Red Pandas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;inkers-at-ruby-for-good&quot;&gt;Inkers at Ruby For Good&lt;/h3&gt;
+
+&lt;p&gt;This year &lt;a href=&quot;http://booster.com&quot;&gt;Booster&lt;/a&gt; and &lt;a href=&quot;http://customink.com&quot;&gt;CustomInk&lt;/a&gt; were well represented with eight engineers.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/inkers-117bc17ba2243073a0556a61333dc675.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;inkers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/shirts-ed89fae3831be1cb0539f6a529f91889.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot; alt=&quot;shirts&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Max Tedford&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I found Ruby for Good to be an incredibly fun and valuable experience. It seems to me that it&amp;#39;s a great place to meet up with some of the DC Ruby community&amp;#39;s stalwarts, and get to build connections with other programmers who share a mutual interest. One of my goals for the year was to use my programming skills to make an impact on something that&amp;#39;s important to me—the environment—and Ruby for Good provided me a perfect opportunity to meet that goal, and I&amp;#39;m very thankful I was able to make new friends and have some fun while doing it. Also, I found the site particularly stimulating both for its physical beauty, and as an animal-lover, and it didn&amp;#39;t hurt that all my meals were accounted for the duration of the weekend.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Brandon Lawrence&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;One of the most rewarding weekends I&amp;#39;ve ever had. ~80 developers together building software for non profits. Not only were the applications exciting, but the people rocked too!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Alex Egan&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;My favorite part about Ruby for Good is how welcoming it is to people of all skill levels. It allows everyone to contribute to a project, teach, and learn while making new friends and helping a great cause.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Chris Mar&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The unexpected benefit of attending Ruby for Good was working with an uncommon team with gender diversity and a range of skill levels. Everyone was able to contribute to the project bringing their unique perspective. I’m grateful for the experience.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Tien Nguyen&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I was constantly impressed that so many people with different skill sets and backgrounds were able to come together to accomplish so much in such a short amount of time. It was a pleasure working with a group so dedicated to donating their time to make a positive impact.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Howard Miller&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;One great thing about Ruby for Good is that, year after year, everyone rises to the occasion. I’ve consistently seen people nervous about whether they were skilled enough or had enough experience for the work at hand, and they’ve gone on to surprise themselves and everyone else with how much they can accomplish in a few days.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;Dylan Pulliam&lt;/em&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Ruby for good was a great experience. I got to work on some cool non-profit projects and learned about some technologies I hadn’t touched before. I also enjoyed meeting ruby-ists from around the country.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.customink.com/about/three_hearts/&quot;&gt;Three Hearts&lt;/a&gt; played a part too! They sponsored and designed the shirt.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-to-get-involved&quot;&gt;How to Get Involved&lt;/h3&gt;
+
+&lt;p&gt;The hardest part of Ruby For Good is finding projects. This is where you can come in. If you are involved with a non-profit or know of a non-profit that needs help implementing technology we&amp;#39;d love to hear about it. Please email us at &lt;a href=&quot;mailto:info@rubyforgood.com&quot;&gt;info@rubyforgood.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/gooders-703a79991544d3a8e063fbee75daeb2a.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;gooders&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 23 Jun 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/06/23/ruby-for-good-2016/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/06/23/ruby-for-good-2016/</guid>
+      </item>
+    
+      <item>
+        <title>Configuring Atom</title>
+        <description>&lt;p&gt;I&amp;#39;ve been using Atom for a while now, and I thought I&amp;#39;d write a blog post describing some quick ways to modify Atom to work better for you. GitHub describes Atom as &amp;quot;modern, approachable, yet hackable to the core&amp;quot;. This post will focus mostly on the &amp;quot;approachable&amp;quot; side of customizing your editor. We&amp;#39;ll first look at editor and package settings before moving to configuration files you can modify, with a few small examples of how you can use them.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: As of writing, Atom is on version 1.7.4, and the beta build is 1.8.0-beta4.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;settings&quot;&gt;Settings&lt;/h3&gt;
+
+&lt;h4 id=&quot;editor-settings&quot;&gt;Editor Settings&lt;/h4&gt;
+
+&lt;p&gt;This is a good place to look when starting to use Atom. There aren&amp;#39;t too many settings here, and the options available to you can be very useful. One of the more common options you might look at here is the &lt;code&gt;font-family&lt;/code&gt; that will be applied to your editor&amp;#39;s text. Another option that is important to know about is &lt;code&gt;Exclude VCS Ignored Paths&lt;/code&gt;. With this option enabled, files ignored from version control will not show up when using the &lt;a href=&quot;https://atom.io/packages/fuzzy-finder&quot;&gt;&lt;code&gt;fuzzy-finder&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;https://atom.io/packages/find-and-replace&quot;&gt;&lt;code&gt;find-and-replace&lt;/code&gt;&lt;/a&gt; packages. This can help eliminate search results that may be irrelevant while also improving performance. For an example of how this can help, try toggling the setting and using &lt;code&gt;fuzzy-finder&lt;/code&gt; and &lt;code&gt;find-and-replace&lt;/code&gt; on a project with a large &lt;code&gt;node_modules&lt;/code&gt; folder. Enabling this behavior may be detrimental to your workflow if you routinely edit files you have ignored by your VCS, so knowing about this option can help avoid some frustration.&lt;/p&gt;
+
+&lt;h4 id=&quot;package-settings&quot;&gt;Package Settings&lt;/h4&gt;
+
+&lt;p&gt;The majority of the modifications you can make to Atom will come from packages. There are a ton of &lt;a href=&quot;https://atom.io/packages&quot;&gt;community made packages&lt;/a&gt; to browse through, but a fresh install of Atom will still contain many core packages that you&amp;#39;ll find useful. Navigate to your Preferences and select &amp;quot;Packages&amp;quot; from the menu on the left. You can search through your installed packages here. There will be a settings button next to the package name if that package has settings you are able to configure.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;d recommend browsing through your package list for the things you use most often. If you use autocomplete a lot, check out the settings for &lt;a href=&quot;https://atom.io/packages/autocomplete-plus&quot;&gt;&lt;code&gt;autocomplete-plus&lt;/code&gt;&lt;/a&gt;. Language support is also contained in packages. The language support packages that ship with Atom usually follow the naming convention of &lt;code&gt;language-&amp;lt;name&amp;gt;&lt;/code&gt;. Be sure to check out the packages for the languages you work with to see settings for things like maximum line length and indentation preferences. These settings allow you to keep style preferences in line with your team&amp;#39;s style guide. Language packages may also include available keybindings, and snippets used in conjunction with autocomplete.&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-files&quot;&gt;Configuration Files&lt;/h3&gt;
+
+&lt;h4 id=&quot;init-script&quot;&gt;Init Script&lt;/h4&gt;
+
+&lt;p&gt;You can open your init script by opening the command palette with &lt;code&gt;cmd-shift-p&lt;/code&gt; and searching for the command &lt;code&gt;Application: Open Your Init Script&lt;/code&gt;. This CoffeeScript or JavaScript file will be evaluated after all of your packages are loaded. This is a good place to write some code to hack together custom commands and modifications that aren&amp;#39;t limited to a single package you have installed, and aren&amp;#39;t suited to be its own package. This file is also great for prototyping new package ideas or modifications you are thinking of developing.&lt;/p&gt;
+
+&lt;p&gt;Recently I&amp;#39;ve been learning React, and found myself frequently changing the grammar for a file from regular &lt;code&gt;JavaScript&lt;/code&gt; to &lt;code&gt;JavaScript (JSX)&lt;/code&gt; for better syntax highlighting and autocomplete behavior. This was a perfect use case for the init script. I changed this process from 3 commands to 1 by creating a custom command in my init script.
+The code for this is below if you&amp;#39;d like to try it out yourself, but I won&amp;#39;t dive into the Atom API in this post. Check the &lt;a href=&quot;https://atom.io/docs/api/v1.7.3/AtomEnvironment&quot;&gt;documentation&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-coffeescript&quot; data-lang=&quot;coffeescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;atom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;commands&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;atom-text-editor&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;custom:js-to-jsx&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;grammars&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;atom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;grammars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getGrammars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;grammar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;grammars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;JavaScript (JSX)&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;editor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;atom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;workspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getActiveTextEditor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;editor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setGrammar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;grammar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;keymap&quot;&gt;Keymap&lt;/h4&gt;
+
+&lt;p&gt;Are you sick of accidentally quitting Atom instead of closing a tab? Let&amp;#39;s override the &lt;code&gt;cmd-q&lt;/code&gt; keybinding! We can do this by editing our keymap file. Open your keymap the same way you opened your init script, but this time looking for the &lt;code&gt;Application: Open Your Keymap&lt;/code&gt; command. This is a CSON or JSON file that you can use to map a keybinding to a command. Your first step when creating a new keybinding is finding the selector you want to apply the keybinding to. For example, you can use &lt;code&gt;atom-text-editor&lt;/code&gt; to refer to your text editing area, or &lt;code&gt;body&lt;/code&gt; for just about everything in the application window. Atom includes Chrome&amp;#39;s developer tools (View -&amp;gt; Developer -&amp;gt; Toggle Developer Tools), which can help you find the right selector. The next option is the keybinding you wish to apply. We want to override &lt;code&gt;cmd-q&lt;/code&gt; to save, and make sure we can still quit Atom with a second press. In this case we will have two keybindings: &lt;code&gt;cmd-q&lt;/code&gt; and &lt;code&gt;cmd-q cmd-q&lt;/code&gt;.
+The last step is the name of the command we want to dispatch. Command names are usually in the format &lt;code&gt;package-name:command-name&lt;/code&gt;. The quit command, like the commands used to open the keymap and init files, is part of &lt;code&gt;Application&lt;/code&gt; and is called &lt;code&gt;application:quit&lt;/code&gt;. Saving is part of Atom Core, and is attached to the command &lt;code&gt;core:save&lt;/code&gt;. Putting all this together, we would get the following:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cson&quot; data-lang=&quot;cson&quot;&gt;&#39;body&#39;:
+  &#39;cmd-q&#39;: &#39;core:save&#39;
+  &#39;cmd-q cmd-q&#39;: &#39;application:quit&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This overrides &lt;code&gt;cmd-q&lt;/code&gt; to save, and allows you to confirm quitting with another &lt;code&gt;cmd-q&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;stylesheet&quot;&gt;Stylesheet&lt;/h4&gt;
+
+&lt;p&gt;Your stylesheet, &lt;code&gt;styles.less&lt;/code&gt;, is used to customize how your editor looks. You can open this file by running the &amp;quot;Application: Open Your Stylesheet&amp;quot; command. You can use this to apply styles to the core editor, as well as views created by third party packages. You can even modify styles set by your syntax theme to get it just right.&lt;/p&gt;
+
+&lt;p&gt;I use panes often, and sometimes lose track of which pane I&amp;#39;m focused on. I was able to solve this small but annoying problem by adding a blue border around my active pane.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-less&quot; data-lang=&quot;less&quot;&gt;atom-pane {
+  border: 1px solid #000000;
+  &amp;amp;.active {
+    border: 1px solid #3fcef4;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;snippets&quot;&gt;Snippets&lt;/h4&gt;
+
+&lt;p&gt;Snippets are your way of adding custom autocomplete options. You can edit your snippets by running the &amp;#39;Application: Open Your Snippets&amp;#39; command. Snippets are defined using CSON or JSON. The outer most key is the language scope. You can find this by looking at the package settings for a language. For &lt;a href=&quot;https://atom.io/packages/language-ruby&quot;&gt;&lt;code&gt;language-ruby&lt;/code&gt;&lt;/a&gt; this is &lt;code&gt;source.ruby&lt;/code&gt;, and for &lt;a href=&quot;https://atom.io/packages/language-ruby&quot;&gt;&lt;code&gt;language-javascript&lt;/code&gt;&lt;/a&gt; it&amp;#39;s &lt;code&gt;source.js&lt;/code&gt;. Each key within this source is the short description of what this snippet is for. There are two attributes that you should add inside of that description. The first is a prefix, used as the &amp;quot;trigger&amp;quot; for autocomplete. The next is the body, which will be the text inserted when the snippet is confirmed. An example I use to set up a &lt;code&gt;describe&lt;/code&gt; method when testing ruby is below.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-cson&quot; data-lang=&quot;cson&quot;&gt;&#39;.source.ruby&#39;:
+  &#39;describe block&#39;:
+    &#39;prefix&#39;: &#39;describe&#39;
+    &#39;body&#39;: &quot;&quot;&quot;
+      describe &#39;${1:message}&#39; do
+        $2
+      end
+    &quot;&quot;&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The dollar signs are Tab Stops, used to signal which part of the snippets are supposed to be edited after the snippet is confirmed.&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;This is a very high level overview of where different settings can be found and modified. The Atom team has written much more detailed documentation for these settings and more. The main documentation can be found &lt;a href=&quot;http://flight-manual.atom.io/&quot;&gt;here&lt;/a&gt;. It includes entire sections on &lt;a href=&quot;http://flight-manual.atom.io/using-atom/sections/atom-packages/&quot;&gt;Packages&lt;/a&gt;, &lt;a href=&quot;http://flight-manual.atom.io/using-atom/sections/snippets/&quot;&gt;Snippets&lt;/a&gt;, &lt;a href=&quot;http://flight-manual.atom.io/hacking-atom/sections/the-init-file/&quot;&gt;The Init File&lt;/a&gt;, and &lt;a href=&quot;http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/&quot;&gt;Keymaps&lt;/a&gt; if you would like to learn more about the specific topics covered in this blog post.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 May 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/05/23/configuring-atom/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/05/23/configuring-atom/</guid>
+      </item>
+    
+      <item>
+        <title>Introducing the activerecord-collection_cache_key Gem</title>
+        <description>&lt;p&gt;Today we&amp;#39;re releasing a backport gem of a new feature in Rails 5—cache keys for ActiveRecord collections. It tracks fairly closely with the implementation seen &lt;a href=&quot;https://github.com/rails/rails/pull/20884&quot;&gt;in the Rails source&lt;/a&gt; but has a few minor differences arising from support back to AR 3. We&amp;#39;ve certainly been missing this feature for a long time and hope it comes in handy.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Rails already has fairly advanced fragment caching available at the view layer—if you wanted to cache the rendered representation of a collection of objects, you could do something like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-erb&quot; data-lang=&quot;erb&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;table&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@cached_things&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;vi&quot;&gt;@cached_things&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cached_thing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;tr&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cached_thing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cached_thing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;td&amp;gt;&lt;/span&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cached_thing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;status&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/td&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tr&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;cp&quot;&gt;&amp;lt;%&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;cp&quot;&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/table&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With caching enabled, you&amp;#39;d see a fragment read/write in your console that looks something like the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;views/cached_things/1-20160404161453044590000/cached_things/2-20160404161002789386000/fda68e69e4c5ced06fcdd5a88ebd2fe5&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;That key includes a few data points. There&amp;#39;s a key for each record in the collection that includes the &lt;code&gt;id&lt;/code&gt; and &lt;code&gt;updated_at&lt;/code&gt; timestamp. There&amp;#39;s also a digest of the template fragment&amp;#39;s content, so the cache can be invalidated when the cached part of the template changes. This is pretty great, but it requires that each instance of &lt;code&gt;CachedThing&lt;/code&gt; be initialized by ActiveRecord. As collection sizes grow this begins to significantly cut into the benefits of caching. Implementing &lt;code&gt;#cache_key&lt;/code&gt; at the collection level allows us to cache upstream of AR object initialization, making rendering from cache a matter of linear time.&lt;/p&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;Add it to your &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;activerecord-collection_cache_key&#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and run &lt;code&gt;bundle&lt;/code&gt;. The gem will be autorequired and will augment &lt;code&gt;ActiveRecord::Base&lt;/code&gt; with a &lt;code&gt;.collection_cache_key&lt;/code&gt; method, as well as adding a &lt;code&gt;#cache_key&lt;/code&gt; method to &lt;code&gt;Activerecord::Relation&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;usage&quot;&gt;Usage&lt;/h3&gt;
+
+&lt;p&gt;You can call &lt;code&gt;#cache_key&lt;/code&gt; on any activerecord relation to get a deterministic key for use with the Rails cache interface, and caching of a response can be implemented at the controller layer for maximum performance gains:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;
+  &lt;span class=&quot;vi&quot;&gt;@collection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;CachedThing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;status: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;published&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@collection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cache_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;respond_with&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@collection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is a simplistic example; a real-world implementation would most likely need to handle things like response format, query params, or anything else that could manipulate the output in a unique way given the same collection. You&amp;#39;ll be able to read all about how we&amp;#39;re using it in an upcoming post.&lt;/p&gt;
+
+&lt;h3 id=&quot;key-format&quot;&gt;Key Format&lt;/h3&gt;
+
+&lt;p&gt;Cache keys look the same as the official Rails implementation:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;#{model_name}/query-#{md5_digest}-#{collection_size}-#{timestamp}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Where the MD5 digest is a hash of the output of &lt;code&gt;Relation#to_sql&lt;/code&gt;, and the timestamp is the most recent &lt;code&gt;updated_at&lt;/code&gt; (or :timestamp_column of your choice) of the matching records in the collection.&lt;/p&gt;
+
+&lt;h3 id=&quot;caveats&quot;&gt;Caveats&lt;/h3&gt;
+
+&lt;p&gt;While keys from this gem follow the same format as the Rails implementation, they are not identical. There are three notable ways in which they differ:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The SQL digest for full-collection caches includes &lt;code&gt;where (1 = 1)&lt;/code&gt; in its source.&lt;/p&gt;
+
+&lt;p&gt;This is because in ActiveRecord 3, Model.all returns an instance of Array, not ActiveRecord::Relation. We can add a where clause to unbound collections to force the correct type.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The &lt;code&gt;collection_size&lt;/code&gt; integer for limited queries will be the full collection size, not the size of the limited collection. &lt;/p&gt;
+
+&lt;p&gt;There are &lt;a href=&quot;https://github.com/rails/rails/pull/20884#issuecomment-128910649&quot;&gt;documented edge cases&lt;/a&gt; where the key for a limited collection may not change when its contents do. We&amp;#39;ve found that including the total size of the collection in the key and letting the sql digest handle uniqueness around limits and offsets suffices to yield properly deterministic caching.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The default &lt;code&gt;cache_timestamp_format&lt;/code&gt; for Rails 3.2 is &lt;code&gt;:number&lt;/code&gt; rather than &lt;code&gt;:nsec&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This is because the &lt;code&gt;cache_timestamp_format&lt;/code&gt; method was introduced in AR 3.2, but the &lt;code&gt;:nsec&lt;/code&gt; formatter did not yet exist. For consistency with other keys in 3.2, we&amp;#39;ve left the default untouched there. All other versions of AR will implement an &lt;code&gt;:nsec&lt;/code&gt; formatter and use it as the default.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;that-39-s-it&quot;&gt;That&amp;#39;s it!&lt;/h3&gt;
+
+&lt;p&gt;Give &lt;a href=&quot;https://github.com/customink/activerecord-collection_cache_key&quot;&gt;the code a look&lt;/a&gt;, try it out, and let us know what you think!&lt;/p&gt;
+</description>
+        <pubDate>Thu, 07 Apr 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/04/07/introducing-the-activerecord-collection-cache-key-gem/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/04/07/introducing-the-activerecord-collection-cache-key-gem/</guid>
+      </item>
+    
+      <item>
         <title>Outrunning a Hurricane</title>
         <description>&lt;p&gt;&lt;em&gt;Two guys are walking thru the woods when they see a charging Grizzly Bear. First guy says &amp;quot;Run for it!&amp;quot; Second guy says, &amp;quot;You can&amp;#39;t outrun a Grizzly!&amp;quot; First guy says &amp;quot;I don&amp;#39;t have to outrun the bear, I just have to outrun YOU.&amp;quot;&lt;/em&gt;&lt;/p&gt;
 
