@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/blog/2016/06/23/ruby-for-good-2016/</loc>
-    <lastmod>2016-06-23T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/05/23/configuring-atom/</loc>
-    <lastmod>2016-05-23T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/04/07/introducing-the-activerecord-collection-cache-key-gem/</loc>
-    <lastmod>2016-04-07T00:00:00-04:00</lastmod>
-  </url>
-  <url>
     <loc>/blog/2016/03/16/outrunning-a-hurricane/</loc>
     <lastmod>2016-03-16T00:00:00-04:00</lastmod>
   </url>
@@ -591,14 +579,5 @@
     </url>
     <url>
       <loc>/blog/2016/03/16/outrunning-a-hurricane/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/04/07/introducing-the-activerecord-collection-cache-key-gem/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/05/23/configuring-atom/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/06/23/ruby-for-good-2016/</loc>
     </url>
 </urlset>
