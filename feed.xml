@@ -7,6 +7,78 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>How to add badges to iterm2</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://www.iterm2.com/index.html&quot;&gt;iTerm2&lt;/a&gt; - the popular terminal emulator for OSX has added some really neat features. One of those, is badges. &lt;a href=&quot;https://www.iterm2.com/documentation-badges.html&quot;&gt;From the documentation&lt;/a&gt;: A badge is a large text label that appears in the top right of a terminal session to provide dynamic status, such as the current host name or git branch.&lt;/p&gt;
+
+&lt;p&gt;I had some trouble figuring out how to build a badge so I wanted to share a quick walk-through. Thanks to &lt;a href=&quot;https://twitter.com/cmar&quot;&gt;Chris Mar&lt;/a&gt; for walking me through the process.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;First, a couple of things to keep in mind. This walk-through includes code for &lt;a href=&quot;http://www.zsh.org/&quot;&gt;zshell&lt;/a&gt; but should work for the most part, or be very similar for other popular shells like &lt;a href=&quot;https://www.gnu.org/software/bash/&quot;&gt;bash&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Second, the emoji characters I used in the tutorial are built right into the mac keyboard. Here&amp;#39;s a &lt;a href=&quot;http://www.imore.com/how-insert-emoji-text-os-x-yosemite&quot;&gt;quick tutorial on how to insert them&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s the walk-through&lt;/p&gt;
+
+&lt;h3 id=&quot;install-shell-integrations-on-iterm&quot;&gt;Install shell integrations on iTerm.&lt;/h3&gt;
+
+&lt;p&gt;Easy enough - it&amp;#39;s an option on the dropdown menu&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.amazonaws.com/moarcats/EwGj0.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Open your &lt;code&gt;.zshrc&lt;/code&gt; file and verify that the integrations are installed. iTerm should have added the line &lt;code&gt;test -e &amp;quot;${HOME}/.iterm2_shell_integration.zsh&amp;quot; &amp;amp;&amp;amp; source &amp;quot;${HOME}/.iterm2_shell_integration.zsh&amp;quot;&lt;/code&gt; &lt;code&gt;.zshrc&lt;/code&gt; is the configuration file for Zsh and generally lives in your home directory.&lt;/p&gt;
+
+&lt;h3 id=&quot;declare-a-custom-variable-in-your-zshrc-file&quot;&gt;Declare a custom variable in your &lt;code&gt;.zshrc&lt;/code&gt; file&lt;/h3&gt;
+
+&lt;p&gt;You now need to write a special function in &lt;code&gt;.zshrc&lt;/code&gt; that Zsh understands. It looks like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;iterm2_print_user_vars&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  iterm2_set_user_var bananas &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;do_fun_stuff&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The function &lt;code&gt;iterm2_print_user_vars()&lt;/code&gt; calls &lt;code&gt;iterm2_print_user_vars()&lt;/code&gt; one or more times. The function &lt;code&gt;iterm2_set_user_var&lt;/code&gt; assigns your &lt;code&gt;user var&lt;/code&gt; &lt;code&gt;bananas&lt;/code&gt; to &lt;code&gt;do_fun_stuff&lt;/code&gt;, which can be written directly there or encapsulated in another function.&lt;/p&gt;
+
+&lt;p&gt;Finally you need to declare your &lt;code&gt;user var&lt;/code&gt; in iterm for each profile you want to use it in.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://s3.amazonaws.com/moarcats/FUnmv.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;let-39-s-create-two-different-examples&quot;&gt;Let&amp;#39;s create two different examples&lt;/h3&gt;
+
+&lt;h4 id=&quot;display-when-there-39-s-a-diff-in-your-git-branch&quot;&gt;Display when there&amp;#39;s a diff in your git branch&lt;/h4&gt;
+
+&lt;p&gt;Add the following to your &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;iterm2_print_user_vars&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  iterm2_set_user_var gitDiff &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;is_git_branch_dirty&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;is_git_branch_dirty &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;git diff --shortstat 2&amp;gt; /dev/null | tail -n1&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; !&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;⚡⚡&quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Add &lt;code&gt;\(user.gitDiff)&lt;/code&gt; to your badge in the profile settings.&lt;/p&gt;
+
+&lt;p&gt;Couldn&amp;#39;t read the code? Checkout &lt;a href=&quot;http://stackoverflow.com/questions/2188199/how-to-use-double-or-single-bracket-parentheses-curly-braces&quot;&gt;this stackoverflow&lt;/a&gt; for the skinny on brackets in shell scripting. I found it to be quite helpful.&lt;/p&gt;
+
+&lt;h4 id=&quot;how-to-add-a-camel-on-wednesdays-and-an-octopus-on-others&quot;&gt;How to add a camel on Wednesdays and an Octopus on others&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;is_it_wednesday &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;date +%A&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Wednesday&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;then
+     &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;🐪&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Camel Prompt&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;🐙&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Inky Prompt&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Add &lt;code&gt;\(user.humpDay)&lt;/code&gt; to your badge in the profile settings.&lt;/p&gt;
+
+&lt;p&gt;Your homework is to combine two badges!
+&lt;img src=&quot;https://s3.amazonaws.com/moarcats/mPosM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 18 Jul 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/07/18/how-to-add-badges-to-iterm2/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/07/18/how-to-add-badges-to-iterm2/</guid>
+      </item>
+    
+      <item>
         <title>Contributing to Open-Source</title>
         <description>&lt;p&gt;Over the last six months here at CustomInk we’ve been building an internal Content Management System (CMS) named Inkpress to help various company stakeholders design and publish a wide array of landing pages that drive overall business objectives. Inkpress makes heavy use of &lt;a href=&quot;http://alchemy-cms.com/about&quot;&gt;AlchemyCMS&lt;/a&gt; - an open-source Rails engine - to help power the user interface and manage much of the back-end page template and element data. It’s a fantastic piece of software, but there was one small issue: we rely heavily on using Sass frameworks that are compatible with SassC and hence &lt;a href=&quot;https://github.com/sass/sassc-rails&quot;&gt;SassC::Rails&lt;/a&gt;. Unfortunately, because AlchemyCMS was using the SassyButtons and Compass libraries, we were unable to make use of the super fast SassC pre-processor to make Inkpress as quick and snappy as the rest of the site. As a result, my colleague &lt;a href=&quot;https://twitter.com/metaskills&quot;&gt;Ken&lt;/a&gt; and I decided to reach out to the project’s primary maintainer to get his thoughts on making some contributions that we felt would improve not only his software, but also improve ours in the process. He agreed, and we decided to use this year’s &lt;a href=&quot;http://technology.customink.com/blog/2015/10/07/inkovate-2015-lightning-talks/&quot;&gt;Inkovate&lt;/a&gt; as an opportunity to take the initial leap.&lt;/p&gt;
 
