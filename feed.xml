@@ -8,7 +8,7 @@
     
       <item>
         <title>How to add badges to iterm2</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://www.iterm2.com/index.html&quot;&gt;iTerm2&lt;/a&gt; - the popular terminal emulator for OSX has added some really neat features. One of those, is badges. &lt;a href=&quot;https://www.iterm2.com/documentation-badges.html&quot;&gt;From the documentation&lt;/a&gt;: A badge is a large text label that appears in the top right of a terminal session to provide dynamic status, such as the current host name or git branch.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;https://www.iterm2.com/index.html&quot;&gt;iTerm2&lt;/a&gt; - the popular terminal emulator for OSX has added some really neat features. One of those is badges. &lt;a href=&quot;https://www.iterm2.com/documentation-badges.html&quot;&gt;From the documentation&lt;/a&gt;: A badge is a large text label that appears in the top right of a terminal session to provide dynamic status, such as the current host name or git branch.&lt;/p&gt;
 
 &lt;p&gt;I had some trouble figuring out how to build a badge so I wanted to share a quick walk-through. Thanks to &lt;a href=&quot;https://twitter.com/cmar&quot;&gt;Chris Mar&lt;/a&gt; for walking me through the process.&lt;/p&gt;
 
