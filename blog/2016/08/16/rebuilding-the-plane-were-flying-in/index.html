@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Rebuilding the Plane We're Flying In - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Three years ago, we were part way through the process of moving all of our servers and infrastructure from a single colocation facility to a multip...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-7a7fb873c5e7b8b21b53bd3a2ee6444a.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Rebuilding the Plane We're Flying In</h1>
+        <p>Three years ago, we were part way through the process of moving all of our servers and infrastructure from a single colocation facility to a multiple availability zone Amazon virtual private cloud. Things were going well and the business was booming, but we had a major problem. The old Storage Area Network (disk drive system shared by many of our servers) was going to run out of capacity in a matter of months.</p>
+
+<!--more-->
+
+<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/cowboy_airplain-6391a595aeb2c8de569d3c72f00e7327.png" alt="riding an airplane"></p>
+
+<p>This problem didn&#39;t appear suddenly. It was something we&#39;d discussed for years. We had outlined plans for how to clean up disk space and update applications to no longer need the old disk system. Unfortunately doing this sort of technical cleanup had always lost out to other work that actually drove the business forward instead of insuring that it wouldn&#39;t stop.</p>
+
+<p>Just so we&#39;re clear: If we&#39;d hit capacity on this system, the business would have stopped. We would not have been able to either take or fulfill any more orders. That would have put the brakes on over 500 people getting their jobs done and would have made for a really horrible customer experience (something we care a lot about).</p>
+
+<h3 id="brainstorming-a-solution">Brainstorming a Solution</h3>
+
+<p>Within the Web Operations team, we started to have a series of informal discussions talking through how we could solve the problem without forcing the company to stop other work and without spending massive amounts of money.</p>
+
+<p>We actually had a lot of data that we knew could be deleted from the system to free up space. The problem was that deleting the data too quickly resulted in saturating the throughput of the system. That caused all the applications that depended on it slow to a crawl. Our site became unusable.</p>
+
+<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/lightening_brain-f9068928918533d24db11c2a0462dfbc.png" alt="lightening brain" /></p>
+
+<p>Still it made sense to make cleaning up the drive space part of the solution. <em>Joe Ritchey</em> set to work writing scripts that throttled the cleanup process. Even with the scripts running 24x7 we weren&#39;t buying ourselves much time.</p>
+
+<p>We knew that ideally we&#39;d switch to using Amazon&#39;s Simple Storage Solution, but that would require significant code changes to most of our applications.</p>
+
+<p>Gluster File System became our technology of choice. Applications wouldn&#39;t need to know whether the servers were using Gluster or our SAN. Since we had already moved some of our infrastructure to AWS we had several unused servers sitting around. They didn&#39;t have much disk space, but for less than the cost of a new server we could buy enough new drives to equal the capacity of our old SAN.</p>
+
+<p>Gluster also has the ability to do geo-replication. That meant that moving files to Gluster inside our colocation facility would also give us a way to replicate it into the cloud. After a few days of informal discussion we had a plan.</p>
+
+<p>On my way out of the office that evening, <em>Doug Wilson</em> mentioned that he was really interested in learning Gluster and working on the data migration. Sounded like he was volunteering to me, so the project landed in his lap (the whole team would be working on it of course, but Doug took the lead on researching and implementing Gluster).</p>
+
+<h3 id="swapping-in-new-parts">Swapping in New Parts</h3>
+
+<p>I put the order for the drives on my company card and by the next week we had a pair of Gluster servers up and running. Shortly after that we ranked the applications based on the risk to the business if we lost data and started migrating them to using Gluster.</p>
+
+<p>It was still a balancing act. The existing data had to be copied from the SAN to Gluster and we had the same issue with saturating the throughput as we did with the cleanup scripts. Never-the-less we gradually got to the point where we were freeing up disk space faster than we were using it.</p>
+
+<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/wrench_man-1937c075209a18f77a5012a773bca6d9.png" alt="mechanic"></p>
+
+<p>In the end we made it through the busiest period the company had ever seen in it&#39;s 12 years of existence while completely re-creating the shared storage solution it depended on.</p>
+
+<p>We actually did work closely with our development teams to move completely out of the colocation facility, and at this point we are close to having removed the need for even the Gluster filesystem. We&#39;ve largely managed to do it without any negative impact to the company which now has over 1,500 employees. I love working with a team that is creative enough to find ways to pull off massive changes like this.</p>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Jake Vanderdray" src="http://www.gravatar.com/avatar/77969ae1dd59cbf53064f474d9b64d4e?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2016-08-16T00:00:00-04:00">
+      16 Aug 2016
+    </time></br>
+    by Jake Vanderdray
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/clumpidy"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/clumpidy"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2016/08/16/rebuilding-the-plane-were-flying-in/';
+    var disqus_title = "Rebuilding the Plane We're Flying In";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2016 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

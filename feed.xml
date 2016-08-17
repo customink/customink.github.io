@@ -7,6 +7,53 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Rebuilding the Plane We&#39;re Flying In</title>
+        <description>&lt;p&gt;Three years ago, we were part way through the process of moving all of our servers and infrastructure from a single colocation facility to a multiple availability zone Amazon virtual private cloud. Things were going well and the business was booming, but we had a major problem. The old Storage Area Network (disk drive system shared by many of our servers) was going to run out of capacity in a matter of months.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/rebuilding-the-plane-were-flying-in/cowboy_airplain-6391a595aeb2c8de569d3c72f00e7327.png&quot; alt=&quot;riding an airplane&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;This problem didn&amp;#39;t appear suddenly. It was something we&amp;#39;d discussed for years. We had outlined plans for how to clean up disk space and update applications to no longer need the old disk system. Unfortunately doing this sort of technical cleanup had always lost out to other work that actually drove the business forward instead of insuring that it wouldn&amp;#39;t stop.&lt;/p&gt;
+
+&lt;p&gt;Just so we&amp;#39;re clear: If we&amp;#39;d hit capacity on this system, the business would have stopped. We would not have been able to either take or fulfill any more orders. That would have put the brakes on over 500 people getting their jobs done and would have made for a really horrible customer experience (something we care a lot about).&lt;/p&gt;
+
+&lt;h3 id=&quot;brainstorming-a-solution&quot;&gt;Brainstorming a Solution&lt;/h3&gt;
+
+&lt;p&gt;Within the Web Operations team, we started to have a series of informal discussions talking through how we could solve the problem without forcing the company to stop other work and without spending massive amounts of money.&lt;/p&gt;
+
+&lt;p&gt;We actually had a lot of data that we knew could be deleted from the system to free up space. The problem was that deleting the data too quickly resulted in saturating the throughput of the system. That caused all the applications that depended on it slow to a crawl. Our site became unusable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/rebuilding-the-plane-were-flying-in/lightening_brain-f9068928918533d24db11c2a0462dfbc.png&quot; alt=&quot;lightening brain&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Still it made sense to make cleaning up the drive space part of the solution. &lt;em&gt;Joe Ritchey&lt;/em&gt; set to work writing scripts that throttled the cleanup process. Even with the scripts running 24x7 we weren&amp;#39;t buying ourselves much time.&lt;/p&gt;
+
+&lt;p&gt;We knew that ideally we&amp;#39;d switch to using Amazon&amp;#39;s Simple Storage Solution, but that would require significant code changes to most of our applications.&lt;/p&gt;
+
+&lt;p&gt;Gluster File System became our technology of choice. Applications wouldn&amp;#39;t need to know whether the servers were using Gluster or our SAN. Since we had already moved some of our infrastructure to AWS we had several unused servers sitting around. They didn&amp;#39;t have much disk space, but for less than the cost of a new server we could buy enough new drives to equal the capacity of our old SAN.&lt;/p&gt;
+
+&lt;p&gt;Gluster also has the ability to do geo-replication. That meant that moving files to Gluster inside our colocation facility would also give us a way to replicate it into the cloud. After a few days of informal discussion we had a plan.&lt;/p&gt;
+
+&lt;p&gt;On my way out of the office that evening, &lt;em&gt;Doug Wilson&lt;/em&gt; mentioned that he was really interested in learning Gluster and working on the data migration. Sounded like he was volunteering to me, so the project landed in his lap (the whole team would be working on it of course, but Doug took the lead on researching and implementing Gluster).&lt;/p&gt;
+
+&lt;h3 id=&quot;swapping-in-new-parts&quot;&gt;Swapping in New Parts&lt;/h3&gt;
+
+&lt;p&gt;I put the order for the drives on my company card and by the next week we had a pair of Gluster servers up and running. Shortly after that we ranked the applications based on the risk to the business if we lost data and started migrating them to using Gluster.&lt;/p&gt;
+
+&lt;p&gt;It was still a balancing act. The existing data had to be copied from the SAN to Gluster and we had the same issue with saturating the throughput as we did with the cleanup scripts. Never-the-less we gradually got to the point where we were freeing up disk space faster than we were using it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/rebuilding-the-plane-were-flying-in/wrench_man-1937c075209a18f77a5012a773bca6d9.png&quot; alt=&quot;mechanic&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;In the end we made it through the busiest period the company had ever seen in it&amp;#39;s 12 years of existence while completely re-creating the shared storage solution it depended on.&lt;/p&gt;
+
+&lt;p&gt;We actually did work closely with our development teams to move completely out of the colocation facility, and at this point we are close to having removed the need for even the Gluster filesystem. We&amp;#39;ve largely managed to do it without any negative impact to the company which now has over 1,500 employees. I love working with a team that is creative enough to find ways to pull off massive changes like this.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Aug 2016 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2016/08/16/rebuilding-the-plane-were-flying-in/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/08/16/rebuilding-the-plane-were-flying-in/</guid>
+      </item>
+    
+      <item>
         <title>How to add badges to iterm2</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://www.iterm2.com/index.html&quot;&gt;iTerm2&lt;/a&gt; - the popular terminal emulator for OSX has added some really neat features. One of those is badges. &lt;a href=&quot;https://www.iterm2.com/documentation-badges.html&quot;&gt;From the documentation&lt;/a&gt;: A badge is a large text label that appears in the top right of a terminal session to provide dynamic status, such as the current host name or git branch.&lt;/p&gt;
 
