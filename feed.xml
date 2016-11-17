@@ -7,6 +7,159 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Making Static Components Stateful With CSS/Sass</title>
+        <description>&lt;style&gt;
+  .highlight {
+    font-size: 14px;
+    font-family: &#39;Source Code Pro&#39;, Menlo, Consolas, Monaco, monospace;
+  }
+  .highlight pre {
+    border: 1px solid rgb(238, 238, 238);
+    background-color: white;
+  }
+  .highlight span.s  { color: rgb(170, 17, 17); }
+  .highlight span.nt { color: rgb(34, 17, 153); }
+  .highlight span.c  { color: rgb(204, 204, 204); }
+  .highlight span.na { color: rgb(85, 85, 85); }
+&lt;/style&gt;
+
+&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/static-components/masthead-colors-337d6009709a4feaa84ff7409e289266.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;Colored pencils.&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Searching for some &lt;a href=&quot;https://www.customink.com/products/results?keyword=ladies+red+hoodie&amp;amp;searchType=techblog&quot;&gt;red ladies hoodies&lt;/a&gt; to wear at your team&amp;#39;s event this Fall? How about a &lt;a href=&quot;https://www.customink.com/products/results?keyword=purple+heathered+t-shirt&amp;amp;searchType=techblog&quot;&gt;purple heathered t-shirt&lt;/a&gt; for your group&amp;#39;s outing? Last month we launched an exciting change to our product catalog – the ability to filter styles whose color(s) match a simplified name or filter.&lt;/p&gt;
+
+&lt;p&gt;Finding your customizable apparel in the right color is now easier than ever. And thanks to our usage of &lt;a href=&quot;http://technology.customink.com/blog/2014/08/26/modular-css-with-suit/&quot;&gt;SUIT-based CSS components&lt;/a&gt;, along with the ability to leverage existing Rails&amp;#39; fragment caches, the feature was both easy to develop and beneficial to our applications&amp;#39; performance.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;tiny-atomic-component-with-state&quot;&gt;Tiny Atomic Component with State&lt;/h3&gt;
+
+&lt;p&gt;So how did we get there and how do static and stateful CSS components work? What constraints did we face that ended up being performance features? To answer that, let&amp;#39;s first have a basic review of a SUIT-based component. We will start small with an atomic pattern, a color swatch. Then work our way upward to the higher UI interface, our product cards.&lt;/p&gt;
+
+&lt;p&gt;&lt;p
+  data-height=&quot;326&quot;
+  data-theme-id=&quot;light&quot;
+  data-slug-hash=&quot;rWLEVg&quot;
+  data-default-tab=&quot;css&quot;
+  data-user=&quot;MetaSkills&quot;
+  data-pen-title=&quot;SUIT-based Swatch Component&quot;
+  class=&quot;codepen&quot;&gt;
+  See the Pen &lt;a href=&quot;http://codepen.io/MetaSkills/pen/rWLEVg/&quot;&gt;SUIT-based Swatch Component&lt;/a&gt;
+  by Ken Collins (&lt;a href=&quot;http://codepen.io/MetaSkills&quot;&gt;@MetaSkills&lt;/a&gt;)
+  on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;Not a lot here, but it does illustrate a key design principle of SUIT, &lt;a href=&quot;https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#is-stateOfComponent&quot;&gt;component state&lt;/a&gt;. Here, when a swatch gains the &lt;code&gt;is-selected&lt;/code&gt; class we show an SVG check mark indicating the change. SUIT&amp;#39;s component state will be our main building block for theming other components and turning static HTML/CSS into magically dynamic interactions. In this case, our product cards. Let&amp;#39;s have a quick look at what they look like.&lt;/p&gt;
+
+&lt;h3 id=&quot;introduction-to-the-productcard&quot;&gt;Introduction to the ProductCard&lt;/h3&gt;
+
+&lt;p&gt;&lt;p
+  data-height=&quot;210&quot;
+  data-theme-id=&quot;light&quot;
+  data-slug-hash=&quot;LbZwag&quot;
+  data-default-tab=&quot;html&quot;
+  data-user=&quot;MetaSkills&quot;
+  data-pen-title=&quot;SUIT-based Product Card Component&quot;
+  class=&quot;codepen&quot;&gt;
+  See the Pen &lt;a href=&quot;http://codepen.io/MetaSkills/pen/LbZwag/&quot;&gt;SUIT-based Product Card Component&lt;/a&gt;
+  by Ken Collins (&lt;a href=&quot;http://codepen.io/MetaSkills&quot;&gt;@MetaSkills&lt;/a&gt;)
+  on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/static-components/augusta-juniors-spirit-hooded-sweatshirt-card-af84ad41f0769ee5d85cdb36aafb32d3.jpg&quot; class=&quot;tb-Img tb-Img--third tb-Img--half--sm&quot; alt=&quot;CustomInk Product Card Component - Before Color Magic&quot; /&gt;
+The HTML for our catalog&amp;#39;s listing pages generally follow this format. Each &lt;code&gt;ProductCard&lt;/code&gt; component is a child element inside another higher level presentation component. The image here illustrates the initial state of each product card. Basically a laydown image, title, and misc details.&lt;/p&gt;
+
+&lt;p&gt;Each product card &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; is the result of an API call who&amp;#39;s HTML is fragment cached. We do all the normal hot stuff like using &lt;a href=&quot;http://www.justinweiss.com/articles/a-faster-way-to-cache-complicated-data-models/&quot;&gt;read multi and pipelining&lt;/a&gt; to turn API requests into rendered content. Our goal was to reuse these while still presenting a visually different card when color(s) are selected. The challenge, how to avoid embedding state in each fragment and essentially limited their usage across the catalog.&lt;/p&gt;
+
+&lt;p&gt;The answer is simple. Build each card with all of its information, then put the state on the &lt;code&gt;div.Styles-products&lt;/code&gt; wrapper component and use that state to theme each card.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-stateful-productcard&quot;&gt;The Stateful ProductCard&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/static-components/augusta-juniors-spirit-hooded-sweatshirt__start-facaee18eb5a686570aaf34b11baa162.gif&quot; class=&quot;tb-Img tb-Img--third tb-Img--half--sm&quot; alt=&quot;CustomInk Product Card Component - Before/After Selecting a Color&quot; /&gt;
+Our stateful product cards driven by color filters will be visually different in two ways. First, the laydown image will change to a color-specific one. Second, swatches matching the selected color will appear below the details. This post will focus only on swatches. But the technique is the same for laydown to color images.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Styles&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Styles-products
+              is-filteredColor
+              is-filteredColor--red&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- Static Fragments --&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Starting with the HTML, here is our working solution. We are adding SUIT state classes to the wrapper holding all product cards. One indicating that these cards are now being filtered by color and other modifier state(s) which indicate one to many filtered color names. Adding and removing these classes will update any product card&amp;#39;s presentation, no JavaScript needed.&lt;/p&gt;
+
+&lt;h4 id=&quot;theming-with-suit-amp-sass&quot;&gt;Theming with SUIT &amp;amp; Sass&lt;/h4&gt;
+
+&lt;p&gt;Using SUIT (like BEM) means that component style selectors have a known &lt;a href=&quot;https://css-tricks.com/specifics-on-css-specificity/&quot;&gt;specificity&lt;/a&gt; of only 10. Composing and theming is a simple matter of using the cascade and nested specificity to our advantage.&lt;/p&gt;
+
+&lt;p&gt;&lt;p
+  data-height=&quot;206&quot;
+  data-theme-id=&quot;light&quot;
+  data-slug-hash=&quot;bBwNyE&quot;
+  data-default-tab=&quot;css&quot;
+  data-user=&quot;MetaSkills&quot;
+  data-pen-title=&quot;SUIT-based Product Card Component (themed-part1)&quot;
+  class=&quot;codepen&quot;&gt;
+  See the Pen &lt;a href=&quot;http://codepen.io/MetaSkills/pen/bBwNyE/&quot;&gt;SUIT-based Product Card Component (themed-part1)&lt;/a&gt;
+  by Ken Collins (&lt;a href=&quot;http://codepen.io/MetaSkills&quot;&gt;@MetaSkills&lt;/a&gt;)
+  on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;We start off by giving our little atomic color swatch components a happy home within our product cards using a SUIT descendant element/selector. A component&amp;#39;s initial presentation is sans-state. So we hide the swatches wrapper. We also start our new &lt;code&gt;.Swatch&lt;/code&gt; theme by nesting it inside the card component. The compiled CSS creates a descendant selector ensuring our theme is a) scoped to the component and b) has a specificity equal to 20. Next, giving our cards some stateful presentation.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-state-based-theming&quot;&gt;Adding State-Based Theming&lt;/h4&gt;
+
+&lt;p&gt;&lt;p
+  data-height=&quot;306&quot;
+  data-theme-id=&quot;light&quot;
+  data-slug-hash=&quot;NbRGvL&quot;
+  data-default-tab=&quot;css&quot;
+  data-user=&quot;MetaSkills&quot;
+  data-pen-title=&quot;SUIT-based Product Card Component (themed-part2)&quot;
+  class=&quot;codepen&quot;&gt;
+  See the Pen &lt;a href=&quot;http://codepen.io/MetaSkills/pen/NbRGvL/&quot;&gt;SUIT-based Product Card Component (themed-part2)&lt;/a&gt;
+  by Ken Collins (&lt;a href=&quot;http://codepen.io/MetaSkills&quot;&gt;@MetaSkills&lt;/a&gt;)
+  on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;This is where the fun starts. I recommend checking the CodePen&amp;#39;s compiled view to see how Sass&amp;#39; &lt;code&gt;@at-root&lt;/code&gt; works in conjunction with the &lt;code&gt;&amp;amp;&lt;/code&gt; operator. What is happening here is that we are theming product cards using the &lt;code&gt;is-filteredByColor&lt;/code&gt; state of the content container for all cards within it. The result is not visible yet, but we are un-hiding the swatches container by switching its display back to block. Let&amp;#39;s use the same technique for the swatches within.&lt;/p&gt;
+
+&lt;p&gt;&lt;p
+  data-height=&quot;446&quot;
+  data-theme-id=&quot;light&quot;
+  data-slug-hash=&quot;NbRRKm&quot;
+  data-default-tab=&quot;css&quot;
+  data-user=&quot;MetaSkills&quot;
+  data-pen-title=&quot;SUIT-based Product Card Component (themed-part3)&quot;
+  class=&quot;codepen&quot;&gt;
+  See the Pen &lt;a href=&quot;http://codepen.io/MetaSkills/pen/NbRRKm/&quot;&gt;SUIT-based Product Card Component (themed-part3)&lt;/a&gt;
+  by Ken Collins (&lt;a href=&quot;http://codepen.io/MetaSkills&quot;&gt;@MetaSkills&lt;/a&gt;)
+  on &lt;a href=&quot;http://codepen.io&quot;&gt;CodePen&lt;/a&gt;.
+&lt;/p&gt;&lt;/p&gt;
+
+&lt;p&gt;This changes the game entirely. All we have to do now is add state classes to our parent wrapper for one to many colors and it completely changes the interaction of our product cards. The results are magical! Please &lt;a href=&quot;https://www.customink.com/products&quot;&gt;browse our catalog&lt;/a&gt; and check it out for yourself.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/static-components/final-results-58406082504c110f5146a494df2b20b0.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;Final results of statfully wrapped product cards&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Have any questions? Please drop a comment. I would love to share more details of how this works for us and maybe how using state in your CSS can help you too. Cheers!&lt;/p&gt;
+
+&lt;h3 id=&quot;more-resources&quot;&gt;More Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://technology.customink.com/blog/2014/08/26/modular-css-with-suit/&quot;&gt;Modular CSS with SUIT CSS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://technology.customink.com/blog/2014/09/19/single-class-vs-multi-class-css/&quot;&gt;Single Class vs. Multi Class CSS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.justinweiss.com/articles/a-faster-way-to-cache-complicated-data-models/&quot;&gt;A Faster Way to Cache Complicated Data Models&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://css-tricks.com/specifics-on-css-specificity/&quot;&gt;Specifics on CSS Specificity&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script async src=&quot;https://production-assets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+</description>
+        <pubDate>Thu, 17 Nov 2016 00:00:00 -0500</pubDate>
+        <link>http://technology.customink.com//blog/2016/11/17/stateful-staic-components-with-css/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2016/11/17/stateful-staic-components-with-css/</guid>
+      </item>
+    
+      <item>
         <title>A Spooky Ink-o-ween!</title>
         <description>&lt;p&gt;This year we had a great showing of costumes in the office for Halloween&lt;/p&gt;
 

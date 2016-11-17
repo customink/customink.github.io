@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Making Static Components Stateful With CSS/Sass - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="
+
+
+  
+
+
+Searching for some red ladies hoodies to wear at your team&#39;s event this Fall? How about a purple heathered t-shirt for your group&#39;s...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-1193f26ffafc82796d02d27f7d8607d4.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Making Static Components Stateful With CSS/Sass</h1>
+        <style>
+  .highlight {
+    font-size: 14px;
+    font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
+  }
+  .highlight pre {
+    border: 1px solid rgb(238, 238, 238);
+    background-color: white;
+  }
+  .highlight span.s  { color: rgb(170, 17, 17); }
+  .highlight span.nt { color: rgb(34, 17, 153); }
+  .highlight span.c  { color: rgb(204, 204, 204); }
+  .highlight span.na { color: rgb(85, 85, 85); }
+</style>
+
+<div class="tb-Masthead">
+  <img src="/assets/content/static-components/masthead-colors-337d6009709a4feaa84ff7409e289266.jpg" class="tb-Img tb-Img--fancy" alt="Colored pencils." />
+</div>
+
+<p>Searching for some <a href="https://www.customink.com/products/results?keyword=ladies+red+hoodie&amp;searchType=techblog">red ladies hoodies</a> to wear at your team&#39;s event this Fall? How about a <a href="https://www.customink.com/products/results?keyword=purple+heathered+t-shirt&amp;searchType=techblog">purple heathered t-shirt</a> for your group&#39;s outing? Last month we launched an exciting change to our product catalog – the ability to filter styles whose color(s) match a simplified name or filter.</p>
+
+<p>Finding your customizable apparel in the right color is now easier than ever. And thanks to our usage of <a href="http://technology.customink.com/blog/2014/08/26/modular-css-with-suit/">SUIT-based CSS components</a>, along with the ability to leverage existing Rails&#39; fragment caches, the feature was both easy to develop and beneficial to our applications&#39; performance.</p>
+
+<!--more-->
+
+<h3 id="tiny-atomic-component-with-state">Tiny Atomic Component with State</h3>
+
+<p>So how did we get there and how do static and stateful CSS components work? What constraints did we face that ended up being performance features? To answer that, let&#39;s first have a basic review of a SUIT-based component. We will start small with an atomic pattern, a color swatch. Then work our way upward to the higher UI interface, our product cards.</p>
+
+<p><p
+  data-height="326"
+  data-theme-id="light"
+  data-slug-hash="rWLEVg"
+  data-default-tab="css"
+  data-user="MetaSkills"
+  data-pen-title="SUIT-based Swatch Component"
+  class="codepen">
+  See the Pen <a href="http://codepen.io/MetaSkills/pen/rWLEVg/">SUIT-based Swatch Component</a>
+  by Ken Collins (<a href="http://codepen.io/MetaSkills">@MetaSkills</a>)
+  on <a href="http://codepen.io">CodePen</a>.
+</p></p>
+
+<p>Not a lot here, but it does illustrate a key design principle of SUIT, <a href="https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md#is-stateOfComponent">component state</a>. Here, when a swatch gains the <code>is-selected</code> class we show an SVG check mark indicating the change. SUIT&#39;s component state will be our main building block for theming other components and turning static HTML/CSS into magically dynamic interactions. In this case, our product cards. Let&#39;s have a quick look at what they look like.</p>
+
+<h3 id="introduction-to-the-productcard">Introduction to the ProductCard</h3>
+
+<p><p
+  data-height="210"
+  data-theme-id="light"
+  data-slug-hash="LbZwag"
+  data-default-tab="html"
+  data-user="MetaSkills"
+  data-pen-title="SUIT-based Product Card Component"
+  class="codepen">
+  See the Pen <a href="http://codepen.io/MetaSkills/pen/LbZwag/">SUIT-based Product Card Component</a>
+  by Ken Collins (<a href="http://codepen.io/MetaSkills">@MetaSkills</a>)
+  on <a href="http://codepen.io">CodePen</a>.
+</p></p>
+
+<p><img src="/assets/content/static-components/augusta-juniors-spirit-hooded-sweatshirt-card-af84ad41f0769ee5d85cdb36aafb32d3.jpg" class="tb-Img tb-Img--third tb-Img--half--sm" alt="CustomInk Product Card Component - Before Color Magic" />
+The HTML for our catalog&#39;s listing pages generally follow this format. Each <code>ProductCard</code> component is a child element inside another higher level presentation component. The image here illustrates the initial state of each product card. Basically a laydown image, title, and misc details.</p>
+
+<p>Each product card <code>&lt;div&gt;</code> is the result of an API call who&#39;s HTML is fragment cached. We do all the normal hot stuff like using <a href="http://www.justinweiss.com/articles/a-faster-way-to-cache-complicated-data-models/">read multi and pipelining</a> to turn API requests into rendered content. Our goal was to reuse these while still presenting a visually different card when color(s) are selected. The challenge, how to avoid embedding state in each fragment and essentially limited their usage across the catalog.</p>
+
+<p>The answer is simple. Build each card with all of its information, then put the state on the <code>div.Styles-products</code> wrapper component and use that state to theme each card.</p>
+
+<h3 id="the-stateful-productcard">The Stateful ProductCard</h3>
+
+<p><img src="/assets/content/static-components/augusta-juniors-spirit-hooded-sweatshirt__start-facaee18eb5a686570aaf34b11baa162.gif" class="tb-Img tb-Img--third tb-Img--half--sm" alt="CustomInk Product Card Component - Before/After Selecting a Color" />
+Our stateful product cards driven by color filters will be visually different in two ways. First, the laydown image will change to a color-specific one. Second, swatches matching the selected color will appear below the details. This post will focus only on swatches. But the technique is the same for laydown to color images.</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"Styles"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"Styles-products
+              is-filteredColor
+              is-filteredColor--red"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- Static Fragments --&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+<p>Starting with the HTML, here is our working solution. We are adding SUIT state classes to the wrapper holding all product cards. One indicating that these cards are now being filtered by color and other modifier state(s) which indicate one to many filtered color names. Adding and removing these classes will update any product card&#39;s presentation, no JavaScript needed.</p>
+
+<h4 id="theming-with-suit-amp-sass">Theming with SUIT &amp; Sass</h4>
+
+<p>Using SUIT (like BEM) means that component style selectors have a known <a href="https://css-tricks.com/specifics-on-css-specificity/">specificity</a> of only 10. Composing and theming is a simple matter of using the cascade and nested specificity to our advantage.</p>
+
+<p><p
+  data-height="206"
+  data-theme-id="light"
+  data-slug-hash="bBwNyE"
+  data-default-tab="css"
+  data-user="MetaSkills"
+  data-pen-title="SUIT-based Product Card Component (themed-part1)"
+  class="codepen">
+  See the Pen <a href="http://codepen.io/MetaSkills/pen/bBwNyE/">SUIT-based Product Card Component (themed-part1)</a>
+  by Ken Collins (<a href="http://codepen.io/MetaSkills">@MetaSkills</a>)
+  on <a href="http://codepen.io">CodePen</a>.
+</p></p>
+
+<p>We start off by giving our little atomic color swatch components a happy home within our product cards using a SUIT descendant element/selector. A component&#39;s initial presentation is sans-state. So we hide the swatches wrapper. We also start our new <code>.Swatch</code> theme by nesting it inside the card component. The compiled CSS creates a descendant selector ensuring our theme is a) scoped to the component and b) has a specificity equal to 20. Next, giving our cards some stateful presentation.</p>
+
+<h4 id="adding-state-based-theming">Adding State-Based Theming</h4>
+
+<p><p
+  data-height="306"
+  data-theme-id="light"
+  data-slug-hash="NbRGvL"
+  data-default-tab="css"
+  data-user="MetaSkills"
+  data-pen-title="SUIT-based Product Card Component (themed-part2)"
+  class="codepen">
+  See the Pen <a href="http://codepen.io/MetaSkills/pen/NbRGvL/">SUIT-based Product Card Component (themed-part2)</a>
+  by Ken Collins (<a href="http://codepen.io/MetaSkills">@MetaSkills</a>)
+  on <a href="http://codepen.io">CodePen</a>.
+</p></p>
+
+<p>This is where the fun starts. I recommend checking the CodePen&#39;s compiled view to see how Sass&#39; <code>@at-root</code> works in conjunction with the <code>&amp;</code> operator. What is happening here is that we are theming product cards using the <code>is-filteredByColor</code> state of the content container for all cards within it. The result is not visible yet, but we are un-hiding the swatches container by switching its display back to block. Let&#39;s use the same technique for the swatches within.</p>
+
+<p><p
+  data-height="446"
+  data-theme-id="light"
+  data-slug-hash="NbRRKm"
+  data-default-tab="css"
+  data-user="MetaSkills"
+  data-pen-title="SUIT-based Product Card Component (themed-part3)"
+  class="codepen">
+  See the Pen <a href="http://codepen.io/MetaSkills/pen/NbRRKm/">SUIT-based Product Card Component (themed-part3)</a>
+  by Ken Collins (<a href="http://codepen.io/MetaSkills">@MetaSkills</a>)
+  on <a href="http://codepen.io">CodePen</a>.
+</p></p>
+
+<p>This changes the game entirely. All we have to do now is add state classes to our parent wrapper for one to many colors and it completely changes the interaction of our product cards. The results are magical! Please <a href="https://www.customink.com/products">browse our catalog</a> and check it out for yourself.</p>
+
+<p><img src="/assets/content/static-components/final-results-58406082504c110f5146a494df2b20b0.jpg" class="tb-Img tb-Img--fancy" alt="Final results of statfully wrapped product cards" /></p>
+
+<p>Have any questions? Please drop a comment. I would love to share more details of how this works for us and maybe how using state in your CSS can help you too. Cheers!</p>
+
+<h3 id="more-resources">More Resources</h3>
+
+<ul>
+<li><a href="http://technology.customink.com/blog/2014/08/26/modular-css-with-suit/">Modular CSS with SUIT CSS</a></li>
+<li><a href="http://technology.customink.com/blog/2014/09/19/single-class-vs-multi-class-css/">Single Class vs. Multi Class CSS</a></li>
+<li><a href="http://www.justinweiss.com/articles/a-faster-way-to-cache-complicated-data-models/">A Faster Way to Cache Complicated Data Models</a></li>
+<li><a href="https://css-tricks.com/specifics-on-css-specificity/">Specifics on CSS Specificity</a></li>
+</ul>
+
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
+      </div>
+      
+
+<div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Ken Collins" src="http://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    <time pubdate datetime="2016-11-17T00:00:00-05:00">
+      17 Nov 2016
+    </time></br>
+    by Ken Collins
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2016/11/17/stateful-staic-components-with-css/';
+    var disqus_title = "Making Static Components Stateful With CSS/Sass";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2016 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>
