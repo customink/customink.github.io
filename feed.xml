@@ -7,7 +7,7 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Disable Image Loading with Rails System Tests</title>
+        <title>Disabling Image Loading with Rails System Tests</title>
         <description>&lt;p&gt;Disabling external assets like JavaScript or images can improve the performance of your Rails System Tests. Capybara is the acceptance test framework abstracted by Rails System Tests. It will load all assets on a page before proceeding to the next step in your test.  Since, we are only testing interactions with Rails System Tests, we can reduce the page load time by ignoring images, external scripts and fonts.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/&quot;&gt;Rails 5.1&lt;/a&gt; introduced SystemTestCase. It is a nice abstraction around Capybara providing a sane default configuration. The &lt;code&gt;driven_by&lt;/code&gt; configuration method allows you to pass additional options to the underlying ChromeDriver.&lt;/p&gt;
@@ -33,8 +33,8 @@
 &lt;p&gt;If you like to learn more about Rails System Tests, I recommend watching &lt;a href=&quot;https://youtu.be/sSn4B8orX70&quot;&gt;RailsConf 2017: Building Rails ActionDispatch::SystemTestCase Framework by Eileen Uchitelle&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 01 Jun 2017 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2017/06/01/disable-image-loading-with-rails-systemtests/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2017/06/01/disable-image-loading-with-rails-systemtests/</guid>
+        <link>http://technology.customink.com//blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</guid>
       </item>
     
       <item>

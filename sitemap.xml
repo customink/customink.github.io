@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/blog/2017/06/01/disable-image-loading-with-rails-systemtests/</loc>
+    <loc>/blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</loc>
     <lastmod>2017-06-01T00:00:00-04:00</lastmod>
   </url>
   <url>
@@ -724,6 +724,6 @@
       <loc>/blog/2016/12/11/timmy-award-winner/</loc>
     </url>
     <url>
-      <loc>/blog/2017/06/01/disable-image-loading-with-rails-systemtests/</loc>
+      <loc>/blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</loc>
     </url>
 </urlset>
