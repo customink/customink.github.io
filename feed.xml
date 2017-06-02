@@ -7,6 +7,37 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Disable Image Loading with Rails System Tests</title>
+        <description>&lt;p&gt;Disabling external assets like JavaScript or images can improve the performance of your Rails System Tests. Capybara is the acceptance test framework abstracted by Rails System Tests. It will load all assets on a page before proceeding to the next step in your test.  Since, we are only testing interactions with Rails System Tests, we can reduce the page load time by ignoring images, external scripts and fonts.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/&quot;&gt;Rails 5.1&lt;/a&gt; introduced SystemTestCase. It is a nice abstraction around Capybara providing a sane default configuration. The &lt;code&gt;driven_by&lt;/code&gt; configuration method allows you to pass additional options to the underlying ChromeDriver.&lt;/p&gt;
+
+&lt;p&gt;If your using the default &lt;code&gt;ApplicationSystemTestCase&lt;/code&gt; it is configured to use the &lt;code&gt;:chrome&lt;/code&gt; web driver with Selenium. This uses the ChromeDriver executable to communicate with the Chrome browser. Disabling image loading is not immediately obvious.&lt;/p&gt;
+
+&lt;p&gt;To disable image loading with the ChromeDriver, you need to configure a profile option that is passed to the Chrome browser. I found the solution on this issue: &lt;a href=&quot;https://github.com/webdriverio/webdriverio/issues/1056&quot;&gt;Disable image with chromedriver · Issue #1056 · webdriverio/webdriverio · GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;To disable image loading for Rails SystemTestCase using the ChromeDriver pass the &lt;code&gt;prefs&lt;/code&gt; profile option:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;test_helper&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationSystemTestCase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionDispatch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SystemTestCase&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;driven_by&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:selenium&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;using: :chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;screen_size: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1400&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+            &lt;span class=&quot;ss&quot;&gt;options: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+              &lt;span class=&quot;ss&quot;&gt;prefs: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;ss&quot;&gt;profile: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                  &lt;span class=&quot;ss&quot;&gt;default_content_setting_values: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;images: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# disable image loading&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you like to learn more about Rails System Tests, I recommend watching &lt;a href=&quot;https://youtu.be/sSn4B8orX70&quot;&gt;RailsConf 2017: Building Rails ActionDispatch::SystemTestCase Framework by Eileen Uchitelle&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 01 Jun 2017 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2017/06/01/disable-image-loading-with-rails-systemtests/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2017/06/01/disable-image-loading-with-rails-systemtests/</guid>
+      </item>
+    
+      <item>
         <title>Working For DC&#39;s Best Tech Manager</title>
         <description>&lt;div class=&quot;tb-Masthead&quot;&gt;
   &lt;img src=&quot;/assets/content/best-tech-manager/masthead-1776-keyboard-artwork-8febd400fa5168c5a199be840d37bad4.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;Old Keyboard artwork at @1776 offices.&quot; /&gt;
