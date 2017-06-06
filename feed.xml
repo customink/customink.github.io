@@ -7,6 +7,110 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Power Moves: SQL Server on Linux, Rails, and Docker</title>
+        <description>&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/power-moves/masthead-51a30dbb8a50422db2da48cedd1cec92.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;The Ultimate Teen Titans Power Move.&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Microsoft is releasing new versions of SQL Server on Linux more and more frequently. Last month brought us &lt;a href=&quot;https://blogs.technet.microsoft.com/dataplatforminsider/2017/04/19/sql-server-2017-community-technology-preview-2-0-now-available/&quot;&gt;SQL Server 2017 Community Technology Preview 2.0&lt;/a&gt; and like the others before, it&amp;#39;s a breeze to use with &lt;a href=&quot;https://www.docker.com&quot;&gt;Docker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Around the same time, &lt;a href=&quot;http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/&quot;&gt;Rails 5.1&lt;/a&gt; was released. Writing modern web applications using every technology from the backend database to frontend JavaScript has never been more enjoyable. Rails 5.1 also raises intergration with SQL Server to an all-time record high.&lt;/p&gt;
+
+&lt;p&gt;Now... today... this very moment... it is time to get merge-obsessed and combine our developer super powers to form some sweet new &lt;a href=&quot;http://teen-titans-go.wikia.com/wiki/Power_Moves&quot;&gt;Power Moves&lt;/a&gt;. &lt;code&gt;GO!&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;your-environment&quot;&gt;Your Environment&lt;/h2&gt;
+
+&lt;p&gt;Before moving on, we should pick a secure password for our local SQL Server administrator. The &lt;code&gt;SA_PASSWORD&lt;/code&gt; variable is used both by Rails and SQL Server on Docker. I recommend setting this in your Bash, ZSH or whatever config your shell uses.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SA_PASSWORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mysecretpassword
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;install-docker&quot;&gt;Install Docker&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/power-moves/docker-memory-prefs-8a496eab8175fa3fc89a511acf8fed05.jpg&quot; class=&quot;tb-Img tb-Img--third tb-Img--half--sm&quot; alt=&quot;Docker Memory Resource Preferences&quot; /&gt;If you do not have it already, please download and install Docker. They offer a &lt;a href=&quot;https://www.docker.com/community-edition&quot;&gt;free Community Edition&lt;/a&gt; for most platforms. Once you have downloaded and verified your install, please update your Docker resource preferences to allow up to 4GB of memory. SQL Server will need a bit more than the 2GB default.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-sql-server&quot;&gt;Install SQL Server&lt;/h2&gt;
+
+&lt;p&gt;This command will download the latest SQL Server image from Microsoft&amp;#39;s official hub on Docker, currently SQL Server 2017 CTP v2.0.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker pull microsoft/mssql-server-linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, start SQL Server using the previous environment settings. The first command will create a persistent data volume while the second starts SQL Server via Docker and attaches that volume to the container. All new databases will persist to the &lt;code&gt;mssqldata&lt;/code&gt; volume.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker create &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -v /var/opt/mssql &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  --name mssqldata microsoft/mssql-server-linux
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;docker run -p 1433:1433 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -e &lt;span class=&quot;s2&quot;&gt;&quot;ACCEPT_EULA=Y&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -e &lt;span class=&quot;s2&quot;&gt;&quot;SA_PASSWORD=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SA_PASSWORD&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  -d --volumes-from mssqldata &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  microsoft/mssql-server-linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;create-a-rails-application&quot;&gt;Create a Rails Application&lt;/h2&gt;
+
+&lt;p&gt;This guide does not cover Ruby installation. Rails requires Ruby v2.2.2 or higher and if you are new to Ruby or do need to install the latest version, I recommend &lt;a href=&quot;https://github.com/rbenv&quot;&gt;rbenv&lt;/a&gt; for POSIX systems or &lt;a href=&quot;https://rubyinstaller.org&quot;&gt;RubyInstaller&lt;/a&gt; if you are on Windows.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s install the latest version of Rails and Bundler using RubyGems.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gem install rails bundler
+Successfully installed rails-5.1.1
+Successfully installed bundler-1.15.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To create your new Rails application with SQL Server as the database, we pass the &lt;code&gt;-d&lt;/code&gt; flag with a value of &lt;code&gt;sqlserver&lt;/code&gt;. This will install the SQL Server Adapter and TinyTDS dependencies – the Ruby bindings to DBLIB. Finally, we test that we can boot our new Rails application and load it in a browser. If all goes well, you should see the following image.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;rails new my_app -d sqlserver
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;my_app
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;./bin/rails server
+
+&lt;span class=&quot;gp&quot;&gt;=&amp;gt; &lt;/span&gt;Booting Puma
+&lt;span class=&quot;gp&quot;&gt;=&amp;gt; &lt;/span&gt;Rails 5.1.1 application starting &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;development on http://localhost:3000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/power-moves/welcome-to-rails-f085fe8fe301b4957a968e5968b1b03b.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;Yay! You&#39;re on Rails! Welcome Screen&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ultimate-power-move&quot;&gt;Ultimate Power Move&lt;/h2&gt;
+
+&lt;p&gt;A static welcome page is fine and all, but let&amp;#39;s see if we can make sure our SQL Server database works with ActiveRecord.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;./bin/rails db:setup
+
+Created database &lt;span class=&quot;s1&quot;&gt;&#39;my_app_development&#39;&lt;/span&gt;
+Created database &lt;span class=&quot;s1&quot;&gt;&#39;my_app_test&#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Success! The &lt;code&gt;db:setup&lt;/code&gt; command has shown us that it has created two databases for us and that everything is bootstraped to SQL Server correctly. We can create a model/table now via a migration.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;./bin/rails generate model User name:string email:string
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;./bin/rails db:migrate
+
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; CreateUsers: migrating &lt;span class=&quot;o&quot;&gt;======================================&lt;/span&gt;
+-- create_table&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;:users&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+   -&amp;gt; 0.0024s
+   -&amp;gt; -1 rows
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; CreateUsers: migrated &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.0025s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=============================&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Success again! Here we crated a User model/table with a few attributes. Running the migration creates the table and columns as needed and we can even fire up a console to test it all out.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;./bin/rails console
+
+&lt;span class=&quot;gp&quot;&gt;&amp;gt; &lt;/span&gt;User.count
+  SQL &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.9ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  USE &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;my_app_development]
+   &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2.1ms&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  SELECT COUNT&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; FROM &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;users]
+&lt;span class=&quot;gp&quot;&gt;=&amp;gt; &lt;/span&gt;0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;thanks&quot;&gt;Thanks!&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/power-moves/thanks-4561d3eed33db7d54d34912529d7aaaf.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--half--sm&quot; alt=&quot;The MetaSkills Power Move&quot; /&gt;There are a lot of good people working hard every day to make your experience with Ruby &amp;amp; SQL Server amazing. From engineers at Microsoft all the way to individual contributors on the Rails SQL Server repos.&lt;/p&gt;
+
+&lt;p&gt;In the coming weeks, we hope to do so much more. What might be next? Maybe better integration to JRuby within the adapter. Maybe native cross-platform tools to script large databases when the Rails DSL can not represent that schema. All of this is in the works.&lt;/p&gt;
+
+&lt;p&gt;I am very proud to be a part of this community and hope you find time to stop by and help, or drop a friendly note/issue about your experiences with Ruby &amp;amp; SQL Server. Lastly, thanks to CustomInk for supporting our passion projects and individual causes.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/&quot;&gt;Rails 5.1 Release Post: Loving JavaScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://technology.customink.com/blog/2015/10/19/microsofts-first-open-source-datacamp/&quot;&gt;Microsoft&amp;#39;s Open Source Kickoff w/Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rails-sqlserver&quot;&gt;Rails &amp;amp; SQL Server on GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/pull/599&quot;&gt;Exploring JDBC Adapter Connection Mode&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 06 Jun 2017 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</guid>
+      </item>
+    
+      <item>
         <title>Disabling Image Loading with Rails System Tests</title>
         <description>&lt;p&gt;Disabling external assets like JavaScript or images can improve the performance of your Rails System Tests. Capybara is the acceptance test framework abstracted by Rails System Tests. It will load all assets on a page before proceeding to the next step in your test.  Since, we are only testing interactions with Rails System Tests, we can reduce the page load time by ignoring images, external scripts and fonts.&lt;/p&gt;
 

@@ -57,6 +57,24 @@
       <div class="tb-PostItem">
         <article class="tb-Excerpt">
   <header>
+    <time class="tb-Excerpt-date" pubdate datetime="2014-10-14T00:00:00-04:00">
+      Posted On 14 Oct 2014&nbsp;&nbsp;-&nbsp;&nbsp;Chris Mar
+    </time>
+    <h2><a href="/blog/2014/10/14/better-hash-injection-using-each-with-object/">Better Hash Injection using each_with_object</a></h2>
+  </header>
+  <p class="tb-Excerpt-text">A common Ruby pattern for injecting values from an Array into to a Hash is to use the Enumerable#inject method and pass the hash as the memo. If you had an enumeration of User objects, you might convert them to a hash with something like this: # build a hash of { name =&gt; email } users = User.all users.inject({}) do |memo, user| memo[user.name] = user.email memo # you must return the memo each time! end While this will reduce...</p>
+  <a href="/blog/2014/10/14/better-hash-injection-using-each-with-object/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
+</article>
+
+      </div>
+    
+  
+    
+    
+    
+      <div class="tb-PostItem">
+        <article class="tb-Excerpt">
+  <header>
     <time class="tb-Excerpt-date" pubdate datetime="2014-10-09T00:00:00-04:00">
       Posted On 09 Oct 2014&nbsp;&nbsp;-&nbsp;&nbsp;Jonathan Lehman
     </time>
@@ -157,24 +175,6 @@
   </header>
   <p class="tb-Excerpt-text">As I have mentioned previously in my post on Modular CSS, structuring Sass/CSS is hard. One of the best ways to determine how clean and well structured the resulting CSS within a project is, is to take a look at the markup being used in project. Overly nested elements typically mean overly nested CSS and if you find it difficult to discern the purpose of the classes on those elements, the CSS itself is probably not semantically written. To add...</p>
   <a href="/blog/2014/09/19/single-class-vs-multi-class-css/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
-
-      </div>
-    
-  
-    
-    
-    
-      <div class="tb-PostItem">
-        <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2014-09-16T00:00:00-04:00">
-      Posted On 16 Sep 2014&nbsp;&nbsp;-&nbsp;&nbsp;Ken Collins
-    </time>
-    <h2><a href="/blog/2014/09/16/from-rails-3-2-to-4-2/">From Rails 3.2 to 4.2</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Last week I set out to upgrade HomeMarks, a personal bookmarking project of mine. This application sat on a very recent upgrade to Rails 3.2. It is written as an API to both an iOS and HTML JavaScript interface. It is by no means huge and should represent a nominal service oriented application. Here are some stats: 8 Models (450 LOC) 11 Controllers (550 LOC) 2 Mailers (50 LOC) 8 Libraries (500 LOC) Using Ruby 2.1.2. The application is heavily...</p>
-  <a href="/blog/2014/09/16/from-rails-3-2-to-4-2/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
 </article>
 
       </div>
