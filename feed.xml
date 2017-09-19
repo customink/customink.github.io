@@ -7,6 +7,84 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Clipart on AWS Lambda</title>
+        <description>&lt;p&gt;In our design lab, each request to add a new piece of clipart or process a user upload touches our clipart service. Historically, this application has been hosted on EC2 which has led to some problems for us. A combination of inconsistent load and random hangups on certain files has led to it becoming an operational and financial burden. We chose to undertake the work to migrate the code path which was the worst offender to AWS Lambda. While not painless, this proved to address the two pain points we had with the current setup.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;The main issue we had with the old service was load. The load on the application is not consistent, even with autoscaling we end up over-provisioned during off peak hours and under-provisioned at critical times. This has cost us monetarily, with us paying for more servers than we need, or caused issues for customers, both internal and external, when working with clipart inside of the Custom Ink design lab without enough servers to handle all of their requests. The application also suffers from random hangups from poorly formatted clipart files or extremely large user uploads. A request for a file in either of these categories would cause an application server to fail to respond to health checks, leave the load balance, then require manual intervention to become healthy again.&lt;/p&gt;
+
+&lt;p&gt;Lambda proved to be an excellent way to combat this issue. Amazon&amp;#39;s provided Node.js environment already shipped ImageMagick, a critical part of our existing service; they guaranteed a stronger level of isolation between requests than we can realistically provide; and, like all AWS supported platform, had a well documented client library for accessing all of the stored data we need to complete requests. As long as we could generate files which were similar to the current service, it would reduce the burden on operations, keep a bad image from hampering site performance, and help us control our costs by only paying for the processing time we need.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-porting-process&quot;&gt;The Porting Process&lt;/h3&gt;
+
+&lt;p&gt;The process we needed to replicate performed a few integrated tasks. It was responsible for:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Retrieving the file from S3&lt;/li&gt;
+&lt;li&gt;Resizing and scaling images&lt;/li&gt;
+&lt;li&gt;Removing and changing colors&lt;/li&gt;
+&lt;li&gt;Converting images to a single color&lt;/li&gt;
+&lt;li&gt;Tracking user selection of clipart in the design lab&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Accomplishing file retrieval on was simple, we just called out to the Node.js SDK to do this. Resizing and scaling are handled by ImageMagick, and color removal and conversion were implemented by hand. Tracking user selection was moved to a SQS queue. The lambda just publishes the requests to the queue, and another application collects the data for reporting purposes.&lt;/p&gt;
+
+&lt;p&gt;Porting to Lambda was not difficult, the first version was completed in about two days of work, but the process wasn&amp;#39;t without issues. Debugging took much longer and we ran into a few hiccups along the way.&lt;/p&gt;
+
+&lt;h3 id=&quot;some-hiccups&quot;&gt;Some Hiccups&lt;/h3&gt;
+
+&lt;p&gt;The issues we ran into fell into two groups, API Gateway issues, ImageMagick issues and environment reuse issues.&lt;/p&gt;
+
+&lt;p&gt;API Gateway is an Amazon service which, among other things, allows for you to invoke a Lambda function over HTTP. It is first and foremost is designed for use with XML or JSON. This becomes a problem when trying to serve binary since the api gateway attempts to set the headers for xml, text, or json over the binary content.&lt;/p&gt;
+
+&lt;p&gt;To get it to serve an arbitrary binary back to a web browser requires you to do two things. First, you need to set &lt;code&gt;isBase64Encoded&lt;/code&gt; to true in the returned json of the handler. Second, you need to update your binary media types to include &lt;code&gt;*/*&lt;/code&gt; then redeploy the stage.&lt;/p&gt;
+
+&lt;p&gt;The second major issue we ran into was ImageMagick on Lambda itself. Some changes between version with regards to antialiasing proved to be frustrating. The short version, that we were unable to disable antialiasing when resizing. That issue required us to render each clipart at their preferred eps size, pull the image into memory, use the &lt;a href=&quot;https://en.wikipedia.org/wiki/Color_difference#CIEDE2000&quot;&gt;CIEDE 2000&lt;/a&gt; formula to identify the colors we need to remove, then apply our optional one color conversation pass. When looking at using ImageMagick on Lambda I would strongly suggest testing anything related to color heavily before investing.&lt;/p&gt;
+
+&lt;p&gt;Finally we had some issues with &lt;a href=&quot;https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/&quot;&gt;environment reuse&lt;/a&gt;. The temporary space that they provide is kept when lambda containers are reused. This means that if / when your lambda function reaches the point where AWS starts to reuse environments, you can fill up the disk and cause your function to error out. The easiest way to deal with that is to delete any files your lambda function created before finishing execution.&lt;/p&gt;
+
+&lt;h3 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h3&gt;
+
+&lt;p&gt;At CustomInk we use Rollbar for all of our error reporting. When using Rollbar with Lambda, take advantage of their out of the box &lt;a href=&quot;https://rollbar.com/blog/lambda-support-for-nodejs-python/&quot;&gt;integration for lambda&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I would also strongly suggest setting up X-Ray. This service proved to be invaluable during development allowing us to see slow paths in our code. If you use promises to structure your code i&amp;#39;ve found the following snippet to be helpful:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AWSXRay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;aws-xray-sdk-core&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TRACE_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_X_AMZN_TRACE_ID&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xrayPromise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;segment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TRACE_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;promise&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;AWSXRay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;captureAsyncFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;segment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subsegment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;subsegment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;subsegment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xrayPromise&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;in-production&quot;&gt;In Production&lt;/h3&gt;
+
+&lt;p&gt;Moving over to a Lambda based process allowed us to cut down on the number and size of the servers needed for our clipart service. We now only need to keep it up and running for the admin panel and user upload ingestion. These new admin only servers don&amp;#39;t impact the end user experience if they have issues.&lt;/p&gt;
+
+&lt;p&gt;Overall we feel that Lambda was a good fit for the project. It allowed us to realize the goal of a better scaling clipart process and gain significant cost savings.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 19 Sep 2017 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</guid>
+      </item>
+    
+      <item>
         <title>Power Moves: SQL Server on Linux, Rails, and Docker</title>
         <description>&lt;div class=&quot;tb-Masthead&quot;&gt;
   &lt;img src=&quot;/assets/content/power-moves/masthead-51a30dbb8a50422db2da48cedd1cec92.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;The Ultimate Teen Titans Power Move.&quot; /&gt;
