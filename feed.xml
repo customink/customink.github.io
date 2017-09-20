@@ -28,21 +28,21 @@
 &lt;li&gt;Tracking user selection of clipart in the design lab&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Accomplishing file retrieval on was simple, we just called out to the Node.js SDK to do this. Resizing and scaling are handled by ImageMagick, and color removal and conversion were implemented by hand. Tracking user selection was moved to a SQS queue. The lambda just publishes the requests to the queue, and another application collects the data for reporting purposes.&lt;/p&gt;
+&lt;p&gt;Accomplishing file retrieval from S3 was simple, we just called out to the Node.js SDK to do this. Resizing and scaling are handled by ImageMagick, and color removal and conversion were implemented by hand. Tracking user selection was moved to a SQS queue. The lambda just publishes the requests to the queue, and another application collects the data for reporting purposes.&lt;/p&gt;
 
 &lt;p&gt;Porting to Lambda was not difficult, the first version was completed in about two days of work, but the process wasn&amp;#39;t without issues. Debugging took much longer and we ran into a few hiccups along the way.&lt;/p&gt;
 
 &lt;h3 id=&quot;some-hiccups&quot;&gt;Some Hiccups&lt;/h3&gt;
 
-&lt;p&gt;The issues we ran into fell into two groups, API Gateway issues, ImageMagick issues and environment reuse issues.&lt;/p&gt;
+&lt;p&gt;The issues we ran into fell into three groups, API Gateway issues, ImageMagick issues and environment reuse issues.&lt;/p&gt;
 
-&lt;p&gt;API Gateway is an Amazon service which, among other things, allows for you to invoke a Lambda function over HTTP. It is first and foremost is designed for use with XML or JSON. This becomes a problem when trying to serve binary since the api gateway attempts to set the headers for xml, text, or json over the binary content.&lt;/p&gt;
+&lt;p&gt;API Gateway is an Amazon service which, among other things, allows for you to invoke a Lambda function over HTTP. It is first and foremost designed for use with XML or JSON. This becomes a problem when trying to serve binary since the api gateway attempts to set the headers for xml, text, or json over the binary content.&lt;/p&gt;
 
 &lt;p&gt;To get it to serve an arbitrary binary back to a web browser requires you to do two things. First, you need to set &lt;code&gt;isBase64Encoded&lt;/code&gt; to true in the returned json of the handler. Second, you need to update your binary media types to include &lt;code&gt;*/*&lt;/code&gt; then redeploy the stage.&lt;/p&gt;
 
-&lt;p&gt;The second major issue we ran into was ImageMagick on Lambda itself. Some changes between version with regards to antialiasing proved to be frustrating. The short version, that we were unable to disable antialiasing when resizing. That issue required us to render each clipart at their preferred eps size, pull the image into memory, use the &lt;a href=&quot;https://en.wikipedia.org/wiki/Color_difference#CIEDE2000&quot;&gt;CIEDE 2000&lt;/a&gt; formula to identify the colors we need to remove, then apply our optional one color conversation pass. When looking at using ImageMagick on Lambda I would strongly suggest testing anything related to color heavily before investing.&lt;/p&gt;
+&lt;p&gt;The second major issue we ran into was ImageMagick on Lambda itself. Long story short, we were unable to disable antialiasing when resizing. That issue required us to render each clipart at their preferred eps size, pull the image into memory, use the &lt;a href=&quot;https://en.wikipedia.org/wiki/Color_difference#CIEDE2000&quot;&gt;CIEDE 2000&lt;/a&gt; formula to identify the colors we need to remove, then apply our optional one color conversation pass. When looking at using ImageMagick on Lambda I would strongly suggest testing anything related to color heavily before investing.&lt;/p&gt;
 
-&lt;p&gt;Finally we had some issues with &lt;a href=&quot;https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/&quot;&gt;environment reuse&lt;/a&gt;. The temporary space that they provide is kept when lambda containers are reused. This means that if / when your lambda function reaches the point where AWS starts to reuse environments, you can fill up the disk and cause your function to error out. The easiest way to deal with that is to delete any files your lambda function created before finishing execution.&lt;/p&gt;
+&lt;p&gt;Finally we had some issues with &lt;a href=&quot;https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/&quot;&gt;environment reuse&lt;/a&gt;. The temporary space that AWS provides is kept when lambda containers are reused. This means that if / when your lambda function reaches the point where AWS starts to reuse environments, you can fill up the disk and cause your function to error out. The easiest way to deal with that is to delete any files your lambda function created before finishing execution.&lt;/p&gt;
 
 &lt;h3 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h3&gt;
 
@@ -75,9 +75,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;in-production&quot;&gt;In Production&lt;/h3&gt;
 
-&lt;p&gt;Moving over to a Lambda based process allowed us to cut down on the number and size of the servers needed for our clipart service. We now only need to keep it up and running for the admin panel and user upload ingestion. These new admin only servers don&amp;#39;t impact the end user experience if they have issues.&lt;/p&gt;
-
-&lt;p&gt;Overall we feel that Lambda was a good fit for the project. It allowed us to realize the goal of a better scaling clipart process and gain significant cost savings.&lt;/p&gt;
+&lt;p&gt;Moving over to a Lambda based process allowed us to cut down on the number and size of the servers needed for our clipart service. Overall we feel that Lambda was a good fit for the project. It allowed us to realize the goal of a better scaling clipart process and gain significant cost savings.&lt;/p&gt;
 </description>
         <pubDate>Tue, 19 Sep 2017 00:00:00 -0400</pubDate>
         <link>http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</link>
