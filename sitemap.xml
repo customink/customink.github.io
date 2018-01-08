@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/blog/2018/01/06/spawnfest-retrospective/</loc>
+    <lastmod>2018-01-06T00:00:00-05:00</lastmod>
+  </url>
+  <url>
+    <loc>/blog/2018/01/02/spawnfest-retrospective/</loc>
+    <lastmod>2018-01-02T00:00:00-05:00</lastmod>
+  </url>
+  <url>
     <loc>/blog/2017/09/19/clipart-on-aws-lambda/</loc>
     <lastmod>2017-09-19T00:00:00-04:00</lastmod>
   </url>
@@ -455,45 +463,6 @@
   <url>
     <loc>/authors/mark-johnson/</loc>
   </url>
-  <url>
-    <loc>/page2/</loc>
-  </url>
-  <url>
-    <loc>/page3/</loc>
-  </url>
-  <url>
-    <loc>/page4/</loc>
-  </url>
-  <url>
-    <loc>/page5/</loc>
-  </url>
-  <url>
-    <loc>/page6/</loc>
-  </url>
-  <url>
-    <loc>/page7/</loc>
-  </url>
-  <url>
-    <loc>/page8/</loc>
-  </url>
-  <url>
-    <loc>/page9/</loc>
-  </url>
-  <url>
-    <loc>/page10/</loc>
-  </url>
-  <url>
-    <loc>/page11/</loc>
-  </url>
-  <url>
-    <loc>/page12/</loc>
-  </url>
-  <url>
-    <loc>/page13/</loc>
-  </url>
-  <url>
-    <loc>/page14/</loc>
-  </url>
     <url>
       <loc>/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
     </url>
@@ -778,5 +747,11 @@
     </url>
     <url>
       <loc>/blog/2017/09/19/clipart-on-aws-lambda/</loc>
+    </url>
+    <url>
+      <loc>/blog/2018/01/02/spawnfest-retrospective/</loc>
+    </url>
+    <url>
+      <loc>/blog/2018/01/06/spawnfest-retrospective/</loc>
     </url>
 </urlset>
