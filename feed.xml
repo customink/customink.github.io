@@ -70,7 +70,7 @@ The other, more pressing, issue was building the array of map data to send to th
 
 &lt;p&gt;While I’m quite proud of what we were able to get done in two days, I still feel like there were a few areas that I could make better given some more time: GameServer ended up being too large for my tastes. I feel it would be cleaner if there was a split between tracking players, passing player changes around and chat message. We currently just use send to pass messages back to clients, it would be more intention revealing if there was a public api, provided by ClientProtocol, to encapsulate this behavior. The map should be built as a gzip stream when we read it from the ETS table. The current list to binary to gzip process is not performant. I’m unhappy with the way fluids work. It feels like they want to be treated as a player like thing and live inside of their own simple_one_for_one supervisor.&lt;/p&gt;
 
-&lt;p&gt;Outside of a few small issues and some areas that I want to correct, the contest was an enjoyable time. Big thanks to Bruno and the rest of the organizers, judges and sponsors for putting on such a wonderful event.&lt;/p&gt;
+&lt;p&gt;Outside of a few small issues and some areas that I want to correct, the contest was an enjoyable time. Big thanks to Brujo and the rest of the organizers, judges and sponsors for putting on such a wonderful event.&lt;/p&gt;
 </description>
         <pubDate>Sat, 06 Jan 2018 00:00:00 -0500</pubDate>
         <link>http://technology.customink.com//blog/2018/01/06/spawnfest-retrospective/</link>
