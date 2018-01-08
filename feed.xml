@@ -7,6 +7,153 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Spawnfest Retrospective</title>
+        <description>&lt;p&gt;This year I participated in &lt;a href=&quot;https://spawnfest.github.io/&quot;&gt;SpawnFest 2017&lt;/a&gt;, a two day hackathon focused around the BEAM virtual machine. With judging finished, I felt this an appropriate time to  reflect on the architecture and process of my submission.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;My submission was a &lt;a href=&quot;https://github.com/spawnfest/beam-craft&quot;&gt;server for Classic Minecraft&lt;/a&gt; written in Elixir. Unlike the current version, this version of Minecraft is very limited in feature set supporting only chat, placing blocks and moving fluids. Because of the simplistic protocol and the availability of open source clients, It seemed like a perfect project for a two day contest.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-server&quot;&gt;The Server&lt;/h2&gt;
+
+&lt;p&gt;Unlike Ruby, C, or Java, Elixir is an actor based language. In actor based languages, communication across boundaries happens via message passing instead of function calls. Its roughly equivalent to a service oriented architecture, but replacing network boundaries between services with ‘in memory’ communication. The pattern leads to highly concurrent software, but requires a different way of thinking.&lt;/p&gt;
+
+&lt;p&gt;At a high level, the server I submitted had three kinds of actors &lt;a href=&quot;https://github.com/spawnfest/beam-craft/blob/master/lib/beam_craft/protocol.ex&quot;&gt;client protocol&lt;/a&gt;, &lt;a href=&quot;https://github.com/spawnfest/beam-craft/blob/master/lib/beam_craft/game_server.ex&quot;&gt;game server&lt;/a&gt; and &lt;a href=&quot;https://github.com/spawnfest/beam-craft/blob/master/lib/beam_craft/map_server.ex&quot;&gt;map server&lt;/a&gt;. Ranch, a socket acceptor pool, would spin up instances of the client protocol to manage connections between the server and client. Those instances decoded messages from the client and passed them to the game server, and the game server sent updates back to the client. The game server, kept track of all of the connected clients, ensuring that all changes in the map, chat messages and player connections / disconnections were seen by everyone on the server. Finally, the map server kept track of updates to the game map.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-went-well-communication-between-clients&quot;&gt;What Went Well: Communication Between Clients&lt;/h2&gt;
+
+&lt;p&gt;The actor model was very nice to use for this project. It helped cleanly separate the encoding and decoding logic and provided process IDs to make tracking connected clients simple. It also helped us avoid the concurrency issues that some traditional approaches to multithreading suffer from.&lt;/p&gt;
+
+&lt;p&gt;There was an actor for each connected client, all the game server needed to do was validate that the input was correct, then send a message to each client actor. The logic involving speaking to the protocol was contained in the client actor. This made the game server much cleaner, since all of the work to construct the binary was separate from the game server logic.&lt;/p&gt;
+
+&lt;p&gt;There was also a good way to keep track of each connected client for free. Since each actor is assigned a process id, the actor which runs the game server just needed to keep a mapping of username and player ids to process ids. It made implementing a “whisper” chat command and despawning logged off players trivial. For “whisper”, the server maps the target player’s username to their pid and send the chat message along. To get despawning working for players that logged off, the server takes the process id of the disconnecting player, released their player id back into the pool, then broadcasted the despawn message to the rest of the connected clients.&lt;/p&gt;
+
+&lt;p&gt;Most importantly, using actor based concurrency removed the cognitive burden associated with a more traditional threading approach. There was no need to manage mutexes or deal with deadlocks. The only thing to focus on was message structure, the runtime took care of the rest.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-didn’t-go-well-the-map&quot;&gt;What Didn’t Go Well: The Map&lt;/h2&gt;
+
+&lt;p&gt;Getting a performant way of representing the map proved to be a challenge. With a little understanding of how they are built and sent to the client I think you will see why.&lt;/p&gt;
+
+&lt;p&gt;A Minecraft classic map is made up of blocks. They get sorted in a “x * y * z” matrix of unsigned 8 bit integers. Each byte in the matrix represents corresponds to the type of block and the index is its position in the world. When this data is sent to the client the matrix is converted to a one dimensional array, a 4 byte header (the number of elements in the array) is added, then it is gziped and sent is chunks of 1024 bytes to the client.&lt;/p&gt;
+
+&lt;p&gt;The largest map is 512 * 512 * 64 blocks. This means it takes 16.78mb of memory for the map data if you store one byte per block. We also needed the ability to update an arbitrary block, which meant that if we treated it as a binary we would have a lot of work to access and update a single block. To overcome this, I implemented two versions of an Erlang Term Storage based map, each with their own issues.&lt;/p&gt;
+
+&lt;h3 id=&quot;attempt-one&quot;&gt;Attempt One&lt;/h3&gt;
+
+&lt;p&gt;Erlang Term Storage (ETS) was a really appealing way to deal with map updates. It provides a key value table which can contain any arbitrary element, has multiple storage options, and provides constant lookup or logarithmic lookup time. If each block in the map was stored as a tuple like &lt;code&gt;{{x,y,z}, block_type}&lt;/code&gt;, we could do our updates quickly with little overhead. There were two issues with this approach, it was very large in memory and you needed to build the array to send to the client.&lt;/p&gt;
+
+&lt;p&gt;For a 512 * 512 * 64 block map, it required an 800mb table. This didn’t feel the best since if we were doing this using malloced c, we could get by with a fiftieth of that.
+The other, more pressing, issue was building the array of map data to send to the client. By default, ETS tables are unsorted sets. This meant our process for building the array was:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Load all of the terms from the table into memory&lt;/li&gt;
+&lt;li&gt;Sort the keys into the correct order&lt;/li&gt;
+&lt;li&gt;Concatenate each value into a new array&lt;/li&gt;
+&lt;li&gt;Send that array to the client&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For the largest map size we ended up sorting and concatenating 16,777,216 items. This proved to be very slow. Switching storage options didn’t provide any appreciable speed boost; another solution was needed.&lt;/p&gt;
+
+&lt;h1 id=&quot;attempt-two&quot;&gt;Attempt Two&lt;/h1&gt;
+
+&lt;p&gt;After a good nights sleep and a bit of Googling, I decided to add Run-length encoding to our map’s internal structure. This helped tremendously with the performance and size.&lt;/p&gt;
+
+&lt;p&gt;If you are unfamiliar, Run-length encoding (RLE) is a lossless form of compression which stores consecutive elements as a single value, and then the number of repetitions. This means:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;[1,2,2,2,5]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Could become&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;[{1, 5}, {3, 2}, {1, 1}]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Since our map data has a lot of consecutive elements, compressing a row or column with RLE means we save a lot on space (800mb to 16mb) and we cut down on the amount of sorting we need to do in memory. Instead of storing &lt;code&gt;{{x,y,z}, block_type}&lt;/code&gt; we use &lt;code&gt;{{y,z}, x_row_compressed}&lt;/code&gt;. This means we only sort 32,768 items, then decompress and concatenate entire rows at a time. The RLE approach proved to be good enough given the time constraints and its the one that made it into the final submission.&lt;/p&gt;
+
+&lt;h2 id=&quot;still-not-perfect&quot;&gt;Still Not Perfect&lt;/h2&gt;
+
+&lt;p&gt;While I’m quite proud of what we were able to get done in two days, I still feel like there were a few areas that I could make better given some more time: GameServer ended up being too large for my tastes. I feel it would be cleaner if there was a split between tracking players, passing player changes around and chat message. We currently just use send to pass messages back to clients, it would be more intention revealing if there was a public api, provided by ClientProtocol, to encapsulate this behavior. The map should be built as a gzip stream when we read it from the ETS table. The current list to binary to gzip process is not performant. I’m unhappy with the way fluids work. It feels like they want to be treated as a player like thing and live inside of their own simple_one_for_one supervisor.&lt;/p&gt;
+
+&lt;p&gt;Outside of a few small issues and some areas that I want to correct, the contest was an enjoyable time. Big thanks to Bruno and the rest of the organizers, judges and sponsors for putting on such a wonderful event.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 06 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://technology.customink.com//blog/2018/01/06/spawnfest-retrospective/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2018/01/06/spawnfest-retrospective/</guid>
+      </item>
+    
+      <item>
+        <title>Clipart on AWS Lambda</title>
+        <description>&lt;p&gt;In our design lab, each request to add a new piece of clipart or process a user upload touches our clipart service. Historically, this application has been hosted on EC2 which has led to some problems for us. A combination of inconsistent load and random hangups on certain files has led to it becoming an operational and financial burden. We chose to undertake the work to migrate the code path which was the worst offender to AWS Lambda. While not painless, this proved to address the two pain points we had with the current setup.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;The main issue we had with the old service was load. The load on the application is not consistent, even with autoscaling we end up over-provisioned during off peak hours and under-provisioned at critical times. This has cost us monetarily, with us paying for more servers than we need, or caused issues for customers, both internal and external, when working with clipart inside of the Custom Ink design lab without enough servers to handle all of their requests. The application also suffers from random hangups from poorly formatted clipart files or extremely large user uploads. A request for a file in either of these categories would cause an application server to fail to respond to health checks, leave the load balance, then require manual intervention to become healthy again.&lt;/p&gt;
+
+&lt;p&gt;Lambda proved to be an excellent way to combat this issue. Amazon&amp;#39;s provided Node.js environment already shipped ImageMagick, a critical part of our existing service; they guaranteed a stronger level of isolation between requests than we can realistically provide; and, like all AWS supported platform, had a well documented client library for accessing all of the stored data we need to complete requests. As long as we could generate files which were similar to the current service, it would reduce the burden on operations, keep a bad image from hampering site performance, and help us control our costs by only paying for the processing time we need.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-porting-process&quot;&gt;The Porting Process&lt;/h3&gt;
+
+&lt;p&gt;The process we needed to replicate performed a few integrated tasks. It was responsible for:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Retrieving the file from S3&lt;/li&gt;
+&lt;li&gt;Resizing and scaling images&lt;/li&gt;
+&lt;li&gt;Removing and changing colors&lt;/li&gt;
+&lt;li&gt;Converting images to a single color&lt;/li&gt;
+&lt;li&gt;Tracking user selection of clipart in the design lab&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Accomplishing file retrieval from S3 was simple, we just called out to the Node.js SDK to do this. Resizing and scaling are handled by ImageMagick, and color removal and conversion were implemented by hand. Tracking user selection was moved to a SQS queue. The lambda just publishes the requests to the queue, and another application collects the data for reporting purposes.&lt;/p&gt;
+
+&lt;p&gt;Porting to Lambda was not difficult, the first version was completed in about two days of work, but the process wasn&amp;#39;t without issues. Debugging took much longer and we ran into a few hiccups along the way.&lt;/p&gt;
+
+&lt;h3 id=&quot;some-hiccups&quot;&gt;Some Hiccups&lt;/h3&gt;
+
+&lt;p&gt;The issues we ran into fell into three groups, API Gateway issues, ImageMagick issues and environment reuse issues.&lt;/p&gt;
+
+&lt;p&gt;API Gateway is an Amazon service which, among other things, allows for you to invoke a Lambda function over HTTP. It is first and foremost designed for use with XML or JSON. This becomes a problem when trying to serve binary since the api gateway attempts to set the headers for xml, text, or json over the binary content.&lt;/p&gt;
+
+&lt;p&gt;To get it to serve an arbitrary binary back to a web browser requires you to do two things. First, you need to set &lt;code&gt;isBase64Encoded&lt;/code&gt; to true in the returned json of the handler. Second, you need to update your binary media types to include &lt;code&gt;*/*&lt;/code&gt; then redeploy the stage.&lt;/p&gt;
+
+&lt;p&gt;The second major issue we ran into was ImageMagick on Lambda itself. Long story short, we were unable to disable antialiasing when resizing. That issue required us to render each clipart at their preferred eps size, pull the image into memory, use the &lt;a href=&quot;https://en.wikipedia.org/wiki/Color_difference#CIEDE2000&quot;&gt;CIEDE 2000&lt;/a&gt; formula to identify the colors we need to remove, then apply our optional one color conversation pass. When looking at using ImageMagick on Lambda I would strongly suggest testing anything related to color heavily before investing.&lt;/p&gt;
+
+&lt;p&gt;Finally we had some issues with &lt;a href=&quot;https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/&quot;&gt;environment reuse&lt;/a&gt;. The temporary space that AWS provides is kept when lambda containers are reused. This means that if / when your lambda function reaches the point where AWS starts to reuse environments, you can fill up the disk and cause your function to error out. The easiest way to deal with that is to delete any files your lambda function created before finishing execution.&lt;/p&gt;
+
+&lt;h3 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h3&gt;
+
+&lt;p&gt;At CustomInk we use Rollbar for all of our error reporting. When using Rollbar with Lambda, take advantage of their out of the box &lt;a href=&quot;https://rollbar.com/blog/lambda-support-for-nodejs-python/&quot;&gt;integration for lambda&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I would also strongly suggest setting up X-Ray. This service proved to be invaluable during development allowing us to see slow paths in our code. If you use promises to structure your code i&amp;#39;ve found the following snippet to be helpful:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AWSXRay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;aws-xray-sdk-core&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;kr&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TRACE_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_X_AMZN_TRACE_ID&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xrayPromise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;segment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TRACE_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;undefined&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;promise&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;AWSXRay&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;captureAsyncFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;segment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subsegment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;promise&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;subsegment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;subsegment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;nx&quot;&gt;reject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xrayPromise&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;in-production&quot;&gt;In Production&lt;/h3&gt;
+
+&lt;p&gt;Moving over to a Lambda based process allowed us to cut down on the number and size of the servers needed for our clipart service. Overall we feel that Lambda was a good fit for the project. It allowed us to realize the goal of a better scaling clipart process and gain significant cost savings.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 19 Sep 2017 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</guid>
+      </item>
+    
+      <item>
         <title>Power Moves: SQL Server on Linux, Rails, and Docker</title>
         <description>&lt;div class=&quot;tb-Masthead&quot;&gt;
   &lt;img src=&quot;/assets/content/power-moves/masthead-51a30dbb8a50422db2da48cedd1cec92.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;The Ultimate Teen Titans Power Move.&quot; /&gt;

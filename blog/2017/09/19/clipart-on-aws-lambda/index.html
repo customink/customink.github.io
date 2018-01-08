@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Clipart on AWS Lambda - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="In our design lab, each request to add a new piece of clipart or process a user upload touches our clipart service. Historically, this application ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Clipart on AWS Lambda</h1>
+        <p>In our design lab, each request to add a new piece of clipart or process a user upload touches our clipart service. Historically, this application has been hosted on EC2 which has led to some problems for us. A combination of inconsistent load and random hangups on certain files has led to it becoming an operational and financial burden. We chose to undertake the work to migrate the code path which was the worst offender to AWS Lambda. While not painless, this proved to address the two pain points we had with the current setup.</p>
+
+<!--more-->
+
+<p>The main issue we had with the old service was load. The load on the application is not consistent, even with autoscaling we end up over-provisioned during off peak hours and under-provisioned at critical times. This has cost us monetarily, with us paying for more servers than we need, or caused issues for customers, both internal and external, when working with clipart inside of the Custom Ink design lab without enough servers to handle all of their requests. The application also suffers from random hangups from poorly formatted clipart files or extremely large user uploads. A request for a file in either of these categories would cause an application server to fail to respond to health checks, leave the load balance, then require manual intervention to become healthy again.</p>
+
+<p>Lambda proved to be an excellent way to combat this issue. Amazon&#39;s provided Node.js environment already shipped ImageMagick, a critical part of our existing service; they guaranteed a stronger level of isolation between requests than we can realistically provide; and, like all AWS supported platform, had a well documented client library for accessing all of the stored data we need to complete requests. As long as we could generate files which were similar to the current service, it would reduce the burden on operations, keep a bad image from hampering site performance, and help us control our costs by only paying for the processing time we need.</p>
+
+<h3 id="the-porting-process">The Porting Process</h3>
+
+<p>The process we needed to replicate performed a few integrated tasks. It was responsible for:</p>
+
+<ul>
+<li>Retrieving the file from S3</li>
+<li>Resizing and scaling images</li>
+<li>Removing and changing colors</li>
+<li>Converting images to a single color</li>
+<li>Tracking user selection of clipart in the design lab</li>
+</ul>
+
+<p>Accomplishing file retrieval from S3 was simple, we just called out to the Node.js SDK to do this. Resizing and scaling are handled by ImageMagick, and color removal and conversion were implemented by hand. Tracking user selection was moved to a SQS queue. The lambda just publishes the requests to the queue, and another application collects the data for reporting purposes.</p>
+
+<p>Porting to Lambda was not difficult, the first version was completed in about two days of work, but the process wasn&#39;t without issues. Debugging took much longer and we ran into a few hiccups along the way.</p>
+
+<h3 id="some-hiccups">Some Hiccups</h3>
+
+<p>The issues we ran into fell into three groups, API Gateway issues, ImageMagick issues and environment reuse issues.</p>
+
+<p>API Gateway is an Amazon service which, among other things, allows for you to invoke a Lambda function over HTTP. It is first and foremost designed for use with XML or JSON. This becomes a problem when trying to serve binary since the api gateway attempts to set the headers for xml, text, or json over the binary content.</p>
+
+<p>To get it to serve an arbitrary binary back to a web browser requires you to do two things. First, you need to set <code>isBase64Encoded</code> to true in the returned json of the handler. Second, you need to update your binary media types to include <code>*/*</code> then redeploy the stage.</p>
+
+<p>The second major issue we ran into was ImageMagick on Lambda itself. Long story short, we were unable to disable antialiasing when resizing. That issue required us to render each clipart at their preferred eps size, pull the image into memory, use the <a href="https://en.wikipedia.org/wiki/Color_difference#CIEDE2000">CIEDE 2000</a> formula to identify the colors we need to remove, then apply our optional one color conversation pass. When looking at using ImageMagick on Lambda I would strongly suggest testing anything related to color heavily before investing.</p>
+
+<p>Finally we had some issues with <a href="https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/">environment reuse</a>. The temporary space that AWS provides is kept when lambda containers are reused. This means that if / when your lambda function reaches the point where AWS starts to reuse environments, you can fill up the disk and cause your function to error out. The easiest way to deal with that is to delete any files your lambda function created before finishing execution.</p>
+
+<h3 id="monitoring">Monitoring</h3>
+
+<p>At CustomInk we use Rollbar for all of our error reporting. When using Rollbar with Lambda, take advantage of their out of the box <a href="https://rollbar.com/blog/lambda-support-for-nodejs-python/">integration for lambda</a>.</p>
+
+<p>I would also strongly suggest setting up X-Ray. This service proved to be invaluable during development allowing us to see slow paths in our code. If you use promises to structure your code i&#39;ve found the following snippet to be helpful:</p>
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">AWSXRay</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'aws-xray-sdk-core'</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">TRACE_ID</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">_X_AMZN_TRACE_ID</span>
+
+<span class="kd">function</span> <span class="nx">xrayPromise</span><span class="p">(</span><span class="nx">segment</span><span class="p">,</span> <span class="nx">promise</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">TRACE_ID</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">promise</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">AWSXRay</span><span class="p">.</span><span class="nx">captureAsyncFunc</span><span class="p">(</span><span class="nx">segment</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">subsegment</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">output</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">subsegment</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
+                <span class="nx">resolve</span><span class="p">(</span><span class="nx">output</span><span class="p">)</span>
+            <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">subsegment</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+            <span class="p">})</span>
+        <span class="p">})</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">xrayPromise</span>
+</code></pre></div>
+<h3 id="in-production">In Production</h3>
+
+<p>Moving over to a Lambda based process allowed us to cut down on the number and size of the servers needed for our clipart service. Overall we feel that Lambda was a good fit for the project. It allowed us to realize the goal of a better scaling clipart process and gain significant cost savings.</p>
+
+      </div>
+      <div class="tb-Post-author">
+        
+        
+        <div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Hunter Madison" src="http://www.gravatar.com/avatar/783bb0bb05dd4d4485b4707c0bf3854a?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    
+      <time pubdate datetime="2017-09-19T00:00:00-04:00">
+        19 Sep 2017
+      </time></br>
+      by Hunter Madison
+    
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/355E3B"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/hmadison"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+    
+      <div class="tb-Author-posts">
+        <a href="/authors/hunter-madison" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+          View All Posts
+        </a>
+      </div>
+    
+  </div>
+</div>
+
+      </div>
+    </div>
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2017/09/19/clipart-on-aws-lambda/';
+    var disqus_title = "Clipart on AWS Lambda";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>

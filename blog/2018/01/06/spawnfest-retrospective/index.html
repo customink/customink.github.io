@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Spawnfest Retrospective - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="This year I participated in SpawnFest 2017, a two day hackathon focused around the BEAM virtual machine. With judging finished, I felt this an appr...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
+  <script type="text/javascript">
+  (function(d) {
+    var config = {
+      kitId: 'tph7yyf',
+      scriptTimeout: 3000
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Spawnfest Retrospective</h1>
+        <p>This year I participated in <a href="https://spawnfest.github.io/">SpawnFest 2017</a>, a two day hackathon focused around the BEAM virtual machine. With judging finished, I felt this an appropriate time to  reflect on the architecture and process of my submission.</p>
+
+<!--more-->
+
+<p>My submission was a <a href="https://github.com/spawnfest/beam-craft">server for Classic Minecraft</a> written in Elixir. Unlike the current version, this version of Minecraft is very limited in feature set supporting only chat, placing blocks and moving fluids. Because of the simplistic protocol and the availability of open source clients, It seemed like a perfect project for a two day contest.</p>
+
+<h2 id="the-server">The Server</h2>
+
+<p>Unlike Ruby, C, or Java, Elixir is an actor based language. In actor based languages, communication across boundaries happens via message passing instead of function calls. Its roughly equivalent to a service oriented architecture, but replacing network boundaries between services with ‘in memory’ communication. The pattern leads to highly concurrent software, but requires a different way of thinking.</p>
+
+<p>At a high level, the server I submitted had three kinds of actors <a href="https://github.com/spawnfest/beam-craft/blob/master/lib/beam_craft/protocol.ex">client protocol</a>, <a href="https://github.com/spawnfest/beam-craft/blob/master/lib/beam_craft/game_server.ex">game server</a> and <a href="https://github.com/spawnfest/beam-craft/blob/master/lib/beam_craft/map_server.ex">map server</a>. Ranch, a socket acceptor pool, would spin up instances of the client protocol to manage connections between the server and client. Those instances decoded messages from the client and passed them to the game server, and the game server sent updates back to the client. The game server, kept track of all of the connected clients, ensuring that all changes in the map, chat messages and player connections / disconnections were seen by everyone on the server. Finally, the map server kept track of updates to the game map.</p>
+
+<h2 id="what-went-well-communication-between-clients">What Went Well: Communication Between Clients</h2>
+
+<p>The actor model was very nice to use for this project. It helped cleanly separate the encoding and decoding logic and provided process IDs to make tracking connected clients simple. It also helped us avoid the concurrency issues that some traditional approaches to multithreading suffer from.</p>
+
+<p>There was an actor for each connected client, all the game server needed to do was validate that the input was correct, then send a message to each client actor. The logic involving speaking to the protocol was contained in the client actor. This made the game server much cleaner, since all of the work to construct the binary was separate from the game server logic.</p>
+
+<p>There was also a good way to keep track of each connected client for free. Since each actor is assigned a process id, the actor which runs the game server just needed to keep a mapping of username and player ids to process ids. It made implementing a “whisper” chat command and despawning logged off players trivial. For “whisper”, the server maps the target player’s username to their pid and send the chat message along. To get despawning working for players that logged off, the server takes the process id of the disconnecting player, released their player id back into the pool, then broadcasted the despawn message to the rest of the connected clients.</p>
+
+<p>Most importantly, using actor based concurrency removed the cognitive burden associated with a more traditional threading approach. There was no need to manage mutexes or deal with deadlocks. The only thing to focus on was message structure, the runtime took care of the rest.</p>
+
+<h2 id="what-didn’t-go-well-the-map">What Didn’t Go Well: The Map</h2>
+
+<p>Getting a performant way of representing the map proved to be a challenge. With a little understanding of how they are built and sent to the client I think you will see why.</p>
+
+<p>A Minecraft classic map is made up of blocks. They get sorted in a “x * y * z” matrix of unsigned 8 bit integers. Each byte in the matrix represents corresponds to the type of block and the index is its position in the world. When this data is sent to the client the matrix is converted to a one dimensional array, a 4 byte header (the number of elements in the array) is added, then it is gziped and sent is chunks of 1024 bytes to the client.</p>
+
+<p>The largest map is 512 * 512 * 64 blocks. This means it takes 16.78mb of memory for the map data if you store one byte per block. We also needed the ability to update an arbitrary block, which meant that if we treated it as a binary we would have a lot of work to access and update a single block. To overcome this, I implemented two versions of an Erlang Term Storage based map, each with their own issues.</p>
+
+<h3 id="attempt-one">Attempt One</h3>
+
+<p>Erlang Term Storage (ETS) was a really appealing way to deal with map updates. It provides a key value table which can contain any arbitrary element, has multiple storage options, and provides constant lookup or logarithmic lookup time. If each block in the map was stored as a tuple like <code>{{x,y,z}, block_type}</code>, we could do our updates quickly with little overhead. There were two issues with this approach, it was very large in memory and you needed to build the array to send to the client.</p>
+
+<p>For a 512 * 512 * 64 block map, it required an 800mb table. This didn’t feel the best since if we were doing this using malloced c, we could get by with a fiftieth of that.
+The other, more pressing, issue was building the array of map data to send to the client. By default, ETS tables are unsorted sets. This meant our process for building the array was:</p>
+
+<ul>
+<li>Load all of the terms from the table into memory</li>
+<li>Sort the keys into the correct order</li>
+<li>Concatenate each value into a new array</li>
+<li>Send that array to the client</li>
+</ul>
+
+<p>For the largest map size we ended up sorting and concatenating 16,777,216 items. This proved to be very slow. Switching storage options didn’t provide any appreciable speed boost; another solution was needed.</p>
+
+<h1 id="attempt-two">Attempt Two</h1>
+
+<p>After a good nights sleep and a bit of Googling, I decided to add Run-length encoding to our map’s internal structure. This helped tremendously with the performance and size.</p>
+
+<p>If you are unfamiliar, Run-length encoding (RLE) is a lossless form of compression which stores consecutive elements as a single value, and then the number of repetitions. This means:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[1,2,2,2,5]
+</code></pre></div>
+<p>Could become</p>
+<div class="highlight"><pre><code class="language-" data-lang="">[{1, 5}, {3, 2}, {1, 1}]
+</code></pre></div>
+<p>Since our map data has a lot of consecutive elements, compressing a row or column with RLE means we save a lot on space (800mb to 16mb) and we cut down on the amount of sorting we need to do in memory. Instead of storing <code>{{x,y,z}, block_type}</code> we use <code>{{y,z}, x_row_compressed}</code>. This means we only sort 32,768 items, then decompress and concatenate entire rows at a time. The RLE approach proved to be good enough given the time constraints and its the one that made it into the final submission.</p>
+
+<h2 id="still-not-perfect">Still Not Perfect</h2>
+
+<p>While I’m quite proud of what we were able to get done in two days, I still feel like there were a few areas that I could make better given some more time: GameServer ended up being too large for my tastes. I feel it would be cleaner if there was a split between tracking players, passing player changes around and chat message. We currently just use send to pass messages back to clients, it would be more intention revealing if there was a public api, provided by ClientProtocol, to encapsulate this behavior. The map should be built as a gzip stream when we read it from the ETS table. The current list to binary to gzip process is not performant. I’m unhappy with the way fluids work. It feels like they want to be treated as a player like thing and live inside of their own simple_one_for_one supervisor.</p>
+
+<p>Outside of a few small issues and some areas that I want to correct, the contest was an enjoyable time. Big thanks to Bruno and the rest of the organizers, judges and sponsors for putting on such a wonderful event.</p>
+
+      </div>
+      <div class="tb-Post-author">
+        
+        
+        <div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Hunter Madison" src="http://www.gravatar.com/avatar/783bb0bb05dd4d4485b4707c0bf3854a?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    
+      <time pubdate datetime="2018-01-06T00:00:00-05:00">
+        06 Jan 2018
+      </time></br>
+      by Hunter Madison
+    
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/355E3B"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/hmadison"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+    
+      <div class="tb-Author-posts">
+        <a href="/authors/hunter-madison" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+          View All Posts
+        </a>
+      </div>
+    
+  </div>
+</div>
+
+      </div>
+    </div>
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2018/01/06/spawnfest-retrospective/';
+    var disqus_title = "Spawnfest Retrospective";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+  </body>
+</html>
