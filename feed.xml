@@ -7,6 +7,253 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Learning ES6: Strings and Destructuring</title>
+        <description>&lt;p&gt;EcmaScript 6 is one of the newer versions of Javascript that we&amp;#39;re now using in a few projects across our teams, and most significantly in our New Design Lab project! As we start to iterate on new features for the lab, we&amp;#39;re reviewing and ramping up on the cool shiny features ES6 brings to the table. This week, we learned about some new string methods and destructuring.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h1 id=&quot;new-string-methods&quot;&gt;New String Methods&lt;/h1&gt;
+
+&lt;p&gt;With these new string methods, we won&amp;#39;t need to rely as much on using crazy regular expressions when trying to parse out strings. This also makes our ES6 code much more readable!&lt;/p&gt;
+
+&lt;h2 id=&quot;startswith&quot;&gt;.startsWith()&lt;/h2&gt;
+
+&lt;p&gt;For this example, let&amp;#39;s pretend we are trying to parse through a collection of flight  codes and find the ones which are flights on United Airlines.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s say we have a group of flight codes:
+&lt;code&gt;[&amp;#39;UA871&amp;#39;, &amp;#39;UA872&amp;#39;, &amp;#39;ATT314&amp;#39;, &amp;#39;ATT093&amp;#39;, &amp;#39;JBL123&amp;#39;]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;With the new &lt;code&gt;.startsWith()&lt;/code&gt; method, we can easily go through each of the flight codes and see if it starts with &amp;#39;UA&amp;#39; so we know that it&amp;#39;s from United Airlines. It would look something like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const flightCodes = [&#39;UA871&#39;, &#39;UA872&#39;, &#39;ATT314&#39;, &#39;ATT093&#39;, &#39;JBL123&#39;];
+for(let flight of flightCodes) {
+    console.log(flight.startsWith(&#39;UA&#39;));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This code would print to the console:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;true
+true
+false
+false
+false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;(More on the &lt;code&gt;for(let x of y)&lt;/code&gt; loops from ES6 in a later blog post!)&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s important to note that whatever string you pass to the &lt;code&gt;.startsWith()&lt;/code&gt; method is &lt;strong&gt;case sensitive&lt;/strong&gt;.  That means if we used &lt;code&gt;flight.startsWith(&amp;#39;ua&amp;#39;)&lt;/code&gt; we would get all falses. If you need to be able to find out if a string starts with some substring, regardless of casing, you will still need to use regular expressions.&lt;/p&gt;
+
+&lt;p&gt;You can also specify to the &lt;code&gt;.startsWith()&lt;/code&gt; method a second parameter: the index that the function considers the &amp;#39;start&amp;#39; of the string. For example, if I only want to see that the numerical part of the United Airlines flight codes starts with &amp;#39;87&amp;#39;, I could pass the index 3 because I know that there will always be the two characters &amp;#39;UA&amp;#39; before the number.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const unitedAirlines = [&#39;UA871&#39;, &#39;UA872&#39;, &#39;UA123&#39;, &#39;UA324&#39;];
+for(let flight of unitedAirlines) {
+    console.log(flight.startsWith(&#39;87&#39;, 3))
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This prints:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;true
+true
+false
+false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;endswith&quot;&gt;.endsWith()&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;.endsWith()&lt;/code&gt; works in a very similar way as &lt;code&gt;.startsWith()&lt;/code&gt; , but it checks the end of the string rather than the beginning.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const color1 = &#39;Light Blue&#39;;
+const color2 = &#39;Light Pink&#39;;
+console.log(color1.endsWith(&#39;Blue&#39;));
+console.log(color2.endsWith(&#39;Blue&#39;));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This would print:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;true
+false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can also specify a second parameter to &lt;code&gt;.endsWith()&lt;/code&gt; which is the length of the substring you&amp;#39;d like to check the end of. For example, if I want to check that the first 5 characters of my string ends with &amp;#39;ght&amp;#39;, I would have to pass the length 5 like so:
+&lt;code&gt;color1.endsWith(&amp;#39;ght&amp;#39;, 5)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Which would return &lt;code&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;includes&quot;&gt;.includes()&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;.includes()&lt;/code&gt; is a pretty straightforward method - it returns &lt;code&gt;true&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt; if the string includes the substring. Like the above two methods, it is case sensitive, so if you need to be able to know if the string includes the substring regardless of casing, you would still need to use regular expressions or modify the prototype.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const color = &#39;Light Blue&#39;;
+color.includes(&#39;Blu&#39;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;returns &lt;code&gt;true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;repeat&quot;&gt;.repeat()&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;.repeat()&lt;/code&gt; is also pretty straightforward! It takes one parameter: how many times you would like the string to be repeated, and it returns that string.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const repeatMe = &#39;Repeat This&#39;;
+repeatMe.repeat(5);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This returns: &lt;code&gt;&amp;quot;Repeat ThisRepeat ThisRepeat ThisRepeat ThisRepeat This&amp;quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;One interesting application of the &lt;code&gt;.repeat()&lt;/code&gt; method is for a function that can add a uniform amount of left padding to some lines of text, such that they look right-aligned. We can write a function which takes in the string, and the amount of padding that we would like to add.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;function leftPad(str, padLength) {
+    return `${&#39; &#39;.repeat(padLength - str.length)}${str}`;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We subtract the length of the string from our padding so every string will always be right aligned regardless of its length. Then, we can call our leftPad method like so:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;console.log(leftPad(&#39;Hello&#39;, 10);
+console.log(leftPad(&#39;World&#39;, 10);
+console.log(leftPad(&#39;Yay&#39;, 10);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;which would output the three strings nicely aligned to the right:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;     Hello
+     World
+       Yay
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1 id=&quot;destructuring&quot;&gt;Destructuring&lt;/h1&gt;
+
+&lt;p&gt;Destructuring is an interesting new feature of ES6 which lets us write less lines of code when trying to extract data from objects, arrays, maps and sets. This is especially useful when we need to extra lots of data from one object/array/map/set.&lt;/p&gt;
+
+&lt;h2 id=&quot;destructuring-an-object&quot;&gt;Destructuring an Object&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;#39;s say we are dealing with the flights again, but we have some more information about each flight like so:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const flight = {
+    airline: &#39;United Airlines&#39;,
+    code: &#39;UA872&#39;,
+    origin: &#39;San Fransisco&#39;,
+    destination: &#39;Taipei&#39;,
+    gate: &#39;D72&#39;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Without destructuring, in order to get each piece of data into its own variable, we have to write something like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const airline = flight.airline;
+const code = flight.code;
+const origin = flight.origin;
+// etc. etc.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is a lot of repeated code! With destructuring, we can do this in a much simpler way:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const { airline, code, origin, destination, gate } = flight;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, each of these variables will match up with the keys in the&lt;code&gt;flight&lt;/code&gt; object, and assign to it the value. So, if we &lt;code&gt;console.log(destination)&lt;/code&gt; then we will get &lt;code&gt;&amp;quot;Taipei&amp;quot;&lt;/code&gt;. We can pick and choose which keys we care about too, so if we left out &lt;code&gt;gate&lt;/code&gt;, the rest of the variables would still work.&lt;/p&gt;
+
+&lt;p&gt;This can be especially useful for when we have deeply nested objects like in many JSON responses!&lt;/p&gt;
+
+&lt;p&gt;But what if we don&amp;#39;t want to keep the original key names and still use destructuring? For example, what if we are already using the variable &lt;code&gt;code&lt;/code&gt; for something else? Well, we can specify what the new variables should be named.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const { code: flightCode } = flight;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, we can &lt;code&gt;console.log(flightCode)&lt;/code&gt; and that will return what was in &lt;code&gt;flight.code&lt;/code&gt; , or &lt;code&gt;&amp;#39;UA872&amp;#39;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;What if we want to be able to pick out some specific data from an object, but the key doesn&amp;#39;t exist in the object? To avoid a code breaking error, we can set a default value when destructuring.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;const { airline, code, plane = &amp;#39;Boeing 757&amp;#39; } = flight;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Even though there is no &lt;code&gt;flight.plane&lt;/code&gt;, we can still use the variable &lt;code&gt;plane&lt;/code&gt; which will be holding the default value &lt;code&gt;&amp;#39;Boeing 757&amp;#39;&lt;/code&gt;. If there is a plane key in the flight object, then the variable &lt;code&gt;plane&lt;/code&gt; will be holding &lt;code&gt;flight.plane&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can also combine these two in our destructuring expression for maximum syntactical sugar!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const { airline = &#39;JetBlue&#39;, code: flightCode = &#39;JBL123&#39;, plane = &#39;Boeing 757&#39; } = flight;
+console.log(airline);
+console.log(flightCode);
+console.log(plane);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will print out:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;United Airlines
+UA872
+Boeing 757
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;destructuring-an-array&quot;&gt;Destructuring an Array&lt;/h2&gt;
+
+&lt;p&gt;We can also use destructuring on an array, which assigns the variables based on the index of the value in the array. Let&amp;#39;s look at a list of student names:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const students = [&#39;Mary&#39;, &#39;John&#39;, &#39;Sue&#39;, &#39;Miranda&#39;]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Instead of assigning our variables like this...&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const student1 = students[0];
+const student2 = students[1];
+// etc.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can use destructuring!
+&lt;code&gt;const [student1, student2, student3, student4] = students&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Then when we  &lt;code&gt;console.log(student4)&lt;/code&gt; we get &lt;code&gt;&amp;#39;Miranda&amp;#39;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This is especially useful for CSV (comma separated values) files.&lt;/p&gt;
+
+&lt;p&gt;Another interesting ES6 feature we can use with array destructuring is the splat operator. For example, if we have an array which has the name of the school as the first value, and the rest of the values are the students, we can write:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const schoolAndStudents = [&#39;University Of Virginia&#39;, &#39;Mary&#39;, &#39;John&#39;, &#39;Sue&#39;, &#39;Miranda&#39;];
+const [school, ...students] = schoolAndStudents;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then &lt;code&gt;console.log(students)&lt;/code&gt; will return an array of the rest of the values: &lt;code&gt;[&amp;#39;Mary&amp;#39;, &amp;#39;John&amp;#39;, &amp;#39;Sue&amp;#39;, &amp;#39;Miranda&amp;#39;]&lt;/code&gt;. Without the &lt;code&gt;...&lt;/code&gt; operator, like this: &lt;code&gt;const [school, students] = schoolAndStudents&lt;/code&gt;, &lt;code&gt;console.log(students)&lt;/code&gt; would only return the first string, &lt;code&gt;&amp;#39;Mary&amp;#39;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;sweet-unlocks-swapping-variables-multiple-returns-and-named-defaults&quot;&gt;Sweet Unlocks: Swapping variables, multiple returns, and named defaults&lt;/h2&gt;
+
+&lt;p&gt;With destructuring, we can get some sweet unlocks! One cool example was being able to swap variables in one line. Before ES6, in order to swap variables, we would need to use a temporary variable like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;let var1 = &#39;A&#39;;
+let var2 = &#39;B&#39;;
+const tmp = var1;
+var1 = var2;
+var2 = tmp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;But with destructuring, we can do this in one line:
+&lt;code&gt;[var1, var2] = [var2, var1]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And now, &lt;code&gt;var1&lt;/code&gt; holds &lt;code&gt;&amp;#39;B&amp;#39;&lt;/code&gt; and &lt;code&gt;var2&lt;/code&gt; holds &lt;code&gt;&amp;#39;A&amp;#39;&lt;/code&gt;!&lt;/p&gt;
+
+&lt;p&gt;We can also take advantage of destructuring to get multiple returns from a function. Let&amp;#39;s say we wrote a function that builds flight codes for different airlines, assuming that the only thing that needs to change is the letter code in the begining of the string.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;function flightCode(num) {
+    const airlineCode = {
+        United: `${UA}${num}`,
+        JetBlue: `${JBL}${num}`,
+        American: `${AA}${num}`
+    }
+    return airlineCode;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, we can easily convert our number into all of the airline codes. But, we still have to specify each of the different airlines to get the specific code for that airline.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const flightCodes = flightCode(872);
+const United = flightCodes.United;
+const JetBlue = flightCodes.JetBlue;
+const American = flightCodes.American;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With destructuring, we can get the value of each of the flight codes into its own variable in one line:
+&lt;code&gt;const { United, JetBlue, American } = flightCode(872)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Because the function &lt;code&gt;flightCode()&lt;/code&gt; returns an object, we can directly set our variables with destructuring.&lt;/p&gt;
+
+&lt;p&gt;Another cool unlock we get with destructuring is the ability to use named defaults in our method parameters. Let&amp;#39;s take a look at an example that calculates flight costs.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;function costOfFlight(distance, basePrice = 5, tax = 0.15) {
+    const priceBeforeTax = distance * 0.25 + basePrice;
+    return priceBeforeTax + (priceBeforeTax * tax);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This function expects that, when it is called, the three parameters will be passed to it in a specific order. &lt;code&gt;distance&lt;/code&gt; first, then &lt;code&gt;basePrice&lt;/code&gt;, and then &lt;code&gt;tax&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;However with destructuring, we can list our variables in any order we&amp;#39;d like and we don&amp;#39;t need to include all of them if there are default values. We just need to add in our destructuring syntax!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;function costOfFlight({distance = 50, basePrice = 5, tax = 0.15} = {}) {
+    const priceBeforeTax = distance * 0.25 + basePrice;
+    return priceBeforeTax + (priceBeforeTax * tax);
+}
+
+console.log(costOfFlight({basePrice: 1000, distance: 100}));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This returns &lt;code&gt;1178.75&lt;/code&gt; . Man, flights can be pricy!&lt;/p&gt;
+
+&lt;p&gt;One important thing to note is that we do need to set a default value for the parameter object. This is to avoid any errors when calling the method with no parameters - in that case, it will use the default values of each.&lt;/p&gt;
+
+&lt;h1 id=&quot;notes-and-thoughts&quot;&gt;Notes and Thoughts&lt;/h1&gt;
+
+&lt;p&gt;During my team discussion, we agreed that we liked how readable the new String methods were. As someone that&amp;#39;s pretty comfortable with Ruby, I liked how these methods reminded me of the same kind of readability that you get in Ruby. However, we did notice that with destructuring, things can get unreadable quickly if we use it excessively. We talked about how there is a fine line between writing less lines of code and readability of the code. It reminded me of the ternary operator for conditions - sometimes it is very useful, like when assigning a variable, but when it gets nested or does more than just assignment, ternaries can really block up your mental model of the code.&lt;/p&gt;
+
+&lt;p&gt;Although it IS super cool to use all the fun syntax and feels clever, we need to remember that an important aspect of programming is the code&amp;#39;s maintainability, and the ease at which another programmer can read and modify your code! We should be conscious of when and why we are using shorthand syntax. Sometimes, even if there is one or two extra lines of code, it&amp;#39;s worth it to make the code more readable.&lt;/p&gt;
+
+&lt;p&gt;Another interesting discussion which was brought up was if we should take advantage of Javascript&amp;#39;s prototype feature and add new methods to String that are similar to the new ones from ES6. One of the best parts of the new String methods is that our code is more readable, and we don&amp;#39;t need to use regular expressions. Should we also modify the String prototype to include new methods for other types of regular expressions? For example, in our code base, we have a file of regular expression constants including a huge one that checks if there is an emoji in your string. Should we create a new method on the String prototype called &lt;code&gt;.hasEmoji()&lt;/code&gt; ?&lt;/p&gt;
+
+&lt;p&gt;We came to the agreement that modifying a core object like String is scary and unreliable because it exists in the global namespace and we could be overriding something without knowing it. However, we did make the distinction that modifying the String prototype in application code is less risky than doing it when writing a library, since you have more of a guarantee that your application code is the &amp;quot;last&amp;quot; part so you can rely on that function doing what you expect it to do.&lt;/p&gt;
+
+&lt;p&gt;Well, I hope this post gave you some food for thought!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;What are your thoughts on these sweet new ES6 features?&lt;/li&gt;
+&lt;li&gt;Where is the line between less lines of code and readability?&lt;/li&gt;
+&lt;li&gt;And, when do you think it&amp;#39;s okay to modify Javascript prototypes?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thanks for reading!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 23 Feb 2018 00:00:00 -0500</pubDate>
+        <link>http://technology.customink.com//blog/2018/02/23/learning-es6-strings-and-destructuring/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2018/02/23/learning-es6-strings-and-destructuring/</guid>
+      </item>
+    
+      <item>
         <title>Spawnfest Retrospective</title>
         <description>&lt;p&gt;This year I participated in &lt;a href=&quot;https://spawnfest.github.io/&quot;&gt;SpawnFest 2017&lt;/a&gt;, a two day hackathon focused around the BEAM virtual machine. With judging finished, I felt this an appropriate time to  reflect on the architecture and process of my submission.&lt;/p&gt;
 
