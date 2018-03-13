@@ -7,6 +7,98 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Learning ES6: New Methods for Arrays</title>
+        <description>&lt;p&gt;In ES6, we get a bunch of new native methods for Arrays that are super useful! This is a short blog post that goes over each of the new methods - &lt;code&gt;.from()&lt;/code&gt;, &lt;code&gt;.of()&lt;/code&gt;, &lt;code&gt;.find()&lt;/code&gt;, &lt;code&gt;.findIndex()&lt;/code&gt;, &lt;code&gt;.some()&lt;/code&gt;, and &lt;code&gt;.every()&lt;/code&gt; - and how they work.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;array-from-and-array-of&quot;&gt;Array.from() and Array.of()&lt;/h2&gt;
+
+&lt;p&gt;We&amp;#39;re definitely familiar with Arrays as a kind of data structure which can hold a collection. But in Javascript, there are  &lt;em&gt;array-ish&lt;/em&gt; objects. These are objects that have a length and look like an array, but we don&amp;#39;t get all of our array methods, like map, reduce, or the rest of the ones we are about to go through in this blog post! This is one of the weird parts about Javascript. Some examples are the &lt;code&gt;arguments&lt;/code&gt; parameter which can be used in a function (that holds a collection of all the arguments given) and collections of DOM nodes that a function like &lt;code&gt;document.getElementsBy...()&lt;/code&gt; returns.&lt;/p&gt;
+
+&lt;p&gt;Prior to ES6, we would have to use one of our for loops which can be used on a non-array type, and transform each element into an array manually. But now we get these handy class methods that can create new arrays!&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Array.from()&lt;/code&gt; takes in a parameter, which is usually one of those &lt;em&gt;array-ish&lt;/em&gt; objects, and turns it into an array. Some interesting use cases include... calling reduce on a function that sums up any given number of arguments (using the &lt;code&gt;arguments&lt;/code&gt; parameter) or manipulating specific DOM elements like adding styles or events.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;function sumAll() {
+    const numbers = Array.from(arguments);
+    return numbers.reduce((prev, next) =&amp;gt; prev + next, 0));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;Array.of()&lt;/code&gt; can take several parameters and uses them to create an array. When I first learned about this method, I wondered what was the difference between using &lt;code&gt;Array.of()&lt;/code&gt; and &lt;code&gt;new Array()&lt;/code&gt;. Why not use the constructor if we know what we want the Array to be created of?&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;new Array()&lt;/code&gt; has some inconsistent behavior depending on the number of arguments you pass to it.  If we take a look at an example comparing &lt;code&gt;new Array()&lt;/code&gt; and &lt;code&gt;Array.of()&lt;/code&gt;, this becomes a bit more clear.&lt;/p&gt;
+
+&lt;p&gt;Passing a single value:
+&lt;code&gt;new Array(2)&lt;/code&gt;
+Returns a new two element Array that is unpopulated:
+&lt;code&gt;[  ,  ]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Passing more than a single value:
+&lt;code&gt;new Array(1,2)&lt;/code&gt;
+Returns a new two element Array that is populated with those values:
+&lt;code&gt;[1, 2]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Array.of()&lt;/code&gt; , however, will always behave in the same way and create a new Array of the elements that you pass it.
+&lt;code&gt;Array.of(2)&lt;/code&gt;  returns &lt;code&gt;[2]&lt;/code&gt;
+&lt;code&gt;Array.of(1, 2)&lt;/code&gt; returns &lt;code&gt;[1, 2]&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Check out this interesting explanation and code example on Github: &lt;a href=&quot;https://gist.github.com/rwaldron/1074126#arrayof--variable-arity-&quot;&gt;https://gist.github.com/rwaldron/1074126#arrayof--variable-arity-&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;find-and-findindex&quot;&gt;.find() and .findIndex()&lt;/h2&gt;
+
+&lt;p&gt;ES6 introduces some new filtering methods that allow us to more easily find elements and indexes of those elements within arrays. It&amp;#39;s useful for when we need to find an element within an array that can&amp;#39;t be looked up solely by value. For example, if we are working with an array of objects like so:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const produce = [
+    {
+        name: &#39;apple&#39;,
+        color: &#39;red&#39;,
+        type: &#39;fruit&#39;,
+        stocked: true
+    },
+    {
+        name: &#39;banana&#39;,
+        color: &#39;yellow&#39;,
+        type: &#39;fruit&#39;,
+        stocked: false
+    },
+    {
+        name: &#39;carrot&#39;,
+        color: &#39;orange&#39;,
+        type: &#39;vegetable&#39;,
+        stocked: true
+    }
+]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If we want to get one of those objects out of the array, it&amp;#39;s difficult without reaching into each object and looping through. With the &lt;code&gt;.find()&lt;/code&gt; method, we can specify exactly what we want more easily! Let&amp;#39;s say we want the first stocked item in produce. We can pass the method a function parameter: &lt;code&gt;produce.find(item =&amp;gt; { item.stocked });&lt;/code&gt; and we&amp;#39;ll get back the entire object:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;apple&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;color:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;red&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;type:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;fruit&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;stocked:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The same goes for &lt;code&gt;.findIndex()&lt;/code&gt; , but instead of being returned the entire object or element, we will get the index of that element. In this case, &lt;code&gt;produce.findIndex(item =&amp;gt; { item.stocked });&lt;/code&gt; we would get the index &lt;code&gt;0&lt;/code&gt; .&lt;/p&gt;
+
+&lt;p&gt;You may be thinking, &amp;quot;Hey! I know another function that can do this already: &lt;code&gt;.indexOf()&lt;/code&gt;!&amp;quot; This also returns us the index of the element we are looking for. The difference lies in the parameters we pass to either function. &lt;code&gt;.indexOf()&lt;/code&gt; takes a value as a parameter, and is more suited for the use case of looking for an element in a collection of all primitive types. &lt;code&gt;.findIndex()&lt;/code&gt;  takes a function as a parameter, and is better for when you need to find an element that fulfills a condition. It&amp;#39;s useful for non-primitive types like objects and when you are looking for a match that is more significant than just a value.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-and-every&quot;&gt;.some() and .every()&lt;/h2&gt;
+
+&lt;p&gt;These two methods are pretty straightforward and they are a great fit for some specific use cases. Both the &lt;code&gt;.some()&lt;/code&gt; and &lt;code&gt;.every()&lt;/code&gt; methods take in functions which return booleans as parameters, and check if either &lt;strong&gt;some&lt;/strong&gt; of the elements in the array cause the function to return true or if &lt;strong&gt;every&lt;/strong&gt; element in the array returns true.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s say we have an array of numbers, and we want to know if some of the numbers are even. This is easy to write with the new &lt;code&gt;.some()&lt;/code&gt; method!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;const nums = [2, 3, 4, 5, 6]
+nums.some(num =&amp;gt; { num % 2 === 0 });
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will return true, because some of our elements (2, 4, 6)  will return true. However, since not all of the elements return true for that function, &lt;code&gt;nums.every(num =&amp;gt; { num % 2 === 0 });&lt;/code&gt; returns false.&lt;/p&gt;
+
+&lt;p&gt;The function that you pass to &lt;code&gt;.some()&lt;/code&gt; and &lt;code&gt;.every()&lt;/code&gt; gets access to three parameters. The only mandatory parameter is the element itself (in our example, we are using &lt;code&gt;num&lt;/code&gt;). You can also use two optional parameters - the index of that element and the entire array. This allows us to write more complex functions to use with these new Array methods.&lt;/p&gt;
+
+&lt;h2 id=&quot;notes-and-thoughts&quot;&gt;Notes and Thoughts&lt;/h2&gt;
+
+&lt;p&gt;In our discussion, everyone agreed that these new methods will be useful. It removes some of the needs to use jQuery, which can be a bigger package than you need in your project. We all thought that the &lt;code&gt;Array.from&lt;/code&gt; method was very practical especially since Javascript has these weird &lt;em&gt;array-ish&lt;/em&gt; objects. I really like how semantic these methods are; so many of the new ES6 features improve readability of your code - a great added benefit, especially with Javascript which can be a little crazy sometimes. It&amp;#39;s good to see that some of the &amp;quot;bad parts&amp;quot; of Javascript are being combatted with new methods that make our code more maintainable and understandable. To me, it definitely feels like Javascript is heading in the right direction. How do you feel about Javascript&amp;#39;s future? Which of these new Array methods is your favorite? What else would you like to see be added to Javascript?&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading!&lt;/p&gt;
+</description>
+        <pubDate>Mon, 12 Mar 2018 00:00:00 -0400</pubDate>
+        <link>http://technology.customink.com//blog/2018/03/12/learning-es6-new-methods-for-arrays/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2018/03/12/learning-es6-new-methods-for-arrays/</guid>
+      </item>
+    
+      <item>
         <title>Learning ES6: Strings and Destructuring</title>
         <description>&lt;p&gt;EcmaScript 6 is one of the newer versions of Javascript that we&amp;#39;re now using in a few projects across our teams, and most significantly in our New Design Lab project! As we start to iterate on new features for the lab, we&amp;#39;re reviewing and ramping up on the cool shiny features ES6 brings to the table. This week, we learned about some new string methods and destructuring.&lt;/p&gt;
 
@@ -8062,8 +8154,8 @@ PassengerRuby /usr/local/bin/ruby_tuned
       |_shipping_detail.rb
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And to make sure Rails can find all of my models, I need to update config/application.rb file as such:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;autoload_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/**&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;]
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;autoload_paths&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;app/models/**&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Feb 2012 15:38:00 -0500</pubDate>

@@ -64,8 +64,8 @@
       |_shipping_detail.rb
 </code></pre></div>
 <p>And to make sure Rails can find all of my models, I need to update config/application.rb file as such:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="err">'</span><span class="n">app</span><span class="o">/</span><span class="n">models</span><span class="o">/**</span><span class="s2">"]
-</span></code></pre></div>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">config</span><span class="p">.</span><span class="nf">autoload_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">'app/models/**'</span><span class="p">]</span>
+</code></pre></div>
 <p>This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.</p>
 
       </div>
