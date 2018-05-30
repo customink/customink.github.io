@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Learning ES6: Strings and Destructuring - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="EcmaScript 6 is one of the newer versions of Javascript that we&#39;re now using in a few projects across our teams, and most significantly in our ...">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-9fb5f199f67c50e99bda49998478901a6afd824fd2bd222f5562e57268788ecd.css">
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-1460f9e847670e2626e66143266004749ab6c7204a8d5a2ae394613f986c473d.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Learning ES6: Strings and Destructuring</h1>
+        <p>EcmaScript 6 is one of the newer versions of Javascript that we&#39;re now using in a few projects across our teams, and most significantly in our New Design Lab project! As we start to iterate on new features for the lab, we&#39;re reviewing and ramping up on the cool shiny features ES6 brings to the table. This week, we learned about some new string methods and destructuring.</p>
+
+<!--more-->
+
+<h1 id="new-string-methods">New String Methods</h1>
+
+<p>With these new string methods, we won&#39;t need to rely as much on using crazy regular expressions when trying to parse out strings. This also makes our ES6 code much more readable!</p>
+
+<h2 id="startswith">.startsWith()</h2>
+
+<p>For this example, let&#39;s pretend we are trying to parse through a collection of flight  codes and find the ones which are flights on United Airlines.</p>
+
+<p>Let&#39;s say we have a group of flight codes:
+<code>[&#39;UA871&#39;, &#39;UA872&#39;, &#39;ATT314&#39;, &#39;ATT093&#39;, &#39;JBL123&#39;]</code></p>
+
+<p>With the new <code>.startsWith()</code> method, we can easily go through each of the flight codes and see if it starts with &#39;UA&#39; so we know that it&#39;s from United Airlines. It would look something like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const flightCodes = ['UA871', 'UA872', 'ATT314', 'ATT093', 'JBL123'];
+for(let flight of flightCodes) {
+    console.log(flight.startsWith('UA'));
+}
+</code></pre></div>
+<p>This code would print to the console:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">true
+true
+false
+false
+false
+</code></pre></div>
+<p>(More on the <code>for(let x of y)</code> loops from ES6 in a later blog post!)</p>
+
+<p>It&#39;s important to note that whatever string you pass to the <code>.startsWith()</code> method is <strong>case sensitive</strong>.  That means if we used <code>flight.startsWith(&#39;ua&#39;)</code> we would get all falses. If you need to be able to find out if a string starts with some substring, regardless of casing, you will still need to use regular expressions.</p>
+
+<p>You can also specify to the <code>.startsWith()</code> method a second parameter: the index that the function considers the &#39;start&#39; of the string. For example, if I only want to see that the numerical part of the United Airlines flight codes starts with &#39;87&#39;, I could pass the index 3 because I know that there will always be the two characters &#39;UA&#39; before the number.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const unitedAirlines = ['UA871', 'UA872', 'UA123', 'UA324'];
+for(let flight of unitedAirlines) {
+    console.log(flight.startsWith('87', 3))
+}
+</code></pre></div>
+<p>This prints:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">true
+true
+false
+false
+</code></pre></div>
+<h2 id="endswith">.endsWith()</h2>
+
+<p><code>.endsWith()</code> works in a very similar way as <code>.startsWith()</code> , but it checks the end of the string rather than the beginning.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const color1 = 'Light Blue';
+const color2 = 'Light Pink';
+console.log(color1.endsWith('Blue'));
+console.log(color2.endsWith('Blue'));
+</code></pre></div>
+<p>This would print:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">true
+false
+</code></pre></div>
+<p>You can also specify a second parameter to <code>.endsWith()</code> which is the length of the substring you&#39;d like to check the end of. For example, if I want to check that the first 5 characters of my string ends with &#39;ght&#39;, I would have to pass the length 5 like so:
+<code>color1.endsWith(&#39;ght&#39;, 5)</code></p>
+
+<p>Which would return <code>true</code>.</p>
+
+<h2 id="includes">.includes()</h2>
+
+<p><code>.includes()</code> is a pretty straightforward method - it returns <code>true</code> or <code>false</code> if the string includes the substring. Like the above two methods, it is case sensitive, so if you need to be able to know if the string includes the substring regardless of casing, you would still need to use regular expressions or modify the prototype.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const color = 'Light Blue';
+color.includes('Blu');
+</code></pre></div>
+<p>returns <code>true</code>.</p>
+
+<h2 id="repeat">.repeat()</h2>
+
+<p><code>.repeat()</code> is also pretty straightforward! It takes one parameter: how many times you would like the string to be repeated, and it returns that string.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const repeatMe = 'Repeat This';
+repeatMe.repeat(5);
+</code></pre></div>
+<p>This returns: <code>&quot;Repeat ThisRepeat ThisRepeat ThisRepeat ThisRepeat This&quot;</code></p>
+
+<p>One interesting application of the <code>.repeat()</code> method is for a function that can add a uniform amount of left padding to some lines of text, such that they look right-aligned. We can write a function which takes in the string, and the amount of padding that we would like to add.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">function leftPad(str, padLength) {
+    return `${' '.repeat(padLength - str.length)}${str}`;
+}
+</code></pre></div>
+<p>We subtract the length of the string from our padding so every string will always be right aligned regardless of its length. Then, we can call our leftPad method like so:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">console.log(leftPad('Hello', 10);
+console.log(leftPad('World', 10);
+console.log(leftPad('Yay', 10);
+</code></pre></div>
+<p>which would output the three strings nicely aligned to the right:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">     Hello
+     World
+       Yay
+</code></pre></div>
+<h1 id="destructuring">Destructuring</h1>
+
+<p>Destructuring is an interesting new feature of ES6 which lets us write less lines of code when trying to extract data from objects, arrays, maps and sets. This is especially useful when we need to extra lots of data from one object/array/map/set.</p>
+
+<h2 id="destructuring-an-object">Destructuring an Object</h2>
+
+<p>Let&#39;s say we are dealing with the flights again, but we have some more information about each flight like so:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const flight = {
+    airline: 'United Airlines',
+    code: 'UA872',
+    origin: 'San Fransisco',
+    destination: 'Taipei',
+    gate: 'D72'
+}
+</code></pre></div>
+<p>Without destructuring, in order to get each piece of data into its own variable, we have to write something like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const airline = flight.airline;
+const code = flight.code;
+const origin = flight.origin;
+// etc. etc.
+</code></pre></div>
+<p>This is a lot of repeated code! With destructuring, we can do this in a much simpler way:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const { airline, code, origin, destination, gate } = flight;
+</code></pre></div>
+<p>Now, each of these variables will match up with the keys in the<code>flight</code> object, and assign to it the value. So, if we <code>console.log(destination)</code> then we will get <code>&quot;Taipei&quot;</code>. We can pick and choose which keys we care about too, so if we left out <code>gate</code>, the rest of the variables would still work.</p>
+
+<p>This can be especially useful for when we have deeply nested objects like in many JSON responses!</p>
+
+<p>But what if we don&#39;t want to keep the original key names and still use destructuring? For example, what if we are already using the variable <code>code</code> for something else? Well, we can specify what the new variables should be named.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const { code: flightCode } = flight;
+</code></pre></div>
+<p>Now, we can <code>console.log(flightCode)</code> and that will return what was in <code>flight.code</code> , or <code>&#39;UA872&#39;</code>.</p>
+
+<p>What if we want to be able to pick out some specific data from an object, but the key doesn&#39;t exist in the object? To avoid a code breaking error, we can set a default value when destructuring.</p>
+
+<p><code>const { airline, code, plane = &#39;Boeing 757&#39; } = flight;</code></p>
+
+<p>Even though there is no <code>flight.plane</code>, we can still use the variable <code>plane</code> which will be holding the default value <code>&#39;Boeing 757&#39;</code>. If there is a plane key in the flight object, then the variable <code>plane</code> will be holding <code>flight.plane</code>.</p>
+
+<p>We can also combine these two in our destructuring expression for maximum syntactical sugar!</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const { airline = 'JetBlue', code: flightCode = 'JBL123', plane = 'Boeing 757' } = flight;
+console.log(airline);
+console.log(flightCode);
+console.log(plane);
+</code></pre></div>
+<p>This will print out:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">United Airlines
+UA872
+Boeing 757
+</code></pre></div>
+<h2 id="destructuring-an-array">Destructuring an Array</h2>
+
+<p>We can also use destructuring on an array, which assigns the variables based on the index of the value in the array. Let&#39;s look at a list of student names:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const students = ['Mary', 'John', 'Sue', 'Miranda']
+</code></pre></div>
+<p>Instead of assigning our variables like this...</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const student1 = students[0];
+const student2 = students[1];
+// etc.
+</code></pre></div>
+<p>We can use destructuring!
+<code>const [student1, student2, student3, student4] = students</code></p>
+
+<p>Then when we  <code>console.log(student4)</code> we get <code>&#39;Miranda&#39;</code>.</p>
+
+<p>This is especially useful for CSV (comma separated values) files.</p>
+
+<p>Another interesting ES6 feature we can use with array destructuring is the splat operator. For example, if we have an array which has the name of the school as the first value, and the rest of the values are the students, we can write:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const schoolAndStudents = ['University Of Virginia', 'Mary', 'John', 'Sue', 'Miranda'];
+const [school, ...students] = schoolAndStudents;
+</code></pre></div>
+<p>Then <code>console.log(students)</code> will return an array of the rest of the values: <code>[&#39;Mary&#39;, &#39;John&#39;, &#39;Sue&#39;, &#39;Miranda&#39;]</code>. Without the <code>...</code> operator, like this: <code>const [school, students] = schoolAndStudents</code>, <code>console.log(students)</code> would only return the first string, <code>&#39;Mary&#39;</code>.</p>
+
+<h2 id="sweet-unlocks-swapping-variables-multiple-returns-and-named-defaults">Sweet Unlocks: Swapping variables, multiple returns, and named defaults</h2>
+
+<p>With destructuring, we can get some sweet unlocks! One cool example was being able to swap variables in one line. Before ES6, in order to swap variables, we would need to use a temporary variable like this:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">let var1 = 'A';
+let var2 = 'B';
+const tmp = var1;
+var1 = var2;
+var2 = tmp;
+</code></pre></div>
+<p>But with destructuring, we can do this in one line:
+<code>[var1, var2] = [var2, var1]</code></p>
+
+<p>And now, <code>var1</code> holds <code>&#39;B&#39;</code> and <code>var2</code> holds <code>&#39;A&#39;</code>!</p>
+
+<p>We can also take advantage of destructuring to get multiple returns from a function. Let&#39;s say we wrote a function that builds flight codes for different airlines, assuming that the only thing that needs to change is the letter code in the begining of the string.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">function flightCode(num) {
+    const airlineCode = {
+        United: `${UA}${num}`,
+        JetBlue: `${JBL}${num}`,
+        American: `${AA}${num}`
+    }
+    return airlineCode;
+}
+</code></pre></div>
+<p>Now, we can easily convert our number into all of the airline codes. But, we still have to specify each of the different airlines to get the specific code for that airline.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">const flightCodes = flightCode(872);
+const United = flightCodes.United;
+const JetBlue = flightCodes.JetBlue;
+const American = flightCodes.American;
+</code></pre></div>
+<p>With destructuring, we can get the value of each of the flight codes into its own variable in one line:
+<code>const { United, JetBlue, American } = flightCode(872)</code></p>
+
+<p>Because the function <code>flightCode()</code> returns an object, we can directly set our variables with destructuring.</p>
+
+<p>Another cool unlock we get with destructuring is the ability to use named defaults in our method parameters. Let&#39;s take a look at an example that calculates flight costs.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">function costOfFlight(distance, basePrice = 5, tax = 0.15) {
+    const priceBeforeTax = distance * 0.25 + basePrice;
+    return priceBeforeTax + (priceBeforeTax * tax);
+}
+</code></pre></div>
+<p>This function expects that, when it is called, the three parameters will be passed to it in a specific order. <code>distance</code> first, then <code>basePrice</code>, and then <code>tax</code>.</p>
+
+<p>However with destructuring, we can list our variables in any order we&#39;d like and we don&#39;t need to include all of them if there are default values. We just need to add in our destructuring syntax!</p>
+<div class="highlight"><pre><code class="language-" data-lang="">function costOfFlight({distance = 50, basePrice = 5, tax = 0.15} = {}) {
+    const priceBeforeTax = distance * 0.25 + basePrice;
+    return priceBeforeTax + (priceBeforeTax * tax);
+}
+
+console.log(costOfFlight({basePrice: 1000, distance: 100}));
+</code></pre></div>
+<p>This returns <code>1178.75</code> . Man, flights can be pricy!</p>
+
+<p>One important thing to note is that we do need to set a default value for the parameter object. This is to avoid any errors when calling the method with no parameters - in that case, it will use the default values of each.</p>
+
+<h1 id="notes-and-thoughts">Notes and Thoughts</h1>
+
+<p>During my team discussion, we agreed that we liked how readable the new String methods were. As someone that&#39;s pretty comfortable with Ruby, I liked how these methods reminded me of the same kind of readability that you get in Ruby. However, we did notice that with destructuring, things can get unreadable quickly if we use it excessively. We talked about how there is a fine line between writing less lines of code and readability of the code. It reminded me of the ternary operator for conditions - sometimes it is very useful, like when assigning a variable, but when it gets nested or does more than just assignment, ternaries can really block up your mental model of the code.</p>
+
+<p>Although it IS super cool to use all the fun syntax and feels clever, we need to remember that an important aspect of programming is the code&#39;s maintainability, and the ease at which another programmer can read and modify your code! We should be conscious of when and why we are using shorthand syntax. Sometimes, even if there is one or two extra lines of code, it&#39;s worth it to make the code more readable.</p>
+
+<p>Another interesting discussion which was brought up was if we should take advantage of Javascript&#39;s prototype feature and add new methods to String that are similar to the new ones from ES6. One of the best parts of the new String methods is that our code is more readable, and we don&#39;t need to use regular expressions. Should we also modify the String prototype to include new methods for other types of regular expressions? For example, in our code base, we have a file of regular expression constants including a huge one that checks if there is an emoji in your string. Should we create a new method on the String prototype called <code>.hasEmoji()</code> ?</p>
+
+<p>We came to the agreement that modifying a core object like String is scary and unreliable because it exists in the global namespace and we could be overriding something without knowing it. However, we did make the distinction that modifying the String prototype in application code is less risky than doing it when writing a library, since you have more of a guarantee that your application code is the &quot;last&quot; part so you can rely on that function doing what you expect it to do.</p>
+
+<p>Well, I hope this post gave you some food for thought!</p>
+
+<ul>
+<li>What are your thoughts on these sweet new ES6 features?</li>
+<li>Where is the line between less lines of code and readability?</li>
+<li>And, when do you think it&#39;s okay to modify Javascript prototypes?</li>
+</ul>
+
+<p>Thanks for reading!</p>
+
+      </div>
+      <div class="tb-Post-author">
+        
+        
+        <div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Miranda Wang" src="http://www.gravatar.com/avatar/b187b2b7ab47955a195b68f62ee6dae4?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    
+      <time pubdate datetime="2018-02-23T00:00:00-05:00">
+        23 Feb 2018
+      </time></br>
+      by Miranda Wang
+    
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/Ch0xi"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/mirandawang"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+    
+      <div class="tb-Author-posts">
+        <a href="/authors/miranda-wang" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+          View All Posts
+        </a>
+      </div>
+    
+  </div>
+</div>
+
+      </div>
+    </div>
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2018/02/23/learning-es6-strings-and-destructuring/';
+    var disqus_title = "Learning ES6: Strings and Destructuring";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32456448-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+    <script src="/assets/app-9b22a82c5e39b6e35faf56501565196c2778184fa749c44436f639b4986f61bc.js" type="text/javascript"></script>
+  </body>
+</html>
