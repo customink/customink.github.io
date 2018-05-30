@@ -3,7 +3,7 @@
   <channel>
     <title>CustomInk Technology Blog</title>
     <description></description>
-    <link>http://technology.customink.com/</link>
+    <link>https://technology.customink.com/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
@@ -94,7 +94,7 @@ nums.some(num =&amp;gt; { num % 2 === 0 });
 &lt;p&gt;Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Mon, 12 Mar 2018 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2018/03/12/learning-es6-new-methods-for-arrays/</link>
+        <link>https://technology.customink.com//blog/2018/03/12/learning-es6-new-methods-for-arrays/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2018/03/12/learning-es6-new-methods-for-arrays/</guid>
       </item>
     
@@ -231,7 +231,7 @@ Pineapple is the 3 item
 &lt;p&gt;Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Fri, 09 Mar 2018 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2018/03/09/learning-es6-loops-&-iterators/</link>
+        <link>https://technology.customink.com//blog/2018/03/09/learning-es6-loops-&-iterators/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2018/03/09/learning-es6-loops-&-iterators/</guid>
       </item>
     
@@ -478,7 +478,7 @@ console.log(costOfFlight({basePrice: 1000, distance: 100}));
 &lt;p&gt;Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Fri, 23 Feb 2018 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2018/02/23/learning-es6-strings-and-destructuring/</link>
+        <link>https://technology.customink.com//blog/2018/02/23/learning-es6-strings-and-destructuring/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2018/02/23/learning-es6-strings-and-destructuring/</guid>
       </item>
     
@@ -549,7 +549,7 @@ The other, more pressing, issue was building the array of map data to send to th
 &lt;p&gt;Outside of a few small issues and some areas that I want to correct, the contest was an enjoyable time. Big thanks to Brujo and the rest of the organizers, judges and sponsors for putting on such a wonderful event.&lt;/p&gt;
 </description>
         <pubDate>Sat, 06 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2018/01/06/spawnfest-retrospective/</link>
+        <link>https://technology.customink.com//blog/2018/01/06/spawnfest-retrospective/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2018/01/06/spawnfest-retrospective/</guid>
       </item>
     
@@ -625,7 +625,7 @@ The other, more pressing, issue was building the array of map data to send to th
 &lt;p&gt;Moving over to a Lambda based process allowed us to cut down on the number and size of the servers needed for our clipart service. Overall we feel that Lambda was a good fit for the project. It allowed us to realize the goal of a better scaling clipart process and gain significant cost savings.&lt;/p&gt;
 </description>
         <pubDate>Tue, 19 Sep 2017 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</link>
+        <link>https://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2017/09/19/clipart-on-aws-lambda/</guid>
       </item>
     
@@ -729,7 +729,7 @@ Created database &lt;span class=&quot;s1&quot;&gt;'my_app_test'&lt;/span&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 06 Jun 2017 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</link>
+        <link>https://technology.customink.com//blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</guid>
       </item>
     
@@ -760,7 +760,7 @@ Created database &lt;span class=&quot;s1&quot;&gt;'my_app_test'&lt;/span&gt;
 &lt;p&gt;If you like to learn more about Rails System Tests, I recommend watching &lt;a href=&quot;https://youtu.be/sSn4B8orX70&quot;&gt;RailsConf 2017: Building Rails ActionDispatch::SystemTestCase Framework by Eileen Uchitelle&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 01 Jun 2017 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</link>
+        <link>https://technology.customink.com//blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</guid>
       </item>
     
@@ -790,7 +790,7 @@ CustomInk is very proud to have Andrew Willis, VP of Ecommerce Technology, win t
 &lt;p&gt;Congrats Andrew!&lt;/p&gt;
 </description>
         <pubDate>Sun, 11 Dec 2016 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2016/12/11/timmy-award-winner/</link>
+        <link>https://technology.customink.com//blog/2016/12/11/timmy-award-winner/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/12/11/timmy-award-winner/</guid>
       </item>
     
@@ -943,7 +943,7 @@ Our stateful product cards driven by color filters will be visually different in
 &lt;script async src=&quot;https://production-assets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Thu, 17 Nov 2016 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2016/11/17/stateful-static-components-with-css/</link>
+        <link>https://technology.customink.com//blog/2016/11/17/stateful-static-components-with-css/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/11/17/stateful-static-components-with-css/</guid>
       </item>
     
@@ -951,7 +951,7 @@ Our stateful product cards driven by color filters will be visually different in
         <title>Stateful Staic Components With Css</title>
         <description></description>
         <pubDate>Thu, 17 Nov 2016 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2016/11/17/stateful-staic-components-with-css/</link>
+        <link>https://technology.customink.com//blog/2016/11/17/stateful-staic-components-with-css/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/11/17/stateful-staic-components-with-css/</guid>
       </item>
     
@@ -1078,7 +1078,7 @@ Our stateful product cards driven by color filters will be visually different in
 &lt;p&gt;Feel free to share more pictures of the spooky fun or punny Halloween jokes in the comments!&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Nov 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/11/01/a-spooky-ink-o-ween/</link>
+        <link>https://technology.customink.com//blog/2016/11/01/a-spooky-ink-o-ween/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/11/01/a-spooky-ink-o-ween/</guid>
       </item>
     
@@ -1125,7 +1125,7 @@ Our stateful product cards driven by color filters will be visually different in
 &lt;p&gt;We actually did work closely with our development teams to move completely out of the colocation facility, and at this point we are close to having removed the need for even the Gluster filesystem. We&amp;#39;ve largely managed to do it without any negative impact to the company which now has over 1,500 employees. I love working with a team that is creative enough to find ways to pull off massive changes like this.&lt;/p&gt;
 </description>
         <pubDate>Tue, 16 Aug 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/08/16/rebuilding-the-plane-were-flying-in/</link>
+        <link>https://technology.customink.com//blog/2016/08/16/rebuilding-the-plane-were-flying-in/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/08/16/rebuilding-the-plane-were-flying-in/</guid>
       </item>
     
@@ -1197,7 +1197,7 @@ Our stateful product cards driven by color filters will be visually different in
 &lt;img src=&quot;https://s3.amazonaws.com/moarcats/mPosM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 18 Jul 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/07/18/how-to-add-badges-to-iterm2/</link>
+        <link>https://technology.customink.com//blog/2016/07/18/how-to-add-badges-to-iterm2/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/07/18/how-to-add-badges-to-iterm2/</guid>
       </item>
     
@@ -1264,7 +1264,7 @@ Our stateful product cards driven by color filters will be visually different in
 &lt;/ul&gt;
 </description>
         <pubDate>Mon, 11 Jul 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/07/11/contributing-to-open-source/</link>
+        <link>https://technology.customink.com//blog/2016/07/11/contributing-to-open-source/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/07/11/contributing-to-open-source/</guid>
       </item>
     
@@ -1382,7 +1382,7 @@ was the best one yet! The conference was held at the picturesque &lt;a href=&quo
 &lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2016/gooders-52bb2e52f9578f75e128d6dffeafb195e2ddc27941f20329b7c90b2f82a333b8.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;gooders&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 23 Jun 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/06/23/ruby-for-good-2016/</link>
+        <link>https://technology.customink.com//blog/2016/06/23/ruby-for-good-2016/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/06/23/ruby-for-good-2016/</guid>
       </item>
     
@@ -1463,7 +1463,7 @@ The last step is the name of the command we want to dispatch. Command names are 
 &lt;p&gt;This is a very high level overview of where different settings can be found and modified. The Atom team has written much more detailed documentation for these settings and more. The main documentation can be found &lt;a href=&quot;http://flight-manual.atom.io/&quot;&gt;here&lt;/a&gt;. It includes entire sections on &lt;a href=&quot;http://flight-manual.atom.io/using-atom/sections/atom-packages/&quot;&gt;Packages&lt;/a&gt;, &lt;a href=&quot;http://flight-manual.atom.io/using-atom/sections/snippets/&quot;&gt;Snippets&lt;/a&gt;, &lt;a href=&quot;http://flight-manual.atom.io/hacking-atom/sections/the-init-file/&quot;&gt;The Init File&lt;/a&gt;, and &lt;a href=&quot;http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/&quot;&gt;Keymaps&lt;/a&gt; if you would like to learn more about the specific topics covered in this blog post.&lt;/p&gt;
 </description>
         <pubDate>Mon, 23 May 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/05/23/configuring_atom/</link>
+        <link>https://technology.customink.com//blog/2016/05/23/configuring_atom/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/05/23/configuring_atom/</guid>
       </item>
     
@@ -1540,7 +1540,7 @@ The last step is the name of the command we want to dispatch. Command names are 
 &lt;p&gt;Give &lt;a href=&quot;https://github.com/customink/activerecord-collection_cache_key&quot;&gt;the code a look&lt;/a&gt;, try it out, and let us know what you think!&lt;/p&gt;
 </description>
         <pubDate>Thu, 07 Apr 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/04/07/introducing-the-activerecord-collection_cache_key-gem/</link>
+        <link>https://technology.customink.com//blog/2016/04/07/introducing-the-activerecord-collection_cache_key-gem/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/04/07/introducing-the-activerecord-collection_cache_key-gem/</guid>
       </item>
     
@@ -1565,7 +1565,7 @@ The last step is the name of the command we want to dispatch. Command names are 
 &lt;p&gt;The conclusion was a bit anti-climatic. There were a few high fives and congrats by senior management.  The systems ran over the weekend and we scaled them back on Monday. Our applications are now multi-region and and we treat US West-2A as a 4th AZ. At the end of the day, we proved that our cloud infrastructure was elastic and dynamic and  our WebOps Team was agile and able to respond to what we believe is our biggest threat.&lt;/p&gt;
 </description>
         <pubDate>Wed, 16 Mar 2016 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2016/03/16/outrunning-a-hurricane/</link>
+        <link>https://technology.customink.com//blog/2016/03/16/outrunning-a-hurricane/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/03/16/outrunning-a-hurricane/</guid>
       </item>
     
@@ -1648,7 +1648,7 @@ The last step is the name of the command we want to dispatch. Command names are 
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 14 Feb 2016 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2016/02/14/rolling-builds-on-travisci/</link>
+        <link>https://technology.customink.com//blog/2016/02/14/rolling-builds-on-travisci/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/02/14/rolling-builds-on-travisci/</guid>
       </item>
     
@@ -1706,7 +1706,7 @@ To get a better understanding of multi-database rails applications, I would reco
 Finally, if your still running into issues with any of this, please feel free to open an issue on &lt;a href=&quot;https://github.com/customink/secondbase/issues&quot;&gt;the SecondBase repo&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sun, 10 Jan 2016 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</link>
+        <link>https://technology.customink.com//blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</guid>
       </item>
     
@@ -1733,7 +1733,7 @@ Finally, if your still running into issues with any of this, please feel free to
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;36707794cdb24ee0aa3e78e7eb71b28e&quot; data-ratio=&quot;1.77777777777778&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Mon, 23 Nov 2015 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/11/23/the-art-of-ruby-technical-interviews/</link>
+        <link>https://technology.customink.com//blog/2015/11/23/the-art-of-ruby-technical-interviews/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/11/23/the-art-of-ruby-technical-interviews/</guid>
       </item>
     
@@ -2124,7 +2124,7 @@ early morning race at the conference was a victory.&lt;/p&gt;
 &lt;/tbody&gt;&lt;/table&gt;
 </description>
         <pubDate>Mon, 16 Nov 2015 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/11/16/rubyconf-5k-2015/</link>
+        <link>https://technology.customink.com//blog/2015/11/16/rubyconf-5k-2015/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/11/16/rubyconf-5k-2015/</guid>
       </item>
     
@@ -2232,7 +2232,7 @@ early morning race at the conference was a victory.&lt;/p&gt;
 &lt;p&gt;And lastly, I want to give a shout out to &lt;a href=&quot;https://github.com/larskanis&quot;&gt;Lars Kanis&lt;/a&gt; who has been a huge contributor over the past many months by making TinyTDS work well on Windows. Let him know it if you see his pull requests!&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 Oct 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp/</link>
+        <link>https://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/19/microsofts-first-open-source-datacamp/</guid>
       </item>
     
@@ -2266,7 +2266,7 @@ early morning race at the conference was a victory.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 07 Oct 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks/</link>
+        <link>https://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/10/07/inkovate-2015-lightning-talks/</guid>
       </item>
     
@@ -2287,7 +2287,7 @@ early morning race at the conference was a victory.&lt;/p&gt;
 &lt;img src=&quot;/assets/content/how_dismantle_a_data_center/truck-42606487a06ef4d07335c2f5bf99a64b6b3494580750057fe8748d228529e18d.jpg&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--responsive-ctr&quot; alt=&quot;truck&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 11 Sep 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center/</link>
+        <link>https://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/09/11/how-to-dismantle-a-data-center/</guid>
       </item>
     
@@ -2335,7 +2335,7 @@ early morning race at the conference was a victory.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/content/ruby_for_good_2015/group-heart-944f814f7946bcc58534f6a6ea5edc6a543368e77c039548143928de67706a51.jpg&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;group heart&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 05 Aug 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/08/05/ruby-for-good/</link>
+        <link>https://technology.customink.com//blog/2015/08/05/ruby-for-good/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/08/05/ruby-for-good/</guid>
       </item>
     
@@ -2408,7 +2408,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 &lt;p&gt;CustomInk is a proud supporter of &lt;a href=&quot;https://rubytogether.org/&quot;&gt;Ruby Together&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 17 Jul 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies/</link>
+        <link>https://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/17/bundler-inline-gemfile-dependencies/</guid>
       </item>
     
@@ -2432,7 +2432,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 16 Jul 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</link>
+        <link>https://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</guid>
       </item>
     
@@ -2551,7 +2551,7 @@ Position the &lt;code&gt;&amp;amp;times;&lt;/code&gt; icon inside the anchor and
 &lt;p&gt;Thoughtbot has excellent resources for developers and the &lt;a href=&quot;https://github.com/thoughtbot/guides/tree/master/code-review&quot;&gt;guidelines for code reviews&lt;/a&gt; are no exception.&lt;/p&gt;
 </description>
         <pubDate>Tue, 07 Jul 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/07/07/i-have-the-pr/</link>
+        <link>https://technology.customink.com//blog/2015/07/07/i-have-the-pr/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/07/07/i-have-the-pr/</guid>
       </item>
     
@@ -2820,7 +2820,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Mon, 22 Jun 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/06/22/rails-multi-database-best-practices-roundup/</link>
+        <link>https://technology.customink.com//blog/2015/06/22/rails-multi-database-best-practices-roundup/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/22/rails-multi-database-best-practices-roundup/</guid>
       </item>
     
@@ -2904,7 +2904,7 @@ transaction will be rolled back, without passing on the exception.&lt;/p&gt;
 &lt;p&gt;There are no mention of classes at all, which explains a lot. The private keyword in Ruby only exists to declare methods as private, not classes.&lt;/p&gt;
 </description>
         <pubDate>Fri, 19 Jun 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/06/19/rubys-private-is-for-methods-only/</link>
+        <link>https://technology.customink.com//blog/2015/06/19/rubys-private-is-for-methods-only/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/19/rubys-private-is-for-methods-only/</guid>
       </item>
     
@@ -2950,7 +2950,7 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;p&gt;see &lt;a href=&quot;https://github.com/rails/rails/blob/2-3-stable/activesupport/lib/active_support/core_ext/symbol.rb&quot;&gt;https://github.com/rails/rails/blob/2-3-stable/activesupport/lib/active_support/core_ext/symbol.rb&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 08 Jun 2015 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2015/06/08/ruby-pretzels/</link>
+        <link>https://technology.customink.com//blog/2015/06/08/ruby-pretzels/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/06/08/ruby-pretzels/</guid>
       </item>
     
@@ -2977,7 +2977,7 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;p&gt;I do have one regret. I am no longer invited to Dell’s suite at the Capitals games. Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Fri, 13 Feb 2015 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/02/13/to-the-cloud/</link>
+        <link>https://technology.customink.com//blog/2015/02/13/to-the-cloud/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/02/13/to-the-cloud/</guid>
       </item>
     
@@ -3105,7 +3105,7 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;p&gt;And it all just works! Thanks for reading!&lt;/p&gt;
 </description>
         <pubDate>Sun, 08 Feb 2015 00:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</link>
+        <link>https://technology.customink.com//blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</guid>
       </item>
     
@@ -3235,7 +3235,7 @@ down into it&amp;#39;s parts.&lt;/p&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 06 Jan 2015 03:29:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2015/01/06/activerecord-42s-type-casting/</link>
+        <link>https://technology.customink.com//blog/2015/01/06/activerecord-42s-type-casting/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2015/01/06/activerecord-42s-type-casting/</guid>
       </item>
     
@@ -3278,7 +3278,7 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/content/rubyconf5k_2014/justinschumacher-87c8a6ffec0a45d1f34262bc0bc0506a91996719858204519775d689db1e42c7.jpg&quot; alt=&quot;Justin Schumacher&quot;&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 19 Nov 2014 08:00:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2014/11/19/rubyconf5k-2014/</link>
+        <link>https://technology.customink.com//blog/2014/11/19/rubyconf5k-2014/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/11/19/rubyconf5k-2014/</guid>
       </item>
     
@@ -3330,7 +3330,7 @@ to guarantee your spot and CustomInk shirt.&lt;/p&gt;
 &lt;img src=/assets/content/ecomiccon/all_of_ecomiccon-a4679a345038eab38e4b28c0973739a1d0193ba1154f75b3a3c3fcc2e751a079.jpg alt=&quot;All of eComiccon&quot; class=&quot;tb-Img tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 31 Oct 2014 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/31/ecomic-con-2014/</link>
+        <link>https://technology.customink.com//blog/2014/10/31/ecomic-con-2014/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/31/ecomic-con-2014/</guid>
       </item>
     
@@ -3357,7 +3357,7 @@ promise of new technologies with the safety of proven implementations?&lt;/p&gt;
 more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 </description>
         <pubDate>Thu, 23 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/23/welcome-arild-shirazi/</link>
+        <link>https://technology.customink.com//blog/2014/10/23/welcome-arild-shirazi/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/23/welcome-arild-shirazi/</guid>
       </item>
     
@@ -3432,7 +3432,7 @@ more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 &lt;p&gt;If you have a workflow that you like to use for managing your repos that differs from, this I would love to hear about it.&lt;/p&gt;
 </description>
         <pubDate>Wed, 22 Oct 2014 07:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos/</link>
+        <link>https://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/22/managing-your-local-project-repos/</guid>
       </item>
     
@@ -3476,7 +3476,7 @@ more about it here soon. In the meantime, welcome to the team Arild!&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;/blog/2014/09/12/open-sourcing-a-gem-pt-1/&quot;&gt;Part 1&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 20 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/20/open-sourcing-a-gem-pt-2/</link>
+        <link>https://technology.customink.com//blog/2014/10/20/open-sourcing-a-gem-pt-2/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/20/open-sourcing-a-gem-pt-2/</guid>
       </item>
     
@@ -3540,7 +3540,7 @@ ourselves and revealing our intentions. Next time you have to reduce an Array to
 the #inject trap. Use Enumerable#each_with_object and impress your friends and family.&lt;/p&gt;
 </description>
         <pubDate>Tue, 14 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/14/better-hash-injection-using-each-with-object/</link>
+        <link>https://technology.customink.com//blog/2014/10/14/better-hash-injection-using-each-with-object/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/14/better-hash-injection-using-each-with-object/</guid>
       </item>
     
@@ -3611,7 +3611,7 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;p&gt;Many thanks to my fellow CustomInk teammates, Stafford Brunk and Ken Collins. Stafford co-authored the gem with me and Ken has been a driving force in adopting the &lt;code&gt;SASS_PATH&lt;/code&gt; environment variable as well as &lt;a href=&quot;https://github.com/at-import/Sassy-Maps/pull/6&quot;&gt;epic pull requests&lt;/a&gt; to fix the problems existing repositories have with the &lt;code&gt;SASS_PATH&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 09 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/09/understanding-and-using-sass-load-paths/</link>
+        <link>https://technology.customink.com//blog/2014/10/09/understanding-and-using-sass-load-paths/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/09/understanding-and-using-sass-load-paths/</guid>
       </item>
     
@@ -3672,7 +3672,7 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;p&gt;By having this proxy class, ActiveRecord can hook into certain methods and determine whether to perform database queries or used cache records.&lt;/p&gt;
 </description>
         <pubDate>Tue, 07 Oct 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/10/07/rails-association-proxies/</link>
+        <link>https://technology.customink.com//blog/2014/10/07/rails-association-proxies/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/10/07/rails-association-proxies/</guid>
       </item>
     
@@ -3772,7 +3772,7 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 30 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks/</link>
+        <link>https://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/30/unit-testing-sass-frameworks/</guid>
       </item>
     
@@ -3830,7 +3830,7 @@ the #inject trap. Use Enumerable#each_with_object and impress your friends and f
 &lt;p&gt;So hopefully this helps clarify the distinctions between &lt;code&gt;#eval&lt;/code&gt;, &lt;code&gt;#class_eval&lt;/code&gt;, and &lt;code&gt;#instance_eval&lt;/code&gt;. The next time you want to dynamically modify the methods to objects (and classes), you’ll know which of these methods to choose!&lt;/p&gt;
 </description>
         <pubDate>Fri, 26 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness/</link>
+        <link>https://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/26/ruby-meta-method-madness/</guid>
       </item>
     
@@ -4049,7 +4049,7 @@ tests to pass. The session data below is invalid.&lt;/p&gt;
 a Rails 3.2 upgrade.&lt;/p&gt;
 </description>
         <pubDate>Tue, 23 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</link>
+        <link>https://technology.customink.com//blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</guid>
       </item>
     
@@ -4218,7 +4218,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://inlehmansterms.net/2014/09/19/single-class-vs-multi-class-css/&quot; rel=&quot;canonical&quot;&gt;Jonathan&amp;#39;s blog- In Lehman&amp;#39;s Terms&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 19 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/19/single-class-vs-multi-class-css/</link>
+        <link>https://technology.customink.com//blog/2014/09/19/single-class-vs-multi-class-css/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/19/single-class-vs-multi-class-css/</guid>
       </item>
     
@@ -4408,7 +4408,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;In closing, thanks for reading and I hope you found this information helpful. If you have any questions, feel free to ask in the comments. Cheers!&lt;/p&gt;
 </description>
         <pubDate>Tue, 16 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/16/from-rails-3.2-to-4.2/</link>
+        <link>https://technology.customink.com//blog/2014/09/16/from-rails-3.2-to-4.2/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/16/from-rails-3.2-to-4.2/</guid>
       </item>
     
@@ -4459,7 +4459,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 12 Sep 2014 13:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/12/fall-college-recruiting-schedule/</link>
+        <link>https://technology.customink.com//blog/2014/09/12/fall-college-recruiting-schedule/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/12/fall-college-recruiting-schedule/</guid>
       </item>
     
@@ -4484,7 +4484,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;/blog/2014/10/20/open-sourcing-a-gem-pt-2/&quot;&gt;Part 2&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 12 Sep 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/12/open-sourcing-a-gem-pt-1/</link>
+        <link>https://technology.customink.com//blog/2014/09/12/open-sourcing-a-gem-pt-1/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/12/open-sourcing-a-gem-pt-1/</guid>
       </item>
     
@@ -4543,7 +4543,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;/ul&gt;
 </description>
         <pubDate>Mon, 08 Sep 2014 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/08/building-the-customink-living-style-guide/</link>
+        <link>https://technology.customink.com//blog/2014/09/08/building-the-customink-living-style-guide/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/08/building-the-customink-living-style-guide/</guid>
       </item>
     
@@ -4568,7 +4568,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;From there we had the tools in place to begin building our new living style guide. This living style guide will be used by the UX team when mocking out new responsive layouts, and of course by our engineers to build our new responsive experience.&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Sep 2014 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/09/01/a-new-living-style-guide/</link>
+        <link>https://technology.customink.com//blog/2014/09/01/a-new-living-style-guide/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/09/01/a-new-living-style-guide/</guid>
       </item>
     
@@ -4727,7 +4727,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 29 Aug 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</link>
+        <link>https://technology.customink.com//blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</guid>
       </item>
     
@@ -4868,7 +4868,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://inlehmansterms.net/2014/08/25/modular-css-with-suitcss/&quot; rel=&quot;canonical&quot;&gt;Jonathan&amp;#39;s blog- In Lehman&amp;#39;s Terms&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 26 Aug 2014 00:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/26/modular-css-with-suit/</link>
+        <link>https://technology.customink.com//blog/2014/08/26/modular-css-with-suit/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/26/modular-css-with-suit/</guid>
       </item>
     
@@ -4887,7 +4887,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;Welcome to the team John!&lt;/p&gt;
 </description>
         <pubDate>Fri, 22 Aug 2014 15:30:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/22/welcome-john-dyer/</link>
+        <link>https://technology.customink.com//blog/2014/08/22/welcome-john-dyer/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/22/welcome-john-dyer/</guid>
       </item>
     
@@ -4908,7 +4908,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;A happy team is a team that learns together.&lt;/p&gt;
 </description>
         <pubDate>Fri, 15 Aug 2014 15:24:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/15/tapas-time/</link>
+        <link>https://technology.customink.com//blog/2014/08/15/tapas-time/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/15/tapas-time/</guid>
       </item>
     
@@ -4935,7 +4935,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;Is my method of learning rails correct? No. People have different learning styles; therefore, no approach is perfect. You must tailor the learning process to meet your needs and ensure your success. In my case, using code school, extra resources, analyzing well written code, and building simple rails applications has allowed me to learn and apply my knowledge. In no form am I a solid Ruby on Rails developer. However, using these tools I can make great efforts to become better as I continue my journey.&lt;/p&gt;
 </description>
         <pubDate>Tue, 12 Aug 2014 11:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/08/12/learning-ruby-on-rails/</link>
+        <link>https://technology.customink.com//blog/2014/08/12/learning-ruby-on-rails/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/08/12/learning-ruby-on-rails/</guid>
       </item>
     
@@ -4956,7 +4956,7 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;p&gt;Overall, I could not have asked for a more challenging, educating, and enjoyable summer internship experience. I feel that this experience has left me well prepared  for the next steps of my career after my senior year at Carnegie Mellon. A huge thanks to everyone on the team who has made this an amazing summer!&lt;/p&gt;
 </description>
         <pubDate>Fri, 25 Jul 2014 11:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/07/25/anthcor-summer-internship/</link>
+        <link>https://technology.customink.com//blog/2014/07/25/anthcor-summer-internship/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/07/25/anthcor-summer-internship/</guid>
       </item>
     
@@ -4979,7 +4979,7 @@ become an important metric to watch.  Hunter is currently working on a utility t
 &lt;p&gt;Welcome to the team Hunter!&lt;/p&gt;
 </description>
         <pubDate>Tue, 08 Jul 2014 07:18:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/07/08/welcome-hunter-madison/</link>
+        <link>https://technology.customink.com//blog/2014/07/08/welcome-hunter-madison/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/07/08/welcome-hunter-madison/</guid>
       </item>
     
@@ -5000,7 +5000,7 @@ aggregate the data, and share it with your team.&lt;/p&gt;
 data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Tue, 17 Jun 2014 07:18:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/06/17/build-better-teams-with-dashing-dashboards/</link>
+        <link>https://technology.customink.com//blog/2014/06/17/build-better-teams-with-dashing-dashboards/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/06/17/build-better-teams-with-dashing-dashboards/</guid>
       </item>
     
@@ -5015,7 +5015,7 @@ data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed
 &lt;p&gt;Welcome to the team Anthony!&lt;/p&gt;
 </description>
         <pubDate>Mon, 19 May 2014 07:18:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2014/05/19/welcome-anthony-corletti/</link>
+        <link>https://technology.customink.com//blog/2014/05/19/welcome-anthony-corletti/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2014/05/19/welcome-anthony-corletti/</guid>
       </item>
     
@@ -5142,7 +5142,7 @@ Have you ever wondered how tools like New Relic are able to gain valuable metric
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 19 Dec 2013 13:36:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</link>
+        <link>https://technology.customink.com//blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</guid>
       </item>
     
@@ -5157,7 +5157,7 @@ Have you ever wondered how tools like New Relic are able to gain valuable metric
 &lt;p&gt;Welcome to the team Michael!&lt;/p&gt;
 </description>
         <pubDate>Sun, 01 Dec 2013 07:18:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2013/12/01/welcome-michael-peteuil/</link>
+        <link>https://technology.customink.com//blog/2013/12/01/welcome-michael-peteuil/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/12/01/welcome-michael-peteuil/</guid>
       </item>
     
@@ -5183,7 +5183,7 @@ relief of a clean shave, the heartfelt joy of charity and the planning for next 
 &lt;img src=&quot;http://technology-customink-com.s3.amazonaws.com/images/2013-12-02_movember_portraits158.jpg&quot; alt=&quot;upperlipsters&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sat, 30 Nov 2013 13:36:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2013/11/30/upper-lipsters/</link>
+        <link>https://technology.customink.com//blog/2013/11/30/upper-lipsters/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/11/30/upper-lipsters/</guid>
       </item>
     
@@ -5201,7 +5201,7 @@ or project.&lt;/p&gt;
 &lt;p&gt;Welcome to the team Jonathan!&lt;/p&gt;
 </description>
         <pubDate>Thu, 31 Oct 2013 13:36:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/31/welcome-jonathan-lehman/</link>
+        <link>https://technology.customink.com//blog/2013/10/31/welcome-jonathan-lehman/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/31/welcome-jonathan-lehman/</guid>
       </item>
     
@@ -5219,7 +5219,7 @@ UX designers and product managers took first place.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://technology-customink-com.s3.amazonaws.com/images/halloween2013.jpg&quot; alt=&quot;Halloween Winners&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 31 Oct 2013 07:08:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/31/halloween-costume-winners/</link>
+        <link>https://technology.customink.com//blog/2013/10/31/halloween-costume-winners/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/31/halloween-costume-winners/</guid>
       </item>
     
@@ -5249,7 +5249,7 @@ had refactored correctly.&lt;/p&gt;
 &lt;p&gt;Welcome to the team, Ryan! We’re glad you’re here.&lt;/p&gt;
 </description>
         <pubDate>Tue, 15 Oct 2013 13:36:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/15/welcome-ryan-billings/</link>
+        <link>https://technology.customink.com//blog/2013/10/15/welcome-ryan-billings/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/15/welcome-ryan-billings/</guid>
       </item>
     
@@ -5267,7 +5267,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;If you missed Chris at &lt;a href=&quot;http://rubydcamp.org/&quot;&gt;Ruby DCamp&lt;/a&gt; last weekend, then be sure to look out for him at &lt;a href=&quot;http://rubyconf.org&quot;&gt;RubyConf&lt;/a&gt; this November.&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Oct 2013 08:38:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/10/01/chris-mar-is-an-inker/</link>
+        <link>https://technology.customink.com//blog/2013/10/01/chris-mar-is-an-inker/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/10/01/chris-mar-is-an-inker/</guid>
       </item>
     
@@ -5286,7 +5286,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;Welcome to the team, Lisa. We&amp;#39;re looking forward to great things!&lt;/p&gt;
 </description>
         <pubDate>Mon, 24 Jun 2013 10:43:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/06/24/welcome-lisa-pourkhomami/</link>
+        <link>https://technology.customink.com//blog/2013/06/24/welcome-lisa-pourkhomami/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/06/24/welcome-lisa-pourkhomami/</guid>
       </item>
     
@@ -5305,7 +5305,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;This is our third year hosting &lt;a href=&quot;http://technology.customink.com/blog/2012/05/24/welcome-interns/&quot;&gt;interns&lt;/a&gt; from Carnegie Mellon and we&amp;#39;re are looking forward to many more.&lt;/p&gt;
 </description>
         <pubDate>Wed, 05 Jun 2013 21:35:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2013/06/05/welcome-sukhada-kulkarni/</link>
+        <link>https://technology.customink.com//blog/2013/06/05/welcome-sukhada-kulkarni/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2013/06/05/welcome-sukhada-kulkarni/</guid>
       </item>
     
@@ -5566,7 +5566,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;The HolyGrailHarness vendors these font files and the needed &lt;code&gt;font-awesome.scss&lt;/code&gt; file and requires them as part of the Twitter Bootstrap bundle shown above. More advanced users may prefer to only include the icon fonts needed in their application or a few custom icons. If that is the case, check out &lt;a href=&quot;http://endtwist.github.com/fontcustom/&quot;&gt;Font Custom&lt;/a&gt;, webfonts from the comfort of the command line.&lt;/p&gt;
 </description>
         <pubDate>Thu, 06 Dec 2012 14:19:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</link>
+        <link>https://technology.customink.com//blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</guid>
       </item>
     
@@ -5583,7 +5583,7 @@ You can hear him every third Friday on the &lt;a href=&quot;http://ruby5.envylab
 &lt;p&gt;Ken spent the week with us here in our Tyson&amp;#39;s Corner headquarters, but he will continue to work from his Norfolk, VA home as a remote developer.&lt;/p&gt;
 </description>
         <pubDate>Fri, 14 Sep 2012 15:34:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/09/14/welcome-ken-collins/</link>
+        <link>https://technology.customink.com//blog/2012/09/14/welcome-ken-collins/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/09/14/welcome-ken-collins/</guid>
       </item>
     
@@ -5761,7 +5761,7 @@ exist.&lt;/p&gt;
 &lt;p&gt;You&amp;#39;re done!&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Aug 2012 21:19:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/08/03/etc-hosts-management-with-chef/</link>
+        <link>https://technology.customink.com//blog/2012/08/03/etc-hosts-management-with-chef/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/08/03/etc-hosts-management-with-chef/</guid>
       </item>
     
@@ -5874,7 +5874,7 @@ chefspec: bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;spec
 &lt;p&gt;Chef testing is a huge topic, and it&amp;#39;s going to be awhile until the community agrees on a single method for testing. Rails still has yet to figure it out... Here&amp;#39;s what is important - &lt;strong&gt;test your cookbooks&lt;/strong&gt;. Even if it&amp;#39;s just running foodcritic against all your cookbooks, you are making the cookbook-world a better place. And &lt;strong&gt;talk about it&lt;/strong&gt;. Tutorials like this one, as well as &lt;a href=&quot;/blog/our-team/seth-vargo&quot;&gt;some of the other posts I&amp;#39;ve written&lt;/a&gt; will help the community embrace testing :)!&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Aug 2012 10:39:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/08/03/testing-chef-cookbooks/</link>
+        <link>https://technology.customink.com//blog/2012/08/03/testing-chef-cookbooks/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/08/03/testing-chef-cookbooks/</guid>
       </item>
     
@@ -6048,7 +6048,7 @@ end
 &lt;p&gt;This post was written using Ruby 1.9.3. It should work on Ruby 1.9.x, but I guarantee it won&amp;#39;t work on 1.8.7.&lt;/p&gt;
 </description>
         <pubDate>Tue, 31 Jul 2012 01:31:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/31/easily-test-your-dns/</link>
+        <link>https://technology.customink.com//blog/2012/07/31/easily-test-your-dns/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/31/easily-test-your-dns/</guid>
       </item>
     
@@ -6545,7 +6545,7 @@ Then tell &lt;code&gt;set Desktop background&lt;/code&gt; to run immediately.&am
 &lt;p&gt;For more information on the rules provided, see the individual repos.&lt;/p&gt;
 </description>
         <pubDate>Mon, 30 Jul 2012 20:43:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/30/provision-your-laptop-with-chef-part-2/</link>
+        <link>https://technology.customink.com//blog/2012/07/30/provision-your-laptop-with-chef-part-2/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/30/provision-your-laptop-with-chef-part-2/</guid>
       </item>
     
@@ -6566,7 +6566,7 @@ Then tell &lt;code&gt;set Desktop background&lt;/code&gt; to run immediately.&am
 &lt;p&gt;I&amp;#39;m proud to be apart of such a great support system.  I have no gripes about the 16 hours I spent at my computer yesterday because I was helping our customers.  More importantly, I was helping my friends.&lt;/p&gt;
 </description>
         <pubDate>Tue, 10 Jul 2012 19:15:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/10/stay-cool/</link>
+        <link>https://technology.customink.com//blog/2012/07/10/stay-cool/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/10/stay-cool/</guid>
       </item>
     
@@ -6757,7 +6757,7 @@ gem 'chef', '~&amp;gt; 10.12.0'
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2012/07/06/mvt-knife-test-and-travisci/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;&lt;sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 06 Jul 2012 22:52:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/07/06/mvt-knife-test-and-travisci/</link>
+        <link>https://technology.customink.com//blog/2012/07/06/mvt-knife-test-and-travisci/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/07/06/mvt-knife-test-and-travisci/</guid>
       </item>
     
@@ -6775,7 +6775,7 @@ gem 'chef', '~&amp;gt; 10.12.0'
 &lt;p&gt;I&amp;#39;ll finish by saying it has been a joy to work with Dan on TheNewHotness. And, I&amp;#39;m looking forward to working with him on future projects. Glad to have you aboard at CustomInk.&lt;/p&gt;
 </description>
         <pubDate>Wed, 27 Jun 2012 16:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/27/welcome-dan-hensgen/</link>
+        <link>https://technology.customink.com//blog/2012/06/27/welcome-dan-hensgen/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/27/welcome-dan-hensgen/</guid>
       </item>
     
@@ -7103,7 +7103,7 @@ lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.40
 &lt;/script&gt;
 </description>
         <pubDate>Mon, 18 Jun 2012 21:32:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</link>
+        <link>https://technology.customink.com//blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</guid>
       </item>
     
@@ -7128,7 +7128,7 @@ lazy loading    0.000002  0.000081  0.000754  0.007333  0.072564  0.737112  7.40
 &lt;p&gt;Since we work on tickets one at a time, we can follow a simple process to continuously deploy new features to our site and tools:  Branch, build, verify, deploy.&lt;/p&gt;
 </description>
         <pubDate>Fri, 15 Jun 2012 10:47:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/15/welcome-jason-gilbertson/</link>
+        <link>https://technology.customink.com//blog/2012/06/15/welcome-jason-gilbertson/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/15/welcome-jason-gilbertson/</guid>
       </item>
     
@@ -7258,7 +7258,7 @@ guard:    guard
 &lt;p&gt;Stoplight is available for &lt;a href=&quot;https://github.com/customink/stoplight&quot;&gt;download and forking on github&lt;/a&gt;. Pull requests are greatly welcome! There is also a highly-configurable &lt;a href=&quot;https://github.com/customink-webops/stoplight&quot;&gt;chef cookbook for installing Stoplight&lt;/a&gt; on Apache and Passenger on your own servers.&lt;/p&gt;
 </description>
         <pubDate>Tue, 12 Jun 2012 17:48:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</link>
+        <link>https://technology.customink.com//blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</guid>
       </item>
     
@@ -7433,7 +7433,7 @@ end
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2012/05/29/mvt-foodcritic-and-travis-ci/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;&lt;sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 04 Jun 2012 13:45:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/06/04/mvt-foodcritic-and-travis-ci/</link>
+        <link>https://technology.customink.com//blog/2012/06/04/mvt-foodcritic-and-travis-ci/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/06/04/mvt-foodcritic-and-travis-ci/</guid>
       </item>
     
@@ -7711,7 +7711,7 @@ INFO: Report handlers complete
 &lt;p&gt;Part 2 of this series will cover more recipes and full provisioning and customization of your personal laptop using Chef.&lt;/p&gt;
 </description>
         <pubDate>Mon, 28 May 2012 20:32:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/28/provision-your-laptop-with-chef-part-1/</link>
+        <link>https://technology.customink.com//blog/2012/05/28/provision-your-laptop-with-chef-part-1/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/28/provision-your-laptop-with-chef-part-1/</guid>
       </item>
     
@@ -7755,7 +7755,7 @@ INFO: Report handlers complete
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;4fb532f2850667001f0008f8&quot; data-ratio=&quot;1.2945638432364097&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Sat, 26 May 2012 21:51:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</link>
+        <link>https://technology.customink.com//blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</guid>
       </item>
     
@@ -7792,7 +7792,7 @@ INFO: Report handlers complete
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;4fb421272cf6f5001f00ba85&quot; data-ratio=&quot;1.2945638432364097&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Fri, 25 May 2012 14:59:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</link>
+        <link>https://technology.customink.com//blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</guid>
       </item>
     
@@ -7815,7 +7815,7 @@ INFO: Report handlers complete
 &lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;4f96da12947c45001f018683&quot; data-ratio=&quot;1.2945638432364097&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
 </description>
         <pubDate>Fri, 25 May 2012 14:31:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</link>
+        <link>https://technology.customink.com//blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</guid>
       </item>
     
@@ -7851,7 +7851,7 @@ INFO: Report handlers complete
 &lt;p&gt;Continuous deployment can&amp;#39;t happen without automation.  I&amp;#39;d like to give a big shout out to our Web Ops team for driving us down the automation super highway.  I&amp;#39;d also like to extend a warm welcome to Nolan and Seth, we look forward to seeing their builds pass all summer long.&lt;/p&gt;
 </description>
         <pubDate>Thu, 24 May 2012 16:01:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/24/welcome-interns/</link>
+        <link>https://technology.customink.com//blog/2012/05/24/welcome-interns/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/24/welcome-interns/</guid>
       </item>
     
@@ -7951,7 +7951,7 @@ INFO: Report handlers complete
 &lt;p&gt;I hope to see you at one some day!&lt;/p&gt;
 </description>
         <pubDate>Wed, 16 May 2012 15:27:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/16/coderetreat-floyd-2012/</link>
+        <link>https://technology.customink.com//blog/2012/05/16/coderetreat-floyd-2012/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/16/coderetreat-floyd-2012/</guid>
       </item>
     
@@ -7976,7 +7976,7 @@ INFO: Report handlers complete
 &lt;p&gt;&lt;img src=&quot;http://technology-customink-com.s3.amazonaws.com/images/josh_born_first_deploy.png&quot; alt=&quot;Josh releases his first code&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 14 May 2012 13:17:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/05/14/welcome-josh-born/</link>
+        <link>https://technology.customink.com//blog/2012/05/14/welcome-josh-born/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/05/14/welcome-josh-born/</guid>
       </item>
     
@@ -8015,7 +8015,7 @@ INFO: Report handlers complete
 &lt;p&gt;Of course, if you don&amp;#39;t think to add the index when you created the table, you can always create a migration just to add the index.  The key is adding a checkpoint to your development process in which you analyze your data structures for completeness.  Adding this checkpoint gives you a chance to add any missing database constructs before it&amp;#39;s too late.&lt;/p&gt;
 </description>
         <pubDate>Fri, 27 Apr 2012 11:48:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/04/27/critical-oversight-indexes/</link>
+        <link>https://technology.customink.com//blog/2012/04/27/critical-oversight-indexes/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/04/27/critical-oversight-indexes/</guid>
       </item>
     
@@ -8047,7 +8047,7 @@ Chris Strom&amp;#39;s talk on &lt;a href=&quot;http://speakerdeck.com/u/chris/p/
 &lt;p&gt;Thanks to all the people who made RubyNation such a great event this year.  See you all next year.&lt;/p&gt;
 </description>
         <pubDate>Mon, 26 Mar 2012 13:36:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/03/26/rubynation-2012/</link>
+        <link>https://technology.customink.com//blog/2012/03/26/rubynation-2012/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/03/26/rubynation-2012/</guid>
       </item>
     
@@ -8146,7 +8146,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 16 Mar 2012 08:07:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</link>
+        <link>https://technology.customink.com//blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</guid>
       </item>
     
@@ -8269,7 +8269,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;Abstracting concepts (or remembering the &lt;a href=&quot;http://en.wikipedia.org/wiki/Single_responsibility_principle&quot;&gt;single responsibility principle&lt;/a&gt;) will always benefit you in the future.&lt;/p&gt;
 </description>
         <pubDate>Fri, 02 Mar 2012 15:35:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/03/02/simple-data-mapper/</link>
+        <link>https://technology.customink.com//blog/2012/03/02/simple-data-mapper/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/03/02/simple-data-mapper/</guid>
       </item>
     
@@ -8296,7 +8296,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;This allows developers to quickly see what models make up an order and what models either stand on their own, or are shared across multiple domains.  And for a large application, you are now able to quickly summarize the high level business objects that make up your system.&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Feb 2012 15:38:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/02/03/organizing-your-rails-models/</link>
+        <link>https://technology.customink.com//blog/2012/02/03/organizing-your-rails-models/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/02/03/organizing-your-rails-models/</guid>
       </item>
     
@@ -8317,7 +8317,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;One of the big wins of using the Nagios plugins is that if a service recovers the PagerDuty incident gets resolved automatically so it doesn&amp;#39;t continue to escalate the problem.  Also if you acknowledge a problem in Nagios the acknowledgment flows through to PagerDuty.&lt;/p&gt;
 </description>
         <pubDate>Tue, 31 Jan 2012 10:14:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/01/31/pagerduty/</link>
+        <link>https://technology.customink.com//blog/2012/01/31/pagerduty/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/01/31/pagerduty/</guid>
       </item>
     
@@ -8366,7 +8366,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2012/01/02/green-screen/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 02 Jan 2012 14:17:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2012/01/02/green-screen/</link>
+        <link>https://technology.customink.com//blog/2012/01/02/green-screen/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2012/01/02/green-screen/</guid>
       </item>
     
@@ -8452,7 +8452,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 21 Nov 2011 03:29:00 -0500</pubDate>
-        <link>http://technology.customink.com//blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</link>
+        <link>https://technology.customink.com//blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</guid>
       </item>
     
@@ -8478,7 +8478,7 @@ PassengerRuby /usr/local/bin/ruby_tuned
 &lt;p&gt;&lt;sub&gt;Reposted from &lt;a href=&quot;http://nathenharvey.com/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/&quot;&gt;Nathen Harvey&amp;#39;s blog&lt;/a&gt;.&lt;/sub&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 16 Jul 2010 09:00:00 -0400</pubDate>
-        <link>http://technology.customink.com//blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</link>
+        <link>https://technology.customink.com//blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</link>
         <guid isPermaLink="true">http://technology.customink.com//blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</guid>
       </item>
     

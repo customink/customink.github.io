@@ -1,1 +1,1 @@
-Sitemap: http://technology.customink.com/sitemap.xml
+Sitemap: https://technology.customink.com/sitemap.xml
