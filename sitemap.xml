@@ -1,764 +1,501 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/blog/2018/03/12/learning-es6-new-methods-for-arrays/</loc>
-    <lastmod>2018-03-12T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2018/02/23/learning-es6-strings-and-destructuring/</loc>
-    <lastmod>2018-02-23T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2018/01/06/spawnfest-retrospective/</loc>
-    <lastmod>2018-01-06T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2017/09/19/clipart-on-aws-lambda/</loc>
-    <lastmod>2017-09-19T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</loc>
-    <lastmod>2017-06-06T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</loc>
-    <lastmod>2017-06-01T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/12/11/timmy-award-winner/</loc>
-    <lastmod>2016-12-11T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/11/17/stateful-static-components-with-css/</loc>
-    <lastmod>2016-11-17T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/11/17/stateful-staic-components-with-css/</loc>
-    <lastmod>2016-11-17T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/11/01/a-spooky-ink-o-ween/</loc>
-    <lastmod>2016-11-01T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/08/16/rebuilding-the-plane-were-flying-in/</loc>
-    <lastmod>2016-08-16T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/07/18/how-to-add-badges-to-iterm2/</loc>
-    <lastmod>2016-07-18T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/07/11/contributing-to-open-source/</loc>
-    <lastmod>2016-07-11T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/06/23/ruby-for-good-2016/</loc>
-    <lastmod>2016-06-23T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/05/23/configuring-atom/</loc>
-    <lastmod>2016-05-23T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/04/07/introducing-the-activerecord-collection-cache-key-gem/</loc>
-    <lastmod>2016-04-07T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/03/16/outrunning-a-hurricane/</loc>
-    <lastmod>2016-03-16T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/02/14/rolling-builds-on-travisci/</loc>
-    <lastmod>2016-02-14T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</loc>
-    <lastmod>2016-01-10T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/11/23/the-art-of-ruby-technical-interviews/</loc>
-    <lastmod>2015-11-23T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/11/16/rubyconf-5k-2015/</loc>
-    <lastmod>2015-11-16T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
-    <lastmod>2015-10-19T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/10/07/inkovate-2015-lightning-talks/</loc>
-    <lastmod>2015-10-07T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/09/11/how-to-dismantle-a-data-center/</loc>
-    <lastmod>2015-09-11T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/08/05/ruby-for-good/</loc>
-    <lastmod>2015-08-05T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/07/17/bundler-inline-gemfile-dependencies/</loc>
-    <lastmod>2015-07-17T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</loc>
-    <lastmod>2015-07-16T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/07/07/i-have-the-pr/</loc>
-    <lastmod>2015-07-07T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/06/22/rails-multi-database-best-practices-roundup/</loc>
-    <lastmod>2015-06-22T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/06/19/rubys-private-is-for-methods-only/</loc>
-    <lastmod>2015-06-19T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/06/08/ruby-pretzels/</loc>
-    <lastmod>2015-06-08T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/02/13/to-the-cloud/</loc>
-    <lastmod>2015-02-13T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</loc>
-    <lastmod>2015-02-08T00:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2015/01/06/activerecord-42s-type-casting/</loc>
-    <lastmod>2015-01-06T03:29:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/11/19/rubyconf5k-2014/</loc>
-    <lastmod>2014-11-19T08:00:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/31/ecomic-con-2014/</loc>
-    <lastmod>2014-10-31T09:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/23/welcome-arild-shirazi/</loc>
-    <lastmod>2014-10-23T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/22/managing-your-local-project-repos/</loc>
-    <lastmod>2014-10-22T07:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/20/open-sourcing-a-gem-pt-2/</loc>
-    <lastmod>2014-10-20T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/14/better-hash-injection-using-each-with-object/</loc>
-    <lastmod>2014-10-14T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/09/understanding-and-using-sass-load-paths/</loc>
-    <lastmod>2014-10-09T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/10/07/rails-association-proxies/</loc>
-    <lastmod>2014-10-07T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/30/unit-testing-sass-frameworks/</loc>
-    <lastmod>2014-09-30T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/26/ruby-meta-method-madness/</loc>
-    <lastmod>2014-09-26T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</loc>
-    <lastmod>2014-09-23T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/19/single-class-vs-multi-class-css/</loc>
-    <lastmod>2014-09-19T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/16/from-rails-3-2-to-4-2/</loc>
-    <lastmod>2014-09-16T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/12/fall-college-recruiting-schedule/</loc>
-    <lastmod>2014-09-12T13:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/12/open-sourcing-a-gem-pt-1/</loc>
-    <lastmod>2014-09-12T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/08/building-the-customink-living-style-guide/</loc>
-    <lastmod>2014-09-08T09:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/09/01/a-new-living-style-guide/</loc>
-    <lastmod>2014-09-01T09:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</loc>
-    <lastmod>2014-08-29T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/08/26/modular-css-with-suit/</loc>
-    <lastmod>2014-08-26T00:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/08/22/welcome-john-dyer/</loc>
-    <lastmod>2014-08-22T15:30:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/08/15/tapas-time/</loc>
-    <lastmod>2014-08-15T15:24:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/08/12/learning-ruby-on-rails/</loc>
-    <lastmod>2014-08-12T11:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/07/25/anthcor-summer-internship/</loc>
-    <lastmod>2014-07-25T11:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/07/08/welcome-hunter-madison/</loc>
-    <lastmod>2014-07-08T07:18:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/06/17/build-better-teams-with-dashing-dashboards/</loc>
-    <lastmod>2014-06-17T07:18:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2014/05/19/welcome-anthony-corletti/</loc>
-    <lastmod>2014-05-19T07:18:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</loc>
-    <lastmod>2013-12-19T13:36:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/12/01/welcome-michael-peteuil/</loc>
-    <lastmod>2013-12-01T07:18:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/11/30/upper-lipsters/</loc>
-    <lastmod>2013-11-30T13:36:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/10/31/welcome-jonathan-lehman/</loc>
-    <lastmod>2013-10-31T13:36:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/10/31/halloween-costume-winners/</loc>
-    <lastmod>2013-10-31T07:08:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/10/15/welcome-ryan-billings/</loc>
-    <lastmod>2013-10-15T13:36:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/10/01/chris-mar-is-an-inker/</loc>
-    <lastmod>2013-10-01T08:38:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/06/24/welcome-lisa-pourkhomami/</loc>
-    <lastmod>2013-06-24T10:43:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2013/06/05/welcome-sukhada-kulkarni/</loc>
-    <lastmod>2013-06-05T21:35:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</loc>
-    <lastmod>2012-12-06T14:19:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/09/14/welcome-ken-collins/</loc>
-    <lastmod>2012-09-14T15:34:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/08/03/etc-hosts-management-with-chef/</loc>
-    <lastmod>2012-08-03T21:19:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/08/03/testing-chef-cookbooks/</loc>
-    <lastmod>2012-08-03T10:39:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/07/31/easily-test-your-dns/</loc>
-    <lastmod>2012-07-31T01:31:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/07/30/provision-your-laptop-with-chef-part-2/</loc>
-    <lastmod>2012-07-30T20:43:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/07/10/stay-cool/</loc>
-    <lastmod>2012-07-10T19:15:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/07/06/mvt-knife-test-and-travisci/</loc>
-    <lastmod>2012-07-06T22:52:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/06/27/welcome-dan-hensgen/</loc>
-    <lastmod>2012-06-27T16:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</loc>
-    <lastmod>2012-06-18T21:32:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/06/15/welcome-jason-gilbertson/</loc>
-    <lastmod>2012-06-15T10:47:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</loc>
-    <lastmod>2012-06-12T17:48:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/06/04/mvt-foodcritic-and-travis-ci/</loc>
-    <lastmod>2012-06-04T13:45:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/28/provision-your-laptop-with-chef-part-1/</loc>
-    <lastmod>2012-05-28T20:32:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</loc>
-    <lastmod>2012-05-26T21:51:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</loc>
-    <lastmod>2012-05-25T14:59:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</loc>
-    <lastmod>2012-05-25T14:31:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/24/welcome-interns/</loc>
-    <lastmod>2012-05-24T16:01:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/16/coderetreat-floyd-2012/</loc>
-    <lastmod>2012-05-16T15:27:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/05/14/welcome-josh-born/</loc>
-    <lastmod>2012-05-14T13:17:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/04/27/critical-oversight-indexes/</loc>
-    <lastmod>2012-04-27T11:48:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/03/26/rubynation-2012/</loc>
-    <lastmod>2012-03-26T13:36:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</loc>
-    <lastmod>2012-03-16T08:07:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/03/02/simple-data-mapper/</loc>
-    <lastmod>2012-03-02T15:35:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/02/03/organizing-your-rails-models/</loc>
-    <lastmod>2012-02-03T15:38:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/01/31/pagerduty/</loc>
-    <lastmod>2012-01-31T10:14:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2012/01/02/green-screen/</loc>
-    <lastmod>2012-01-02T14:17:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</loc>
-    <lastmod>2011-11-21T03:29:00-05:00</lastmod>
-  </url>
-  <url>
-    <loc>/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
-    <lastmod>2010-07-16T09:00:00-04:00</lastmod>
-  </url>
-  <url>
-    <loc>/team/</loc>
-  </url>
-  <url>
-    <loc>/</loc>
-  </url>
-  <url>
-    <loc>/authors/nathen-harvery/</loc>
-  </url>
-  <url>
-    <loc>/authors/jake-vanderdray/</loc>
-  </url>
-  <url>
-    <loc>/authors/karle-durante/</loc>
-  </url>
-  <url>
-    <loc>/authors/tien-nguyen/</loc>
-  </url>
-  <url>
-    <loc>/authors/seth-vargo/</loc>
-  </url>
-  <url>
-    <loc>/authors/nathan-hessler/</loc>
-  </url>
-  <url>
-    <loc>/authors/ken-collins/</loc>
-  </url>
-  <url>
-    <loc>/authors/dan-hensgen/</loc>
-  </url>
-  <url>
-    <loc>/authors/chris-mar/</loc>
-  </url>
-  <url>
-    <loc>/authors/anthony-corletti/</loc>
-  </url>
-  <url>
-    <loc>/authors/daniel-wheeler/</loc>
-  </url>
-  <url>
-    <loc>/authors/jonathan-lehman/</loc>
-  </url>
-  <url>
-    <loc>/authors/andrea-bailey/</loc>
-  </url>
-  <url>
-    <loc>/authors/arild-shirazi/</loc>
-  </url>
-  <url>
-    <loc>/authors/ryan-billings/</loc>
-  </url>
-  <url>
-    <loc>/authors/john-peterson/</loc>
-  </url>
-  <url>
-    <loc>/authors/kalimar-maia/</loc>
-  </url>
-  <url>
-    <loc>/authors/hunter-madison/</loc>
-  </url>
-  <url>
-    <loc>/authors/dan-drinkard/</loc>
-  </url>
-  <url>
-    <loc>/authors/alex-egan/</loc>
-  </url>
-  <url>
-    <loc>/authors/max-tedford/</loc>
-  </url>
-  <url>
-    <loc>/authors/miranda-wang/</loc>
-  </url>
-  <url>
-    <loc>/authors/mark-johnson/</loc>
-  </url>
-    <url>
-      <loc>/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
-    </url>
-    <url>
-      <loc>/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/01/02/green-screen/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/01/31/pagerduty/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/02/03/organizing-your-rails-models/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/03/02/simple-data-mapper/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/03/26/rubynation-2012/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/04/27/critical-oversight-indexes/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/14/welcome-josh-born/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/16/coderetreat-floyd-2012/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/24/welcome-interns/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/05/28/provision-your-laptop-with-chef-part-1/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/06/04/mvt-foodcritic-and-travis-ci/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/06/15/welcome-jason-gilbertson/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/06/27/welcome-dan-hensgen/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/07/06/mvt-knife-test-and-travisci/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/07/10/stay-cool/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/07/30/provision-your-laptop-with-chef-part-2/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/07/31/easily-test-your-dns/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/08/03/testing-chef-cookbooks/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/08/03/etc-hosts-management-with-chef/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/09/14/welcome-ken-collins/</loc>
-    </url>
-    <url>
-      <loc>/blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/06/05/welcome-sukhada-kulkarni/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/06/24/welcome-lisa-pourkhomami/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/10/01/chris-mar-is-an-inker/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/10/15/welcome-ryan-billings/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/10/31/halloween-costume-winners/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/10/31/welcome-jonathan-lehman/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/11/30/upper-lipsters/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/12/01/welcome-michael-peteuil/</loc>
-    </url>
-    <url>
-      <loc>/blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/05/19/welcome-anthony-corletti/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/06/17/build-better-teams-with-dashing-dashboards/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/07/08/welcome-hunter-madison/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/07/25/anthcor-summer-internship/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/08/12/learning-ruby-on-rails/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/08/15/tapas-time/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/08/22/welcome-john-dyer/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/08/26/modular-css-with-suit/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/01/a-new-living-style-guide/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/08/building-the-customink-living-style-guide/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/12/open-sourcing-a-gem-pt-1/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/12/fall-college-recruiting-schedule/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/16/from-rails-3-2-to-4-2/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/19/single-class-vs-multi-class-css/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/26/ruby-meta-method-madness/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/09/30/unit-testing-sass-frameworks/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/07/rails-association-proxies/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/09/understanding-and-using-sass-load-paths/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/14/better-hash-injection-using-each-with-object/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/20/open-sourcing-a-gem-pt-2/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/22/managing-your-local-project-repos/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/23/welcome-arild-shirazi/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/10/31/ecomic-con-2014/</loc>
-    </url>
-    <url>
-      <loc>/blog/2014/11/19/rubyconf5k-2014/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/01/06/activerecord-42s-type-casting/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/02/13/to-the-cloud/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/06/08/ruby-pretzels/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/06/19/rubys-private-is-for-methods-only/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/06/22/rails-multi-database-best-practices-roundup/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/07/07/i-have-the-pr/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/07/17/bundler-inline-gemfile-dependencies/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/08/05/ruby-for-good/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/09/11/how-to-dismantle-a-data-center/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/10/07/inkovate-2015-lightning-talks/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/11/16/rubyconf-5k-2015/</loc>
-    </url>
-    <url>
-      <loc>/blog/2015/11/23/the-art-of-ruby-technical-interviews/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/02/14/rolling-builds-on-travisci/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/03/16/outrunning-a-hurricane/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/04/07/introducing-the-activerecord-collection-cache-key-gem/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/05/23/configuring-atom/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/06/23/ruby-for-good-2016/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/07/11/contributing-to-open-source/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/07/18/how-to-add-badges-to-iterm2/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/08/16/rebuilding-the-plane-were-flying-in/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/11/01/a-spooky-ink-o-ween/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/11/17/stateful-staic-components-with-css/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/11/17/stateful-static-components-with-css/</loc>
-    </url>
-    <url>
-      <loc>/blog/2016/12/11/timmy-award-winner/</loc>
-    </url>
-    <url>
-      <loc>/blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</loc>
-    </url>
-    <url>
-      <loc>/blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</loc>
-    </url>
-    <url>
-      <loc>/blog/2017/09/19/clipart-on-aws-lambda/</loc>
-    </url>
-    <url>
-      <loc>/blog/2018/01/06/spawnfest-retrospective/</loc>
-    </url>
-    <url>
-      <loc>/blog/2018/02/23/learning-es6-strings-and-destructuring/</loc>
-    </url>
-    <url>
-      <loc>/blog/2018/03/12/learning-es6-new-methods-for-arrays/</loc>
-    </url>
+<url>
+<loc>http://localhost:4000/blog/2010/07/16/testing-mod-rewrite-and-apache-redirects/</loc>
+<lastmod>2010-07-16T09:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/</loc>
+<lastmod>2011-11-21T03:29:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/01/02/green-screen/</loc>
+<lastmod>2012-01-02T14:17:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/01/31/pagerduty/</loc>
+<lastmod>2012-01-31T10:14:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/02/03/organizing-your-rails-models/</loc>
+<lastmod>2012-02-03T15:38:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/03/02/simple-data-mapper/</loc>
+<lastmod>2012-03-02T15:35:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/03/16/simple-garbage-collection-tuning-for-rails/</loc>
+<lastmod>2012-03-16T08:07:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/03/26/rubynation-2012/</loc>
+<lastmod>2012-03-26T13:36:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/04/27/critical-oversight-indexes/</loc>
+<lastmod>2012-04-27T11:48:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/14/welcome-josh-born/</loc>
+<lastmod>2012-05-14T13:17:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/16/coderetreat-floyd-2012/</loc>
+<lastmod>2012-05-16T15:27:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/24/welcome-interns/</loc>
+<lastmod>2012-05-24T16:01:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/25/taming-the-kraken-how-operations-enables-developer-productivity/</loc>
+<lastmod>2012-05-25T14:31:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/25/the-joy-of-cooking-whip-up-a-rails-environment-with-chef/</loc>
+<lastmod>2012-05-25T14:59:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/26/5-things-you-always-wanted-to-know-about-chef/</loc>
+<lastmod>2012-05-26T21:51:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/05/28/provision-your-laptop-with-chef-part-1/</loc>
+<lastmod>2012-05-28T20:32:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/06/04/mvt-foodcritic-and-travis-ci/</loc>
+<lastmod>2012-06-04T13:45:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/06/12/introducing-stoplight-greenscreen-2-dot-0/</loc>
+<lastmod>2012-06-12T17:48:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/06/15/welcome-jason-gilbertson/</loc>
+<lastmod>2012-06-15T10:47:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/06/18/profiling-openstruct-eager-loading-method-missing-and-lazy-loading/</loc>
+<lastmod>2012-06-18T21:32:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/06/27/welcome-dan-hensgen/</loc>
+<lastmod>2012-06-27T16:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/07/06/mvt-knife-test-and-travisci/</loc>
+<lastmod>2012-07-06T22:52:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/07/10/stay-cool/</loc>
+<lastmod>2012-07-10T19:15:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/07/30/provision-your-laptop-with-chef-part-2/</loc>
+<lastmod>2012-07-30T20:43:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/07/31/easily-test-your-dns/</loc>
+<lastmod>2012-07-31T01:31:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/08/03/testing-chef-cookbooks/</loc>
+<lastmod>2012-08-03T10:39:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/08/03/etc-hosts-management-with-chef/</loc>
+<lastmod>2012-08-03T21:19:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/09/14/welcome-ken-collins/</loc>
+<lastmod>2012-09-14T15:34:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2012/12/06/bootstrap-your-next-project-with-holygrailharness/</loc>
+<lastmod>2012-12-06T14:19:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/06/05/welcome-sukhada-kulkarni/</loc>
+<lastmod>2013-06-05T21:35:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/06/24/welcome-lisa-pourkhomami/</loc>
+<lastmod>2013-06-24T10:43:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/10/01/chris-mar-is-an-inker/</loc>
+<lastmod>2013-10-01T08:38:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/10/15/welcome-ryan-billings/</loc>
+<lastmod>2013-10-15T13:36:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/10/31/halloween-costume-winners/</loc>
+<lastmod>2013-10-31T07:08:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/10/31/welcome-jonathan-lehman/</loc>
+<lastmod>2013-10-31T13:36:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/11/30/upper-lipsters/</loc>
+<lastmod>2013-11-30T13:36:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/12/01/welcome-michael-peteuil/</loc>
+<lastmod>2013-12-01T07:18:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2013/12/19/instrumenting-your-code-with-activesupport-notifications/</loc>
+<lastmod>2013-12-19T13:36:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/05/19/welcome-anthony-corletti/</loc>
+<lastmod>2014-05-19T07:18:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/06/17/build-better-teams-with-dashing-dashboards/</loc>
+<lastmod>2014-06-17T07:18:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/07/08/welcome-hunter-madison/</loc>
+<lastmod>2014-07-08T07:18:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/07/25/anthcor-summer-internship/</loc>
+<lastmod>2014-07-25T11:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/08/12/learning-ruby-on-rails/</loc>
+<lastmod>2014-08-12T11:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/08/15/tapas-time/</loc>
+<lastmod>2014-08-15T15:24:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/08/22/welcome-john-dyer/</loc>
+<lastmod>2014-08-22T15:30:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/08/26/modular-css-with-suit/</loc>
+<lastmod>2014-08-26T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/08/29/dynamic-svgs-using-defs-elements-and-javascript/</loc>
+<lastmod>2014-08-29T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/01/a-new-living-style-guide/</loc>
+<lastmod>2014-09-01T09:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/08/building-the-customink-living-style-guide/</loc>
+<lastmod>2014-09-08T09:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/12/open-sourcing-a-gem-pt-1/</loc>
+<lastmod>2014-09-12T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/12/fall-college-recruiting-schedule/</loc>
+<lastmod>2014-09-12T13:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/16/from-rails-3.2-to-4.2/</loc>
+<lastmod>2014-09-16T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/19/single-class-vs-multi-class-css/</loc>
+<lastmod>2014-09-19T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/23/migrating-session-flash-from-rails-30x-to-32x/</loc>
+<lastmod>2014-09-23T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/26/ruby-meta-method-madness/</loc>
+<lastmod>2014-09-26T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/09/30/unit-testing-sass-frameworks/</loc>
+<lastmod>2014-09-30T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/07/rails-association-proxies/</loc>
+<lastmod>2014-10-07T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/09/understanding-and-using-sass-load-paths/</loc>
+<lastmod>2014-10-09T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/14/better-hash-injection-using-each-with-object/</loc>
+<lastmod>2014-10-14T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/20/open-sourcing-a-gem-pt-2/</loc>
+<lastmod>2014-10-20T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/22/managing-your-local-project-repos/</loc>
+<lastmod>2014-10-22T07:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/23/welcome-arild-shirazi/</loc>
+<lastmod>2014-10-23T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/10/31/ecomic-con-2014/</loc>
+<lastmod>2014-10-31T09:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2014/11/19/rubyconf5k-2014/</loc>
+<lastmod>2014-11-19T08:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/01/06/activerecord-42s-type-casting/</loc>
+<lastmod>2015-01-06T03:29:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/02/08/customizing-rake-tasks-in-rails-41-and-higher/</loc>
+<lastmod>2015-02-08T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/02/13/to-the-cloud/</loc>
+<lastmod>2015-02-13T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/06/08/ruby-pretzels/</loc>
+<lastmod>2015-06-08T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/06/19/rubys-private-is-for-methods-only/</loc>
+<lastmod>2015-06-19T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/06/22/rails-multi-database-best-practices-roundup/</loc>
+<lastmod>2015-06-22T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/07/07/i-have-the-pr/</loc>
+<lastmod>2015-07-07T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/07/16/colorized-sql-log-backport-for-activerecord/</loc>
+<lastmod>2015-07-16T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/07/17/bundler-inline-gemfile-dependencies/</loc>
+<lastmod>2015-07-17T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/08/05/ruby-for-good/</loc>
+<lastmod>2015-08-05T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/09/11/how-to-dismantle-a-data-center/</loc>
+<lastmod>2015-09-11T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/10/07/inkovate-2015-lightning-talks/</loc>
+<lastmod>2015-10-07T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/10/19/microsofts-first-open-source-datacamp/</loc>
+<lastmod>2015-10-19T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/11/16/rubyconf-5k-2015/</loc>
+<lastmod>2015-11-16T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2015/11/23/the-art-of-ruby-technical-interviews/</loc>
+<lastmod>2015-11-23T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/01/10/two-headed-cat-using-secondbase-to-provide-some-level-of-sanity-in-a-two-database-rails-application/</loc>
+<lastmod>2016-01-10T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/02/14/rolling-builds-on-travisci/</loc>
+<lastmod>2016-02-14T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/03/16/outrunning-a-hurricane/</loc>
+<lastmod>2016-03-16T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/04/07/introducing-the-activerecord-collection_cache_key-gem/</loc>
+<lastmod>2016-04-07T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/05/23/configuring_atom/</loc>
+<lastmod>2016-05-23T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/06/23/ruby-for-good-2016/</loc>
+<lastmod>2016-06-23T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/07/11/contributing-to-open-source/</loc>
+<lastmod>2016-07-11T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/07/18/how-to-add-badges-to-iterm2/</loc>
+<lastmod>2016-07-18T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/08/16/rebuilding-the-plane-were-flying-in/</loc>
+<lastmod>2016-08-16T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/11/01/a-spooky-ink-o-ween/</loc>
+<lastmod>2016-11-01T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/11/17/stateful-staic-components-with-css/</loc>
+<lastmod>2016-11-17T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/11/17/stateful-static-components-with-css/</loc>
+<lastmod>2016-11-17T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2016/12/11/timmy-award-winner/</loc>
+<lastmod>2016-12-11T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2017/06/01/disabling-image-loading-with-rails-systemtests/</loc>
+<lastmod>2017-06-01T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/</loc>
+<lastmod>2017-06-06T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2017/09/19/clipart-on-aws-lambda/</loc>
+<lastmod>2017-09-19T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/blog/2018/01/06/spawnfest-retrospective/</loc>
+<lastmod>2018-01-06T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/team/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/nathen-harvery/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/jake-vanderdray/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/karle-durante/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/tien-nguyen/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/seth-vargo/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/nathan-hessler/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/ken-collins/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/dan-hensgen/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/chris-mar/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/anthony-corletti/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/daniel-wheeler/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/jonathan-lehman/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/andrea-bailey/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/arild-shirazi/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/ryan-billings/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/john-peterson/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/kalimar-maia/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/hunter-madison/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/dan-drinkard/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/alex-egan/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/max-tedford/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/miranda-wang/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/authors/mark-johnson/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page2/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page3/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page4/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page5/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page6/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page7/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page8/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page9/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page10/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page11/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page12/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page13/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page14/</loc>
+</url>
 </urlset>

@@ -7,18 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="description" content="Three years ago, we were part way through the process of moving all of our servers and infrastructure from a single colocation facility to a multip...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
-  <script type="text/javascript">
-  (function(d) {
-    var config = {
-      kitId: 'tph7yyf',
-      scriptTimeout: 3000
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   
 </head>
 
@@ -26,7 +18,7 @@
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -52,7 +44,7 @@
 
 <!--more-->
 
-<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/cowboy_airplain-6391a595aeb2c8de569d3c72f00e7327.png" alt="riding an airplane"></p>
+<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/cowboy_airplain-69c9c283776f8da4b84af61f8a74792e5404a0e7060797228633197f7d68dfdd.png" alt="riding an airplane"></p>
 
 <p>This problem didn&#39;t appear suddenly. It was something we&#39;d discussed for years. We had outlined plans for how to clean up disk space and update applications to no longer need the old disk system. Unfortunately doing this sort of technical cleanup had always lost out to other work that actually drove the business forward instead of insuring that it wouldn&#39;t stop.</p>
 
@@ -64,7 +56,7 @@
 
 <p>We actually had a lot of data that we knew could be deleted from the system to free up space. The problem was that deleting the data too quickly resulted in saturating the throughput of the system. That caused all the applications that depended on it slow to a crawl. Our site became unusable.</p>
 
-<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/lightening_brain-f9068928918533d24db11c2a0462dfbc.png" alt="lightening brain" /></p>
+<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/lightening_brain-ea6ff38f13d583effb8c25912d0b47ea936a855d7fb0e5336fde5ff408b67d5f.png" alt="lightening brain" /></p>
 
 <p>Still it made sense to make cleaning up the drive space part of the solution. <em>Joe Ritchey</em> set to work writing scripts that throttled the cleanup process. Even with the scripts running 24x7 we weren&#39;t buying ourselves much time.</p>
 
@@ -82,7 +74,7 @@
 
 <p>It was still a balancing act. The existing data had to be copied from the SAN to Gluster and we had the same issue with saturating the throughput as we did with the cleanup scripts. Never-the-less we gradually got to the point where we were freeing up disk space faster than we were using it.</p>
 
-<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/wrench_man-1937c075209a18f77a5012a773bca6d9.png" alt="mechanic"></p>
+<p><img src="/assets/content/rebuilding-the-plane-were-flying-in/wrench_man-d5d169c1acc3b30fa6dfa8ba665226816de30dbe87edd9cf68690b497f1c3488.png" alt="mechanic"></p>
 
 <p>In the end we made it through the busiest period the company had ever seen in it&#39;s 12 years of existence while completely re-creating the shared storage solution it depended on.</p>
 
@@ -93,6 +85,10 @@
         
         
         <div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Jake Vanderdray" src="http://www.gravatar.com/avatar/77969ae1dd59cbf53064f474d9b64d4e?s=150"/>
+    </div>
   
   <div class="tb-Author-info">
     
@@ -127,21 +123,6 @@
       </div>
     </div>
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2016/08/16/rebuilding-the-plane-were-flying-in/';
-    var disqus_title = "Rebuilding the Plane We're Flying In";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
@@ -149,19 +130,7 @@
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
   </body>
 </html>

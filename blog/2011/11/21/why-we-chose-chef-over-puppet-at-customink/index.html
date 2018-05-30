@@ -7,18 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="description" content="Not unlike most technology choices, the choice of which configuration management tool to use for managing your infrastructure as code is sure to sp...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
-  <script type="text/javascript">
-  (function(d) {
-    var config = {
-      kitId: 'tph7yyf',
-      scriptTimeout: 3000
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   
 </head>
 
@@ -26,7 +18,7 @@
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -62,15 +54,15 @@
 
 <p>As you consider which tool is right for you, you&#39;ll need to consider a number of questions. I think of these as the WIIFs, or &quot;what&#39;s in it for...&quot; questions:</p>
 
-<h3 id="wiifm-what-39-s-in-it-for-me">WIIFM - What&#39;s in it for me</h3>
+<h3 id="wiifm-whats-in-it-for-me">WIIFM - What&#39;s in it for me</h3>
 
 <p>You&#39;re going to want a tool that you&#39;re happy working with. You&#39;re going to make an investment in this tool. You&#39;ll need to learn to be proficient with the tool, master it, and use it in your everyday workflow. Pick something that you&#39;ll be happy working with for some time.</p>
 
-<h3 id="wiifc-what-39-s-in-it-for-my-customers">WIIFC - What&#39;s in it for my customers</h3>
+<h3 id="wiifc-whats-in-it-for-my-customers">WIIFC - What&#39;s in it for my customers</h3>
 
 <p>It&#39;s highly unlikely that your customers know or care anything about how your infrastructure was built, provisioned, and managed. Why should they have any say about which tool you pick? Your customers are keenly interested in the services or products you offer. They also care about things like performance, availability, and how quickly you recover from an issue or outage. If they don&#39;t care about these things, they&#39;ll likely not be your customers for long. As you grow your business, you&#39;ll want to have more time for delivering value to customers. Spend less time building, provisioning, upgrading, and repairing your infrastructure.</p>
 
-<h3 id="wiifb-what-39-s-in-it-for-my-business">WIIFB - What&#39;s in it for my business</h3>
+<h3 id="wiifb-whats-in-it-for-my-business">WIIFB - What&#39;s in it for my business</h3>
 
 <p>You may be the only one who has to build and manage the infrastructure in your company but it&#39;s likely you&#39;ll eventually move beyond a technology team of one. As your technology team grows, you&#39;ll want to include everyone in the process of managing your infrastructure. This includes the people you might not think of as typically having a say in the infrastructure: developers, quality assurance engineers, etc. You do not want to be the only person in your company who knows how to manage the infrastructure and use the tools you&#39;ve selected. Sure, it gives you a false sense of job security and feeds into your hero-complex but you need to be able to pass the on-call baton to someone else. Cost may also be a factor to consider when selecting a solution although it&#39;s likely it&#39;s more of a data-point than selection criteria, given the solutions that are on the market.</p>
 
@@ -78,7 +70,7 @@
 
 <h2 id="why-did-we-switch">Why did we switch?</h2>
 
-<h3 id="we-39-re-a-rails-shop">We&#39;re a Rails shop</h3>
+<h3 id="were-a-rails-shop">We&#39;re a Rails shop</h3>
 
 <p>CustomInk is a Ruby on Rails shop and has been for many years. Being a Rails shop helped push us towards Chef in two ways. As a Rails shop, we suffer a bit from from the stereotypical &quot;newer and shinier is better&quot; syndrome that many people feel ails the Rails community. As a Rails shop, the domain-specific language (DSL) of Chef is a more comfortable way for us to work. Everyone on the technology team can easily understand the code.</p>
 
@@ -158,21 +150,6 @@
       </div>
     </div>
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2011/11/21/why-we-chose-chef-over-puppet-at-customink/';
-    var disqus_title = "Why we chose Chef over Puppet at CustomInk";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
@@ -180,19 +157,7 @@
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
   </body>
 </html>

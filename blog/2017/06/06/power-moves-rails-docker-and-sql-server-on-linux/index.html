@@ -11,18 +11,10 @@
 
 
 Microsoft is releasing new versions of SQL Server on Linux more and more frequently. Last month brought us SQL Server 2017 Community Technolo...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
-  <script type="text/javascript">
-  (function(d) {
-    var config = {
-      kitId: 'tph7yyf',
-      scriptTimeout: 3000
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   
 </head>
 
@@ -30,7 +22,7 @@ Microsoft is releasing new versions of SQL Server on Linux more and more frequen
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -53,7 +45,7 @@ Microsoft is releasing new versions of SQL Server on Linux more and more frequen
       <div class="tb-Post-content">
         <h1>Power Moves: SQL Server on Linux, Rails, and Docker</h1>
         <div class="tb-Masthead">
-  <img src="/assets/content/power-moves/masthead-51a30dbb8a50422db2da48cedd1cec92.jpg" class="tb-Img tb-Img--fancy" alt="The Ultimate Teen Titans Power Move." />
+  <img src="/assets/content/power-moves/masthead-00358e30452214dc1f16bc2293f4d5577dc9e2d6b3761fc6a6f71b8a63602e6c.jpg" class="tb-Img tb-Img--fancy" alt="The Ultimate Teen Titans Power Move." />
 </div>
 
 <p>Microsoft is releasing new versions of SQL Server on Linux more and more frequently. Last month brought us <a href="https://blogs.technet.microsoft.com/dataplatforminsider/2017/04/19/sql-server-2017-community-technology-preview-2-0-now-available/">SQL Server 2017 Community Technology Preview 2.0</a> and like the others before, it&#39;s a breeze to use with <a href="https://www.docker.com">Docker</a>.</p>
@@ -67,26 +59,26 @@ Microsoft is releasing new versions of SQL Server on Linux more and more frequen
 <h2 id="your-environment">Your Environment</h2>
 
 <p>Before moving on, we should pick a secure password for our local SQL Server administrator. The <code>SA_PASSWORD</code> variable is used both by Rails and SQL Server on Docker. I recommend setting this in your Bash, ZSH or whatever config your shell uses.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span><span class="nb">export </span><span class="nv">SA_PASSWORD</span><span class="o">=</span>mysecretpassword
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">export </span><span class="nv">SA_PASSWORD</span><span class="o">=</span>mysecretpassword
 </code></pre></div>
 <h2 id="install-docker">Install Docker</h2>
 
-<p><img src="/assets/content/power-moves/docker-memory-prefs-8a496eab8175fa3fc89a511acf8fed05.jpg" class="tb-Img tb-Img--third tb-Img--half--sm" alt="Docker Memory Resource Preferences" />If you do not have it already, please download and install Docker. They offer a <a href="https://www.docker.com/community-edition">free Community Edition</a> for most platforms. Once you have downloaded and verified your install, please update your Docker resource preferences to allow up to 4GB of memory. SQL Server will need a bit more than the 2GB default.</p>
+<p><img src="/assets/content/power-moves/docker-memory-prefs-8ad442dfb46bd33ab9a8eefdb54f598b96861d251ee06e5ffabcbe9dced7ed5d.jpg" class="tb-Img tb-Img--third tb-Img--half--sm" alt="Docker Memory Resource Preferences" />If you do not have it already, please download and install Docker. They offer a <a href="https://www.docker.com/community-edition">free Community Edition</a> for most platforms. Once you have downloaded and verified your install, please update your Docker resource preferences to allow up to 4GB of memory. SQL Server will need a bit more than the 2GB default.</p>
 
 <h2 id="install-sql-server">Install SQL Server</h2>
 
 <p>This command will download the latest SQL Server image from Microsoft&#39;s official hub on Docker, currently SQL Server 2017 CTP v2.0.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>docker pull microsoft/mssql-server-linux
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>docker pull microsoft/mssql-server-linux
 </code></pre></div>
 <p>Now, start SQL Server using the previous environment settings. The first command will create a persistent data volume while the second starts SQL Server via Docker and attaches that volume to the container. All new databases will persist to the <code>mssqldata</code> volume.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>docker create <span class="se">\</span>
-  -v /var/opt/mssql <span class="se">\</span>
-  --name mssqldata microsoft/mssql-server-linux
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>docker create <span class="se">\</span>
+  <span class="nt">-v</span> /var/opt/mssql <span class="se">\</span>
+  <span class="nt">--name</span> mssqldata microsoft/mssql-server-linux
 
-<span class="gp">$ </span>docker run -p 1433:1433 <span class="se">\</span>
-  -e <span class="s2">"ACCEPT_EULA=Y"</span> <span class="se">\</span>
-  -e <span class="s2">"SA_PASSWORD=</span><span class="nv">$SA_PASSWORD</span><span class="s2">"</span> <span class="se">\</span>
-  -d --volumes-from mssqldata <span class="se">\</span>
+<span class="nv">$ </span>docker run <span class="nt">-p</span> 1433:1433 <span class="se">\</span>
+  <span class="nt">-e</span> <span class="s2">"ACCEPT_EULA=Y"</span> <span class="se">\</span>
+  <span class="nt">-e</span> <span class="s2">"SA_PASSWORD=</span><span class="nv">$SA_PASSWORD</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="nt">--volumes-from</span> mssqldata <span class="se">\</span>
   microsoft/mssql-server-linux
 </code></pre></div>
 <h2 id="create-a-rails-application">Create a Rails Application</h2>
@@ -94,49 +86,49 @@ Microsoft is releasing new versions of SQL Server on Linux more and more frequen
 <p>This guide does not cover Ruby installation. Rails requires Ruby v2.2.2 or higher and if you are new to Ruby or do need to install the latest version, I recommend <a href="https://github.com/rbenv">rbenv</a> for POSIX systems or <a href="https://rubyinstaller.org">RubyInstaller</a> if you are on Windows.</p>
 
 <p>Let&#39;s install the latest version of Rails and Bundler using RubyGems.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>gem install rails bundler
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>gem <span class="nb">install </span>rails bundler
 Successfully installed rails-5.1.1
 Successfully installed bundler-1.15.1
 </code></pre></div>
 <p>To create your new Rails application with SQL Server as the database, we pass the <code>-d</code> flag with a value of <code>sqlserver</code>. This will install the SQL Server Adapter and TinyTDS dependencies – the Ruby bindings to DBLIB. Finally, we test that we can boot our new Rails application and load it in a browser. If all goes well, you should see the following image.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>rails new my_app -d sqlserver
-<span class="gp">$ </span><span class="nb">cd </span>my_app
-<span class="gp">$ </span>./bin/rails server
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>rails new my_app <span class="nt">-d</span> sqlserver
+<span class="nv">$ </span><span class="nb">cd </span>my_app
+<span class="nv">$ </span>./bin/rails server
 
-<span class="gp">=&gt; </span>Booting Puma
-<span class="gp">=&gt; </span>Rails 5.1.1 application starting <span class="k">in </span>development on http://localhost:3000
+<span class="o">=&gt;</span> Booting Puma
+<span class="o">=&gt;</span> Rails 5.1.1 application starting <span class="k">in </span>development on http://localhost:3000
 </code></pre></div>
-<p><img src="/assets/content/power-moves/welcome-to-rails-f085fe8fe301b4957a968e5968b1b03b.jpg" class="tb-Img tb-Img--responsive-ctr" alt="Yay! You're on Rails! Welcome Screen" /></p>
+<p><img src="/assets/content/power-moves/welcome-to-rails-051121731979c533db830998a3cb6a81f02ed053fd051f090d29a231fb71a6cb.jpg" class="tb-Img tb-Img--responsive-ctr" alt="Yay! You're on Rails! Welcome Screen" /></p>
 
 <h2 id="ultimate-power-move">Ultimate Power Move</h2>
 
 <p>A static welcome page is fine and all, but let&#39;s see if we can make sure our SQL Server database works with ActiveRecord.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>./bin/rails db:setup
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>./bin/rails db:setup
 
 Created database <span class="s1">'my_app_development'</span>
 Created database <span class="s1">'my_app_test'</span>
 </code></pre></div>
 <p>Success! The <code>db:setup</code> command has shown us that it has created two databases for us and that everything is bootstraped to SQL Server correctly. We can create a model/table now via a migration.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>./bin/rails generate model User name:string email:string
-<span class="gp">$ </span>./bin/rails db:migrate
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>./bin/rails generate model User name:string email:string
+<span class="nv">$ </span>./bin/rails db:migrate
 
 <span class="o">==</span> CreateUsers: migrating <span class="o">======================================</span>
--- create_table<span class="o">(</span>:users<span class="o">)</span>
+<span class="nt">--</span> create_table<span class="o">(</span>:users<span class="o">)</span>
    -&gt; 0.0024s
-   -&gt; -1 rows
+   -&gt; <span class="nt">-1</span> rows
 <span class="o">==</span> CreateUsers: migrated <span class="o">(</span>0.0025s<span class="o">)</span> <span class="o">=============================</span>
 </code></pre></div>
 <p>Success again! Here we crated a User model/table with a few attributes. Running the migration creates the table and columns as needed and we can even fire up a console to test it all out.</p>
-<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="gp">$ </span>./bin/rails console
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>./bin/rails console
 
-<span class="gp">&gt; </span>User.count
+<span class="o">&gt;</span> User.count
   SQL <span class="o">(</span>0.9ms<span class="o">)</span>  USE <span class="o">[</span>my_app_development]
-   <span class="o">(</span>2.1ms<span class="o">)</span>  SELECT COUNT<span class="o">(</span><span class="k">*</span><span class="o">)</span> FROM <span class="o">[</span>users]
-<span class="gp">=&gt; </span>0
+   <span class="o">(</span>2.1ms<span class="o">)</span>  SELECT COUNT<span class="o">(</span><span class="k">*</span><span class="o">)</span> FROM <span class="o">[</span><span class="nb">users</span><span class="o">]</span>
+<span class="o">=&gt;</span> 0
 </code></pre></div>
 <h2 id="thanks">Thanks!</h2>
 
-<p><img src="/assets/content/power-moves/thanks-4561d3eed33db7d54d34912529d7aaaf.jpg" class="tb-Img tb-Img--fancy tb-Img--third tb-Img--half--sm" alt="The MetaSkills Power Move" />There are a lot of good people working hard every day to make your experience with Ruby &amp; SQL Server amazing. From engineers at Microsoft all the way to individual contributors on the Rails SQL Server repos.</p>
+<p><img src="/assets/content/power-moves/thanks-6a02ee3951e46a9891740dcb02ee9aee4bef4eee8de029992554b479a8ce4983.jpg" class="tb-Img tb-Img--fancy tb-Img--third tb-Img--half--sm" alt="The MetaSkills Power Move" />There are a lot of good people working hard every day to make your experience with Ruby &amp; SQL Server amazing. From engineers at Microsoft all the way to individual contributors on the Rails SQL Server repos.</p>
 
 <p>In the coming weeks, we hope to do so much more. What might be next? Maybe better integration to JRuby within the adapter. Maybe native cross-platform tools to script large databases when the Rails DSL can not represent that schema. All of this is in the works.</p>
 
@@ -196,21 +188,6 @@ Created database <span class="s1">'my_app_test'</span>
       </div>
     </div>
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2017/06/06/power-moves-rails-docker-and-sql-server-on-linux/';
-    var disqus_title = "Power Moves: SQL Server on Linux, Rails, and Docker";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
@@ -218,19 +195,7 @@ Created database <span class="s1">'my_app_test'</span>
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
   </body>
 </html>

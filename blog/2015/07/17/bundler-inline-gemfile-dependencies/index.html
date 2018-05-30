@@ -8,18 +8,10 @@
   
   <meta name="description" content="If you haven&#39;t noticed, the Bundler team has been on a tear lately. It&#39;s hard
 to keep up with the pace of the 1.10.x releases. Along with i...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
-  <script type="text/javascript">
-  (function(d) {
-    var config = {
-      kitId: 'tph7yyf',
-      scriptTimeout: 3000
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   
 </head>
 
@@ -27,7 +19,7 @@ to keep up with the pace of the 1.10.x releases. Along with i...">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -58,7 +50,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 
 <p>Recently at <a href="http://rubyloco.com">RubyLoCo Hack Night</a>, we were challenged with creating an ASCII flag. Given a <a href="https://github.com/rubyloco/hack-night/blob/master/meetings/2015-07-13/flag.rb">starter script</a> that printed out a simple ASCII art American flag, our  first thought was to print it in color. There is a gem for that named <a href="https://github.com/fazibear/colorize">colorize</a>. But how do we install the gem and require it in our script? We wouldn&#39;t be so pedestrian as to actually run <code>gem install colorize</code>. We are proud bundlers.</p>
 
-<p><img src=/assets/content/bundler_inline_gemfile/pre_flag-a5c14f8f01db59729e6248053cd326cb.png alt="Default Flag"></p>
+<p><img src=/assets/content/bundler_inline_gemfile/pre_flag-0180d46177063c57a3378b4cf6e021082a1de074506a82064a9d11a8192d0b87.png alt="Default Flag"></p>
 
 <h2 id="inline-gemfile">Inline Gemfile</h2>
 
@@ -82,7 +74,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 </code></pre></div>
 <p>And now... With the help of Bundler... And colorize... We present <strong>Happy Birthday America</strong>!</p>
 
-<p><img src=/assets/content/bundler_inline_gemfile/post_flag-f6f56afdd3d3c0809a612f41c0552e34.png alt="Colored Flag"></p>
+<p><img src=/assets/content/bundler_inline_gemfile/post_flag-96759bb2218646ba696491d739be1f7c28a578012931c71893f00dfba835dd84.png alt="Colored Flag"></p>
 
 <h2 id="what-did-we-accomplish">What did we accomplish?</h2>
 
@@ -110,7 +102,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 <span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
 <span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">white</span><span class="p">.</span><span class="nf">on_white</span>
 <span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
-<span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="p">.</span><span class="nf">.</span><span class="n">white</span><span class="p">.</span><span class="nf">on_white</span>
+<span class="nb">puts</span> <span class="s1">'0000000000000000000000000000000000000000000000000000000'</span><span class="o">..</span><span class="n">white</span><span class="p">.</span><span class="nf">on_white</span>
 <span class="nb">puts</span> <span class="s1">'1111111111111111111111111111111111111111111111111111111'</span><span class="p">.</span><span class="nf">red</span><span class="p">.</span><span class="nf">on_red</span>
 </code></pre></div>
 <p>CustomInk is a proud supporter of <a href="https://rubytogether.org/">Ruby Together</a></p>
@@ -158,21 +150,6 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
       </div>
     </div>
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2015/07/17/bundler-inline-gemfile-dependencies/';
-    var disqus_title = "Bundler Inline Gemfile Dependencies";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
@@ -180,19 +157,7 @@ to keep up with the pace of the 1.10.x releases. Along with improvements, they h
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
   </body>
 </html>

@@ -14,18 +14,10 @@
     Seamless second database integration for Rails.
     
       2016-01-11: We just finished a new version of SecondBase, our own gem...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
-  <script type="text/javascript">
-  (function(d) {
-    var config = {
-      kitId: 'tph7yyf',
-      scriptTimeout: 3000
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   
 </head>
 
@@ -33,7 +25,7 @@
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -71,7 +63,7 @@
 
 <p>The goal is simple! To give you the tools you need to keep your application running smoothly when connecting to multiple databases.</p>
 
-<h2 id="topics-amp-scenarios">Topics &amp; Scenarios</h2>
+<h2 id="topics-scenarios">Topics &amp; Scenarios</h2>
 
 <p>Each topic or scenario below is tested within a demo Rails application that you can checkout on GitHub. See the <a href="#resources">resources section</a> at the bottom of this post for more information. Examples assume that Rails 3.2.x to 4.2.x are the same behavior. When this is not the case, it will be explicitly pointed out.</p>
 
@@ -277,7 +269,7 @@ transaction will be rolled back, without passing on the exception.</p>
 
 <p>The patch works by overriding critical connection specification/handling class methods defined on ActiveRecord::Base. The first two methods <code>connection_pool</code> and <code>retrieve_connection</code> will make all your queries work. The second two will ensure all remaining connection management methods like <code>remove_connection</code> and <code>clear_all_connections!</code> do the same. But remember! If you need to do any connection management, you really only need do it on the connection class, in this case, <code>MysqlBase</code>.</p>
 
-<h3 id="topic-6-forked-processes-amp-clearing-connections">Topic 6: Forked Processes &amp; Clearing Connections</h3>
+<h3 id="topic-6-forked-processes-clearing-connections">Topic 6: Forked Processes &amp; Clearing Connections</h3>
 
 <p>Most libraries that fork your Rails application process know how to reset ActiveRecord&#39;s base connections. This includes web servers like Passenger or Unicorn. However, it is up to you to do the same for any other database connections. This is easy to do by leveraging our connection class in the first topic.</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="p">.</span><span class="nf">clear_all_connections!</span>
@@ -364,21 +356,6 @@ transaction will be rolled back, without passing on the exception.</p>
       </div>
     </div>
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2015/06/22/rails-multi-database-best-practices-roundup/';
-    var disqus_title = "Rails Multi-Database Best Practices Roundup";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
@@ -386,19 +363,7 @@ transaction will be rolled back, without passing on the exception.</p>
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
   </body>
 </html>

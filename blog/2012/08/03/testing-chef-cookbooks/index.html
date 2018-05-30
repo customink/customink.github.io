@@ -7,18 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <meta name="description" content="Throughout my internship at CustomInk, I&#39;ve put a significant focus on Chef cookbook testing. At the time of this writing, there are a few solu...">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://technology.customink.com/feed.xml" />
-  <link rel="stylesheet" href="/assets/app-90514783ac3de3ce28b5a6a6bf1ab3e8.css">
-  <script type="text/javascript">
-  (function(d) {
-    var config = {
-      kitId: 'tph7yyf',
-      scriptTimeout: 3000
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
   
 </head>
 
@@ -26,7 +18,7 @@
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
-      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-f9e81e9def04cfa2ba39d06ee8e218e4.png"></a>
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
     </nav>
     <input type="checkbox" id="tb-Header-toggle" />
     <div class="tb-Header-area">
@@ -90,7 +82,7 @@ $ bundle exec spec</p></li>
 
 <p>This is why I wrote <a href="https://github.com/customink/strainer">Strainer</a>. Strainer uses a <code>Colanderfile</code> at either the project-level or cookbook-level to run isolated tests on your cookbooks. The cookbook is actually copied to a temporary location and then the tests are run against it. To get started, create a Colander file in your editor and enter the following:</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">knife <span class="nb">test</span>: bundle <span class="nb">exec </span>knife cookbook <span class="nb">test</span> <span class="nv">$COOKBOOK</span>
-foodcritic: bundle <span class="nb">exec </span>foodcritic -I foodcritic/<span class="k">*</span> cookbooks/<span class="nv">$COOKBOOK</span>
+foodcritic: bundle <span class="nb">exec </span>foodcritic <span class="nt">-I</span> foodcritic/<span class="k">*</span> cookbooks/<span class="nv">$COOKBOOK</span>
 chefspec: bundle <span class="nb">exec </span>spec
 </code></pre></div>
 <p>Notice that we have this <code>$COOKBOOK</code> variable. There&#39;s also a <code>$ENVIRONMENT</code> variable provided. These are replaced with the cookbook or cookbooks you are straining.</p>
@@ -144,13 +136,13 @@ chefspec: bundle <span class="nb">exec </span>spec
 
 <p>There is one hang-up about ChefSpec - it has incredibly confusing documentation. Depending on where you look, some methods have changed, syntax is different, things have been removed, and there&#39;s <a href="https://github.com/acrmp/chefspec/issues/30">a few different places for documentation</a>. The solution - just dive into the source. It&#39;s the easiest way, and you&#39;ll have a better understanding from the start.</p>
 
-<h2 id="travis-amp-jenkins">Travis &amp; Jenkins</h2>
+<h2 id="travis-jenkins">Travis &amp; Jenkins</h2>
 
 <p>Internally, we use <a href="http://jenkins-ci.org">Jenkins</a> as our build server. However, for all our public-facing cookbooks, we use <a href="http://travis-ci.org">Travis</a>. This causes somewhat of a gap between our build statuses - we have to look in two locations to see the status of all our builds...</p>
 
 <p>Okay, I lied. We don&#39;t. We actually use another project I wrote, <a href="https://github.com/customink/stoplight">stoplight</a>, that shows the build status from multiple build servers in a single UI. It&#39;s incredibly handy for these kinds of situations. And, for you hardcore Chef users, there&#39;s even a <a href="https://github.com/customink-webops/stoplight">Chef cookbook for stoplight</a> for installing stoplight on your infrastructure.</p>
 
-<h2 id="the-long-amp-short-of-it">The Long &amp; Short of it</h2>
+<h2 id="the-long-short-of-it">The Long &amp; Short of it</h2>
 
 <p>Chef testing is a huge topic, and it&#39;s going to be awhile until the community agrees on a single method for testing. Rails still has yet to figure it out... Here&#39;s what is important - <strong>test your cookbooks</strong>. Even if it&#39;s just running foodcritic against all your cookbooks, you are making the cookbook-world a better place. And <strong>talk about it</strong>. Tutorials like this one, as well as <a href="/blog/our-team/seth-vargo">some of the other posts I&#39;ve written</a> will help the community embrace testing :)!</p>
 
@@ -185,21 +177,6 @@ chefspec: bundle <span class="nb">exec </span>spec
       </div>
     </div>
     
-  <div class="sb-Wrapper">
-    <section id="disqus_thread">
-    </section>
-  </div>
-  <script type="text/javascript">
-    var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2012/08/03/testing-chef-cookbooks/';
-    var disqus_title = "Testing Chef Cookbooks";
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-
 
     <div class="tb-Footer">
   <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
@@ -207,19 +184,7 @@ chefspec: bundle <span class="nb">exec </span>spec
 </div>
 
     
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-32456448-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
-
-    <script src="/assets/app-c8c0da21cd353ed58196e02e376670a3.js"></script>
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
   </body>
 </html>

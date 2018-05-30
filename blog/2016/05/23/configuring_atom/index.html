@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Configuring Atom - CustomInk Technology Blog</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="I&#39;ve been using Atom for a while now, and I thought I&#39;d write a blog post describing some quick ways to modify Atom to work better for you....">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://127.0.0.1/feed.xml" />
+  <link rel="stylesheet" type="text/css" href="/assets/app-bee0774cc464b91cddf5241d3625ea473d6e28c432d2d510402c2e076d80aa4f.css">
+  
+  <script src="http://localhost:35729/livereload.js?snipver=1"></script>
+  
+</head>
+
+  <body class="tb-Post">
+    <header class="tb-Header">
+  <div class="sb-Wrapper">
+    <nav class="tb-Header-home">
+      <a href="/" class="tb-Header-home-logo"><img src="/assets/CustomInk_Tech_Color-71342fb39c34e2733703345fbd48c21a2c13517e056e46f2bff7e09ae76e55c9.png"></a>
+    </nav>
+    <input type="checkbox" id="tb-Header-toggle" />
+    <div class="tb-Header-area">
+      <label for="tb-Header-toggle" class="tb-Header-toggle" data-open="Menu" data-close="Close" onclick></label>
+      <ul class="tb-Header-menu">
+        <li class="tb-Header-menu-item">
+        
+          <a href="/team" class="tb-Header-menu-link">AUTHORS</a>
+        
+        </li>
+        <li class="tb-Header-menu-item">
+          <a href="http://customink.com" class="tb-Header-menu-link">CUSTOMINK.COM</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Configuring Atom</h1>
+        <p>I&#39;ve been using Atom for a while now, and I thought I&#39;d write a blog post describing some quick ways to modify Atom to work better for you. GitHub describes Atom as &quot;modern, approachable, yet hackable to the core&quot;. This post will focus mostly on the &quot;approachable&quot; side of customizing your editor. We&#39;ll first look at editor and package settings before moving to configuration files you can modify, with a few small examples of how you can use them.</p>
+
+<p><strong>NOTE</strong>: As of writing, Atom is on version 1.7.4, and the beta build is 1.8.0-beta4.</p>
+
+<!--more-->
+
+<h3 id="settings">Settings</h3>
+
+<h4 id="editor-settings">Editor Settings</h4>
+
+<p>This is a good place to look when starting to use Atom. There aren&#39;t too many settings here, and the options available to you can be very useful. One of the more common options you might look at here is the <code>font-family</code> that will be applied to your editor&#39;s text. Another option that is important to know about is <code>Exclude VCS Ignored Paths</code>. With this option enabled, files ignored from version control will not show up when using the <a href="https://atom.io/packages/fuzzy-finder"><code>fuzzy-finder</code></a> and <a href="https://atom.io/packages/find-and-replace"><code>find-and-replace</code></a> packages. This can help eliminate search results that may be irrelevant while also improving performance. For an example of how this can help, try toggling the setting and using <code>fuzzy-finder</code> and <code>find-and-replace</code> on a project with a large <code>node_modules</code> folder. Enabling this behavior may be detrimental to your workflow if you routinely edit files you have ignored by your VCS, so knowing about this option can help avoid some frustration.</p>
+
+<h4 id="package-settings">Package Settings</h4>
+
+<p>The majority of the modifications you can make to Atom will come from packages. There are a ton of <a href="https://atom.io/packages">community made packages</a> to browse through, but a fresh install of Atom will still contain many core packages that you&#39;ll find useful. Navigate to your Preferences and select &quot;Packages&quot; from the menu on the left. You can search through your installed packages here. There will be a settings button next to the package name if that package has settings you are able to configure.</p>
+
+<p>I&#39;d recommend browsing through your package list for the things you use most often. If you use autocomplete a lot, check out the settings for <a href="https://atom.io/packages/autocomplete-plus"><code>autocomplete-plus</code></a>. Language support is also contained in packages. The language support packages that ship with Atom usually follow the naming convention of <code>language-&lt;name&gt;</code>. Be sure to check out the packages for the languages you work with to see settings for things like maximum line length and indentation preferences. These settings allow you to keep style preferences in line with your team&#39;s style guide. Language packages may also include available keybindings, and snippets used in conjunction with autocomplete.</p>
+
+<h3 id="configuration-files">Configuration Files</h3>
+
+<h4 id="init-script">Init Script</h4>
+
+<p>You can open your init script by opening the command palette with <code>cmd-shift-p</code> and searching for the command <code>Application: Open Your Init Script</code>. This CoffeeScript or JavaScript file will be evaluated after all of your packages are loaded. This is a good place to write some code to hack together custom commands and modifications that aren&#39;t limited to a single package you have installed, and aren&#39;t suited to be its own package. This file is also great for prototyping new package ideas or modifications you are thinking of developing.</p>
+
+<p>Recently I&#39;ve been learning React, and found myself frequently changing the grammar for a file from regular <code>JavaScript</code> to <code>JavaScript (JSX)</code> for better syntax highlighting and autocomplete behavior. This was a perfect use case for the init script. I changed this process from 3 commands to 1 by creating a custom command in my init script.
+The code for this is below if you&#39;d like to try it out yourself, but I won&#39;t dive into the Atom API in this post. Check the <a href="https://atom.io/docs/api/v1.7.3/AtomEnvironment">documentation</a> for more details.</p>
+<div class="highlight"><pre><code class="language-coffeescript" data-lang="coffeescript"><span class="nx">atom</span><span class="p">.</span><span class="na">commands</span><span class="p">.</span><span class="na">add</span> <span class="s">'atom-text-editor'</span><span class="p">,</span> <span class="s">'custom:js-to-jsx'</span><span class="p">,</span> <span class="o">-&gt;</span>
+  <span class="nx">grammars</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">.</span><span class="na">grammars</span><span class="p">.</span><span class="na">getGrammars</span><span class="p">()</span>
+  <span class="nx">grammar</span> <span class="o">=</span> <span class="nx">grammars</span><span class="p">.</span><span class="na">find</span><span class="p">((</span><span class="nx">g</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">g</span><span class="p">.</span><span class="na">name</span> <span class="o">==</span> <span class="s">"JavaScript (JSX)"</span>
+  <span class="p">)</span>
+  <span class="nx">editor</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">.</span><span class="na">workspace</span><span class="p">.</span><span class="na">getActiveTextEditor</span><span class="p">()</span>
+  <span class="nx">editor</span><span class="p">.</span><span class="na">setGrammar</span><span class="p">(</span><span class="nx">grammar</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="keymap">Keymap</h4>
+
+<p>Are you sick of accidentally quitting Atom instead of closing a tab? Let&#39;s override the <code>cmd-q</code> keybinding! We can do this by editing our keymap file. Open your keymap the same way you opened your init script, but this time looking for the <code>Application: Open Your Keymap</code> command. This is a CSON or JSON file that you can use to map a keybinding to a command. Your first step when creating a new keybinding is finding the selector you want to apply the keybinding to. For example, you can use <code>atom-text-editor</code> to refer to your text editing area, or <code>body</code> for just about everything in the application window. Atom includes Chrome&#39;s developer tools (View -&gt; Developer -&gt; Toggle Developer Tools), which can help you find the right selector. The next option is the keybinding you wish to apply. We want to override <code>cmd-q</code> to save, and make sure we can still quit Atom with a second press. In this case we will have two keybindings: <code>cmd-q</code> and <code>cmd-q cmd-q</code>.
+The last step is the name of the command we want to dispatch. Command names are usually in the format <code>package-name:command-name</code>. The quit command, like the commands used to open the keymap and init files, is part of <code>Application</code> and is called <code>application:quit</code>. Saving is part of Atom Core, and is attached to the command <code>core:save</code>. Putting all this together, we would get the following:</p>
+<div class="highlight"><pre><code class="language-cson" data-lang="cson">'body':
+  'cmd-q': 'core:save'
+  'cmd-q cmd-q': 'application:quit'
+</code></pre></div>
+<p>This overrides <code>cmd-q</code> to save, and allows you to confirm quitting with another <code>cmd-q</code>.</p>
+
+<h4 id="stylesheet">Stylesheet</h4>
+
+<p>Your stylesheet, <code>styles.less</code>, is used to customize how your editor looks. You can open this file by running the &quot;Application: Open Your Stylesheet&quot; command. You can use this to apply styles to the core editor, as well as views created by third party packages. You can even modify styles set by your syntax theme to get it just right.</p>
+
+<p>I use panes often, and sometimes lose track of which pane I&#39;m focused on. I was able to solve this small but annoying problem by adding a blue border around my active pane.</p>
+<div class="highlight"><pre><code class="language-less" data-lang="less">atom-pane {
+  border: 1px solid #000000;
+  &amp;.active {
+    border: 1px solid #3fcef4;
+  }
+}
+</code></pre></div>
+<h4 id="snippets">Snippets</h4>
+
+<p>Snippets are your way of adding custom autocomplete options. You can edit your snippets by running the &#39;Application: Open Your Snippets&#39; command. Snippets are defined using CSON or JSON. The outer most key is the language scope. You can find this by looking at the package settings for a language. For <a href="https://atom.io/packages/language-ruby"><code>language-ruby</code></a> this is <code>source.ruby</code>, and for <a href="https://atom.io/packages/language-ruby"><code>language-javascript</code></a> it&#39;s <code>source.js</code>. Each key within this source is the short description of what this snippet is for. There are two attributes that you should add inside of that description. The first is a prefix, used as the &quot;trigger&quot; for autocomplete. The next is the body, which will be the text inserted when the snippet is confirmed. An example I use to set up a <code>describe</code> method when testing ruby is below.</p>
+<div class="highlight"><pre><code class="language-cson" data-lang="cson">'.source.ruby':
+  'describe block':
+    'prefix': 'describe'
+    'body': """
+      describe '${1:message}' do
+        $2
+      end
+    """
+</code></pre></div>
+<p>The dollar signs are Tab Stops, used to signal which part of the snippets are supposed to be edited after the snippet is confirmed.</p>
+
+<h3 id="summary">Summary</h3>
+
+<p>This is a very high level overview of where different settings can be found and modified. The Atom team has written much more detailed documentation for these settings and more. The main documentation can be found <a href="http://flight-manual.atom.io/">here</a>. It includes entire sections on <a href="http://flight-manual.atom.io/using-atom/sections/atom-packages/">Packages</a>, <a href="http://flight-manual.atom.io/using-atom/sections/snippets/">Snippets</a>, <a href="http://flight-manual.atom.io/hacking-atom/sections/the-init-file/">The Init File</a>, and <a href="http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/">Keymaps</a> if you would like to learn more about the specific topics covered in this blog post.</p>
+
+      </div>
+      <div class="tb-Post-author">
+        
+        
+        <div class="tb-Author">
+  
+    <div class="tb-Author-gravatar">
+      <img title="Alex Egan" src="http://www.gravatar.com/avatar/edb6d7f634bb99eae57ac34e9049009b?s=150"/>
+    </div>
+  
+  <div class="tb-Author-info">
+    
+      <time pubdate datetime="2016-05-23T00:00:00-04:00">
+        23 May 2016
+      </time></br>
+      by Alex Egan
+    
+    <div class="tb-Author-icons">
+      
+        <span class="tb-Author-icon">
+          <a href="http://twitter.com/Egan___"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/AEgan"><i class="tb-Icon-github"></i></a>
+        </span>
+      
+      
+    </div>
+    
+      <div class="tb-Author-posts">
+        <a href="/authors/alex-egan" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+          View All Posts
+        </a>
+      </div>
+    
+  </div>
+</div>
+
+      </div>
+    </div>
+    
+
+    <div class="tb-Footer">
+  <div><small>&copy; 2018 CustomInk, LLC. All rights reserved.</small></div>
+  <div><small><a href="http://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>
+</div>
+
+    
+
+    <script src="/assets/app-cdd78b0dc506b751b442bb5e5298ea658af2ee55e46ccb88ba5583570ca686e2.js" type="text/javascript"></script>
+  </body>
+</html>
