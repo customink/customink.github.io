@@ -7,6 +7,206 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Using IMGIX to Personalize Knolled Images</title>
+        <description>&lt;style&gt;
+  .highlight {
+    font-size: 14px;
+    font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
+  }
+  .highlight pre {
+    border: 1px solid rgb(238, 238, 238);
+    background-color: white;
+  }
+  .highlight span.s  { color: rgb(170, 17, 17); }
+  .highlight span.nt { color: rgb(34, 17, 153); }
+  .highlight span.c  { color: rgb(204, 204, 204); }
+  .highlight span.na { color: rgb(85, 85, 85); }
+&lt;/style&gt;
+
+&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/imgix/masthead2-f-5c55d7a6ff6e06cde41ff049f33a89b95697189e9d77e990d0a8aaca82ad617a.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;Deconstructed: Photo by Todd McLellan.&quot; /&gt;
+  &lt;aside&gt;&lt;a href=&quot;https://www.thisiscolossal.com/2011/02/todd-mclellan-deconstructed/&quot;&gt;Deconstructed: Photo by Todd McLellan.&lt;/a&gt;&lt;/aside&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://creativemarket.com/blog/what-is-knolling-the-overhead-photography-trend-explained&quot;&gt;Knolling&lt;/a&gt; is the process of arranging different objects so that they are at 90 degree angles from each other. The term originates from a janitor named Andrew Kromelow in 1987 who would arrange tools using this method for a popular furniture brand called &lt;a href=&quot;https://www.knoll.com/shop/by-designer/frank-gehry&quot;&gt;Knoll&lt;/a&gt;. Commonly photographed from above, knolling is a highly popular method for promoting products from companies like Instagram to Apple.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.imgix.com&quot;&gt;&lt;img src=&quot;/assets/content/imgix/imgix-a6c45c8e8fbb4c352c598fcf2282992a1e145914ab324e413248e25068982afd.png&quot; class=&quot;tb-Img tb-Img--third tb-Img--third--sm&quot; alt=&quot;IMGIX Logo&quot; /&gt;&lt;/a&gt;
+Even here at Custom Ink, we use knolling to showcase our products. But how could we personalize knolled images to help our customers visualize their creations? We often use &lt;a href=&quot;https://www.imgix.com&quot;&gt;IMGIX&lt;/a&gt; to help us process &amp;amp; optimize catalog images and decided to give its blending capabilities a try out. Let&amp;#39;s jump right in and explore how.&lt;/p&gt;
+
+&lt;h2 id=&quot;our-goal&quot;&gt;Our Goal&lt;/h2&gt;
+
+&lt;p&gt;To personalize this image below with a design centered on each product. The image is marked up to indicate areas a design can be placed within, appearing as red rectangles. The &lt;code&gt;width&lt;/code&gt; and &lt;code&gt;height&lt;/code&gt; of each rectangle appear as large text followed by smaller text indicating the &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt;  placement coordinates, both in pixels. The overall dimensions of the image is &lt;code&gt;600x432&lt;/code&gt; pixels. Take note, we will need all these numbers later :)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/0-7dc4b1cb585739f856abaaeff2102a176a7b6f690bb9e66a7a6602dbf0a1ee6f.png&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; alt=&quot;Custom Ink Knolled Image Goals&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;imgix-intro&quot;&gt;IMGIX Intro&lt;/h2&gt;
+
+&lt;p&gt;That background image is hosted on Custom Ink&amp;#39;s site at &lt;a href=&quot;https://www.customink.com/email/imgix/knolled.jpg&quot;&gt;/email/imgix/knolled.jpg&lt;/a&gt; and in order for IMGIX to process it, we must allow their system to connect to our site. For today&amp;#39;s demo, we are using IMGIX&amp;#39;s &lt;a href=&quot;https://docs.imgix.com/setup/creating-sources&quot;&gt;web bucket source&lt;/a&gt; which enables any file in this URL path to be processed.&lt;/p&gt;
+
+&lt;p&gt;Below is a little Ruby script that we will use in future code examples. It will evolve a bit as we move forward and the final version can be found in &lt;a href=&quot;https://gist.github.com/metaskills/316e1285c34f713d646171beb63ae252&quot;&gt;this GitHub gist&lt;/a&gt;. The script uses Bundler&amp;#39;s &lt;a href=&quot;https://technology.customink.com/blog/2015/07/17/bundler-inline-gemfile-dependencies/&quot;&gt;inline feature&lt;/a&gt; to install our dependencies, for now, the IMGIX &lt;a href=&quot;https://github.com/imgix/imgix-rb&quot;&gt;ruby client&lt;/a&gt;. The design to add is a URL string. Lastly, this script also creates a simple client instance and convenience method to make IMGIX paths to our web bucket source created above.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'bundler/inline'&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;gemfile&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://rubygems.org'&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'imgix'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;DESIGN_URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'https://www.customink.com/email/imgix/inky.png'&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;IMGIX_CLIENT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Imgix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;host: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IMGIX_SOURCE'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;IMGIX_CLIENT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/email/imgix/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;first-placement&quot;&gt;First Placement&lt;/h2&gt;
+
+&lt;p&gt;IMGIX has a vast &lt;a href=&quot;https://docs.imgix.com/apis/url&quot;&gt;API&lt;/a&gt; available to process images. Think of them as a hosted &lt;a href=&quot;https://www.imagemagick.org&quot;&gt;ImageMagick&lt;/a&gt; service. From file formation conversions to face detection, they do it all. But today we are going to make heavy use of their &lt;a href=&quot;https://docs.imgix.com/apis/url/blending&quot;&gt;Blending API&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our first experiment will simply blend our design url onto the base knolled image using dimensions &amp;amp; coordinates from our first design area shown above. The client&amp;#39;s &lt;code&gt;to_url&lt;/code&gt; methods returns a URL string. The parameters direct IMGIX how to process the image which are mostly self-documenting. If you have questions, reference that API links above as we move along.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'knolled.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DESIGN_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# Design area width &amp;amp; height.&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# Design area coordinates.&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/1-c6da1cbcc1a856dc84073172007ae4115a5681fc437e4188dbe5ad441bdc8ea2.jpg&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Well this is mostly what we want. The design fits into its area but is not centered. We could adjust the &lt;code&gt;bx&lt;/code&gt; param to nudge it to the right, but this requires that we calculate the width of the image. Our goal is to do as little work as possible while making any design (horizontal or vertical) automatically center within each area.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Option #1&lt;/strong&gt; - The &lt;a href=&quot;https://docs.imgix.com/apis/url/blending/ba&quot;&gt;Blend Align&lt;/a&gt; param which adjusts the alignment of the overlay image relative to the base image. So we might think adding &lt;code&gt;ba: &amp;#39;middle,center&amp;#39;&lt;/code&gt; would work? But it does not because alignment only applies when we are not setting the (bx) and/or (by) params.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Option #2&lt;/strong&gt; - The &lt;a href=&quot;https://docs.imgix.com/apis/url/blending/bf&quot;&gt;Blend Fit&lt;/a&gt; param which controls how an overlay image fits within its blend width (bw) and blend height (bh) dimensions. This sounds ideal. But we are already seeing how the default of &lt;code&gt;bf: &amp;#39;clip&amp;#39;&lt;/code&gt; is working by making sure the design proportionally fits in the area. In this case, it adjusted the height automatically for us to 80 pixels. The blend fit param does nothing for alignment.&lt;/p&gt;
+
+&lt;p&gt;In order to continue with other design areas, we need to rethink the problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;new-placement-approach&quot;&gt;New Placement Approach&lt;/h2&gt;
+
+&lt;p&gt;So did it feel like we hit a roadblock above? We actually learned a valuable lesson. In order to center any design within its area, we need to rethink what is the overlay image. Rather than use the design on its own, we need to instruct IMGIX to make a design area layer which centers the design, then blend that over the knolled background.&lt;/p&gt;
+
+&lt;p&gt;To create this layer, we will use a 1px transparent png and resize it to the dimensions of the design layer, then blend the design over it.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'1px.png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;fit: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;w: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;h: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DESIGN_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/2-bc0d5beea73569580a426338c1bbb9f0d3cba54d8723b9268921d634a650c079.png&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; style=&quot;width:110px; height:80px; box-sizing:content-box; float:right; margin-left: 1rem; margin-bottom: 1rem;&quot; /&gt;Perfect! The design is centered in a new image that is the exact size of the design area. We had to use a new param, &lt;a href=&quot;https://docs.imgix.com/apis/url/size/fit&quot;&gt;Fit Crop&lt;/a&gt;, which maintains the full design area dimensions. If not used, the default fit (clip) would have trimmed our image to &lt;code&gt;80x80&lt;/code&gt; pixels.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/2-debug-51de0c2249bd64a62bfce07f4695a8174457e018e9f02344b316d13a53dff67d.png&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; style=&quot;width:110px; height:80px; box-sizing:content-box; float:right; margin-left: 1rem; margin-bottom: 1rem;&quot; /&gt;&lt;strong&gt;DEBUGGING&lt;/strong&gt; - Sometimes you want to visualize the design area. This is easy to do now by using a 1px image that has a color transparency. I chose red and named it &lt;code&gt;1px-debug.png&lt;/code&gt;. Here is the same image using the debug pixel.&lt;/p&gt;
+
+&lt;p&gt;Finally, putting this new design layer technique onto the knolled background by swapping out the design URL with our new IMGIX layer URL. For this example, I have used the debug pixel so we can see how this all works.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'knolled.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'1px-debug.png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;w: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;h: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;fit: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DESIGN_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bf: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'clip'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/2-final-42566d816a563ab2ab427b40730ddbcddfbb74cf0dff2eea55fb6dac8895d467.jpg&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we are cooking! But a handful of design areas remain and there is no way to use multiple blends on the same knolled background image. I wonder if we can recursively blend multiple design layers? 🤔&lt;/p&gt;
+
+&lt;h2 id=&quot;peeling-back-the-layers&quot;&gt;Peeling Back The Layers&lt;/h2&gt;
+
+&lt;p&gt;We have already seen how we can pass one blended IMGIX URL to another blended IMGIX URL. Till now, that second image&amp;#39;s dimensions are the size of the design area - the red boxes illustrated in our goals section. But to layer multiple designs, we need a uniform approach similar to &lt;a href=&quot;https://en.wikipedia.org/wiki/Traditional_animation&quot;&gt;cell animation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A small change to our Ruby script is needed so the width and height of the knolled background can be used. Also, a clean way to turn on the 1px debug image by setting an environment variable.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;WIDTH&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;HEIGHT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;432&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;ONEPX&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'DEBUGPX'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1px-debug.png'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1px.png'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And now an example of a transparent layer, the size of our knolled background, that has the design area layer blended onto it. The debug pixel was used so we can visibly see these layers at work. Again, here is the &lt;a href=&quot;https://docs.imgix.com/apis/url/blending&quot;&gt;Blending API&lt;/a&gt; in case you would like to reference these parameters.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ONEPX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;w: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;WIDTH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;h: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HEIGHT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;fit: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ONEPX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;w: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;h: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;fit: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DESIGN_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bf: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'clip'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/3-724c6a82ee2fe96c23013de72237d225a04d0b8cc74ad2fa30e9948a430e2cf1.jpg&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;stacking-the-deck&quot;&gt;Stacking The Deck&lt;/h2&gt;
+
+&lt;p&gt;We need to create a Ruby &lt;a href=&quot;https://robots.thoughtbot.com/writing-a-domain-specific-language-in-ruby&quot;&gt;DSL&lt;/a&gt; that allows us to stack IMGIX design layer URLs like the one above. The pseudo code I initially wrote looked something like this. Where Ruby blocks allow us to recursively build a stack.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;knolled_background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;But if every IMGIX URL uses the (blend) option, where is our recursive hook to stitch each layer together? The answer is the &lt;a href=&quot;https://docs.imgix.com/apis/url/watermark&quot;&gt;Watermark API&lt;/a&gt; which has a similar interface to blending. So here is our final addition to our Ruby script.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:)&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'1px.png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;w: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;WIDTH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;h: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;HEIGHT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;fit: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ONEPX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;w: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;h: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;fit: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crop'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;DESIGN_URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bw&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;bf: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'clip'&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;mark64: &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;block_given?&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;markx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;marky: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Because the inner most image, the first URL generated has no block argument, we use Ruby&amp;#39;s &lt;code&gt;block_given?&lt;/code&gt; to conditionally yield or not. And because we have uniform layers, all we have to do is set both (markx) and (marky) to 0. Perfect!&lt;/p&gt;
+
+&lt;h2 id=&quot;putting-it-all-together&quot;&gt;Putting It All Together&lt;/h2&gt;
+
+&lt;p&gt;All that learning so we can write this concise code using each design area&amp;#39;s data.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;ixpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'knolled.jpg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;blend64: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;110&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;115&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;115&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;240&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;495&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;155&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;design_layer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;bw: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bh: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;bx: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;485&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;by: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;295&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;bm: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'normal'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/steps/final-bdfcc823ef810b7ce63b9194c9ee41235a57f3e739a0b784d3a44759ec958d15.jpg&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;From here you can do all sorts of additional fun things. For example, you can create layers in PhotoShop and interleave as you build your design layers. You can even use URL shortener services like &lt;a href=&quot;https://bitly.com&quot;&gt;Bitly&lt;/a&gt; as you build IMGIX URLs to ensure your final URL remains well under browser limits. Here is an example of how we are using all these techniques.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/imgix/advanced-73d094a30670f2bc0a0b66a1e23d82587521a87eb71ffa6f01c53bf93227f19a.jpg&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;thanks&quot;&gt;Thanks!&lt;/h2&gt;
+
+&lt;p&gt;If you have any questions or comments, please feel free to ask or share. Thank you so much for reading and remember - &lt;a href=&quot;https://www.youtube.com/watch?v=49p1JVLHUos&amp;t=15m33s&quot;&gt;Always Be Knolling (ABK)&lt;/a&gt; !!!&lt;/p&gt;
+</description>
+        <pubDate>Tue, 27 Nov 2018 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2018/11/27/using-imgix-to-personalize-knolled-images/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2018/11/27/using-imgix-to-personalize-knolled-images/</guid>
+      </item>
+    
+      <item>
         <title>Learning ES6: New Methods for Arrays</title>
         <description>&lt;p&gt;In ES6, we get a bunch of new native methods for Arrays that are super useful! This is a short blog post that goes over each of the new methods - &lt;code&gt;.from()&lt;/code&gt;, &lt;code&gt;.of()&lt;/code&gt;, &lt;code&gt;.find()&lt;/code&gt;, &lt;code&gt;.findIndex()&lt;/code&gt;, &lt;code&gt;.some()&lt;/code&gt;, and &lt;code&gt;.every()&lt;/code&gt; - and how they work.&lt;/p&gt;
 
