@@ -7,6 +7,31 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>[Video] AWS Lambda with Ruby on Rails and SAM</title>
+        <description>&lt;p&gt;At Custom Ink, we are always working on new technologies and love to share with the community. &lt;a href=&quot;https://twitter.com/metaskills&quot;&gt;Ken Collins&lt;/a&gt; recently presented on using Ruby on Rails with Lambda at &lt;a href=&quot;http://arlingtonruby.org/&quot;&gt;Arlington Ruby&lt;/a&gt;. We recorded the presentation to share.&lt;/p&gt;
+
+&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;A progressive dive into how to use Ruby with AWS Lambda via their &lt;a href=&quot;https://aws.amazon.com/serverless/sam/&quot;&gt;serverless application framework SAM&lt;/a&gt; to locally develop, test and ship your function to the cloud. Along the way we will cover topics on how to build native extensions, extend your function with Lambda Layers, and how to use databases like DynamoDB.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://twitter.com/metaskills&quot;&gt;Ken &amp;quot;metaskills&amp;quot; Collins&lt;/a&gt; is a staff engineer at Custom Ink and maintainer of wonderful libraries like &lt;a href=&quot;https://github.com/rails-sqlserver/activerecord-sqlserver-adapter&quot;&gt;ActiveRecord SQL Server Adapter&lt;/a&gt; and &lt;a href=&quot;https://github.com/metaskills/minitest-spec-rails&quot;&gt;MiniTest::Spec&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;video&quot;&gt;Video&lt;/h2&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/0Dm1Isas0h4&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;slide-deck&quot;&gt;Slide Deck&lt;/h2&gt;
+
+&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;660cd3be95a247fbba30792027bf92f4&quot; data-ratio=&quot;1.33333333333333&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;
+</description>
+        <pubDate>Tue, 12 Mar 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/03/12/aws-lambda-with-ruby/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/03/12/aws-lambda-with-ruby/</guid>
+      </item>
+    
+      <item>
         <title>Using IMGIX to Personalize Knolled Images</title>
         <description>&lt;style&gt;
   .highlight {
