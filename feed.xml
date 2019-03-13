@@ -7,6 +7,58 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Rails on AWS Lambda with SAM</title>
+        <description>&lt;style&gt;
+  .highlight {
+    font-size: 14px;
+    font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
+  }
+  .highlight pre {
+    border: 1px solid rgb(238, 238, 238);
+    background-color: white;
+  }
+  .highlight span.s  { color: rgb(170, 17, 17); }
+  .highlight span.nt { color: rgb(34, 17, 153); }
+  .highlight span.c  { color: rgb(204, 204, 204); }
+  .highlight span.na { color: rgb(85, 85, 85); }
+&lt;/style&gt;
+
+&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/lamby/masthead-2958bbf108ff6a30c332bce34da1f71f9c978794124fae83cb048ae3cfcee727.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;Lambda Loves Rails.&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Move over basic &amp;quot;Hello World&amp;quot; functions - get ready to super charge your next Lambda project with the most productive web framework on the most convenient cloud infrastructure! Following up from my Arlington Ruby presentation &lt;a href=&quot;/blog/2019/03/12/aws-lambda-with-ruby/&quot;&gt;AWS Lambda &amp;amp; Ruby/Rails with SAM&lt;/a&gt; last week - I am very excited to share today how you can get started with Rails under &lt;a href=&quot;https://aws.amazon.com/lambda/&quot;&gt;AWS Lambda&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;introducing-lamby&quot;&gt;Introducing Lamby&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;&lt;img src=&quot;/assets/content/lamby/lamby-723dfdc344c076844d5ad81fe9baab2f1240650bee200865edd3dbe6d77c336a.jpg&quot; class=&quot;tb-Img tb-Img--third tb-Img--half--sm&quot; alt=&quot;The Lamby Gem&quot; /&gt;&lt;/a&gt;
+&lt;strong&gt;Simple Rails &amp;amp; AWS Lambda Integration using Rack&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The goal of this project is to provide minimal code along with comprehensive documentation to get your Rails application running under AWS Lambda.&lt;/p&gt;
+
+&lt;p&gt;This gem&amp;#39;s code will focus mainly on converting API Gateway &lt;code&gt;event&lt;/code&gt; and &lt;code&gt;context&lt;/code&gt; objects into a Rack &lt;code&gt;env&lt;/code&gt; to send to your Rails application. Most everything else is documentation.&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;sb-Btn&quot; href=&quot;https://github.com/customink/lamby&quot;&gt;Get Started with Rails &amp;amp; Lambda Now!&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;live-demo&quot;&gt;Live Demo&lt;/h3&gt;
+
+&lt;p&gt;Want to dig into a demo Rails application running on AWS Lambda? Visit &lt;a href=&quot;https://lamby.metademo.net&quot;&gt;https://lamby.metademo.net&lt;/a&gt; or checkout this GitHub repository &lt;a href=&quot;https://github.com/customink/lamby_demo&quot;&gt;customink/lamby_demo&lt;/a&gt; which is deployed to this custom domain name behind a CloudFront distribution.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:)&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Lamby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;handler&lt;/span&gt; &lt;span class=&quot;vg&quot;&gt;$app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;lots-of-todos&quot;&gt;Lots of Todos&lt;/h3&gt;
+
+&lt;p&gt;This is just the start and the project list several TODOs that will happen over the coming weeks. So make sure to ⭐️ and 👁 watch the repository for updates to learn how to accomplish anything from Rails asset compilation using an S3 bucket, to tagged logging in CloudWatch, and more. Please submit &lt;a href=&quot;https://github.com/customink/lamby/issues&quot;&gt;an issue&lt;/a&gt; if you have any questions or want to see documentation around a certain topic of using AWS with Rails on Lambda. Thanks!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 13 Mar 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/03/13/rails-on-aws-lambda-with-sam/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/03/13/rails-on-aws-lambda-with-sam/</guid>
+      </item>
+    
+      <item>
         <title>[Video] AWS Lambda with Ruby on Rails and SAM</title>
         <description>&lt;p&gt;At Custom Ink, we are always working on new technologies and love to share with the community. &lt;a href=&quot;https://twitter.com/metaskills&quot;&gt;Ken Collins&lt;/a&gt; recently presented on using Ruby on Rails with Lambda at &lt;a href=&quot;http://arlingtonruby.org/&quot;&gt;Arlington Ruby&lt;/a&gt;. We recorded the presentation to share.&lt;/p&gt;
 
