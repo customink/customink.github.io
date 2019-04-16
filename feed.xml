@@ -104,6 +104,62 @@
       </item>
     
       <item>
+        <title>Day Zero Deployments</title>
+        <description>&lt;p&gt;Custom Ink leverages open source tools and practices that unlock &lt;em&gt;Day Zero Deployments&lt;/em&gt; for new engineers and frictionless development for our entire engineering organization! Here&amp;#39;s how!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;the-tools&quot;&gt;🛠 The Tools&lt;/h2&gt;
+
+&lt;h4 id=&quot;strap&quot;&gt;👢 Strap&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/MikeMcQuaid/strap&quot;&gt;Strap&lt;/a&gt; is a useful tool maintained by &lt;a href=&quot;https://github.com/MikeMcQuaid&quot;&gt;Mike McQuaid&lt;/a&gt;, project lead for &lt;a href=&quot;https://github.com/Homebrew&quot;&gt;homebrew&lt;/a&gt;, that sets out to &amp;quot;bootstrap a minimal macOS development system&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;We leverage Strap at Custom Ink to ensure that our development machines have a minimal set of requirements for working on any of our 100+ production applications. Most of these are Ruby on Rails web services, with some notable exceptions in Node (with React), Python and Java.&lt;/p&gt;
+
+&lt;p&gt;Thanks to Strap, we can make some base assumptions about the environment, which sets us up for some major unlocks during application setup.&lt;/p&gt;
+
+&lt;h4 id=&quot;scripts-to-rule-them-all&quot;&gt;💪 Scripts to Rule Them All&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/github/scripts-to-rule-them-all&quot;&gt;Scripts to Rule them all&lt;/a&gt; is &amp;quot;a set of boilerplate scripts describing the normalized script pattern that GitHub uses in its projects&amp;quot;.&lt;/p&gt;
+
+&lt;p&gt;At Custom Ink we took these recommendations to heart and implemented them across nearly every project in our stack! We also added in our own &lt;code&gt;bin/workers&lt;/code&gt; for supporting background processes, but that&amp;#39;s a topic for another blog post.&lt;/p&gt;
+
+&lt;h4 id=&quot;continuous-integration&quot;&gt;👷‍ Continuous Integration&lt;/h4&gt;
+
+&lt;p&gt;All of our projects are wired up to be continually tested for every pull request. This keeps our feedback cycle tight, and our confidence high that the changes we&amp;#39;re making are safe.&lt;/p&gt;
+
+&lt;p&gt;We try to reuse Scripts to Rule Them All in our CI environments as much as possible, with most projects leveraging &lt;code&gt;bin/setup&lt;/code&gt; and &lt;code&gt;bin/test&lt;/code&gt; as part of their continuous integration workflow. This unlocks a virtuous cycle where our local setup process also becomes continually tested!&lt;/p&gt;
+
+&lt;h2 id=&quot;tying-it-all-together&quot;&gt;🧶 Tying it all together&lt;/h2&gt;
+
+&lt;p&gt;So we have established base guarantees about the development environment, and applied the convention of Scripts to Rule Them All across all our applications. Because of this, we enjoy the benefit of a streamlined development setup process &lt;em&gt;no matter which application, language, or framework we choose to write it in&lt;/em&gt;!&lt;/p&gt;
+
+&lt;h4 id=&quot;in-practice&quot;&gt;👩‍💻 In practice&lt;/h4&gt;
+
+&lt;p&gt;Our aptly named Rails Frontend is our primary e-commerce application which handles everything you see when you go to &lt;a href=&quot;https://www.customink.com&quot;&gt;CustomInk.com&lt;/a&gt;. Here are the steps for a brand new engineer to get it up and running on their laptop:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Clone the &lt;code&gt;rails_frontend&lt;/code&gt; repo.&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;bin/bootstrap&lt;/code&gt; – all local dependencies will be brought in via the &lt;code&gt;Brewfile&lt;/code&gt; from the repo, thanks to &lt;a href=&quot;https://github.com/Homebrew/homebrew-bundle#homebrew-bundle&quot;&gt;homebrew-bundle&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;bin/setup&lt;/code&gt; – the application will set up any library dependencies, as well as the required databases.&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;bin/test&lt;/code&gt; – the application will have all tests passing right out of the box!&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;That&amp;#39;s it. And the same process will work across every one of our hundreds of applications&lt;/strong&gt; that are currently in production.&lt;/p&gt;
+
+&lt;h2 id=&quot;wrapping-it-all-up&quot;&gt;🎁 Wrapping it all up&lt;/h2&gt;
+
+&lt;p&gt;By leveraging some really great open source tooling (Thanks GitHub and Mike McQuaid!), we have a reliable and repeatable way for all of our engineers to get applications up running on their local environments with little to no friction.&lt;/p&gt;
+
+&lt;p&gt;This has been a huge win for our productivity and onboarding, and allows us to have a consistent developer experience across our entire organization. It often results in new engineers deploying a change into production on their first day!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 12 Apr 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/04/12/day-zero-deployments/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/04/12/day-zero-deployments/</guid>
+      </item>
+    
+      <item>
         <title>Rails on AWS Lambda with SAM</title>
         <description>&lt;style&gt;
   .highlight {
