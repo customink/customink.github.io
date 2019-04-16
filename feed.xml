@@ -7,6 +7,103 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Secure Configs with AWS SSM Parameter Store and Rails on Lambda</title>
+        <description>&lt;p&gt;&lt;strong&gt;Part of an series while developing, &lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;Lamby - Simple Rails &amp;amp; AWS Lambda Integration using Rack 🚂🐑&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Most Rails applications require over a dozen environment variables to configure themselves or use popular gems. Most notable is the &lt;code&gt;DATABASE_URL&lt;/code&gt; or others like &lt;code&gt;SECRET_KEY_BASE&lt;/code&gt; which is used by Rails itself to sign encrypted cookies for sessions.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;There are numerous ways to configure environment variables ranging from quick and dirty commits to GitHub all the way to a strict separation of config from code using countless methods to achieve a proper &lt;a href=&quot;https://12factor.net/config&quot;&gt;Twelve-Factor&lt;/a&gt; app. This document speaks to one we think fits nicely with AWS and Lambda. But first, some alternatives:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/cedarcode/rails-5-2-credentials-9b3324851336&quot;&gt;Rails 5.2 Credentials&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Share yours in the comments!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;aws-sms-parameter-store-dotenv&quot;&gt;AWS SMS Parameter Store &amp;amp; Dotenv&lt;/h2&gt;
+
+&lt;p&gt;AWS Systems Manager &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html&quot;&gt;Parameter Store&lt;/a&gt; provides secure, hierarchical storage for configuration data management and secrets management and is offered at &lt;strong&gt;no additional charge&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;To say Parameter Store is versatile is an understatement. It can be used in CloudFormation templates to the CLI and has unlimited ways to configure IAM for data access. Both Lamby and this guide below follow AWS guides-lines for &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-su-organize.html&quot;&gt;Organizing Parameters into Hierarchies&lt;/a&gt; and a technique called &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-labels.html&quot;&gt;Labeling Parameters&lt;/a&gt;. If Parameter store is new to you, please take some time to read up on it afterward.&lt;/p&gt;
+
+&lt;h3 id=&quot;overview&quot;&gt;Overview&lt;/h3&gt;
+
+&lt;p&gt;Lamby supports a few ways to integrate with Parameter Store, but we suggest using our &lt;code&gt;Lamby::SsmParameterStore&lt;/code&gt; object with &lt;a href=&quot;https://github.com/bkeepers/dotenv&quot;&gt;Dotenv&lt;/a&gt;. The end result below will write out a &lt;code&gt;.env.RAILS_ENV&lt;/code&gt; file within your &lt;a href=&quot;https://github.com/customink/lamby/issues/17&quot;&gt;deploy script&lt;/a&gt; and ensure it is included in your Lambda package.&lt;/p&gt;
+
+&lt;h3 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h3&gt;
+
+&lt;p&gt;In your &lt;code&gt;Gemfile&lt;/code&gt; add both Dotenv and the AWS SDK for SMS.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'dotenv-rails'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aws-sdk-ssm'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In your Rails &lt;code&gt;config/application.rb&lt;/code&gt; file, add Dotenv&amp;#39;s &lt;code&gt;rails-now&lt;/code&gt; require right after rails is required. This ensures Dotenv works when using `rails server.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require_relative&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'boot'&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rails&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'dotenv/rails-now'&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Change your Lamby &lt;code&gt;app.rb&lt;/code&gt; to require and load Dotenv after the boot require and before requiring Lamby. This will load your environment variables when your function is deployed or using SAM&amp;#39;s development server locally.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require_relative&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'config/boot'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'dotenv'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Dotenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;load&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.env.&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'RAILS_ENV'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'lamby'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require_relative&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'config/application'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require_relative&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'config/environment'&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Add this to your &lt;a href=&quot;https://github.com/customink/lamby/issues/17&quot;&gt;&lt;code&gt;bin/deploy&lt;/code&gt;&lt;/a&gt; script right before the &lt;code&gt;sam package&lt;/code&gt; lines. Replace &lt;code&gt;myapp&lt;/code&gt; with the name of your app or completely customize the path to match your own &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-su-organize.html&quot;&gt;hierarchal structure&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;./bin/rake lamby:ssm:dotenv &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;LAMBY_SSM_PARAMS_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/config/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RAILS_ENV&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/myapp/env&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.env.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RAILS_ENV&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; ./.aws-sam/build/RailsFunction
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;lamby-support&quot;&gt;Lamby Support&lt;/h3&gt;
+
+&lt;p&gt;The above &lt;code&gt;lamby:ssm:dotenv&lt;/code&gt; rake task is made possible with our &lt;a href=&quot;https://github.com/customink/lamby/blob/master/lib/lamby/ssm_parameter_store.rb&quot;&gt;Lamby:: SsmParameterStore&lt;/a&gt; class. But to understand how the above code works, we first need to create a few SSM Parameters. We can use the AWS CLI for that. Here is what we did for the Lamby Demo app&amp;#39;s &lt;code&gt;SECRET_KEY_BASE&lt;/code&gt; env var.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;aws ssm put-parameter &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/config/production/myapp/env/SECRET_KEY_BASE&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--type&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;SecureString&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--value&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;rails secret&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code&gt;name&lt;/code&gt; option is our path and is an example hierarchy, you can come up with your own. But here is how we have structured ours.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The top level &lt;code&gt;/config&lt;/code&gt; path establishes that all our application&amp;#39;s config will be under this path.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;/production&lt;/code&gt; component can change for each &lt;code&gt;RAILS_ENV&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The third component is for your application name. Change this for each of your apps.&lt;/li&gt;
+&lt;li&gt;Lastly, the &lt;code&gt;/env&lt;/code&gt; path sets down that everything in this path is for environment variables.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Again, feel free to come up with your own path hierarchies. Whatever is found in the path you pass via &lt;code&gt;LAMBY_SSM_PARAMS_PATH&lt;/code&gt; will be converted to entries in your Dotenv file.&lt;/p&gt;
+
+&lt;h4 id=&quot;labeling&quot;&gt;Labeling&lt;/h4&gt;
+
+&lt;p&gt;Parameters have a history. The last version created is found by default. However, if you want to take advantage of &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-labels.html&quot;&gt;labels&lt;/a&gt; and for example use a &lt;code&gt;live&lt;/code&gt; label migrate from one env to another in a controlled way, use the &lt;code&gt;LAMBY_SSM_PARAMS_LABEL&lt;/code&gt; variable.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;./bin/rake lamby:ssm:dotenv &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;LAMBY_SSM_PARAMS_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/config/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RAILS_ENV&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/myapp/env&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;LAMBY_SSM_PARAMS_LABEL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;live&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;advanced-usage&quot;&gt;Advanced Usage&lt;/h4&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://github.com/customink/lamby/blob/master/lib/lamby/ssm_parameter_store.rb&quot;&gt;Lamby:: SsmParameterStore&lt;/a&gt; can be used at runtime too when your Lambda starts, assuming you have written out the needed &lt;a href=&quot;https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction&quot;&gt;Policies&lt;/a&gt; in your &lt;code&gt;template.yaml&lt;/code&gt; file. This example below will write directly to the &lt;code&gt;ENV&lt;/code&gt; after loading all your parameters.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/config/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RAILS_ENV&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/myapp/env&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;envs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Lamby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SsmParameterStore&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;label: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'live'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;envs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_env&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;more-resources&quot;&gt;More Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[Lamby - Simple Rails &amp; AWS Lambda Integration using Rack 🚂🐑](https://github.com/customink/lamby)&lt;/li&gt;
+  &lt;li&gt;[Rails on AWS Lambda with SAM](/blog/2019/03/13/rails-on-aws-lambda-with-sam/)&lt;/li&gt;
+  &lt;li&gt;[[Video] AWS Lambda with Ruby on Rails and SAM](/blog/2019/03/12/aws-lambda-with-ruby/)&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 16 Apr 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/04/16/secure-configs-with-aws-ssm-parameter-store-and-rails-on-lambda/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/04/16/secure-configs-with-aws-ssm-parameter-store-and-rails-on-lambda/</guid>
+      </item>
+    
+      <item>
         <title>Rails on AWS Lambda with SAM</title>
         <description>&lt;style&gt;
   .highlight {
@@ -52,6 +149,12 @@
 &lt;h3 id=&quot;lots-of-todos&quot;&gt;Lots of Todos&lt;/h3&gt;
 
 &lt;p&gt;This is just the start and the project list several TODOs that will happen over the coming weeks. So make sure to ⭐️ and 👁 watch the repository for updates to learn how to accomplish anything from Rails asset compilation using an S3 bucket, to tagged logging in CloudWatch, and more. Please submit &lt;a href=&quot;https://github.com/customink/lamby/issues&quot;&gt;an issue&lt;/a&gt; if you have any questions or want to see documentation around a certain topic of using AWS with Rails on Lambda. Thanks!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;[Lamby - Simple Rails &amp; AWS Lambda Integration using Rack 🚂🐑](https://github.com/customink/lamby)&lt;/li&gt;
+  &lt;li&gt;[Secure Configs with AWS SSM Parameter Store and Rails on Lambda](/blog/2019/03/27/secure-configs-with-aws-ssm-parameter-store-and-rails-on-lambda/)&lt;/li&gt;
+  &lt;li&gt;[[Video] AWS Lambda with Ruby on Rails and SAM](/blog/2019/03/12/aws-lambda-with-ruby/)&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Wed, 13 Mar 2019 00:00:00 -0400</pubDate>
         <link>https://technology.customink.com//blog/2019/03/13/rails-on-aws-lambda-with-sam/</link>
