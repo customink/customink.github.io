@@ -207,9 +207,9 @@
 &lt;p&gt;This is just the start and the project list several TODOs that will happen over the coming weeks. So make sure to ⭐️ and 👁 watch the repository for updates to learn how to accomplish anything from Rails asset compilation using an S3 bucket, to tagged logging in CloudWatch, and more. Please submit &lt;a href=&quot;https://github.com/customink/lamby/issues&quot;&gt;an issue&lt;/a&gt; if you have any questions or want to see documentation around a certain topic of using AWS with Rails on Lambda. Thanks!&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;[Lamby - Simple Rails &amp; AWS Lambda Integration using Rack 🚂🐑](https://github.com/customink/lamby)&lt;/li&gt;
-  &lt;li&gt;[Secure Configs with AWS SSM Parameter Store and Rails on Lambda](/blog/2019/03/27/secure-configs-with-aws-ssm-parameter-store-and-rails-on-lambda/)&lt;/li&gt;
-  &lt;li&gt;[[Video] AWS Lambda with Ruby on Rails and SAM](/blog/2019/03/12/aws-lambda-with-ruby/)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;Lamby - Simple Rails &amp;amp; AWS Lambda Integration using Rack 🚂🐑&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/2019/03/27/secure-configs-with-aws-ssm-parameter-store-and-rails-on-lambda/&quot;&gt;Secure Configs with AWS SSM Parameter Store and Rails on Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/2019/03/12/aws-lambda-with-ruby/&quot;&gt;[Video] AWS Lambda with Ruby on Rails and SAM&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 13 Mar 2019 00:00:00 -0400</pubDate>
