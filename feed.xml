@@ -93,9 +93,9 @@
 &lt;h3 id=&quot;more-resources&quot;&gt;More Resources&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;[Lamby - Simple Rails &amp; AWS Lambda Integration using Rack 🚂🐑](https://github.com/customink/lamby)&lt;/li&gt;
-  &lt;li&gt;[Rails on AWS Lambda with SAM](/blog/2019/03/13/rails-on-aws-lambda-with-sam/)&lt;/li&gt;
-  &lt;li&gt;[[Video] AWS Lambda with Ruby on Rails and SAM](/blog/2019/03/12/aws-lambda-with-ruby/)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;Lamby - Simple Rails &amp;amp; AWS Lambda Integration using Rack 🚂🐑&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/2019/03/13/rails-on-aws-lambda-with-sam/&quot;&gt;Rails on AWS Lambda with SAM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/2019/03/12/aws-lambda-with-ruby/&quot;&gt;[Video] AWS Lambda with Ruby on Rails and SAM&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 16 Apr 2019 00:00:00 -0400</pubDate>
