@@ -197,7 +197,7 @@
 
 &lt;h3 id=&quot;live-demo&quot;&gt;Live Demo&lt;/h3&gt;
 
-&lt;p&gt;Want to dig into a demo Rails application running on AWS Lambda? Visit &lt;a href=&quot;https://lamby.metademo.net&quot;&gt;https://lamby.metademo.net&lt;/a&gt; or checkout this GitHub repository &lt;a href=&quot;https://github.com/customink/lamby_demo&quot;&gt;customink/lamby_demo&lt;/a&gt; which is deployed to this custom domain name behind a CloudFront distribution.&lt;/p&gt;
+&lt;p&gt;Want to dig into a demo Rails application running on AWS Lambda? Visit &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;https://lamby.custominktech.com&lt;/a&gt; or checkout this GitHub repository &lt;a href=&quot;https://github.com/customink/lamby_demo&quot;&gt;customink/lamby_demo&lt;/a&gt; which is deployed to this custom domain name behind a CloudFront distribution.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:)&lt;/span&gt;
   &lt;span class=&quot;no&quot;&gt;Lamby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;handler&lt;/span&gt; &lt;span class=&quot;vg&quot;&gt;$app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;

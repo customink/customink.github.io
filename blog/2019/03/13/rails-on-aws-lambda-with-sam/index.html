@@ -80,7 +80,7 @@ Move over basic &quot;Hello World&quot; functions - get ready to super charge yo
 
 <h3 id="live-demo">Live Demo</h3>
 
-<p>Want to dig into a demo Rails application running on AWS Lambda? Visit <a href="https://lamby.metademo.net">https://lamby.metademo.net</a> or checkout this GitHub repository <a href="https://github.com/customink/lamby_demo">customink/lamby_demo</a> which is deployed to this custom domain name behind a CloudFront distribution.</p>
+<p>Want to dig into a demo Rails application running on AWS Lambda? Visit <a href="https://lamby.custominktech.com">https://lamby.custominktech.com</a> or checkout this GitHub repository <a href="https://github.com/customink/lamby_demo">customink/lamby_demo</a> which is deployed to this custom domain name behind a CloudFront distribution.</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">:,</span> <span class="n">context</span><span class="p">:)</span>
   <span class="no">Lamby</span><span class="p">.</span><span class="nf">handler</span> <span class="vg">$app</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">context</span>
 <span class="k">end</span>
