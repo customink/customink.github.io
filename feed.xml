@@ -7,6 +7,55 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Chaos at Custom Ink</title>
+        <description>&lt;p&gt;How Custom Ink implements Chaos Engineering and how you can do it too!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;who-we-are&quot;&gt;Who we are&lt;/h3&gt;
+
+&lt;p&gt;The WebOps team at Custom Ink works to maintain the highest availability possible for our internal and external customers. Being always available is a goal that many companies strive for, and at Custom Ink, we take steps to make sure that we are as available as we can be to stay ahead in this competitive marketplace. &lt;/p&gt;
+
+&lt;p&gt;One of the ways we ensure we are highly available is by practicing our version of infrastructure Chaos at Custom Ink. Many of you may be familiar with Netflix&amp;#39;s &lt;a href=&quot;https://github.com/Netflix/chaosmonkey&quot;&gt;Chaos Monkey&lt;/a&gt;. It&amp;#39;s impressive and is probably the leader within our industry for benchmarking these sorts of tests.
+But, we aren&amp;#39;t Netflix, and there&amp;#39;s a good chance you aren&amp;#39;t either.&lt;/p&gt;
+
+&lt;p&gt;(If you are, hi...I love the &amp;quot;San Junipero&amp;quot; episode from &lt;em&gt;Black Mirror&lt;/em&gt;.)&lt;/p&gt;
+
+&lt;h3 id=&quot;so-how-do-we-do-it-and-how-can-you-do-it&quot;&gt;So, how do we do it and how can you do it?&lt;/h3&gt;
+
+&lt;p&gt;We dedicate a few days of scheduled chaos every year to help identify problems that could arise if an actual issue with our AWS infrastructure happens.&lt;/p&gt;
+
+&lt;p&gt;One day is for strictly &amp;quot;frontend&amp;quot; applications, the other is for &amp;quot;backend&amp;quot; applications, and we notify everyone at the company that testing is happening so there is a minimum of panic when alarms inevitably go off.
+We shut off production servers and portions of SaaS services, such as Elasticache cluster nodes, one availability zone at a time, for at least an hour. During our testing, we look for single points of failure, poorly balanced applications, and other miscellaneous items that could cause real production issues down the line.&lt;/p&gt;
+
+&lt;p&gt;Our development teams are aware of this process and hold off on deployments for a few hours to ensure we can have thorough testing.
+Make sure you document EVERYTHING...yes, everything! Keep the notes in a shared folder where your operations team members can collaborate and add things for the next year of Chaos.
+Hold a post-mortem once you’re done and create action items to empower and encourage ownership of your applications with each member of the team.&lt;/p&gt;
+
+&lt;p&gt;Testing chaos this way isn&amp;#39;t new and shiny, but it is totally doable. If your company has 5 or 500 servers, you can do this!
+Don&amp;#39;t assume because you aren&amp;#39;t at Netflix&amp;#39;s scale that chaos testing is out of your reach. You can empower your engineers to make sure your site is always on. After all, that&amp;#39;s the goal, right?&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#39;re familiar with more automated testing in a production capacity, please leave a comment, I&amp;#39;d love to hear from you!&lt;/p&gt;
+
+&lt;h3 id=&quot;chaotic-possibilities-at-custom-ink&quot;&gt;Chaotic possibilities at Custom Ink&lt;/h3&gt;
+
+&lt;p&gt;This is currently a manual process, but we still do it and every year we find issues that we can quickly remediate or acknowledge aren&amp;#39;t fixable (cost considerations, licensing issues, etc.) and accept the risk if the host goes down.
+This helps down the line so you know what applications are more fragile, how you can make existing applications better, and explore more technologies that will help minimize fallout, and improve your redundancy. For example, you may leverage auto-scaling groups, replace applications with lambda functions, and pursue other technologies that your cloud provider makes available to improve resiliency.&lt;/p&gt;
+
+&lt;p&gt;The next step at Custom Ink would be to automate our chaos. We are currently looking into Chaos Monkey, and plan on making greater use of autoscaling with our applications.&lt;/p&gt;
+
+&lt;h5 id=&quot;about-the-author&quot;&gt;About the author&lt;/h5&gt;
+
+&lt;p&gt;Katherine Cisneros is an Operations Engineer at Custom Ink and has been an Inker since March 2015.&lt;/p&gt;
+
+&lt;p&gt;Interested in breaking things? We’re hiring! Visit us at &lt;a href=&quot;https://www.customink.com/jobs&quot;&gt;customink.com/jobs&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 28 Jun 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/06/28/chaos-at-custom-ink/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/06/28/chaos-at-custom-ink/</guid>
+      </item>
+    
+      <item>
         <title>Secure Configs with AWS SSM Parameter Store and Rails on Lambda</title>
         <description>&lt;p&gt;&lt;strong&gt;Part of an series while developing, &lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;Lamby - Simple Rails &amp;amp; AWS Lambda Integration using Rack 🚂🐑&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
