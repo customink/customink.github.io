@@ -23,7 +23,7 @@
 &lt;ul&gt;
 &lt;li&gt;The Rails Application&lt;/li&gt;
 &lt;li&gt;Sidekiq worker process(es)&lt;/li&gt;
-&lt;li&gt;Redis cache&lt;/li&gt;
+&lt;li&gt;Redis&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Each of these components can be scaled up to meet the needs of your workflows.&lt;/p&gt;
@@ -76,7 +76,7 @@ end
 
 &lt;p&gt;&lt;code&gt;bundle exec sidekiq&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Sidekiq will crawl the application for any &lt;code&gt;Sidekiq::Worker&lt;/code&gt; classes and persist the source code of each method within the class to Redis. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.&lt;/p&gt;
+&lt;p&gt;Sidekiq will crawl the application for any &lt;code&gt;Sidekiq::Worker&lt;/code&gt; classes and initialize the source code of each method within the class inside of the sidekiq process. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.&lt;/p&gt;
 
 &lt;p&gt;Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Redis has the latest version of your worker code.&lt;/p&gt;
 
@@ -99,7 +99,7 @@ end
 
 &lt;p&gt;In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.&lt;/p&gt;
 
-&lt;p&gt;Next post we will take a look at how to optimize cyour sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.&lt;/p&gt;
+&lt;p&gt;Next post we will take a look at how to optimize your sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.&lt;/p&gt;
 
 &lt;p&gt;Thank you for visiting the Custom Ink Tech Blog and taking a moment to read my first post. Please feel free to comment and ask questions below.&lt;/p&gt;
 

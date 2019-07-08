@@ -55,7 +55,7 @@ At Custom Ink we leverage Sidekiq as a job scheduler to execute batch processing
 <ul>
 <li>The Rails Application</li>
 <li>Sidekiq worker process(es)</li>
-<li>Redis cache</li>
+<li>Redis</li>
 </ul>
 
 <p>Each of these components can be scaled up to meet the needs of your workflows.</p>
@@ -108,7 +108,7 @@ end
 
 <p><code>bundle exec sidekiq</code></p>
 
-<p>Sidekiq will crawl the application for any <code>Sidekiq::Worker</code> classes and persist the source code of each method within the class to Redis. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.</p>
+<p>Sidekiq will crawl the application for any <code>Sidekiq::Worker</code> classes and initialize the source code of each method within the class inside of the sidekiq process. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.</p>
 
 <p>Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Redis has the latest version of your worker code.</p>
 
@@ -131,7 +131,7 @@ end
 
 <p>In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.</p>
 
-<p>Next post we will take a look at how to optimize cyour sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.</p>
+<p>Next post we will take a look at how to optimize your sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.</p>
 
 <p>Thank you for visiting the Custom Ink Tech Blog and taking a moment to read my first post. Please feel free to comment and ask questions below.</p>
 
