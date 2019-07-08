@@ -421,6 +421,10 @@
 <lastmod>2019-06-28T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>/blog/2019/07/08/sidekiq-rundown-part-1/</loc>
+<lastmod>2019-07-08T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>/team/</loc>
 </url>
 <url>
@@ -502,6 +506,9 @@
 <loc>/authors/katherine-cisneros/</loc>
 </url>
 <url>
+<loc>/authors/logan-beougher/</loc>
+</url>
+<url>
 <loc>/page2/</loc>
 </url>
 <url>
@@ -542,5 +549,8 @@
 </url>
 <url>
 <loc>/page15/</loc>
+</url>
+<url>
+<loc>/page16/</loc>
 </url>
 </urlset>

@@ -7,6 +7,122 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Sidekiq Rundown Part 1: Getting Started with Simple Workflows</title>
+        <description>&lt;h5 id=&quot;what-is-sidekiq&quot;&gt;What is Sidekiq?&lt;/h5&gt;
+
+&lt;p&gt;At Custom Ink we leverage &lt;a href=&quot;https://sidekiq.org/&quot;&gt;Sidekiq&lt;/a&gt; as a job scheduler to execute batch processing workflows. This post is part of a series, &amp;quot;Sidekiq Rundown,&amp;quot; where we will explore various features of Sidekiq. Sidekiq enables us to efficiently parallelize jobs/tasks reliably and sidekiq queues allow the workloads to stack up. The main point of utilizing a job scheduler is to manage the background execution of jobs that orchestrate business activity automation.  Using an open-source technology solution like Sidekiq allows us to skip all the headaches involved in building a full-featured in house solution. We will dive right into the steps required to execute work within sidekiq.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h5 id=&quot;sidekiq-architecture&quot;&gt;Sidekiq Architecture&lt;/h5&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/sidekiq/sidekiq-architecture-efeb945774bf1dbcd2ec31aa8d9a7a28f01a87be6197067b9e7b736a6065844f.png alt=&quot;sidekiq-architecture&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;Sidekiq runs on 3 components&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The Rails Application&lt;/li&gt;
+&lt;li&gt;Sidekiq worker process(es)&lt;/li&gt;
+&lt;li&gt;Redis cache&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each of these components can be scaled up to meet the needs of your workflows.&lt;/p&gt;
+
+&lt;h5 id=&quot;sidekiq-configuration&quot;&gt;Sidekiq Configuration&lt;/h5&gt;
+
+&lt;p&gt;The rails application requires the sidekiq gem to be installed and configured.&lt;/p&gt;
+
+&lt;p&gt;In Gemfile&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;gem &amp;#39;sidekiq&amp;#39;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In Terminal&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;bundle install&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The sidekiq code that lives in the application will need to be configured to talk to Redis.&lt;/p&gt;
+
+&lt;p&gt;Inside of &lt;code&gt;config/initializers/sidekiq.rb&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# Server config
+Sidekiq.configure_server do |config|
+  config.redis = { namespace: 'blog-post-app' }
+end
+
+# Client config
+Sidekiq.configure_client do |config|
+  config.redis = { namespace: 'blog-post-app' }
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;sidekiq-workers&quot;&gt;Sidekiq Workers&lt;/h5&gt;
+
+&lt;p&gt;Code that is executed lives within the rails application in the form of workers. Each worker is required to have a &amp;#39;perform&amp;#39; method as the entry point. These workers ideally will behave in an idempotent manner, meaning no matter how many times they run, the result will be the same.&lt;/p&gt;
+
+&lt;p&gt;Create a worker in &lt;code&gt;app/workers&lt;/code&gt; with
+&lt;code&gt;rails g sidekiq:worker BlogPost&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class BlogPostWorker
+  include Sidekiq::Worker
+  def perform(subject, title, article)
+    # writes a blog post
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now that we have created a worker, we can create jobs with that worker. Open up a rails console within your application and create some jobs.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;BlogPostWorker.perform_async(&amp;#39;Sidekiq&amp;#39;, &amp;#39;Sidekiq Rundown&amp;#39;, &amp;#39;At Custom Ink we leverage...&amp;#39;)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;sidekiq-worker-process&quot;&gt;Sidekiq Worker Process&lt;/h5&gt;
+
+&lt;p&gt;This will enqueue a job into the default queue to be processed by sidekiq. Now it is time to start sidekiq&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;bundle exec sidekiq&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Sidekiq will crawl the application for any &lt;code&gt;Sidekiq::Worker&lt;/code&gt; classes and persist the source code of each method within the class to Redis. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.&lt;/p&gt;
+
+&lt;p&gt;Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Redis has the latest version of your worker code.&lt;/p&gt;
+
+&lt;h5 id=&quot;sidekiq-queues&quot;&gt;Sidekiq Queues&lt;/h5&gt;
+
+&lt;p&gt;If we wanted to create a high priority queue, we can achieve this by simply configuring workers to queue jobs into a new queue.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class BlogPostWorker
+  include Sidekiq::Worker
+  sidekiq_options queue: :critical
+  def perform(subject, title, article)
+    # writes a blog post
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can tell the sidekiq worker process about this queue when we start the process.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;bundle exec sidekiq -q critical,5 -q default&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Above we have told the sidekiq process that we want this worker process to poll the critical queue 5 times more often than the default queue&lt;/p&gt;
+
+&lt;p&gt;In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.&lt;/p&gt;
+
+&lt;p&gt;Next post we will take a look at how to optimize cyour sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.&lt;/p&gt;
+
+&lt;p&gt;Thank you for visiting the Custom Ink Tech Blog and taking a moment to read my first post. Please feel free to comment and ask questions below.&lt;/p&gt;
+
+&lt;h5 id=&quot;sidekiq-resources&quot;&gt;Sidekiq Resources&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sidekiq.org/&quot;&gt;Sidekiq Website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq&quot;&gt;Sidekiq Repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq/wiki&quot;&gt;Sidekiq Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;about-the-author&quot;&gt;About the author&lt;/h5&gt;
+
+&lt;p&gt;Logan Beougher is a Software Engineer at Custom Ink and has been an Inker since May 2019.&lt;/p&gt;
+
+&lt;p&gt;Interested in writing really fast code? We’re hiring! Visit us at &lt;a href=&quot;https://www.customink.com/jobs&quot;&gt;customink.com/jobs&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Jul 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/07/08/sidekiq-rundown-part-1/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/08/sidekiq-rundown-part-1/</guid>
+      </item>
+    
+      <item>
         <title>Chaos at Custom Ink</title>
         <description>&lt;p&gt;How Custom Ink implements Chaos Engineering and how you can do it too!&lt;/p&gt;
 
