@@ -16,7 +16,7 @@
 
 &lt;h5 id=&quot;sidekiq-architecture&quot;&gt;Sidekiq Architecture&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/sidekiq/sidekiq-architecture-efeb945774bf1dbcd2ec31aa8d9a7a28f01a87be6197067b9e7b736a6065844f.png alt=&quot;sidekiq-architecture&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/sidekiq/sidekiq-architecture-55a7b0491a724dd5c4b39570ea60966d438f97bebc2e9562ab5881db319fdc0f.png alt=&quot;sidekiq-architecture&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot;/&gt;&lt;/p&gt;
 
 &lt;p&gt;Sidekiq runs on 3 components&lt;/p&gt;
 
@@ -43,15 +43,15 @@
 &lt;p&gt;The sidekiq code that lives in the application will need to be configured to talk to Redis.&lt;/p&gt;
 
 &lt;p&gt;Inside of &lt;code&gt;config/initializers/sidekiq.rb&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# Server config
-Sidekiq.configure_server do |config|
-  config.redis = { namespace: 'blog-post-app' }
-end
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Server config&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure_server&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;namespace: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'blog-post-app'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 
-# Client config
-Sidekiq.configure_client do |config|
-  config.redis = { namespace: 'blog-post-app' }
-end
+&lt;span class=&quot;c1&quot;&gt;# Client config&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure_client&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;namespace: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'blog-post-app'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;sidekiq-workers&quot;&gt;Sidekiq Workers&lt;/h5&gt;
 
@@ -59,12 +59,12 @@ end
 
 &lt;p&gt;Create a worker in &lt;code&gt;app/workers&lt;/code&gt; with
 &lt;code&gt;rails g sidekiq:worker BlogPost&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class BlogPostWorker
-  include Sidekiq::Worker
-  def perform(subject, title, article)
-    # writes a blog post
-  end
-end
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BlogPostWorker&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Worker&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# writes a blog post&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that we have created a worker, we can create jobs with that worker. Open up a rails console within your application and create some jobs.&lt;/p&gt;
 
@@ -83,13 +83,13 @@ end
 &lt;h5 id=&quot;sidekiq-queues&quot;&gt;Sidekiq Queues&lt;/h5&gt;
 
 &lt;p&gt;If we wanted to create a high priority queue, we can achieve this by simply configuring workers to queue jobs into a new queue.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class BlogPostWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: :critical
-  def perform(subject, title, article)
-    # writes a blog post
-  end
-end
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BlogPostWorker&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Worker&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;sidekiq_options&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;queue: :critical&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# writes a blog post&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We can tell the sidekiq worker process about this queue when we start the process.&lt;/p&gt;
 

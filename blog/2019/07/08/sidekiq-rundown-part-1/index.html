@@ -48,7 +48,7 @@ At Custom Ink we leverage Sidekiq as a job scheduler to execute batch processing
 
 <h5 id="sidekiq-architecture">Sidekiq Architecture</h5>
 
-<p><img src=/assets/content/sidekiq/sidekiq-architecture-efeb945774bf1dbcd2ec31aa8d9a7a28f01a87be6197067b9e7b736a6065844f.png alt="sidekiq-architecture" class="tb-Img tb-Img--responsive tb-Img--fancy"/></p>
+<p><img src=/assets/content/sidekiq/sidekiq-architecture-55a7b0491a724dd5c4b39570ea60966d438f97bebc2e9562ab5881db319fdc0f.png alt="sidekiq-architecture" class="tb-Img tb-Img--responsive tb-Img--fancy"/></p>
 
 <p>Sidekiq runs on 3 components</p>
 
@@ -75,15 +75,15 @@ At Custom Ink we leverage Sidekiq as a job scheduler to execute batch processing
 <p>The sidekiq code that lives in the application will need to be configured to talk to Redis.</p>
 
 <p>Inside of <code>config/initializers/sidekiq.rb</code></p>
-<div class="highlight"><pre><code class="language-" data-lang=""># Server config
-Sidekiq.configure_server do |config|
-  config.redis = { namespace: 'blog-post-app' }
-end
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Server config</span>
+<span class="no">Sidekiq</span><span class="p">.</span><span class="nf">configure_server</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">redis</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">namespace: </span><span class="s1">'blog-post-app'</span> <span class="p">}</span>
+<span class="k">end</span>
 
-# Client config
-Sidekiq.configure_client do |config|
-  config.redis = { namespace: 'blog-post-app' }
-end
+<span class="c1"># Client config</span>
+<span class="no">Sidekiq</span><span class="p">.</span><span class="nf">configure_client</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="p">.</span><span class="nf">redis</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">namespace: </span><span class="s1">'blog-post-app'</span> <span class="p">}</span>
+<span class="k">end</span>
 </code></pre></div>
 <h5 id="sidekiq-workers">Sidekiq Workers</h5>
 
@@ -91,12 +91,12 @@ end
 
 <p>Create a worker in <code>app/workers</code> with
 <code>rails g sidekiq:worker BlogPost</code></p>
-<div class="highlight"><pre><code class="language-" data-lang="">class BlogPostWorker
-  include Sidekiq::Worker
-  def perform(subject, title, article)
-    # writes a blog post
-  end
-end
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">BlogPostWorker</span>
+  <span class="kp">include</span> <span class="no">Sidekiq</span><span class="o">::</span><span class="no">Worker</span>
+  <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">article</span><span class="p">)</span>
+    <span class="c1"># writes a blog post</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </code></pre></div>
 <p>Now that we have created a worker, we can create jobs with that worker. Open up a rails console within your application and create some jobs.</p>
 
@@ -115,13 +115,13 @@ end
 <h5 id="sidekiq-queues">Sidekiq Queues</h5>
 
 <p>If we wanted to create a high priority queue, we can achieve this by simply configuring workers to queue jobs into a new queue.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">class BlogPostWorker
-  include Sidekiq::Worker
-  sidekiq_options queue: :critical
-  def perform(subject, title, article)
-    # writes a blog post
-  end
-end
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">BlogPostWorker</span>
+  <span class="kp">include</span> <span class="no">Sidekiq</span><span class="o">::</span><span class="no">Worker</span>
+  <span class="n">sidekiq_options</span> <span class="ss">queue: :critical</span>
+  <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">article</span><span class="p">)</span>
+    <span class="c1"># writes a blog post</span>
+  <span class="k">end</span>
+<span class="k">end</span>
 </code></pre></div>
 <p>We can tell the sidekiq worker process about this queue when we start the process.</p>
 
