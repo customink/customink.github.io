@@ -110,7 +110,119 @@ end
 
 <p>Sidekiq will crawl the application for any <code>Sidekiq::Worker</code> classes and initialize the source code of each method within the class inside of the sidekiq process. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.</p>
 
-<p>Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Redis has the latest version of your worker code.</p>
+<p>Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Sidekiq has the latest version of your worker code.</p>
+
+<h5 id="sidekiq-queues">Sidekiq Queues</h5>
+
+<p>If we wanted to create a high priority queue, we can achieve this by simply configuring workers to queue jobs into a new queue.</p>
+<div class="highlight"><pre><code class="language-" data-lang="">class BlogPostWorker
+  include Sidekiq::Worker
+  sidekiq_options queue: :critical
+  def perform(subject, title, article)
+    # writes a blog post
+  end
+end
+</code></pre></div>
+<p>We can tell the sidekiq worker process about this queue when we start the process.</p>
+
+<p><code>bundle exec sidekiq -q critical,5 -q default</code></p>
+
+<p>Above we have told the sidekiq process that we want this worker process to poll the critical queue 5 times more often than the default queue</p>
+
+<p>In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.</p>
+
+<p>Next post we will take a look at how to optimize your sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.</p>
+
+<p>Thank you for visiting the Custom Ink Tech Blog and taking a moment to read my first post. Please feel free to comment and ask questions below.</p>
+
+<h5 id="sidekiq-resources">Sidekiq Resources</h5>
+
+<ul>
+<li><a href="https://sidekiq.org/">Sidekiq Website</a></li>
+<li><a href="https://github.com/mperham/sidekiq">Sidekiq Repo</a></li>
+</ul>
+
+<h2 id="sidekiq-wiki">* <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq Wiki</a></h2>
+
+<p>layout: post
+title: &quot;Sidekiq Rundown Part 1: Getting Started with Simple Workflows&quot;
+comments: true
+published: true
+author: lbeougher</p>
+
+<h2 id="tags-sidekiq-job-schedulers-task-runner-workflows">tags: sidekiq, job schedulers, task runner, workflows</h2>
+
+<h5 id="what-is-sidekiq">What is Sidekiq?</h5>
+
+<p>At Custom Ink we leverage <a href="https://sidekiq.org/">Sidekiq</a> as a job scheduler to execute batch processing workflows. This post is part of a series, &quot;Sidekiq Rundown,&quot; where we will explore various features of Sidekiq. Sidekiq enables us to efficiently parallelize jobs/tasks reliably and sidekiq queues allow the workloads to stack up. The main point of utilizing a job scheduler is to manage the background execution of jobs that orchestrate business activity automation.  Using an open-source technology solution like Sidekiq allows us to skip all the headaches involved in building a full-featured in house solution. We will dive right into the steps required to execute work within sidekiq.</p>
+
+<!--more-->
+
+<h5 id="sidekiq-architecture">Sidekiq Architecture</h5>
+
+<p><img src=/assets/content/sidekiq/sidekiq-architecture-efeb945774bf1dbcd2ec31aa8d9a7a28f01a87be6197067b9e7b736a6065844f.png alt="sidekiq-architecture" class="tb-Img tb-Img--responsive tb-Img--fancy"/></p>
+
+<p>Sidekiq runs on 3 components</p>
+
+<ul>
+<li>The Rails Application</li>
+<li>Sidekiq worker process(es)</li>
+<li>Redis</li>
+</ul>
+
+<p>Each of these components can be scaled up to meet the needs of your workflows.</p>
+
+<h5 id="sidekiq-configuration">Sidekiq Configuration</h5>
+
+<p>The rails application requires the sidekiq gem to be installed and configured.</p>
+
+<p>In Gemfile</p>
+
+<p><code>gem &#39;sidekiq&#39;</code></p>
+
+<p>In Terminal</p>
+
+<p><code>bundle install</code></p>
+
+<p>The sidekiq code that lives in the application will need to be configured to talk to Redis.</p>
+
+<p>Inside of <code>config/initializers/sidekiq.rb</code></p>
+<div class="highlight"><pre><code class="language-" data-lang=""># Server config
+Sidekiq.configure_server do |config|
+  config.redis = { namespace: 'blog-post-app' }
+end
+
+# Client config
+Sidekiq.configure_client do |config|
+  config.redis = { namespace: 'blog-post-app' }
+end
+</code></pre></div>
+<h5 id="sidekiq-workers">Sidekiq Workers</h5>
+
+<p>Code that is executed lives within the rails application in the form of workers. Each worker is required to have a &#39;perform&#39; method as the entry point. These workers ideally will behave in an idempotent manner, meaning no matter how many times they run, the result will be the same.</p>
+
+<p>Create a worker in <code>app/workers</code> with
+<code>rails g sidekiq:worker BlogPost</code></p>
+<div class="highlight"><pre><code class="language-" data-lang="">class BlogPostWorker
+  include Sidekiq::Worker
+  def perform(subject, title, article)
+    # writes a blog post
+  end
+end
+</code></pre></div>
+<p>Now that we have created a worker, we can create jobs with that worker. Open up a rails console within your application and create some jobs.</p>
+
+<p><code>BlogPostWorker.perform_async(&#39;Sidekiq&#39;, &#39;Sidekiq Rundown&#39;, &#39;At Custom Ink we leverage...&#39;)</code></p>
+
+<h5 id="sidekiq-worker-process">Sidekiq Worker Process</h5>
+
+<p>This will enqueue a job into the default queue to be processed by sidekiq. Now it is time to start sidekiq</p>
+
+<p><code>bundle exec sidekiq</code></p>
+
+<p>Sidekiq will crawl the application for any <code>Sidekiq::Worker</code> classes and initialize the source code of each method within the class inside of the sidekiq process. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.</p>
+
+<p>Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Sidekiq has the latest version of your worker code.</p>
 
 <h5 id="sidekiq-queues">Sidekiq Queues</h5>
 
@@ -142,6 +254,12 @@ end
 <li><a href="https://github.com/mperham/sidekiq">Sidekiq Repo</a></li>
 <li><a href="https://github.com/mperham/sidekiq/wiki">Sidekiq Wiki</a></li>
 </ul>
+
+<h5 id="about-the-author">About the author</h5>
+
+<p>Logan Beougher is a Software Engineer at Custom Ink and has been an Inker since May 2019.</p>
+
+<p>Interested in writing really fast code? We’re hiring! Visit us at <a href="https://www.customink.com/jobs">customink.com/jobs</a></p>
 
 <h5 id="about-the-author">About the author</h5>
 
