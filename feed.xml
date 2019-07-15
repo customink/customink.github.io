@@ -7,6 +7,100 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Inkycop - Standardizing team configuration for RuboCop</title>
+        <description>&lt;p&gt;How Custom Ink unifies its code base across projects.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;ruby-coding-guide&quot;&gt;Ruby Coding Guide&lt;/h3&gt;
+
+&lt;p&gt;I&amp;#39;m sure that every developer is familiar with the concept of a coding guide to ensure that everyone working on a project is writing the same code.
+This ensures that the code style remains consistent, and the overall quality of the code is guaranteed.
+Of course this doesn&amp;#39;t come without its share of problems and difficulties.&lt;/p&gt;
+
+&lt;p&gt;As it stands right now, Custom Ink has just over 800 different repositories on GitHub, the majority of them being Ruby projects.
+As we have multiple teams working across these projects, we need to come up with some way to keep a uniform code style.&lt;/p&gt;
+
+&lt;h3 id=&quot;rubocop&quot;&gt;RuboCop&lt;/h3&gt;
+
+&lt;p&gt;Almost all of our Ruby projects use &lt;a href=&quot;https://rubocop.readthedocs.io/en/stable/&quot;&gt;RuboCop&lt;/a&gt; through CodeClimate. 
+While this is a good step in the right direction, it does not guarantee that all projects also adhere to the same style guidelines.
+After all, nothing prevents an engineer from disabling a rule, changing its configuration or outright ignoring the messages from CodeClimate.&lt;/p&gt;
+
+&lt;h3 id=&quot;codeclimate&quot;&gt;CodeClimate&lt;/h3&gt;
+
+&lt;p&gt;As mentioned above, we use &lt;a href=&quot;https://codeclimate.com/&quot;&gt;CodeClimate&lt;/a&gt;. 
+We, however, do not always see eye-to-eye with the warnings and issues raised by CodeClimate.
+Mainly because a team might have a different view on things, there&amp;#39;s a reason why we want to deviate or something is technically not possible.
+There are also technical limitations imposed by CodeClimate that make it hard to do certain technical solutions.&lt;/p&gt;
+
+&lt;h3 id=&quot;meet-inkycop&quot;&gt;Meet InkyCop!&lt;/h3&gt;
+
+&lt;p&gt;Inky is the mascot of Custom Ink. Our lovely octopus is a part of the company, and seeing we actually depend on RuboCop, I came up with the name InkyCop.
+So what is InkyCop exactly?&lt;/p&gt;
+
+&lt;p&gt;InkyCop is a gem developed for internal usage at the moment, where we have created several configuration files:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a special &lt;code&gt;customink.yml&lt;/code&gt; file that contains the general configuration for all RuboCop cops, regardless of Ruby version&lt;/li&gt;
+&lt;li&gt;a special folder structure to support ruby-specific &lt;code&gt;rubocop.yml&lt;/code&gt; versions for that Ruby version&lt;/li&gt;
+&lt;li&gt;a special folder structure to support RuboCop-plugins such as &lt;code&gt;rubocop-rails&lt;/code&gt; and &lt;code&gt;rubocop-rspec&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This allows us to create a matrix of configurations that we can tweak to support all Ruby versions that are supported by RuboCop, and used inside the company.
+Of course, we need to work on getting everything up to date, but this is a tremendous amount of work that will take time, and it&amp;#39;s easier to support the version through RuboCop.&lt;/p&gt;
+
+&lt;p&gt;Our merchandising system is actually the first system to rely on InkyCop!
+Its configuration file looks as follows:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# The load order is first those defined by inkycop, then everything in the todo file,&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# finally whatever is appended later in this file.&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;inherit_from&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.rubocop_todo.yml&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;inherit_gem&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;inkycop&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config/rspec/2.3/rubocop.yml&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config/customink.yml&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That&amp;#39;s it! nothing more needs to be added or configured to use all of RuboCop features, and rely on the shared configuration that&amp;#39;s defined in our Gem.&lt;/p&gt;
+
+&lt;h3 id=&quot;issues-we-ran-into&quot;&gt;Issues we ran into&lt;/h3&gt;
+
+&lt;p&gt;Getting InkyCop successfully integrated was no easy-feat. There&amp;#39;s actually quite a few technical details that need to be kept in mind when creating this gem.
+Even though the gem in itself is nothing more than a simple wrapper around RuboCop with custom configuration files:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CodeClimate does not work for InkyCop. CodeClimate does not allow the usage of external gems during their RuboCop engine. This results in their engine crashing because the &lt;code&gt;inkycop&lt;/code&gt; gem is not checked out.&lt;/li&gt;
+&lt;li&gt;To work around this problem, we actually switched to CircleCI (for other reasons) and made the RuboCop check a part of the CI.&lt;/li&gt;
+&lt;li&gt;A build is now considered a failure if the RuboCop check does not pass.&lt;/li&gt;
+&lt;li&gt;RuboCop must be executed using &lt;code&gt;bundle exec&lt;/code&gt; or with a binstub.&lt;/li&gt;
+&lt;li&gt;The naming of the configuration files was important! Note that we called our files &lt;code&gt;rubocop.yml&lt;/code&gt; and not &lt;code&gt;.rubocop.yml&lt;/code&gt; inside the gem.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;rubocop-file-names&quot;&gt;RuboCop file names&lt;/h4&gt;
+
+&lt;p&gt;There is a subtle difference on how RuboCop interprets paths, depending on how your configuration files are named.
+This took some debugging as well as diving deep into the documentation of RuboCop to understand and figure out.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.rubocop.yml&lt;/code&gt; : All paths are treated as relative of the file&amp;#39;s location&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rubocop.yml&lt;/code&gt; : All paths are treated as relative of the location RuboCop is running from&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;While this seemed to work properly at first, it becomes more tricky when files start inheriting from one another and/or files are combined as we do.
+That&amp;#39;s why we made this an integral part of our documentation to make sure this information is well known.&lt;/p&gt;
+
+&lt;h3 id=&quot;upcoming-challenges&quot;&gt;Upcoming challenges&lt;/h3&gt;
+
+&lt;p&gt;The next step is get all projects to migrate slowly to using InkyCop, so we can start tweaking our configuration.
+There&amp;#39;s going to be a lot of discussion on whether we will follow the standard set by RuboCop, or tweak a Cop to our liking.
+In the end, all teams will have to agree to it, and roll out with InkyCop to unify the coding guidelines across the entire code-base.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 15 Jul 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/07/15/inkycop/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/15/inkycop/</guid>
+      </item>
+    
+      <item>
         <title>Sidekiq Rundown Part 1: Getting Started with Simple Workflows</title>
         <description>&lt;h5 id=&quot;what-is-sidekiq&quot;&gt;What is Sidekiq?&lt;/h5&gt;
 
