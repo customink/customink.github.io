@@ -90,17 +90,15 @@
 <br /></p>
 
 <p>There are two methods that every  Processing sketchbook should have.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">void setup() {
-  size(800, 600);
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">800</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
 
-}
-
-
-void draw() {
-     rect(200, 100, 200, 100);
-}
+<span class="o">}</span>
 
 
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">rect</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <ul>
 <li><p><code>setup</code> will have the default settings for the sketchbook, it will run once at the start of each sketchbook to set the canvas size and any other settings you might want at the initial start up. We currently have our canvas set to 800px X 600px</p></li>
@@ -115,12 +113,11 @@ void draw() {
 <p><img class="em-28"alt="processing-UI" src=/assets/content/processing/2019-07-24_2106-df211f48b40921b6e418d0eefa28cffb1b965d0cc73f331faeeabaf2cc0c5ef6.png class="tb-Img-processing tb-Img--fancy" /></p>
 
 <p>Let’s remove the border of the rectangle <code>noStroke</code> (border of the rectangle),  set the color of the rectangle to red <code>fill</code>and re-draw it wherever we move the mouse by using <code>mouseX</code> &amp; <code>mouseY</code>. The fill method takes arguments for red, green &amp; blue.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">
-void draw() {
-  fill(255, 0, 0);
-  noStroke();
-  rect(mouseX, mouseY, 200, 100);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="n">noStroke</span><span class="o">();</span>
+  <span class="n">rect</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <div class="flex-center">
 
@@ -133,116 +130,113 @@ void draw() {
 We could also vary the color of red so that it is a random shade. We add a method called `randomRed` that will set the fill to a random number between 0 and 255 for the red value.
 
 </div>
-<div class="highlight"><pre><code class="language-" data-lang="">void draw() {
-   noStroke();
-   randomRed();
-   rect(mouseX, mouseY, 200, 100);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">noStroke</span><span class="o">();</span>
+   <span class="n">randomRed</span><span class="o">();</span>
+   <span class="n">rect</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+<span class="o">}</span>
 
 
-void randomRed() {
-  fill(random(255), 0, 0);
-}
+<span class="kt">void</span> <span class="nf">randomRed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div>
 <div class="flex-center">
   <img class="tb-Img tb-Img--responsive tb-Img--fancy" src="https://media.giphy.com/media/LQ37QpemioRX61nqy6/giphy.gif">
 </div>
 
 <p>Let’s add a variety of colors, we will recreate the method that we used for the <code>randomRed</code> for green and blue and then pick between those 3 methods randomly.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">//add this line to the top of the file
-import java.util.concurrent.ThreadLocalRandom;
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//add this line to the top of the file</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ThreadLocalRandom</span><span class="o">;</span>
 
 
-void setup() {
-  size(800, 600);
-}
+<span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">800</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
+<span class="o">}</span>
 
-void draw() {
-   noStroke();
-   randomColor();
-   rect(mouseX, mouseY, 200, 100);
-}
-
-
-
-void randomColor(){
-    int random_index = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-
-    if (random_index &lt;= 1) {
-      randomBlue();
-    } else if (random_index &lt;= 2) {
-      randomRed();
-    } else {
-      randomGreen();
-    }
-}
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">noStroke</span><span class="o">();</span>
+   <span class="n">randomColor</span><span class="o">();</span>
+   <span class="n">rect</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+<span class="o">}</span>
 
 
 
-void randomRed() {
-  fill(random(255), 0, 0);
-}
+<span class="kt">void</span> <span class="nf">randomColor</span><span class="o">(){</span>
+    <span class="kt">int</span> <span class="n">random_index</span> <span class="o">=</span> <span class="nc">ThreadLocalRandom</span><span class="o">.</span><span class="na">current</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
 
-void randomGreen() {
-  fill(0, random(255), 0);
-}
+    <span class="k">if</span> <span class="o">(</span><span class="n">random_index</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">randomBlue</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">random_index</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">randomRed</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+      <span class="n">randomGreen</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
 
-void randomBlue() {
-  fill(0, 0, random(255));
-}
+
+<span class="kt">void</span> <span class="nf">randomRed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">randomGreen</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 
 
+<span class="kt">void</span> <span class="nf">randomBlue</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">fill</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+<span class="o">}</span>
 </code></pre></div>
 <div class="flex-center">
   <img class="tb-Img tb-Img--responsive tb-Img--fancy" src="https://media.giphy.com/media/XfVh38MH47VNYUuEBW/giphy.gif">
 </div>
 
 <p>Cool, the blockiness is getting a little old. Let’s change the shape that we are drawing to a line, in addition to changing the shape we will need to the <code>fill</code> to a <code>stroke</code> because we are using a <code>line</code>.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">void draw() {
-   randomColor();
-   line(mouseX, mouseY, 20, 30);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+   <span class="n">randomColor</span><span class="o">();</span>
+   <span class="n">line</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">30</span><span class="o">);</span>
+<span class="o">}</span>
 
 
-void randomGreen() {
-  stroke(0, random(255), 0);
-}
+<span class="kt">void</span> <span class="nf">randomGreen</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 
-void randomRed() {
-  stroke(random(255), 0, 0);
-}
+<span class="kt">void</span> <span class="nf">randomRed</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 
-void randomBlue() {
-  stroke(0, 0, random(255));
-}
+<span class="kt">void</span> <span class="nf">randomBlue</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">255</span><span class="o">));</span>
+<span class="o">}</span>
 </code></pre></div>
 <div class="flex-center">
   <img class="tb-Img tb-Img--responsive tb-Img--fancy" src="https://media.giphy.com/media/Z9VtaLNSOyoFJ19hse/giphy.gif">
 </div>
 
 <p>Cool, if we add a little bit more code we can change the line stroke to only run when we click on the canvas instead of when we just move the mouse.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">void draw() {
-   if(mousePressed)line(mouseX, mouseY, random(800), random(600));
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+   <span class="k">if</span><span class="o">(</span><span class="n">mousePressed</span><span class="o">)</span><span class="n">line</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">800</span><span class="o">),</span> <span class="n">random</span><span class="o">(</span><span class="mi">600</span><span class="o">));</span>
+<span class="o">}</span>
 </code></pre></div>
 <div class="flex-center">
   <img class="tb-Img tb-Img--responsive tb-Img--fancy" src="https://media.giphy.com/media/ZAwycwoXLYLhmbLm5r/giphy.gif">
 </div>
 
 <p>Let’s try one more change, we’ll set the background to black on start and we’ll set the color to white for the lines and we’ll erase the lines before we make them.</p>
-<div class="highlight"><pre><code class="language-" data-lang="">void setup() {
-  size(800, 600);
-  background(0,0,0);
-}
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">size</span><span class="o">(</span><span class="mi">800</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
 
-void draw() {
-  stroke(255, 255, 255);
-  background(0,0,0);
-  if(mousePressed)line(mouseX, mouseY, random(800), random(600));
-  if(mousePressed)line(mouseX, mouseY, random(800), random(600));
-}
-
+<span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">,</span> <span class="mi">255</span><span class="o">);</span>
+  <span class="n">background</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">mousePressed</span><span class="o">)</span><span class="n">line</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">800</span><span class="o">),</span> <span class="n">random</span><span class="o">(</span><span class="mi">600</span><span class="o">));</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">mousePressed</span><span class="o">)</span><span class="n">line</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">random</span><span class="o">(</span><span class="mi">800</span><span class="o">),</span> <span class="n">random</span><span class="o">(</span><span class="mi">600</span><span class="o">));</span>
+<span class="o">}</span>
 </code></pre></div>
 <!-- <div class="flex-center"> -->
 
