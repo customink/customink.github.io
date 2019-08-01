@@ -433,6 +433,10 @@
 <lastmod>2019-07-23T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>/blog/2019/07/29/integration-testing-react-apps-with-cypress/</loc>
+<lastmod>2019-07-29T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>/team/</loc>
 </url>
 <url>
@@ -521,6 +525,9 @@
 </url>
 <url>
 <loc>/authors/don-mclamb/</loc>
+</url>
+<url>
+<loc>/authors/ke-cheng/</loc>
 </url>
 <url>
 <loc>/page2/</loc>

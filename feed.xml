@@ -7,6 +7,106 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Integration Testing React Apps with Cypress</title>
+        <description>&lt;h3 id=&quot;what-is-cypress&quot;&gt;What is Cypress?&lt;/h3&gt;
+
+&lt;p&gt;Cypress is an end to end testing framework for JavaScript apps. It helps you run and automate tests on the browser for your entire web experience. Cypress uses a headless browser to navigate through your app and perform user actions following a set of test scripts. &lt;/p&gt;
+
+&lt;p&gt;This is a quick post on getting started with Cypress in your React app, explores some of its cool features for integration testing, and how to add Cypress to your Travis CI/CD pipeline. &lt;/p&gt;
+
+&lt;p&gt;Although this post calls out React, Cypress is applicable to any JavaScript framework, and there&amp;#39;s nothing specific about the setup, so it can be applied to any non React app as well. &lt;/p&gt;
+
+&lt;h3 id=&quot;why-cypress-is-awesome-and-you-should-use-it&quot;&gt;Why Cypress is awesome and you should use it:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Cypress records screenshots and videos of your test runs, so you can trace back what went wrong - incredibly helpful for debugging&lt;/li&gt;
+&lt;li&gt;Live reloading - watches changes in test files and reruns your tests (we expect nothing less in the React world...)&lt;/li&gt;
+&lt;li&gt;DOESN&amp;#39;T use Selenium - we used to use Selenium for integration testing, but tests would fail due to asynchronous loading. Cypress intuitively waits for HTML DOM nodes to load if it doesn&amp;#39;t find it initially. Cypress has built-in retrying and customizable timeouts. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;using-cypress-in-your-react-app&quot;&gt;Using Cypress in your React app:&lt;/h3&gt;
+
+&lt;p&gt;Cypress is super easy to integrate in with your React app. Its setup is minimal. So let&amp;#39;s get started:&lt;/p&gt;
+
+&lt;h5 id=&quot;1-add-cypress-as-a-npm-package&quot;&gt;1. Add cypress as a NPM package:&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;yarn add cypress --dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h5 id=&quot;2-start-your-server-and-run&quot;&gt;2. Start your server, and run:&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;yarn run cypress open
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will open the Cypress test runner&lt;/p&gt;
+
+&lt;h5 id=&quot;3-give-cypress-a-baseurl-in-cypress-json&quot;&gt;3. Give Cypress a baseURL in &lt;code&gt;cypress.json&lt;/code&gt;&lt;/h5&gt;
+
+&lt;p&gt;&lt;code&gt;{ &amp;quot;baseUrl&amp;quot;: &amp;quot;http://localhost:3000&amp;quot; }&lt;/code&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;4-write-our-first-test&quot;&gt;4. Write our first test!&lt;/h5&gt;
+
+&lt;p&gt;In your test directory, create your test file. We named ours a simple &lt;code&gt;does-it-work-test.js&lt;/code&gt; which just runs through the happy path of the Assisted Design portion of the lab experience. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;describe('assisted design', () =&amp;gt; {
+  it('should select default shirt and ink colors', () =&amp;gt; {
+    cy.visit('/');
+    cy.get('.ad-GateTest-button').click();
+    cy.get('.ad-selfSelectionScreen-skip').click();
+    cy.get('.ad-productColorLg-colors-name').should('contain', 'White');
+    cy.get('.ad-productColorLg-cta').click();
+    cy.get('.ad-inkColorLg-colors-name').should('contain', 'Black');
+  })
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Familiar, right? The first command tells Cypress to visit the root URL in Chrome, which loads up Custom Ink&amp;#39;s assisted design experience. &lt;/p&gt;
+
+&lt;p&gt;The next command finds the &lt;code&gt;.ad-GateTest-button&lt;/code&gt;, which appears as the blue &amp;quot;Try it&amp;quot; button, and clicks on it. This renders the next design theme screen - where Cypress finds the DOM node for &amp;quot;Skip this step&amp;quot; button. On the next page for shirt color selection, Cypress asserts the selected product color in span &lt;code&gt;.ad-productColorLg-colors-name&lt;/code&gt; is white. &lt;/p&gt;
+
+&lt;p&gt;You can guess the last two lines - Cypress clicks on the Next button (&lt;code&gt;.ad-productColorLg-cta&lt;/code&gt;), leading to the ink color selection page, where it asserts the selected ink color in span &lt;code&gt;.ad-inkColorLg-colors-name&lt;/code&gt; is Black. That&amp;#39;s the gist of it!&lt;/p&gt;
+
+&lt;p&gt;To run the new test, click on the name of your test file under &amp;quot;Tests&amp;quot; in the Cypress test runner, and it should run your tests in the browser. &lt;/p&gt;
+
+&lt;h5 id=&quot;4-explore-visual-history-navigation&quot;&gt;4. Explore visual history navigation:&lt;/h5&gt;
+
+&lt;p&gt;On the browser, you can click through the left side to see exactly how Cypress executed your test scripts, so you can walk through each step of your test. When something goes awry, you can retrace the steps, and helps you gain clarity on what went wrong in either your test script, or your code. &lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;tb-Img&quot; src=/assets/content/cypress/cypress-nav-284961bfd5b625abb9a41415d598d9a976bde5e4e956be7c972c1ac12941b770.gif /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;5-selector-playground&quot;&gt;5. Selector playground:&lt;/h5&gt;
+
+&lt;p&gt;On the top Cypress nav bar, directly left of where Cypress displays the URL bar, you can click to open the Selector Playgroud. This is similar (but way more intuitive) to a browser&amp;#39;s inspect element feature, where you can click around to find the right DOM element you want to add to your test suite or make an assertion on. It makes it easy to copy to clipart and paste into a test. &lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;tb-Img&quot; src=/assets/content/cypress/cypress-selector-f73313665a7bead2fedba190b02d297029a1f863f85ffab51e87a7d4aff5590f.gif /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;adding-cypress-to-travis&quot;&gt;Adding Cypress to Travis:&lt;/h3&gt;
+
+&lt;p&gt;We wanted to add Cypress to our Travis workflow, so we can run integration testing whenever new features are added to make sure new code doesn&amp;#39;t break existing features during deployments. &lt;/p&gt;
+
+&lt;h5 id=&quot;1-we-add-a-yarn-script-in-package-json&quot;&gt;1. We add a yarn script in &lt;code&gt;package.json&lt;/code&gt;&lt;/h5&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&quot;start:ci&quot;: &quot;NODE_ENV=development $(yarn bin)/webpack-dev-server&quot;
+
+&quot;test:integration:ci&quot;: &quot;yarn start:ci &amp;amp; $(yarn bin)/wait-on
+  http://localhost:5000 &amp;amp;&amp;amp; $(yarn bin)/cypress run --config 
+  baseUrl=http://localhost:5000&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;a href=&quot;https://www.npmjs.com/package/wait-on&quot;&gt;wait-on&lt;/a&gt; package makes sure webpack starts the webserver on localhost:5000 before running Cypress tests against it. &lt;/p&gt;
+
+&lt;h5 id=&quot;2-add-the-cypress-yarn-script-to-travis-yml&quot;&gt;2. Add the Cypress yarn script to &lt;code&gt;travis.yml&lt;/code&gt;&lt;/h5&gt;
+
+&lt;p&gt;In our yaml file, we run the script &lt;code&gt;yarn run $TEST_SUITE&lt;/code&gt;.
+Our &lt;code&gt;$TEST_SUITE&lt;/code&gt; includes our lint and unit test, so we just add &lt;code&gt;test:integration:ci&lt;/code&gt; from our &lt;code&gt;package.json&lt;/code&gt; to it. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;- TEST_SUITE=test:integration:ci
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, Cypress is part of your Travis run! CI/CD FTW! &lt;/p&gt;
+
+&lt;h3 id=&quot;learn-more&quot;&gt;Learn more:&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell&quot;&gt;Cypress docs&lt;/a&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;ke-is-a-software-engineer-at-custom-ink-and-works-on-custom-inks-design-lab-experience&quot;&gt;Ke is a software engineer at Custom Ink, and works on Custom Ink&amp;#39;s design lab experience.&lt;/h5&gt;
+</description>
+        <pubDate>Mon, 29 Jul 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/07/29/integration-testing-react-apps-with-cypress/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/29/integration-testing-react-apps-with-cypress/</guid>
+      </item>
+    
+      <item>
         <title>Let's Get Visual With Processing</title>
         <description>&lt;p&gt;I recently started mentoring graduates from &lt;a href=&quot;https://lambdaschool.com/&quot;&gt;Lambda School&lt;/a&gt; and while reviewing my mentee’s resume (&lt;a href=&quot;http://erikkimsey.com/&quot;&gt;he’s super creative and looking for work in the Virginia area!!!&lt;/a&gt;) I saw on his resume under skills ‘Processing’ at first I thought it must of been a typo…I was wrong.&lt;/p&gt;
 
