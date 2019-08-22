@@ -425,10 +425,6 @@
 <lastmod>2019-07-08T00:00:00-04:00</lastmod>
 </url>
 <url>
-<loc>/blog/2019/07/10/authorization-with-api-gateway-and-congito/</loc>
-<lastmod>2019-07-10T00:00:00-04:00</lastmod>
-</url>
-<url>
 <loc>/blog/2019/07/15/inkycop/</loc>
 <lastmod>2019-07-15T00:00:00-04:00</lastmod>
 </url>
@@ -443,6 +439,10 @@
 <url>
 <loc>/blog/2019/08/05/performing-digital-forensics-on-an-aws-ebs-volume/</loc>
 <lastmod>2019-08-05T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>/blog/2019/08/16/authorization-with-api-gateway-and-congito/</loc>
+<lastmod>2019-08-16T00:00:00-04:00</lastmod>
 </url>
 <url>
 <loc>/team/</loc>
