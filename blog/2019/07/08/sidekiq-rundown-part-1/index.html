@@ -123,11 +123,12 @@ At Custom Ink we leverage Sidekiq as a job scheduler to execute batch processing
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div>
-<p>We can tell the sidekiq worker process about this queue when we start the process.</p>
+<p>We can tell the sidekiq worker process about this queue when we start the process.
+We can also can give the critical queue a weight of 5.</p>
 
 <p><code>bundle exec sidekiq -q critical,5 -q default</code></p>
 
-<p>Above we have told the sidekiq process that we want this worker process to poll the critical queue 5 times more often than the default queue</p>
+<p>Above we have told the sidekiq process that we want this worker process to poll the critical queue 5 times more often than the default queue.</p>
 
 <p>In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.</p>
 

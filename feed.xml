@@ -7,6 +7,121 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Sidekiq Rundown Part 2: Optimizing Job Execution within Sidekiq</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://technology.customink.com/blog/2019/07/08/sidekiq-rundown-part-1/&quot;&gt;In the previous post&lt;/a&gt; of this series, we set up a simple Sidekiq worker. This time we introduce &lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/Batches&quot;&gt;Sidekiq Batches&lt;/a&gt; and ways to configure &lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/Advanced-Options#concurrency&quot;&gt;Sidekiq Worker Concurrency&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/sidekiq/sidekiq-pro-3bfb28483017046cddbbeea528ee831351b3d4bc44e245e9008641f3ecca1bf8.png alt=&quot;sidekiq-pro&quot; style=&quot;width:100%&quot;/&gt;&lt;/p&gt;
+
+&lt;p&gt;While optimizing the performance of our applications and systems, we should ask ourselves, &amp;quot;where is the bottleneck?&amp;quot; What piece of code or infrastructure is impeding the flow of computing? Some bare metal solutions involve increasing a machine&amp;#39;s resources in terms of CPU, RAM, I/O, or disk storage. Some less apparent solutions could involve some random configuration on a load balancer or an API gateway/proxy. Today we are focused on bottlenecks from within Sidekiq and how to optimize your sidekiq configuration. The goal is to perform heavy workloads efficiently and concurrently in the shortest execution time possible.&lt;/p&gt;
+
+&lt;h3 id=&quot;sidekiq-batches&quot;&gt;Sidekiq Batches&lt;/h3&gt;
+
+&lt;p&gt;You can think of a batch as one big job or a container that knows about all of its jobs. One reason to use a batch is to group similar jobs to track the overall progress and completion of an encompassing task with &lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/Batches#status&quot;&gt;statuses&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can register &lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/Batches#callbacks&quot;&gt;callback methods&lt;/a&gt; on batches that fire after the batch of jobs has completed.&lt;br/&gt;
+There are two scenarios where we can fire a callback.&lt;br/&gt;
+&lt;code&gt;on_success # Callback executes when a batch&amp;#39;s jobs have 100% completed successfully.&lt;/code&gt;&lt;br/&gt;
+&lt;code&gt;on_completion # Callback executes when a batch&amp;#39;s jobs have completed, which may include failed jobs.&lt;/code&gt;&lt;br/&gt;
+These callbacks can be useful for chaining together batches in sequence or sending a completion notification for an important task.&lt;/p&gt;
+
+&lt;h3 id=&quot;sidekiq-concurrency&quot;&gt;Sidekiq Concurrency&lt;/h3&gt;
+
+&lt;p&gt;When you start Sidekiq within your application it allocates a certain amount of threads from your laptop or server. By default, Sidekiq allocates 10 threads per worker which works fine for most use cases. If your job traffic starts to increase and your queue lengths keep growing, increase the concurrency of that worker if you have the resources available. Sidekiq experiences stability issues with a concurrency of 100 threads. The author of Sidekiq, Mike Perham, suggests a concurrency of no higher than 50. You want to make sure that your concurrency is low enough that your server is not close to maxing out it&amp;#39;s I/O resources.&lt;/p&gt;
+
+&lt;p&gt;Using batches and concurrency together, we can quickly process jobs with better visibility and control. Finding the right balance in concurrency and resources can take some experimenting. Some good starting points are making sure that the number of connections in your database connection pool is greater than or equal to the number of threads available to all sidekiq workers.&lt;/p&gt;
+
+&lt;p&gt;First, let&amp;#39;s take a look at creating a batch. Let&amp;#39;s imagine that we have thousands of blog posts to proofread &amp;amp; edit and that we have written a &lt;code&gt;BlogPostEditorWorker&lt;/code&gt; to process a blog post by &lt;code&gt;blog_post_id&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BlogPostEditorWorker&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Worker&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blog_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;BlogPostClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blog_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;Editor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;process_blog_post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Processes Blog Posts&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;EmailPublisherWithPosts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Publisher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;email_recipient&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Any worker.perform created inside the block below will belong to the batch&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;BlogPostClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;processed: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;BlogPostEditorWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;perform_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blog_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;common-problem-scenarios-while-scaling-sidekiq-jobs&quot;&gt;Common Problem Scenarios while Scaling Sidekiq Jobs&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: You are running long Sidekiq jobs that consume a worker&amp;#39;s threads, causing other jobs to move slowly through a congested queue.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Refactor your Sidekiq worker to process single atomic pieces of work instead of a long-running batch. Write worker code that runs smaller jobs that handle one individual unit of work at a time. This enables Sidekiq to leverage it&amp;#39;s available concurrency as opposed to only using one thread.&lt;/p&gt;
+
+&lt;p&gt;Try to stay away from doing this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;one_thousand_blog_post_ids&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;BlogPostClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;processed: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blog_post_id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;BlogPostEditorWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;perform_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;one_thousand_blog_post_ids&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Prefer processing single items:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;jobs&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;BlogPostClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;processed: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;BlogPostEditorWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;perform_async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blog_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: You are putting thousands of asynchronous jobs into a queue which takes way too long. In the above example, we have to enqueue 1000 jobs. Doing this inside of &lt;code&gt;.each&lt;/code&gt; is expensive as each new job is a trip to Redis&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Enqueue several jobs at a time with a &lt;code&gt;bulk_jobs&lt;/code&gt; call to the Sidekiq client. The main advantage here is that we are vastly reducing the number of network trips to Redis.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;BulkBlogPostEditorWorkerLoader&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Worker&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;perform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;blog_posts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;BlogPostClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;processed: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;blog_posts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;blog_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# args must be an array of arrays where each array&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# holds parameters passed to the worker's perform method.&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# puts args =&amp;gt; [ ['123'], ['124'], ['125'] ... ]&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;Sidekiq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;push_bulk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'class'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;BlogPostEditorWorker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'args'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;&lt;strong&gt;Scenario&lt;/strong&gt;: You have a long-running job consuming a worker for 30 minutes and counting, blocking more critical jobs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Add a worker with a reserved queue for critical jobs. Some services may rely on Sidekiq jobs to execute in near real-time. These jobs are better off working off of reserved queues. We can also give our critical queue 10 extra threads knowing we have a higher volume of critical items that need processing.&lt;/p&gt;
+
+&lt;p&gt;When starting your Sidekiq workers&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;bundle&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sidekiq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bundle&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sidekiq&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;These were just a few tricks in Sidekiq to optimize your task workflows.  Knowing the limitations of your downstream resources is vital when trying to scale a piece of your system. Also remember to experiment and keep track of execution times to find the optimal configuration for your system.&lt;/p&gt;
+
+&lt;h5 id=&quot;sidekiq-resources&quot;&gt;Sidekiq Resources&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sidekiq.org/&quot;&gt;Sidekiq Website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq&quot;&gt;Sidekiq Repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mperham/sidekiq/wiki&quot;&gt;Sidekiq Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;about-the-author&quot;&gt;About the author&lt;/h5&gt;
+
+&lt;p&gt;Logan Beougher is a Software Engineer at Custom Ink and has been an Inker since May 2019.&lt;/p&gt;
+
+&lt;p&gt;Interested in writing really fast code? We’re hiring! Visit us at &lt;a href=&quot;https://www.customink.com/jobs&quot;&gt;customink.com/jobs&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 23 Aug 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/08/23/sidekiq-rundown-part-2-optimizing-job-execution-within-sidekiq/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/08/23/sidekiq-rundown-part-2-optimizing-job-execution-within-sidekiq/</guid>
+      </item>
+    
+      <item>
         <title>Authorization with API Gateway, Cognito and React</title>
         <description>&lt;p&gt;I&amp;#39;ve been experimenting with using &lt;a href=&quot;https://aws.amazon.com/cognito/&quot;&gt;Amazon Cognito User Pools&lt;/a&gt; in conjunction with the Amplify Javascript library to handle user authentication in our Single Page applications. One of the problems I ran into was finding a way to restrict my API to only be accessible to authorized users. Cognito, API Gateway, and Amplify made this easy to do.&lt;/p&gt;
 
@@ -788,11 +903,12 @@ In the end, all teams will have to agree to it, and roll out with InkyCop to uni
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;We can tell the sidekiq worker process about this queue when we start the process.&lt;/p&gt;
+&lt;p&gt;We can tell the sidekiq worker process about this queue when we start the process.
+We can also can give the critical queue a weight of 5.&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;bundle exec sidekiq -q critical,5 -q default&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Above we have told the sidekiq process that we want this worker process to poll the critical queue 5 times more often than the default queue&lt;/p&gt;
+&lt;p&gt;Above we have told the sidekiq process that we want this worker process to poll the critical queue 5 times more often than the default queue.&lt;/p&gt;
 
 &lt;p&gt;In this post, we have gone over how to configure your rails application and write some worker code that executes when a sidekiq worker process can pull a new job from a queue. Congratulations, you now know how to do simple background processing with sidekiq. Background jobs are very useful when you need compute cycles done behind the scenes without affecting the user experience.&lt;/p&gt;
 
