@@ -7,6 +7,174 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>From TravisCI to GitHub Actions</title>
+        <description>&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/githubactions-part1/masthead-c3229ebf2a4d7c6398435d69eecb25c0fb35179c9d610c844a3f4404a5c6cba8.png&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;GitHub Actions&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If premature optimization is the root of all evil, should procrastination until the right tool arrives be divine? If so, then yours truly would be the Patron saint of pragmatic &amp;amp; lazy programmers everywhere. I&amp;#39;m no adoption curve laggard, rather more like an early majority adopter with an extended view of the x-axis 😅 and I&amp;#39;m here to convince you that now is the right time to reevaluate your CI/CD needs.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;GitHub Actions was announced last &lt;a href=&quot;https://twitter.com/github/status/1052248654445076481&quot;&gt;October&lt;/a&gt; and I never found the time to expierment with it. Last &lt;a href=&quot;https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/&quot;&gt;month&lt;/a&gt; they announced free access for all public repositories along with a few revamped &lt;a href=&quot;https://www.youtube.com/watch?v=E1OunoCyuhY&quot;&gt;featues&lt;/a&gt;. It looks way more intriguing and given the long Labor Day weekend it felt like a great time to learn GitHub&amp;#39;s new CI/CD killer app with my favorite open source gem &lt;a href=&quot;https://github.com/metaskills/minitest-spec-rails&quot;&gt;minitest-spec-rails&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;⚠️ GitHub Actions is in &lt;a href=&quot;https://github.com/features/actions&quot;&gt;Beta&lt;/a&gt; access and will be generally available in Novemeber.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-github-actions&quot;&gt;Why GitHub Actions?&lt;/h2&gt;
+
+&lt;p&gt;The value of Continuous Integration (CI) via tools like TravisCI &amp;amp; CircleCI have benefits that are immediately obvious. Constant test feedback in pull requests give us the confidence to move our projects forward at a faster pace.&lt;/p&gt;
+
+&lt;p&gt;But what about the Continuous Delivery (CD) part of CI/CD? In a world driven by &lt;a href=&quot;https://aws.amazon.com/fargate/&quot;&gt;containers&lt;/a&gt; and &lt;a href=&quot;https://firecracker-microvm.github.io&quot;&gt;microVMs&lt;/a&gt;, how are we to ship our applications to Cooper Netties without a good pipeline? Continuous delivery is what powers this and like others I think &lt;a href=&quot;https://www.weave.works/blog/gitops-operations-by-pull-request&quot;&gt;​GitOps&lt;/a&gt; solutions tightly integrated with GitHub are important to helping modernizing all of our workflow needs.&lt;/p&gt;
+
+&lt;p&gt;Here is a quick list of things I found compelling about GitHub Actions.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Workflows can be triggered by any GitHub or App event. Unlimited automation.&lt;/li&gt;
+&lt;li&gt;Workflows &amp;amp; Actions are each under your repository&amp;#39;s source.&lt;/li&gt;
+&lt;li&gt;Actions can be external GitHub repositories &amp;amp; semantically versioned.&lt;/li&gt;
+&lt;li&gt;Workflows run on virtualized Linux, Mac, or Windows environments.&lt;/li&gt;
+&lt;li&gt;Bring your own environment with Docker containers.&lt;/li&gt;
+&lt;li&gt;Encrypted secrets store integrated into each GitHub repository.&lt;/li&gt;
+&lt;li&gt;Logical pricing structure based on time used. No bounds on scaling.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;migrating-from-travisci&quot;&gt;Migrating From TravisCI&lt;/h2&gt;
+
+&lt;p&gt;Enough hype and reasoning. Let&amp;#39;s dig into my notes on how I setup my first CI workflow with GitHub Actions.&lt;/p&gt;
+
+&lt;div style=&quot;display:flex;&quot;&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/assets/content/githubactions-part1/getting-started-1-11b27f87329096758a9fb863ef51cfad256cc037131e0f0b1ff96715f02b6971.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/getting-started-1-11b27f87329096758a9fb863ef51cfad256cc037131e0f0b1ff96715f02b6971.png&quot; class=&quot;tb-Img&quot; alt=&quot;GitHub Actions Getting Started w/Ruby Workflow #1&quot; /&gt;&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;a href=&quot;/assets/content/githubactions-part1/getting-started-2-0f8df01b7bb3cfcee139c4660ad6809c6c8d51b835698621eeaae8ea2f17191d.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/getting-started-2-0f8df01b7bb3cfcee139c4660ad6809c6c8d51b835698621eeaae8ea2f17191d.png&quot; class=&quot;tb-Img&quot; alt=&quot;GitHub Actions Getting Started w/Ruby Workflow #2&quot; /&gt;&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I used their Ruby example workflow as my starting point. From there I changed the name of the workflow to &lt;code&gt;ci.yml&lt;/code&gt; to better reflect my intent. Note how all workflows will be in the repo&amp;#39;s &lt;code&gt;.github/workflows&lt;/code&gt; directory. The defaults were simple, basically checkout, bundle, and test using their latest Ubuntu &lt;a href=&quot;https://help.github.com/en/articles/virtual-environments-for-github-actions#supported-virtual-environments-and-hardware-resources&quot;&gt;virtual environment&lt;/a&gt; as the workflow&amp;#39;s runner. Commit and see what happens... woohoo, our first error!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;sqlite3.h is missing. Try `brew install sqlite3,
+'yum' install sqlite-devel' or 'apt-get install libsqlite3-dev'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/content/githubactions-part1/sqlite3.h-missing-c7238e45fec7653852119a511d6c7f324bc7286b72856d25545da207a98500c7.png&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;sqlite3.h is missing error in GitHub Actions Ruby workflow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was easy to fix by adding &lt;code&gt;sudo apt-get install libsqlite3-dev&lt;/code&gt; prior to our Bundle command. After that everything turns green and we have clutched our first duos win with GitHub Actions by our side. 🎉&lt;/p&gt;
+
+&lt;h2 id=&quot;happy-little-ci&quot;&gt;Happy Little CI&lt;/h2&gt;
+
+&lt;p&gt;This is your world and you can do anything you want, so why stop there? What about testing different Ruby versions? Another common pattern requires that we make sure our gem is compatible with multiple versions of downstream gems. I often reach to Thoughtbot&amp;#39;s &lt;a href=&quot;https://github.com/thoughtbot/appraisal&quot;&gt;appraisal&lt;/a&gt; gem which allows us to generate multiple Gemfile variants.&lt;/p&gt;
+
+&lt;p&gt;To pull this all together we are going to need to jump into GitHub Actions&amp;#39; support for &lt;a href=&quot;https://help.github.com/en/articles/configuring-a-workflow#configuring-a-build-matrix&quot;&gt;matrix builds&lt;/a&gt;. We are also going to make this CI workflow feel more personalized and organized to suit our personal needs. Here is my final &lt;code&gt;.github/workflows/ci.yml&lt;/code&gt; workflow file.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;CI&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;matrix&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2.5.x'&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2.6.x'&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;rails&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rails_v5.1.x'&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rails_v5.2.x'&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rails_v6.0.x'&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Checkout&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v1&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Setup System&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;sudo apt-get install libsqlite3-dev&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Setup Ruby&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/setup-ruby@v1&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;ruby-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ matrix.ruby }}&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Bundle&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;MTSR_RAILS_VERSION&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ matrix.rails }}&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;export BUNDLE_GEMFILE=&quot;${GITHUB_WORKSPACE}/gemfiles/${MTSR_RAILS_VERSION}.gemfile&quot;&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;gem uninstall -aIx bundler&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;gem install bundler -v 1.17.3&lt;/span&gt;
+          &lt;span class=&quot;s&quot;&gt;bundle install --jobs 4 --retry 3&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Test&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec rake&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Final Minitest Spec Rails GitHub Actions Pull Requst Feedback&quot; /&gt;&lt;/a&gt;A few highlights on why I landed on the specifics of this workflow above.&lt;/p&gt;
+
+&lt;h4 id=&quot;naming&quot;&gt;Naming&lt;/h4&gt;
+
+&lt;p&gt;Renamed the top level name from &lt;code&gt;Ruby&lt;/code&gt; to &lt;code&gt;CI&lt;/code&gt;. This is what shows up when you browse all Actions in GitHub&amp;#39;s user interface. Keep the name logical to the workflow.&lt;/p&gt;
+
+&lt;p&gt;Each step can have a &lt;code&gt;name&lt;/code&gt; attribute as well. By default the checkout action does not so I added one. Again these step names show up as headers in the log view. So make them logical to you or your team. I ended up with:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Checkout&lt;/li&gt;
+&lt;li&gt;Setup System&lt;/li&gt;
+&lt;li&gt;Bundle&lt;/li&gt;
+&lt;li&gt;Test&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;context&quot;&gt;Context&lt;/h4&gt;
+
+&lt;p&gt;GitHub Actions has several &lt;a href=&quot;https://help.github.com/en/articles/contexts-and-expression-syntax-for-github-actions#contexts&quot;&gt;context objects&lt;/a&gt; that can be used from setting environment variables to expressions. Here I am using the &lt;code&gt;matrix&lt;/code&gt; context but there are others like &lt;code&gt;github&lt;/code&gt;, &lt;code&gt;job&lt;/code&gt;, &lt;code&gt;steps&lt;/code&gt;, &lt;code&gt;secrets&lt;/code&gt;, and more.&lt;/p&gt;
+
+&lt;h4 id=&quot;hacks&quot;&gt;Hacks&lt;/h4&gt;
+
+&lt;p&gt;Lastly, I have standardized on Bundler &lt;code&gt;1.17.3&lt;/code&gt; until a few v2 kinks are worked out. Feel free to disregard that step&amp;#39;s run line to downgrade bundler.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-rough-edges&quot;&gt;The Rough Edges&lt;/h2&gt;
+
+&lt;p&gt;So thats the spin. But any new product, especially beta access, is bound to give you a little grief. I certainly hit a few while learning today. None I would consider blockers to adopting GitHub Actions in your test projects or setting your sights for its eventual release. But here are the ones I found.&lt;/p&gt;
+
+&lt;h4 id=&quot;match-your-workflows-file-name-early&quot;&gt;Match Your Workflow&amp;#39;s File &amp;amp; Name Early!&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Final Minitest Spec Rails GitHub Actions Pull Requst Feedback&quot; /&gt;&lt;/a&gt;When I created my workflow using the &amp;quot;Ruby&amp;quot; example, I knew I wanted it to be called &amp;quot;CI&amp;quot;. However, I neglected to set the top level &lt;code&gt;name&lt;/code&gt; property early on and even renamed it a few times. This means I had a few names tied to the &lt;code&gt;ci.yml&lt;/code&gt; workflow file and I&amp;#39;m guessing they will be forever burned into my repo&amp;#39;s action link history. Oh well, I&amp;#39;ll skeert more carefully on the next project.&lt;/p&gt;
+
+&lt;h4 id=&quot;pull-request-usability&quot;&gt;Pull Request Usability&lt;/h4&gt;
+
+&lt;p&gt;One nice feature of TravisCI is that they make it easy to monitor a pull requests build state when new commits are pushed. For GitHub Actions, I found myself constantly watching a build fail, clicking back to my PR, and then finding the new build links agian. It would be nice if the build page detected a push to the same PR and navigated you to the new build automatically.&lt;/p&gt;
+
+&lt;h4 id=&quot;environment-variables-contexts&quot;&gt;Environment Variables &amp;amp; Contexts&lt;/h4&gt;
+
+&lt;p&gt;Providing runtime reflection to your Workflows &amp;amp; Actions is critical to enabling developers to build abstract and dynamic automation tools. GitHub does a great job by providing both &lt;a href=&quot;https://help.github.com/en/articles/virtual-environments-for-github-actions#environment-variables&quot;&gt;environment variables&lt;/a&gt; and &lt;a href=&quot;https://help.github.com/en/articles/contexts-and-expression-syntax-for-github-actions#contexts&quot;&gt;context objects&lt;/a&gt;. However, I found it hard to setup my builds &lt;code&gt;BUNDLE_GEMFILE&lt;/code&gt; environment variable. I tried using their &lt;a href=&quot;https://help.github.com/en/articles/contexts-and-expression-syntax-for-github-actions#functions&quot;&gt;&lt;code&gt;join&lt;/code&gt;&lt;/a&gt; function to do this in one step but found myself wishing that the &lt;code&gt;GITHUB_WORKSPACE&lt;/code&gt; environment was a property on the &lt;code&gt;github&lt;/code&gt; context instead. So maybe if &lt;code&gt;github.workspace&lt;/code&gt; was there my &lt;code&gt;join&lt;/code&gt; function would have worked?&lt;/p&gt;
+
+&lt;h4 id=&quot;ruby-versions&quot;&gt;Ruby Versions&lt;/h4&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://help.github.com/en/articles/software-in-virtual-environments-for-github-actions&quot;&gt;software in each virtual environment&lt;/a&gt; is impressive! For example at the time of this writing the Ubuntu environments have Ruby &lt;code&gt;2.3.7&lt;/code&gt;, &lt;code&gt;2.4.6&lt;/code&gt;, &lt;code&gt;2.5.5&lt;/code&gt;, and &lt;code&gt;2.6.3&lt;/code&gt; already installed. When I took a &lt;a href=&quot;https://github.com/actions/setup-ruby/issues/8&quot;&gt;closer look&lt;/a&gt; at the &lt;a href=&quot;https://github.com/actions/setup-ruby&quot;&gt;actions/setup-ruby&lt;/a&gt; repository I found they basically do some shebang path switching to use one of these preinstall Ruby versions. I totally see the value in this but expect if finer grain control is needed you would use one of two solutions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Make a &lt;a href=&quot;https://github.com/actions/setup-ruby/issues/8#issuecomment-526925014&quot;&gt;rbenv/ruby-build&lt;/a&gt; action. Nerd snipe alert!&lt;/li&gt;
+&lt;li&gt;Bring your own Docker &lt;a href=&quot;https://help.github.com/en/articles/about-actions#types-of-actions&quot;&gt;container action&lt;/a&gt; to the party.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;badge-support&quot;&gt;Badge Support&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/githubactions-part1/badge-398ae483455e770d9e51da964075caf992f37b068b6b12ddadd399d7d13805f2.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Minitest Spec Rails GitHub Actions Badge Example&quot; /&gt;We all want to show off our workflow&amp;#39;s status in our project&amp;#39;s README file. After some digging I found this Shields.io GitHub &lt;a href=&quot;https://github.com/badges/shields/issues/2574&quot;&gt;issue discussion&lt;/a&gt; which found the magic formula to generate an SVG using GitHub Actions. How cool is this!?! Native badge support shows they are in it to win it.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;https://github.com/{USER}/{REPO}/workflows/{NAME}/badge.svg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;more-cd&quot;&gt;More CD 🔔&lt;/h2&gt;
+
+&lt;p&gt;Thanks for taking the time to read my post today on GitHub Actions. Got a fever for more continuous delivery examples? Stay tuned to &lt;a href=&quot;https://twitter.com/custominktech&quot;&gt;@CustomInkTech&lt;/a&gt; on Twitter for updates. Next week I&amp;#39;ll be writing about how to use GitHub Actions to deploy your Rails applications to AWS Lambda using &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;additional-resources&quot;&gt;Additional Resources&lt;/h2&gt;
+
+&lt;p&gt;New to GitHub Actions? I found these resoruces super helpful. You will almost certainly want to bookmark the developer documentation!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=E1OunoCyuhY&quot;&gt;GitHub HQ Actions Announcement Video&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lab.github.com/github/hello-github-actions!&quot;&gt;Learning Lab: Hello, GitHub Actions!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://help.github.com/en/categories/automating-your-workflow-with-github-actions&quot;&gt;Developer Documentation: Automating your workflow with GitHub Actions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/marketplace?type=actions&quot;&gt;Actions: Marketplace&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/actions/setup-ruby&quot;&gt;Action: Setup Ruby&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/sdras/awesome-actions&quot;&gt;Community: Awesome Actions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 02 Sep 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/09/02/from-travis-ci-to-github-actions/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/09/02/from-travis-ci-to-github-actions/</guid>
+      </item>
+    
+      <item>
         <title>Sidekiq Rundown Part 2: Optimizing Job Execution within Sidekiq</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://technology.customink.com/blog/2019/07/08/sidekiq-rundown-part-1/&quot;&gt;In the previous post&lt;/a&gt; of this series, we set up a simple Sidekiq worker. This time we introduce &lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/Batches&quot;&gt;Sidekiq Batches&lt;/a&gt; and ways to configure &lt;a href=&quot;https://github.com/mperham/sidekiq/wiki/Advanced-Options#concurrency&quot;&gt;Sidekiq Worker Concurrency&lt;/a&gt;.&lt;/p&gt;
 

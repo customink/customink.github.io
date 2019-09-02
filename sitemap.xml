@@ -449,6 +449,10 @@
 <lastmod>2019-08-23T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>/blog/2019/09/02/from-travis-ci-to-github-actions/</loc>
+<lastmod>2019-09-02T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>/team/</loc>
 </url>
 <url>
@@ -588,5 +592,8 @@
 </url>
 <url>
 <loc>/page16/</loc>
+</url>
+<url>
+<loc>/page17/</loc>
 </url>
 </urlset>
