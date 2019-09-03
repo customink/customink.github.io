@@ -16,9 +16,9 @@
 
 &lt;!--more--&gt;
 
-&lt;p&gt;GitHub Actions was announced last &lt;a href=&quot;https://twitter.com/github/status/1052248654445076481&quot;&gt;October&lt;/a&gt; and I never found the time to expierment with it. Last &lt;a href=&quot;https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/&quot;&gt;month&lt;/a&gt; they announced free access for all public repositories along with a few revamped &lt;a href=&quot;https://www.youtube.com/watch?v=E1OunoCyuhY&quot;&gt;featues&lt;/a&gt;. It looks way more intriguing and given the long Labor Day weekend it felt like a great time to learn GitHub&amp;#39;s new CI/CD killer app with my favorite open source gem &lt;a href=&quot;https://github.com/metaskills/minitest-spec-rails&quot;&gt;minitest-spec-rails&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;GitHub Actions was announced last &lt;a href=&quot;https://twitter.com/github/status/1052248654445076481&quot;&gt;October&lt;/a&gt; and I never found the time to experiment with it. Last &lt;a href=&quot;https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/&quot;&gt;month&lt;/a&gt; they announced free access for all public repositories along with a few revamped &lt;a href=&quot;https://www.youtube.com/watch?v=E1OunoCyuhY&quot;&gt;features&lt;/a&gt;. It looks way more intriguing and given the long Labor Day weekend it felt like a great time to learn GitHub&amp;#39;s new CI/CD killer app with my favorite open source gem &lt;a href=&quot;https://github.com/metaskills/minitest-spec-rails&quot;&gt;minitest-spec-rails&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;⚠️ GitHub Actions is in &lt;a href=&quot;https://github.com/features/actions&quot;&gt;Beta&lt;/a&gt; access and will be generally available in Novemeber.&lt;/p&gt;
+&lt;p&gt;⚠️ GitHub Actions is in &lt;a href=&quot;https://github.com/features/actions&quot;&gt;Beta&lt;/a&gt; access and will be generally available in November.&lt;/p&gt;
 
 &lt;h2 id=&quot;why-github-actions&quot;&gt;Why GitHub Actions?&lt;/h2&gt;
 
@@ -99,7 +99,7 @@
       &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Test&lt;/span&gt;
         &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bundle exec rake&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;a href=&quot;/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Final Minitest Spec Rails GitHub Actions Pull Requst Feedback&quot; /&gt;&lt;/a&gt;A few highlights on why I landed on the specifics of this workflow above.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Final Minitest Spec Rails GitHub Actions Pull Request Feedback&quot; /&gt;&lt;/a&gt;A few highlights on why I landed on the specifics of this workflow above.&lt;/p&gt;
 
 &lt;h4 id=&quot;naming&quot;&gt;Naming&lt;/h4&gt;
 
@@ -128,11 +128,11 @@
 
 &lt;h4 id=&quot;match-your-workflows-file-name-early&quot;&gt;Match Your Workflow&amp;#39;s File &amp;amp; Name Early!&lt;/h4&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Final Minitest Spec Rails GitHub Actions Pull Requst Feedback&quot; /&gt;&lt;/a&gt;When I created my workflow using the &amp;quot;Ruby&amp;quot; example, I knew I wanted it to be called &amp;quot;CI&amp;quot;. However, I neglected to set the top level &lt;code&gt;name&lt;/code&gt; property early on and even renamed it a few times. This means I had a few names tied to the &lt;code&gt;ci.yml&lt;/code&gt; workflow file and I&amp;#39;m guessing they will be forever burned into my repo&amp;#39;s action link history. Oh well, I&amp;#39;ll skeert more carefully on the next project.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png&quot;&gt;&lt;img src=&quot;/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png&quot; class=&quot;tb-Img tb-Img--responsive tb-Img--third&quot; alt=&quot;Final Minitest Spec Rails GitHub Actions Pull Request Feedback&quot; /&gt;&lt;/a&gt;When I created my workflow using the &amp;quot;Ruby&amp;quot; example, I knew I wanted it to be called &amp;quot;CI&amp;quot;. However, I neglected to set the top level &lt;code&gt;name&lt;/code&gt; property early on and even renamed it a few times. This means I had a few names tied to the &lt;code&gt;ci.yml&lt;/code&gt; workflow file and I&amp;#39;m guessing they will be forever burned into my repo&amp;#39;s action link history. Oh well, I&amp;#39;ll skeert more carefully on the next project.&lt;/p&gt;
 
 &lt;h4 id=&quot;pull-request-usability&quot;&gt;Pull Request Usability&lt;/h4&gt;
 
-&lt;p&gt;One nice feature of TravisCI is that they make it easy to monitor a pull requests build state when new commits are pushed. For GitHub Actions, I found myself constantly watching a build fail, clicking back to my PR, and then finding the new build links agian. It would be nice if the build page detected a push to the same PR and navigated you to the new build automatically.&lt;/p&gt;
+&lt;p&gt;One nice feature of TravisCI is that they make it easy to monitor a pull requests build state when new commits are pushed. For GitHub Actions, I found myself constantly watching a build fail, clicking back to my PR, and then finding the new build links again. It would be nice if the build page detected a push to the same PR and navigated you to the new build automatically.&lt;/p&gt;
 
 &lt;h4 id=&quot;environment-variables-contexts&quot;&gt;Environment Variables &amp;amp; Contexts&lt;/h4&gt;
 

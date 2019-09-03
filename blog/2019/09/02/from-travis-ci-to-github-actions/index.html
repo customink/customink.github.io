@@ -50,9 +50,9 @@ If premature optimization is the root of all evil, should procrastination until 
 
 <!--more-->
 
-<p>GitHub Actions was announced last <a href="https://twitter.com/github/status/1052248654445076481">October</a> and I never found the time to expierment with it. Last <a href="https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/">month</a> they announced free access for all public repositories along with a few revamped <a href="https://www.youtube.com/watch?v=E1OunoCyuhY">featues</a>. It looks way more intriguing and given the long Labor Day weekend it felt like a great time to learn GitHub&#39;s new CI/CD killer app with my favorite open source gem <a href="https://github.com/metaskills/minitest-spec-rails">minitest-spec-rails</a>.</p>
+<p>GitHub Actions was announced last <a href="https://twitter.com/github/status/1052248654445076481">October</a> and I never found the time to experiment with it. Last <a href="https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/">month</a> they announced free access for all public repositories along with a few revamped <a href="https://www.youtube.com/watch?v=E1OunoCyuhY">features</a>. It looks way more intriguing and given the long Labor Day weekend it felt like a great time to learn GitHub&#39;s new CI/CD killer app with my favorite open source gem <a href="https://github.com/metaskills/minitest-spec-rails">minitest-spec-rails</a>.</p>
 
-<p>⚠️ GitHub Actions is in <a href="https://github.com/features/actions">Beta</a> access and will be generally available in Novemeber.</p>
+<p>⚠️ GitHub Actions is in <a href="https://github.com/features/actions">Beta</a> access and will be generally available in November.</p>
 
 <h2 id="why-github-actions">Why GitHub Actions?</h2>
 
@@ -133,7 +133,7 @@ If premature optimization is the root of all evil, should procrastination until 
       <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Test</span>
         <span class="na">run</span><span class="pi">:</span> <span class="s">bundle exec rake</span>
 </code></pre></div>
-<p><a href="/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png"><img src="/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png" class="tb-Img tb-Img--responsive tb-Img--third" alt="Final Minitest Spec Rails GitHub Actions Pull Requst Feedback" /></a>A few highlights on why I landed on the specifics of this workflow above.</p>
+<p><a href="/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png"><img src="/assets/content/githubactions-part1/greener-37f000dd8772fe3cdb04c5320283b6f7a6d827c8a4296a367d4a8425519abf8a.png" class="tb-Img tb-Img--responsive tb-Img--third" alt="Final Minitest Spec Rails GitHub Actions Pull Request Feedback" /></a>A few highlights on why I landed on the specifics of this workflow above.</p>
 
 <h4 id="naming">Naming</h4>
 
@@ -162,11 +162,11 @@ If premature optimization is the root of all evil, should procrastination until 
 
 <h4 id="match-your-workflows-file-name-early">Match Your Workflow&#39;s File &amp; Name Early!</h4>
 
-<p><a href="/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png"><img src="/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png" class="tb-Img tb-Img--responsive tb-Img--third" alt="Final Minitest Spec Rails GitHub Actions Pull Requst Feedback" /></a>When I created my workflow using the &quot;Ruby&quot; example, I knew I wanted it to be called &quot;CI&quot;. However, I neglected to set the top level <code>name</code> property early on and even renamed it a few times. This means I had a few names tied to the <code>ci.yml</code> workflow file and I&#39;m guessing they will be forever burned into my repo&#39;s action link history. Oh well, I&#39;ll skeert more carefully on the next project.</p>
+<p><a href="/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png"><img src="/assets/content/githubactions-part1/pick-a-name-9043b5306864c99e9256383e8e618c7d2fcddf87a5ace6dd5863d01f3c8065da.png" class="tb-Img tb-Img--responsive tb-Img--third" alt="Final Minitest Spec Rails GitHub Actions Pull Request Feedback" /></a>When I created my workflow using the &quot;Ruby&quot; example, I knew I wanted it to be called &quot;CI&quot;. However, I neglected to set the top level <code>name</code> property early on and even renamed it a few times. This means I had a few names tied to the <code>ci.yml</code> workflow file and I&#39;m guessing they will be forever burned into my repo&#39;s action link history. Oh well, I&#39;ll skeert more carefully on the next project.</p>
 
 <h4 id="pull-request-usability">Pull Request Usability</h4>
 
-<p>One nice feature of TravisCI is that they make it easy to monitor a pull requests build state when new commits are pushed. For GitHub Actions, I found myself constantly watching a build fail, clicking back to my PR, and then finding the new build links agian. It would be nice if the build page detected a push to the same PR and navigated you to the new build automatically.</p>
+<p>One nice feature of TravisCI is that they make it easy to monitor a pull requests build state when new commits are pushed. For GitHub Actions, I found myself constantly watching a build fail, clicking back to my PR, and then finding the new build links again. It would be nice if the build page detected a push to the same PR and navigated you to the new build automatically.</p>
 
 <h4 id="environment-variables-contexts">Environment Variables &amp; Contexts</h4>
 
