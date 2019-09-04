@@ -368,6 +368,25 @@ These callbacks can be useful for chaining together batches in sequence or sendi
       </item>
     
       <item>
+        <title>Software engineer internship at Custom Ink</title>
+        <description>&lt;p&gt;Hi, my name is Guillermo Saavedra and I&amp;#39;m currently studying computer science at the University of Virginia. This summer, I got the chance to intern as a software engineer at Custom Ink.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;I joined the Hydra team, which was working on Online Stores and the project was just a few weeks away from launch. The smooth onboarding process allowed me to have my development environment set up on the first day and got to create my first pull request by the end of the second day! It was very exciting to be part of the Hydra team when Online Stores launched and very thrilled that my work was part of it. I was very happy with many of the opportunities that I was given to make real contributions and work on features that I knew were important to the future of the project. Picking up tickets, making pull requests, and deploying to production allowed me to get familiar with the development process very quickly and enabled me to contribute all on my own.&lt;/p&gt;
+
+&lt;p&gt;Every other Friday I took part in Imaginate, which is a whole day when engineers have the chance to explore any new technologies of their interest. This was a chance for me to complement what I was already learning throughout my internship and explore other new areas. In my case, I wanted to get more experience using AWS and would use Imaginate to play around with AWS Lambdas using Ruby. Other ways I was able to expand my learning was when LunchConf took place and I could enjoy my lunch while watching a tech-related conference on YouTube with fellow inkers.&lt;/p&gt;
+
+&lt;p&gt;Overall, my summer internship at Custom Ink was a success. It gave me the chance to learn, contribute, and grow as a software engineer. Thanks to everybody that I got the chance to work with!!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/internship_lunch-033d2e567072e89f0e9730e1883dcfb5e99ab7dcfb44474292b83893bab86163.png&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 11 Aug 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/08/11/internship_experience/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/08/11/internship_experience/</guid>
+      </item>
+    
+      <item>
         <title>Performing Digital Forensics on an AWS EBS Volume</title>
         <description>&lt;p&gt;As a fellow Ops Engineer on the WebOps team here at Custom Ink I try to make InfoSEC a high priority and exercise &amp;#39;best practices&amp;#39; when it comes to building out Infrastructure. However, as you&amp;#39;re probably aware, ugh... &amp;#39;stuff&amp;#39; happens!  😜 This post will be a relatively deep dive into a &lt;em&gt;fairly&lt;/em&gt; recent compromise we experienced and details on conducting a digital forensics analysis on an AWS EBS volume.    &lt;/p&gt;
 
