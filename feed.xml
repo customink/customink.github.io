@@ -7,6 +7,75 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Imaginate - The process of Imagining a better working environment</title>
+        <description>&lt;p&gt;How Custom Ink improves its technical stack and environment&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;technical-debt&quot;&gt;Technical Debt&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;#39;s be honest, every company and/or project is suffering from technical debt.
+Technology decisions that sounded great back when they were made now tend to slow us down because it may have not been the best approach.
+We&amp;#39;ve all been there and had to deal with the famous &amp;quot;legacy&amp;quot; application left by our predecessors.&lt;/p&gt;
+
+&lt;p&gt;Here at Custom Ink, the situation is no different. We have old software running that has been with us from the beginning.
+And sometimes this software poses a significant hurdle in making changes to parts of our technology stack that we rely on.
+Yet, we have the power and possibility to make changes and improvements to everything we use.&lt;/p&gt;
+
+&lt;h3 id=&quot;imaginate&quot;&gt;Imaginate&lt;/h3&gt;
+
+&lt;p&gt;Welcome to Imaginate. A process we run every other Friday across the company, where our Software Engineers are invited to work on projects and things they think will benefit the company and the teams.
+Ever wanted to try out that new gem? Test a library? Play with a feature, or even pick up a new programming language?
+Then Imaginate is the process for you!&lt;/p&gt;
+
+&lt;p&gt;Some of the things that have come out of our Imaginate process:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Rails upgrades for applications&lt;/li&gt;
+&lt;li&gt;Ruby upgrades for applications&lt;/li&gt;
+&lt;li&gt;AWS Lambda adoption for one-time-processing calls&lt;/li&gt;
+&lt;li&gt;Docker&lt;/li&gt;
+&lt;li&gt;Legacy code cleanup&lt;/li&gt;
+&lt;li&gt;AWS certification&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These are just the tip of the iceberg when it comes to the imagination of our Software Engineers.
+We actually have an in-house application where everyone can write their ideas to work on during Imaginate sessions, allowing people to &amp;quot;like it&amp;quot;, comment on it, or even propose to work together on the idea.&lt;/p&gt;
+
+&lt;h3 id=&quot;design-time&quot;&gt;Design Time&lt;/h3&gt;
+
+&lt;p&gt;Working on these ideas is one step. Sharing the fruits of that work is another.
+This is why we have &amp;quot;Design Time&amp;quot;, a weekly meeting run by the entire engineering team across the globe. During this meeting, people are invited to demonstrate some of the things they have been working on.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ve personally held demonstrations on how to migrate your application from Travis CI to CircleCI, how to upgrade a Ruby on Rails application, and the changes in the Rails Dirty API.
+Other people have done similar demonstrations of their work.
+The goal here is to share knowledge with the entire team, allowing people to take pride in the work they are doing and to help everyone move forward.&lt;/p&gt;
+
+&lt;h3 id=&quot;inkovate&quot;&gt;Inkovate&lt;/h3&gt;
+
+&lt;p&gt;This is personally my favourite event in the entire year.
+Inkovate is very similar to Imaginate, except we only do this twice a year, and each session usually runs for a few days.
+It&amp;#39;s also a great opportunity to meet up with people and travel to the Fairfax office if you&amp;#39;re remote.&lt;/p&gt;
+
+&lt;p&gt;The process is very similar to Imaginate, except the scope is simply way bigger. As are the ideas that usually come out of this event.
+To list a few of the amazing ideas we have seen last time:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A complete Virtual Reality application to train people to work in a &lt;a href=&quot;https://www.customink.com/ink/stores&quot;&gt;store&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Time-keys to make the entire check-in/check-out process for our internal printing facility easier.&lt;/li&gt;
+&lt;li&gt;A lightning talk about running and health.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We are a company that relies a lot on Open Source and the people involved to do what we do.
+And as a company we want to give back to those people as well. With the above, we aim at giving people the freedom to allow them to improve their day to day tools they are working with, as well as their processes.
+For happy people are productive people, and this benefits not only Custom Ink, but the people themselves! &lt;/p&gt;
+</description>
+        <pubDate>Mon, 09 Sep 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/09/09/imaginate/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/09/09/imaginate/</guid>
+      </item>
+    
+      <item>
         <title>Software engineer internship at Custom Ink</title>
         <description>&lt;p&gt;Hi, my name is Guillermo Saavedra and I&amp;#39;m currently studying computer science at the University of Virginia. This summer, I got the chance to intern as a software engineer at Custom Ink.&lt;/p&gt;
 
