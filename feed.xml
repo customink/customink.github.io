@@ -7,6 +7,45 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>How to Kill it at the College Career Fair - Software Engineers</title>
+        <description>&lt;p&gt;I’ve gone to a handful of career fairs as a college student hoping to land a summer internship or full time job, and just get my foot in the door to gain some experience. I was definitely thinking to myself - How am I going to stand out among hundreds of other CS kids? &lt;/p&gt;
+
+&lt;p&gt;I got to go back to my alma mater (UVA - wahoowa!) for the fall Engineering Career Fair a week ago and was on the other side of the table - talking to students and looking for promising software engineers who we think could really succeed here at Custom Ink. Having been on both sides, this is what I wish I had known as a college student: &lt;/p&gt;
+
+&lt;h5 id=&quot;1-wait-so-why-am-i-talking-to-you-again-do-your-research&quot;&gt;1. Wait, so why am I talking to you again? - Do your research!&lt;/h5&gt;
+
+&lt;p&gt;Go through the list of companies that are going to be there, make a list of which ones have software engineering openings available, and narrow that list down to which ones you are actually interested in. Hit those booths first (you can go around afterwards to collect cool swag). Do some research as to what the company does, and why you&amp;#39;re interested in working there, so when they ask, you aren&amp;#39;t put on the spot. You&amp;#39;re more likely to make a good impression if you show genuine interest in what we do as a company. &lt;/p&gt;
+
+&lt;h5 id=&quot;2-clearly-not-desperate-for-just-any-job-opportunity-know-your-pitch&quot;&gt;2. Clearly not desperate for just &lt;em&gt;any&lt;/em&gt; job opportunity - Know your pitch&lt;/h5&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Give a quick background of your major, skill set, whether you&amp;#39;re looking for a full time or internship position, and what you&amp;#39;re strengths and interests are in. This last bit is important - it really helps set up the rest of the conversation, so don&amp;#39;t skip it. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Be prepared to talk about side projects or past internship experiences. Talk about your contributions to the projects, and parts of the project that you actually had a hand in coding. We &lt;em&gt;will&lt;/em&gt; ask you specific technical questions about them to gauge your experience (and honestly, whether or not you really did contribute code to the project). At a minimum, we may ask about technology and frameworks you used, what kinds of APIs you consumed or built for the project, and other implementation or architecture questions specific to your project. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Talk about what you hope to gain out of your next internship experience. Don&amp;#39;t say anything along the lines of &amp;quot;I&amp;#39;m open to anything&amp;quot;. That doesn&amp;#39;t show initiative that you&amp;#39;re taking control of your career. Rather than limiting your options, telling us your general interest will actually help you get a role that&amp;#39;s best aligned to you and your goals. Do you want to do more AWS/DevOps stuff, data engineering, building front-end web apps, write backend APIs, mobile engineering, etc? Something like &amp;quot;I&amp;#39;m still exploring, but I&amp;#39;d love to work on or learn more about xyz&amp;quot; shows that you&amp;#39;re open to different opportunities, but you have enough experience and self awareness to know what you like and don&amp;#39;t like. &lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;3-its-about-the-marathon-not-the-sprint-even-though-swes-live-and-die-by-sprints-put-in-long-term-preparation&quot;&gt;3. It&amp;#39;s about the marathon, not the sprint (even though SWEs live and die by sprints...) - Put in long term preparation&lt;/h5&gt;
+
+&lt;p&gt;The engineering career fair is just the tip of the iceberg. It&amp;#39;s to get your foot in the door for the rest of the recruiting process, but underneath it all is work and preparation you have to put in throughout your college career. &lt;/p&gt;
+
+&lt;p&gt;Here&amp;#39;s the tough love you might need to hear about your CS classes - everyone takes the same classes. We know you&amp;#39;re probably a rock star at algorithms and data representation, and you&amp;#39;re going to build a really cool website for this other class you&amp;#39;re taking. But, we want to know whether software engineering and coding excites you enough to go out there and want to build things outside of your class assignments and group projects. &lt;/p&gt;
+
+&lt;p&gt;So outside of your core curriculum, do learn some javascript frameworks, learn how the web actually works, learn SQL, get an idea and build out a small web app all on your own from the ground up. Learn about HTTP requests and how to write APIs, pick a framework - Python + Django, Ruby on Rails, Node.js + Express.js, whatever you want, learn it and use it to build something. It&amp;#39;s easy to say, but hard to put in practice - but don&amp;#39;t limit yourself to classes, learn outside of them. There&amp;#39;s a whole other world of software engineering outside of learning how to reverse a linked list. Those are the things you can do in the long term so that you have what it takes to stand out as a candidate at your next career fair. &lt;/p&gt;
+
+&lt;p&gt;Hope this helps, and if you have any additional advice I missed, leave them in the comments below!&lt;/p&gt;
+
+&lt;p&gt;&lt;img class=&quot;center-img&quot; width=&quot;500&quot; src=/assets/content/career-fair/career-fair-uva-598ac96931b65efb06a59a322879ca1669a2ca031e0ad3493c3ccb892e0b4f6e.jpg /&gt;&lt;/p&gt;
+
+&lt;p&gt;To learn about what it&amp;#39;s like to intern with us at Custom Ink, take a look at the following post from our summer 2019 intern, Guillermo, on his experience &lt;a href=&quot;https://technology.customink.com/blog/2019/09/04/internship-experience/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#39;re interested in joining us, visit our &lt;a href=&quot;https://www.customink.com/about/jobs?p=jobs%2Fcareers&quot;&gt;jobs page&lt;/a&gt;! &lt;/p&gt;
+</description>
+        <pubDate>Fri, 20 Sep 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/09/20/how-to-kill-it-at-the-college-career-fair-software-engineers/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/09/20/how-to-kill-it-at-the-college-career-fair-software-engineers/</guid>
+      </item>
+    
+      <item>
         <title>Working at Custom Ink</title>
         <description>&lt;p&gt;Are you ready to level up your career in technology? We’re growing and need remarkable talent to support the innovation of world-class products centered around the lives of our customers.&lt;/p&gt;
 
