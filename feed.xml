@@ -7,6 +7,92 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>CodeCommitment Issues</title>
+        <description>&lt;p&gt;CodeCommit is an AWS service I have been wanting to explore for quite some time, and one of the 
+things that came out of that research was the title of this post. 💍&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;what-is-codecommit&quot;&gt;What is CodeCommit?&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/codecommit/&quot;&gt;CodeCommit&lt;/a&gt; is a part of the developer focused offerings AWS has and for my recent &lt;a href=&quot;https://technology.customink.com/blog/2019/09/09/imaginate/&quot;&gt;imaginate&lt;/a&gt; day,
+I got to play around with this service. Below I have some thoughts on my experience with it, and how you can use it too!&lt;/p&gt;
+
+&lt;h4 id=&quot;my-hopes-dreams&quot;&gt;My Hopes &amp;amp; Dreams&lt;/h4&gt;
+
+&lt;p&gt;I wanted to explore whether or not it would be worth it for Custom Ink to move from GitHub to CodeCommit,
+the quick answer is no, but that’s not to say it won’t be right for us in the future.&lt;/p&gt;
+
+&lt;p&gt;Let’s start with a few pros on the service…&lt;/p&gt;
+
+&lt;p&gt;Pluses:&lt;/p&gt;
+
+&lt;p&gt;➕ Permissions are integrated with IAM, so you can control who has permissions to sync to repos, etc. etc.&lt;/p&gt;
+
+&lt;p&gt;➕ Charged for storage so it encourages cleanup of branches and cruft when you are done.&lt;/p&gt;
+
+&lt;p&gt;➕ Inline editor is nicer than GitHub’s.&lt;/p&gt;
+
+&lt;p&gt;➕ CodeCommit is tied with IAM so once a user is separated, they no longer have access to the codebase.&lt;/p&gt;
+
+&lt;p&gt;➕ CodeCommit can be used as a backup!&lt;/p&gt;
+
+&lt;p&gt;➕ Git based, so no learning curve.&lt;/p&gt;
+
+&lt;p&gt;➕ AWS support tier that Custom Ink has is better than GitHub’s enterprise support in my experience.&lt;/p&gt;
+
+&lt;p&gt;The above is just a quick pro list for CodeCommit + Custom Ink. I have to say that when I have submitted a support request in the past with GitHub,
+ it has taken longer than I would have liked and that was disappointing. When I was playing around with CodeCommit,
+ I was able to set up a Lambda function and SNS topic to post when changes were made to the repo I set up,
+ that was a pretty neat feature and allowed me to have better alerting on changes in the repo. Additionally,
+ using CodeCommit as a backup I think is an easy and smart use of the tool, because your code is held outside
+ of whatever service you are using, and you get to learn more about AWS’s ecosystem!&lt;/p&gt;
+
+&lt;p&gt;Now onto a few minuses...&lt;/p&gt;
+
+&lt;p&gt;Minuses:&lt;/p&gt;
+
+&lt;p&gt;➖ Repos are specific to AWS region&lt;/p&gt;
+
+&lt;p&gt;➖ This is problematic imo if you have DR/multi-region setup&lt;/p&gt;
+
+&lt;p&gt;➖ General UI issues:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Commit messaging wasn’t obvious to me when pushing up, and I rely on commit messaging pretty heavily to get a quick idea of what change was promoted&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;➖ Charged for storage, so if folks don’t delete old branches and repos that are no longer used, the cost can add up&lt;/p&gt;
+
+&lt;p&gt;➖ No dashboard/notification screen with a list of the whole org like with our GitHub account&lt;/p&gt;
+
+&lt;p&gt;➖ Initial of permissions/credentials for the git repo&lt;/p&gt;
+
+&lt;p&gt;My biggest pain point was the general UI. It took some time to get used to the display,
+if you are just starting out and are already in AWS, I would encourage you to look into CodeCommit before
+looking at other services like GitHub or GitLab. The reason being is that you are already in the AWS system
+and it makes management of services easier.&lt;/p&gt;
+
+&lt;p&gt;In the future, I’d love to continue exploring AWS’s code* services and continue learning more about their
+ecosystem and exploring if there are better fits for Custom Ink. If you’d like to explore CodeCommit, I definitely encourage you do so!
+I recommend you sign up for an AWS account, with CodeCommit you do pay for storage, so things won’t fall under free tier,
+but it helps to play around with it to truly understand the service and prepare you for any sort of &lt;a href=&quot;https://aws.amazon.com/training/path-developing/&quot;&gt;developer&lt;/a&gt; exams if
+you’d like to add that on your resume!&lt;/p&gt;
+
+&lt;h4 id=&quot;interested-in-learning-more-about-aws-services&quot;&gt;Interested in learning more about AWS services?&lt;/h4&gt;
+
+&lt;p&gt;We’re hiring! Visit us at &lt;a href=&quot;https://www.customink.com/jobs&quot;&gt;customink.com/jobs&lt;/a&gt;&lt;/p&gt;
+
+&lt;h6 id=&quot;about-the-author&quot;&gt;About the author&lt;/h6&gt;
+
+&lt;p&gt;Katherine Cisneros is an Operations Engineer at Custom Ink and has been an Inker since March 2015.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 26 Sep 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/09/26/codecommitment-issues/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/09/26/codecommitment-issues/</guid>
+      </item>
+    
+      <item>
         <title>How to Kill it at the College Career Fair - Software Engineers</title>
         <description>&lt;p&gt;I’ve gone to a handful of career fairs as a college student hoping to land a summer internship or full time job, and just get my foot in the door to gain some experience. I was definitely thinking to myself - How am I going to stand out among hundreds of other CS kids? &lt;/p&gt;
 
