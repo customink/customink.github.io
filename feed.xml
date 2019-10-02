@@ -59,7 +59,9 @@ the quick answer is no, but that’s not to say it won’t be right for us in th
 
 &lt;p&gt;➕ Permissions are integrated with IAM, so you can control who has permissions to sync to repos, etc. etc.&lt;/p&gt;
 
-&lt;p&gt;➕ Charged for storage so it encourages cleanup of branches and cruft when you are done.&lt;/p&gt;
+&lt;p&gt;➕ Charged for storage so it encourages cleanup of stale branches.&lt;/p&gt;
+
+&lt;p&gt;➕ Cruft can be cleaned up since you&amp;#39;re starting from scratch in a new version control platform.&lt;/p&gt;
 
 &lt;p&gt;➕ Inline editor is nicer than GitHub’s.&lt;/p&gt;
 
@@ -82,21 +84,23 @@ the quick answer is no, but that’s not to say it won’t be right for us in th
 
 &lt;p&gt;Minuses:&lt;/p&gt;
 
-&lt;p&gt;➖ Repos are specific to AWS region&lt;/p&gt;
+&lt;p&gt;➖ Repos are specific to AWS region.&lt;/p&gt;
 
-&lt;p&gt;➖ This is problematic imo if you have DR/multi-region setup&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This is problematic in my opinion if you have DR/multi-region setup.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;➖ General UI issues:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Commit messaging wasn’t obvious to me when pushing up, and I rely on commit messaging pretty heavily to get a quick idea of what change was promoted&lt;/li&gt;
+&lt;li&gt;Commit messaging wasn’t obvious to me when pushing up, and I rely on commit messaging pretty heavily to get a quick idea of what change was promoted.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;➖ Charged for storage, so if folks don’t delete old branches and repos that are no longer used, the cost can add up&lt;/p&gt;
+&lt;p&gt;➖ Charged for storage &amp;amp; other &lt;a href=&quot;https://aws.amazon.com/codecommit/pricing/&quot;&gt;miscellaneous&lt;/a&gt; Git activities! So if folks don’t delete stale branches that will not be merged, and repos that are no longer used, the costs can add up.&lt;/p&gt;
 
-&lt;p&gt;➖ No dashboard/notification screen with a list of the whole org like with our GitHub account&lt;/p&gt;
+&lt;p&gt;➖ No dashboard/notification screen with a list of the whole org like with our GitHub account.&lt;/p&gt;
 
-&lt;p&gt;➖ Initial of permissions/credentials for the git repo&lt;/p&gt;
+&lt;p&gt;➖ Initial of permissions/credentials for the git repo.&lt;/p&gt;
 
 &lt;p&gt;My biggest pain point was the general UI. It took some time to get used to the display,
 if you are just starting out and are already in AWS, I would encourage you to look into CodeCommit before
