@@ -7,6 +7,36 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Full-Stack to Functions &amp; Back Again Talk</title>
+        <description>&lt;p&gt;We love &lt;a href=&quot;https://github.com/customink&quot;&gt;open source&lt;/a&gt;. We build on open source technology and we strive to give back to the community. One of our Engineers - &lt;a href=&quot;/authors/ken-collins/&quot;&gt;Ken Collins&lt;/a&gt; - discovered a creative way to map a Lambda request to a Rack request for a Full-Stack Rails application. We open sourced the &lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;Lamby project&lt;/a&gt; to provide a minimal amount of code to allow your Rails project to respond to incoming Lambda events.&lt;/p&gt;
+
+&lt;p&gt;Ken shared our story of monoliths to microservices to Lamby at the &lt;a href=&quot;https://www.meetup.com/AWS-Washington-DC-Meet-Up/&quot;&gt;AWS Washington DC Meet Up&lt;/a&gt; in August and we recorded this talk because it captures our technology journey over the years.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/ktDXVn3EPfY&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;description&quot;&gt;Description&lt;/h2&gt;
+
+&lt;p&gt;Learn how thinking big with AWS Lambda and moving to Full-Stack Serverless using Web Application Frameworks could help your company&amp;#39;s cloud adoption &amp;amp; innovation cycles. This is &lt;a href=&quot;https://www.customink.com/&quot;&gt;Custom Ink&amp;#39;s&lt;/a&gt; story of our lift &amp;amp; shift cloud migration to cloud-native using &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby&lt;/a&gt;, a Rack/HTTP adapter for API Gateway or Application Load Balancers, as one of our tools to help deliver AWS Well-Architected solutions in a versatile programming environment that uses many languages.&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/lamby&quot;&gt;Lamby project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://technology.customink.com/blog/2019/03/13/rails-on-aws-lambda-with-sam/&quot;&gt;Rails on AWS Lambda With Sam&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;want-to-work-on-cool-technologies-with-us&quot;&gt;Want to work on cool technologies with us?&lt;/h3&gt;
+
+&lt;p&gt;We’re hiring! Visit us at &lt;a href=&quot;https://www.customink.com/jobs&quot;&gt;customink.com/jobs&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 01 Oct 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/10/01/full-stack-to-functions-&-back-again-talk/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/10/01/full-stack-to-functions-&-back-again-talk/</guid>
+      </item>
+    
+      <item>
         <title>CodeCommitment Issues</title>
         <description>&lt;p&gt;CodeCommit is an AWS service I have been wanting to explore for quite some time, and one of the 
 things that came out of that research was the title of this post. 💍&lt;/p&gt;
@@ -29,9 +59,7 @@ the quick answer is no, but that’s not to say it won’t be right for us in th
 
 &lt;p&gt;➕ Permissions are integrated with IAM, so you can control who has permissions to sync to repos, etc. etc.&lt;/p&gt;
 
-&lt;p&gt;➕ Charged for storage so it encourages cleanup of stale branches.&lt;/p&gt;
-
-&lt;p&gt;➕ Cruft can be cleaned up since you&amp;#39;re starting from scratch in a new version control platform.&lt;/p&gt;
+&lt;p&gt;➕ Charged for storage so it encourages cleanup of branches and cruft when you are done.&lt;/p&gt;
 
 &lt;p&gt;➕ Inline editor is nicer than GitHub’s.&lt;/p&gt;
 
@@ -54,23 +82,21 @@ the quick answer is no, but that’s not to say it won’t be right for us in th
 
 &lt;p&gt;Minuses:&lt;/p&gt;
 
-&lt;p&gt;➖ Repos are specific to AWS region.&lt;/p&gt;
+&lt;p&gt;➖ Repos are specific to AWS region&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;This is problematic in my opinion if you have DR/multi-region setup.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;➖ This is problematic imo if you have DR/multi-region setup&lt;/p&gt;
 
 &lt;p&gt;➖ General UI issues:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Commit messaging wasn’t obvious to me when pushing up, and I rely on commit messaging pretty heavily to get a quick idea of what change was promoted.&lt;/li&gt;
+&lt;li&gt;Commit messaging wasn’t obvious to me when pushing up, and I rely on commit messaging pretty heavily to get a quick idea of what change was promoted&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;➖ Charged for storage &amp;amp; other &lt;a href=&quot;https://aws.amazon.com/codecommit/pricing/&quot;&gt;miscellaneous&lt;/a&gt; Git activities! So if folks don’t delete stale branches that will not be merged, and repos that are no longer used, the costs can add up.&lt;/p&gt;
+&lt;p&gt;➖ Charged for storage, so if folks don’t delete old branches and repos that are no longer used, the cost can add up&lt;/p&gt;
 
-&lt;p&gt;➖ No dashboard/notification screen with a list of the whole org like with our GitHub account.&lt;/p&gt;
+&lt;p&gt;➖ No dashboard/notification screen with a list of the whole org like with our GitHub account&lt;/p&gt;
 
-&lt;p&gt;➖ Initial of permissions/credentials for the git repo.&lt;/p&gt;
+&lt;p&gt;➖ Initial of permissions/credentials for the git repo&lt;/p&gt;
 
 &lt;p&gt;My biggest pain point was the general UI. It took some time to get used to the display,
 if you are just starting out and are already in AWS, I would encourage you to look into CodeCommit before
