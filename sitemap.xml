@@ -477,6 +477,10 @@
 <lastmod>2019-10-01T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>/blog/2019/10/05/building-a-cloudfront-cookie-dashboard-using-aws-lambda-at-edge-kinesis-and-quicksight/</loc>
+<lastmod>2019-10-05T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>/team/</loc>
 </url>
 <url>
@@ -622,5 +626,8 @@
 </url>
 <url>
 <loc>/page17/</loc>
+</url>
+<url>
+<loc>/page18/</loc>
 </url>
 </urlset>
