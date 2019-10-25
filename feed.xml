@@ -7,6 +7,43 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>What Wappens When Engineers Participate in a Halloween Costume Contest</title>
+        <description>&lt;p&gt;When the weather cools down, Custom Ink rings in fall with donuts, cider and... an office wide Halloween costume contest. Our Tech Platform team definitely doesn&amp;#39;t take this opportunity for creativity and competition lightly! In the spirit of Halloween, here&amp;#39;s a look back on some of the best group costumes our group has put together: &lt;/p&gt;
+
+&lt;h4 id=&quot;command-center-irl&quot;&gt;Command Center IRL&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/halloween2019/rangers-bf22fe767f867ef1d11f0ad125dfa4122f4148817414f2a2cbf223042c15a540.png class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot;/&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;somewhere-in-never-land&quot;&gt;Somewhere in Never Land&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/halloween2019/hook-10bda45b0e0410215480abebf9b77b2df5e48b5ec980f56f403b9440820245e5.jpg class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot;/&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;where-is-marios-luigi&quot;&gt;Where is Mario&amp;#39;s Luigi?&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/halloween2019/nintendo-d5baf96677e014c8f748808fcdca8b7ad0b7083d8008a3672feb1eac8f7c3406.jpg class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;you-are-a-toy&quot;&gt;You... are... a... toy!&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/halloween2019/toystory-5e2af23d4248e5392825cad05dd46a2a24d05ef8a19d12064c727a9f5e82e1df.png class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;2018-group-spot-the-inker&quot;&gt;2018 group - spot the Inker!&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/halloween2019/2018-c68a5323e7fecabec9877d35dc70d52ae4212f959a3d2b0261d4488e47947bac.png class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;saving-the-best-for-last-heard-the-90s-are-coming-back&quot;&gt;Saving the best for last - heard the 90s are coming back!&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/halloween2019/90s-af4ddd64958b62b7d361eb6bf8e9abbf2ab486280a4f0c14c5bb07dacada2360.png class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Big thanks to Andrew and Amy for supplying the shots! Hope you got a laugh out of this, and leave a comment on ideas we can use for this year! &lt;/p&gt;
+
+&lt;p&gt;Can&amp;#39;t get enough? Here&amp;#39;s some more throwback costumes from &lt;a href=&quot;https://technology.customink.com/blog/2016/11/01/a-spooky-ink-o-ween/&quot;&gt;2016&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 25 Oct 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/10/25/what-wappens-when-engineers-participate-in-a-halloween-costume-contest/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/10/25/what-wappens-when-engineers-participate-in-a-halloween-costume-contest/</guid>
+      </item>
+    
+      <item>
         <title>Building a CloudFront Cookie Dashboard</title>
         <description>&lt;h3&gt;Using AWS Lambda@Edge, Kinesis, &amp;amp; QuickSight.&lt;/h3&gt;
 
