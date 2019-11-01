@@ -7,6 +7,70 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Tapping into Logs</title>
+        <description>&lt;p&gt;In today’s world of cloud-hosted service-oriented architectures, infrastructures are becoming increasingly complex and dynamic. Companies need a way to tell the full story of how their systems are behaving.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Managing logs and making them discoverable for an infrastructure is not a trivial task. Sometimes the effort of setting up logging solutions outweighs the benefits. Sumo Logic is one of the many log management platforms that gives organizations enhanced operational insight into their systems by leveraging log data.&lt;/p&gt;
+
+&lt;p&gt;We use their tools to deep dive into service outages and diagnose problems more efficiently. We can wire up Sumo Logic to our whole infrastructure and query very specific information across a large set of logs. While debugging, it&amp;#39;s useful to track down an unhandled error message that only shows up in the logs of a specific VM in a production environment. Another benefit is being able to track the behavior of an application without maintaining a new database table.&lt;/p&gt;
+
+&lt;p&gt;There are several logging solutions out there with different limitations and pricing tiers. Most of them solve the same type of problems. Please do not consider this a marketing plug for Sumo Logic (who by the way, have been awesome to us). Hopefully you can take away some capabilities that a logging solution could unlock for your organization.&lt;/p&gt;
+
+&lt;p&gt;One of the main uses of a log management system is to take unformatted data and normalize it into a report. We can achieve this in Sumo Logic by logging rows with a distinct pattern that we can look for when trying to extract this data. This pattern can be some unique string, or a top level property of a JSON object. We will look at extracting information with the latter.&lt;/p&gt;
+
+&lt;p&gt;Let’s say our logs have JSON objects that look like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;{
+  &quot;log_this_user&quot;:{
+    &quot;guid&quot;: &quot;ada9fe4c-fbb5-4eec-b665-9cbfdd72e58b&quot;,
+    &quot;isActive&quot;: true,
+    &quot;age&quot;: 39,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Sue Washington&quot;
+  }
+}
+{
+  &quot;log_this_user&quot;:{
+    &quot;guid&quot;: &quot;447634c8-59b4-4ea1-8554-60595d83c4c6&quot;,
+    &quot;isActive&quot;: true,
+    &quot;age&quot;: 26,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Rosemary Dotson&quot;
+  }
+}
+{
+  &quot;log_this_user&quot;:{
+    &quot;guid&quot;: &quot;af66cf66-558c-44fa-91a8-77576071d173&quot;,
+    &quot;isActive&quot;: true,
+    &quot;age&quot;: 31,
+    &quot;eyeColor&quot;: &quot;blue&quot;,
+    &quot;name&quot;: &quot;Pitts Greer&quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We want to capture the following properties: &lt;code&gt;guid&lt;/code&gt;, &lt;code&gt;isActive&lt;/code&gt;, &lt;code&gt;age&lt;/code&gt;, &lt;code&gt;eyeColor&lt;/code&gt;, and &lt;code&gt;name&lt;/code&gt;. We also know that these logs only come from &lt;code&gt;user_service&lt;/code&gt; servers. Our query in Sumo Logic would look something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/tapping-into-logs/sumo-logic-query-6423fdf74608a34b5a7a383036751091c20a7a0365ac4cb2a35de1e17d8e07f2.png class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First we search for any messages that contain the string ‘log_this_user’ within the user_service’s logs.&lt;/p&gt;
+
+&lt;p&gt;We are then pulling out the inner json object using regex into a field called ‘user_row’. Multi allows us to parse multiple occurrences of { “log_this_user”:{...}} within one message.&lt;/p&gt;
+
+&lt;p&gt;We then define each field we want to extract from the parsed JSON&lt;/p&gt;
+
+&lt;p&gt;The result messages would look something like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/tapping-into-logs/sumo-logic-report-568740550d282d0071e0059f0f8ef72e13be0c89b5d4939094f9b80eb8fb3cc2.png class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There are several other ways that we can leverage log management platforms. Hopefully this example gives you an idea about some basic capabilities and prompts you to dive deeper into what these products have to offer.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 01 Nov 2019 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2019/11/01/tapping-into-logs/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/11/01/tapping-into-logs/</guid>
+      </item>
+    
+      <item>
         <title>What Happens When Engineers Participate in a Halloween Costume Contest</title>
         <description>&lt;p&gt;When the weather cools down, Custom Ink rings in fall with donuts, cider and... an office wide Halloween costume contest. Our Tech Platform team definitely doesn&amp;#39;t take this opportunity for creativity and competition lightly! In the spirit of Halloween, here&amp;#39;s a look back on some of the best group costumes our group has put together: &lt;/p&gt;
 
