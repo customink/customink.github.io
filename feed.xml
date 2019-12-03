@@ -9,8 +9,8 @@
       <item>
         <title>Rebase into Ops Engineering</title>
         <description>&lt;p&gt;Changing careers can be exciting and intimidating at the same time, especially when you are learning a new skill set.
-This is a brief introduction around my journey from Sales Representative at Custom Ink to Operations Engineer and the
-resources I used to transition into Ops Engineering.&lt;/p&gt;
+This is a brief introduction around my journey from Sales Representative at Custom Ink to Operations Engineer and the 
+resources I used to transition into Ops Engineering. &lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -19,10 +19,10 @@ resources I used to transition into Ops Engineering.&lt;/p&gt;
 &lt;p&gt;Around June of 2016 I applied to an internal internship program, called an Inkternship, with the WebOps team. The purpose of
 program at the time was to get some exposure to another part of the business that you do not regularly interact with in your day
 to day. It sounded like a lot of fun when I read the description, and I was excited to see how that team affected my role in Sales.
-I had to interview with the WebOps manager as well as the Director of Infrastructure and I vividly remember thinking to myself, &amp;quot;they
-won&amp;#39;t pick me.&amp;quot; With Inkternships, there is an understanding that folks will have little to no knowledge around that particular part of
+I had to interview with the WebOps manager as well as the Director of Infrastructure and I vividly remember thinking to myself, &amp;quot;they 
+won&amp;#39;t pick me.&amp;quot; With Inkternships, there is an understanding that folks will have little to no knowledge around that particular part of 
 the business...but the interview was intimidating, at least for me. When the Director of Infrastructure asked me if I knew what AWS was,
-I said no...when he asked if I knew what Chef was, I said no...I had never touched a terminal before and was completely new to this. But,
+I said no...when he asked if I knew what Chef was, I said no...I had never touched a terminal before and was completely new to this. But, 
 I emphasized that I was willing to learn and hoped to have a greater understanding of their work and how it affected my work. Long story short,
 the Inkternship opportunity presented itself to me and I was with the WebOps team from mid June 2016 - September 2016 and I loved it!&lt;/p&gt;
 
@@ -32,55 +32,55 @@ the Inkternship opportunity presented itself to me and I was with the WebOps tea
 with the basics of just learning a few of the tools listed below:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://linuxsurvival.com/&quot;&gt;Linux&lt;/a&gt; - To understand what I would be doing in my day to day, I had to
+&lt;li&gt;&lt;a href=&quot;https://linuxsurvival.com/&quot;&gt;Linux&lt;/a&gt; - To understand what I would be doing in my day to day, I had to 
 learn some Linux fundamentals, and it was exciting! Having a good working understanding of Linux commands
 is important for any Ops Engineer but also Software Engineering!&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://try.github.io/&quot;&gt;Git/GitHub&lt;/a&gt; - Once I had a rudimentary understanding of Linux, I pivoted to
-learning Git and GitHub since this is really where the work happens. Our team has a Chef repository where we
+&lt;li&gt;&lt;a href=&quot;https://try.github.io/&quot;&gt;Git/GitHub&lt;/a&gt; - Once I had a rudimentary understanding of Linux, I pivoted to 
+learning Git and GitHub since this is really where the work happens. Our team has a Chef repository where we 
 collaborated on cookbooks and other parts that ran our infrastructure. I think in the three months of being on the Ops team
-as an Inktern, I had 3 busted repos and cloned a new one...this will happen to you too, don&amp;#39;t be afraid! It&amp;#39;s ok, just don&amp;#39;t
+as an Inktern, I had 3 busted repos and cloned a new one...this will happen to you too, don&amp;#39;t be afraid! It&amp;#39;s ok, just don&amp;#39;t 
 commit to master....work on branches!!&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://learn.chef.io/#/&quot;&gt;Chef&lt;/a&gt; - Back in 2016, the team heavily relied on Chef and I had to learn what this did. I have
-to say the Chef documentation is probably some of the best I&amp;#39;ve seen in my short time working in tech.&lt;/li&gt;
+to say the Chef documentation is probably some of the best I&amp;#39;ve seen in my short time working in tech. &lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://learnrubythehardway.org/book/&quot;&gt;Ruby&lt;/a&gt; - This was the most intimidating part of my three month period...learning a language!
-In college, I took one class of Java, and decided that I want nothing to do with programming so I ended up switching majors to
-Foreign Languages. Looking back, I know Java was the wrong first language for me to delve into.
+In college, I took one class of Java, and decided that I want nothing to do with programming so I ended up switching majors to 
+Foreign Languages. Looking back, I know Java was the wrong first language for me to delve into. 
 This book helped me understand the fundamentals of Ruby and is a great first resource
-in my opinion for anyone interested in learning to code. It&amp;#39;s okay to be intimidated, I certainly was, but I know you can do it!&lt;/li&gt;
+in my opinion for anyone interested in learning to code. It&amp;#39;s okay to be intimidated, I certainly was, but I know you can do it! &lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/getting-started/&quot;&gt;AWS&lt;/a&gt; - Since Custom Ink is 99.999999999% (this is an S3 joke)
 in AWS, I had to learn what the cloud was. Before I  was an Inktern, I had no idea what a server was, or what a cloud was.
-I know they existed, but that was the extent of my knowledge. AWS provides decent starting points for anyone
-wanting to learn about their services. If you are a developer who wants to
-code for the cloud, they have a path for you...if you&amp;#39;re more of a traditional sysadmin and
+I know they existed, but that was the extent of my knowledge. AWS provides decent starting points for anyone 
+wanting to learn about their services. If you are a developer who wants to 
+code for the cloud, they have a path for you...if you&amp;#39;re more of a traditional sysadmin and 
 are looking to migrate to the cloud, they have a path for you!
 AWS has a robust product offering and their documentation helps with getting your feet wet and understanding
 all that they offer. I highly recommend studying and taking one of their certification exams because
-that really helps solidify the information. I received the Solutions Architect certification in
+that really helps solidify the information. I received the Solutions Architect certification in 
 January 2019 and it helped me understand networking better since admittedly that was a weak point of mine.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;git-commit&quot;&gt;Git Commit&lt;/h3&gt;
 
-&lt;p&gt;So, how did I go from Inktern to full time Operations Engineer by December 2016? I studied...a lot and I asked
-a lot of questions. I&amp;#39;m fortunate enough to work at a company where asking questions is encouraged and I
+&lt;p&gt;So, how did I go from Inktern to full time Operations Engineer by December 2016? I studied...a lot and I asked 
+a lot of questions. I&amp;#39;m fortunate enough to work at a company where asking questions is encouraged and I 
 never felt less than my peers for asking &amp;quot;simple&amp;quot; questions. I had a fantastic mentor at the time and he helped me navigate the land of WebOps.
-It was overwhelming as to the amount of information out there for being an Operations Engineer
-so I compartmentalized the topics I had to learn, and only focused on that until I felt comfortable
-enough to move onto the next one. I started with Linux, it seemed the easiest for me to wrap
-my head around and it was a foundational building block for the rest. Every day after work I would go home and pick up where I left off
-because this was interesting and fun to me. I enjoyed learning more about how the site remained available
-and the impact that I had on the rest of the company.&lt;/p&gt;
+It was overwhelming as to the amount of information out there for being an Operations Engineer 
+so I compartmentalized the topics I had to learn, and only focused on that until I felt comfortable 
+enough to move onto the next one. I started with Linux, it seemed the easiest for me to wrap 
+my head around and it was a foundational building block for the rest. Every day after work I would go home and pick up where I left off 
+because this was interesting and fun to me. I enjoyed learning more about how the site remained available 
+and the impact that I had on the rest of the company. &lt;/p&gt;
 
 &lt;h3 id=&quot;git-push&quot;&gt;Git Push&lt;/h3&gt;
 
-&lt;p&gt;Three years in, I have to say this is the most exciting career path I have ever had. It was a lot of time spent
-learning the tools that I use and I am continuing to learn every day. We are currently migrating our
-traditional infrastructure from EC2 to Kubernetes and new challenges present themselves all the
-time along with having to learn a new thing. If you like to learn new things, consider a career in
-tech and do not get discouraged!! You will not get it right the first time, if you do, awesome!
-But chances are you won&amp;#39;t, and you have to be okay with that. Continue to push through the
-hard parts because this is rewarding work and it&amp;#39;s awesome to see your impact at scale like on
-a website accessed by millions!&lt;/p&gt;
+&lt;p&gt;Three years in, I have to say this is the most exciting career path I have ever had. It was a lot of time spent 
+learning the tools that I use and I am continuing to learn every day. We are currently migrating our 
+traditional infrastructure from EC2 to Kubernetes and new challenges present themselves all the 
+time along with having to learn a new thing. If you like to learn new things, consider a career in 
+tech and do not get discouraged!! You will not get it right the first time, if you do, awesome! 
+But chances are you won&amp;#39;t, and you have to be okay with that. Continue to push through the 
+hard parts because this is rewarding work and it&amp;#39;s awesome to see your impact at scale like on 
+a website accessed by millions! &lt;/p&gt;
 
 &lt;h4 id=&quot;interested-in-being-an-operations-engineer&quot;&gt;Interested in being an Operations Engineer?&lt;/h4&gt;
 
@@ -1043,7 +1043,7 @@ For happy people are productive people, and this benefits not only Custom Ink, b
 
 &lt;p&gt;Thanks for taking the time to read my post today on GitHub Actions. Got a fever for more continuous delivery examples? Stay tuned to &lt;a href=&quot;https://twitter.com/custominktech&quot;&gt;@CustomInkTech&lt;/a&gt; on Twitter for updates. Next week I&amp;#39;ll be writing about how to use GitHub Actions to deploy your Rails applications to AWS Lambda using &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;additional-resources&quot;&gt;Additional Resources&lt;/h2&gt;
+&lt;h2 id=&quot;additional-resources&quot;&gt;Additional Resources 📚&lt;/h2&gt;
 
 &lt;p&gt;New to GitHub Actions? I found these resoruces super helpful. You will almost certainly want to bookmark the developer documentation!&lt;/p&gt;
 
