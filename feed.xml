@@ -7,6 +7,65 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>NationJS</title>
+        <description>&lt;p&gt;This previous week I had the privilege of attending the Nation Frontrunner’s React JavaScript conference (&lt;a href=&quot;http://nationjs.com/main&quot;&gt;http://nationjs.com/main&lt;/a&gt;). This is a ReactJS and Javascript web stack conference and one of the bigger events of this type in the Mid-Atlantic region. Custom Ink served as one of the three main sponsors to the event and were graciously given extra tickets for employees to attend and gain important knowledge in this field of technology. This year’s event was held in Washington DC at the Burke theater in the Navy Memorial Theater and included a slew of information and informative speakers.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/JSConferences/NationJS-booth-min-0deef83b4b3938ee6c5976ed45f4ef72af0831a44501f7a514d2a20135d932c3.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot;/&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;I come from a professional background mostly in mobile technologies including native iOS and Android development. I have also touched web development in previous projects but haven&amp;#39;t worked on a web stack much professionally (outside of internships). However, I do have over a year of work with React Native including javascript. So although I wasn&amp;#39;t completely new to these technologies and ideas, I found them easy to follow and I learned a lot. &lt;/p&gt;
+
+&lt;p&gt;The event covered a range of topics but kept a moderate complexity to the talks. The speakers explored the technologies used in development and also the applications in modern day. After finding my way into the visitor center (after walking around the block twice), the day was fittingly started by Ben Ilegbodu, a principal engineer at Stitch Fix web platforms. For his talk during the beginning of the day, Ben walked through some of the most prevalent technologies within ReactJS. He goes on to explain the importance of each part of the development process, and the pros and cons for each design choice with technologies.&lt;/p&gt;
+
+&lt;h3&gt;Overview of JS and React Technologies&lt;/h3&gt;
+
+&lt;p&gt;Ben recommended through each part of the process the following technologies:&lt;/p&gt;
+
+&lt;h4&gt;Styling&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://emotion.sh/docs/introduction&quot;&gt;Emotion&lt;/a&gt; is Ben’s recommendation. For beginners, he also suggests starting with component css, then moving into more eloquent styling.&lt;/p&gt;
+
+&lt;h4&gt;Single Page Applications&lt;/h4&gt;
+
+&lt;p&gt;This is composed of data fetching and routing (keeping your UI in sync with the URL). Ben recommended &lt;a href=&quot;https://reach.tech/router&quot;&gt;Reach Router&lt;/a&gt;. Data fetching he said can be done in many ways, but the easiest ways include regular Fetch API, Axios Libraries, and JQuery GET. &lt;/p&gt;
+
+&lt;h4&gt;Forms and Form State Management - A way to implement complex form validity &lt;/h4&gt;
+
+&lt;p&gt;Options are &lt;a href=&quot;https://final-form.org/&quot;&gt;Final Form&lt;/a&gt;, &lt;a href=&quot;https://jaredpalmer.com/formik/&quot;&gt;Formik&lt;/a&gt;, and Redux Form. Final form was his recommendation.&lt;/p&gt;
+
+&lt;h4&gt;Testing&lt;/h4&gt;
+
+&lt;p&gt;Options include &lt;a href=&quot;https://www.cypress.io/&quot;&gt;Cypress&lt;/a&gt;, &lt;a href=&quot;https://airbnb.io/enzyme/&quot;&gt;Enzyme&lt;/a&gt;, and React Native Testing. React Native Testing was recommended for general customers. &lt;/p&gt;
+
+&lt;h4&gt;State managers&lt;/h4&gt;
+
+&lt;p&gt;Using Hooks + Context, &lt;a href=&quot;https://mobx.js.org/README.html&quot;&gt;MobX&lt;/a&gt;, &lt;a href=&quot;https://redux.js.org/&quot;&gt;Redux&lt;/a&gt;, &lt;a href=&quot;https://xstate.js.org/&quot;&gt;XState&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4&gt;Server Side Rendering&lt;/h4&gt;
+
+&lt;p&gt;This was an interesting topic because he discussed how it was also used in determining the performance of your application. Performance also impacts Search Engine Optimization (SEO) since it is a key indicator. It also has an effect on Social Media Optimization (SMO), since sharing links via Slack and Twitter and having the preview counts SSR. Options include &lt;a href=&quot;https://www.gatsbyjs.org/docs/ssr-apis/&quot;&gt;Gatsby&lt;/a&gt;, &lt;a href=&quot;https://nextjs.org/&quot;&gt;Next.js&lt;/a&gt;, Node, and &lt;a href=&quot;https://github.com/jaredpalmer/razzle&quot;&gt;Razzle&lt;/a&gt;. Next.js was his recommendation. &lt;/p&gt;
+
+&lt;h3&gt;UI Component Libraries&lt;/h3&gt;
+
+&lt;p&gt;The day continued with Kathryn Nantz, a designer turned developer. She argued that UI designs now lack consistency, and it has been a rush to create more and more designs instead of adhering to basic use principles. She mentions that when the UI is complicated, users cannot learn and have trouble using your systems. Simplifying your UI libraries then can make life easier for your developers as well as users too.&lt;/p&gt;
+
+&lt;p&gt;Kathryn used &lt;a href=&quot;https://storybook.js.org/&quot;&gt;StoryBook&lt;/a&gt; (a tool for developing UI components) in tandem with GreenSock, AwesomeFont, Animate.css, Rollup.js, and some regular css3. She recommends keeping the component library to about eight to ten separate components all together, and create new components by combining existing ones. Usually, she says each component has a primary, secondary, and small versions of themselves (think of buttons). The primary goal is to keep consistency while making development easier. Then, gathering feedback and understanding context while growing and removing components over time helps your library evolve. Plus, building in accessibility to the components in the start helps prevent a headache of adding them later!&lt;/p&gt;
+
+&lt;h3&gt;JS Applications Demonstrated&lt;/h3&gt;
+
+&lt;p&gt;The rest of the day consisted of multiple other talks which were essentially code walk-throughs, including a Redux walk-through (use the React Tool Kit), React Testing, and Next.js. Each were helpful in understanding basic usage. Multiple speakers explored their use cases for javascript, including cooperation in online map making as well as a full hydroponic system for growing cannabis. During these talks, the speakers showed how they can make rich interfaces and quick functionality with javascript and React. One speaker spoke on using Brain.js, a machine learning library which can be very easily integrated to start a neural network to make decisions.&lt;/p&gt;
+
+&lt;p&gt;The day ended with the emcee Nir Kaufman, who was a developer himself. An eccentric man throughout the day, Nir joked with the speakers and played games with the attendees. Nir is an avid electric music listener and producer, so naturally he taught the room in a live coding demonstration how to use Tone.js along with some vanilla javascript in order to create beats, tones, chords, and entire songs with just a small amount of code. He demonstrated the ease of use and the large potential available to developers right out of the box. A great way to end the long day in DC.&lt;/p&gt;
+
+&lt;p&gt;The conference was overall very fulfilling and introduced a bunch of topics and technologies with which I wasn’t familiar with. In between talks, attendees networked with each other and visited booths provided by Element 84, Social Tables, and of course, CustomInk. Each provided cool swag and the conference included free nationJS shirts. Conferences like this help build community and encourage others to explore their creativity and possibilities with these technologies. I recommend all developers across all fields try to attend!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 13 Dec 2019 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2019/12/13/nationjs/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2019/12/13/nationjs/</guid>
+      </item>
+    
+      <item>
         <title>Rebase into Ops Engineering</title>
         <description>&lt;p&gt;Changing careers can be exciting and intimidating at the same time, especially when you are learning a new skill set.
 This is a brief introduction around my journey from Sales Representative at Custom Ink to Operations Engineer and the 
