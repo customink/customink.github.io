@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Migrate Your Rails App from Heroku to AWS Lmabda - CustomInk Technology Blog</title>
+  <title>Migrate Your Rails App from Heroku to AWS Lambda - CustomInk Technology Blog</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,7 +58,7 @@
 
     <div class="tb-Post-main sb-Wrapper">
       <div class="tb-Post-content">
-        <h1>Migrate Your Rails App from Heroku to AWS Lmabda</h1>
+        <h1>Migrate Your Rails App from Heroku to AWS Lambda</h1>
         <h3>Using The New ActiveRecord Aurora Serverless Adapter</h3>
 
 <div class="tb-Masthead" style="margin-bottom:0.5rem;">
@@ -304,6 +304,10 @@ Created database <span class="s1">'mydatabase_test'</span>
     <span class="no">Uglifier</span><span class="p">.</span><span class="nf">new</span>
   <span class="k">end</span>
 <span class="k">end</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">public_file_server</span><span class="p">.</span><span class="nf">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Cache-Control'</span> <span class="o">=&gt;</span> <span class="s2">"public, max-age=</span><span class="si">#{</span><span class="mi">30</span><span class="p">.</span><span class="nf">days</span><span class="p">.</span><span class="nf">seconds</span><span class="p">.</span><span class="nf">to_i</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+  <span class="s1">'X-Lamby-Base64'</span> <span class="o">=&gt;</span> <span class="s1">'1'</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>From here, it would be straight forward to add a custom domain to finish off your migration. We have this guide on the Lamby site for that too. See our <a href="https://lamby.custominktech.com/docs/custom_domain_name_cloudfront_and_ssl_application_load_balancer">Custom Domain Name, CloudFront, &amp; SSL</a> documentation.</p>
 
@@ -314,6 +318,8 @@ Created database <span class="s1">'mydatabase_test'</span>
 <p>Our work here is more meaningful than that. Consider this your Rails introduction to learning Serverless &amp; AWS as a whole. In a sense, a stepping stone to learning - learning how to program the cloud, how to rethink our existing Rails solutions within AWS&#39; <a href="https://acloud.guru/learn/aws-well-architected-framework">Well-Architected</a> framework.</p>
 
 <p>From here you should approach any new problem from background jobs to database events in a new way. One that might have you choosing tools like AWS SNS vs Sidekiq. Let your growing application dictate what abstractions to take, micro-services to build, and more important - how to deliver value to your customers first, and quickly.</p>
+
+<p>Are you a Rails developer making your way to the cloud? I&#39;d love to hear from you in the comments on if this post was helpful or not. Got any questions or running into problems. Happy to help! Thanks for reading.</p>
 
 <h2 id="resources">Resources</h2>
 
@@ -385,7 +391,7 @@ Created database <span class="s1">'mydatabase_test'</span>
   <script type="text/javascript">
     var disqus_shortname = 'custominktechnologyblog';
     var disqus_identifier = '/blog/2020/01/03/migrate-your-rails-app-from-heroku-to-aws-lambda/';
-    var disqus_title = "Migrate Your Rails App from Heroku to AWS Lmabda";
+    var disqus_title = "Migrate Your Rails App from Heroku to AWS Lambda";
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';

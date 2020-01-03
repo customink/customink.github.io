@@ -7,7 +7,7 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Migrate Your Rails App from Heroku to AWS Lmabda</title>
+        <title>Migrate Your Rails App from Heroku to AWS Lambda</title>
         <description>&lt;h3&gt;Using The New ActiveRecord Aurora Serverless Adapter&lt;/h3&gt;
 
 &lt;div class=&quot;tb-Masthead&quot; style=&quot;margin-bottom:0.5rem;&quot;&gt;
@@ -253,6 +253,10 @@ Created database &lt;span class=&quot;s1&quot;&gt;'mydatabase_test'&lt;/span&gt;
     &lt;span class=&quot;no&quot;&gt;Uglifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;public_file_server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;headers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s1&quot;&gt;'Cache-Control'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;public, max-age=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;days&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;seconds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_i&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;s1&quot;&gt;'X-Lamby-Base64'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;From here, it would be straight forward to add a custom domain to finish off your migration. We have this guide on the Lamby site for that too. See our &lt;a href=&quot;https://lamby.custominktech.com/docs/custom_domain_name_cloudfront_and_ssl_application_load_balancer&quot;&gt;Custom Domain Name, CloudFront, &amp;amp; SSL&lt;/a&gt; documentation.&lt;/p&gt;
 
@@ -263,6 +267,8 @@ Created database &lt;span class=&quot;s1&quot;&gt;'mydatabase_test'&lt;/span&gt;
 &lt;p&gt;Our work here is more meaningful than that. Consider this your Rails introduction to learning Serverless &amp;amp; AWS as a whole. In a sense, a stepping stone to learning - learning how to program the cloud, how to rethink our existing Rails solutions within AWS&amp;#39; &lt;a href=&quot;https://acloud.guru/learn/aws-well-architected-framework&quot;&gt;Well-Architected&lt;/a&gt; framework.&lt;/p&gt;
 
 &lt;p&gt;From here you should approach any new problem from background jobs to database events in a new way. One that might have you choosing tools like AWS SNS vs Sidekiq. Let your growing application dictate what abstractions to take, micro-services to build, and more important - how to deliver value to your customers first, and quickly.&lt;/p&gt;
+
+&lt;p&gt;Are you a Rails developer making your way to the cloud? I&amp;#39;d love to hear from you in the comments on if this post was helpful or not. Got any questions or running into problems. Happy to help! Thanks for reading.&lt;/p&gt;
 
 &lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
 
