@@ -7,6 +7,285 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Migrate Your Rails App from Heroku to AWS Lmabda</title>
+        <description>&lt;h3&gt;Using The New ActiveRecord Aurora Serverless Adapter&lt;/h3&gt;
+
+&lt;div class=&quot;tb-Masthead&quot; style=&quot;margin-bottom:0.5rem;&quot;&gt;
+  &lt;img src=&quot;/assets/content/aurora-serverless/masthead-5a56cf63e72393d6abff92c8b05178363bbd07d444e19ed6dca99435403f5b5b.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;(right) AWS re:Invent 2017 - Amazon Aurora Serverless&quot; /&gt;
+  &lt;a href=&quot;https://www.youtube.com/watch?v=Q0cqKl6ktIg&quot; &gt;&lt;aside class=&quot;tb-Masthead-caption&quot; caption=&quot;(right) AWS re:Invent 2017 - Amazon Aurora Serverless&quot;&gt;&lt;/aside&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;sb-Dialog sb-Dialog--info&quot; style=&quot;margin-top:0;&quot;&gt;
+  &lt;div class=&quot;sb-Dialog-icon&quot;&gt;
+    &lt;i class=&quot;sb-Icon--info&quot;&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;sb-Dialog-message&quot;&gt;
+    &lt;h3&gt;Need a More Robust Rails on Lambda Database Solution?&lt;/h3&gt;
+    &lt;p&gt;
+      AWS recently announced &lt;a href=&quot;https://aws.amazon.com/about-aws/whats-new/2019/12/amazon-rds-proxy-available-in-preview/&quot;&gt;RDS Proxy (Preview)&lt;/a&gt;. Stay tuned to this blog or &lt;a href=&quot;https://twitter.com/CustomInkTech&quot;&gt;@CustomInkTech&lt;/a&gt; on Twitter for my next post on using &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby&lt;/a&gt; with RDS Proxy.
+    &lt;/p&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Are you someone with a pet Rails project running on a Free, Hobby, or Professional Heroku plan? Perhaps your company or freelance gig has a valuable, but infrequently used, Rails application? Such applications make great candidates for both AWS Lambda &amp;amp; Aurora Serverless.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;What is &lt;a href=&quot;https://aws.amazon.com/rds/aurora/serverless/&quot;&gt;Aurora Serverless&lt;/a&gt;? It is an on-demand, auto-scaling configuration for Amazon Aurora, where the database will automatically start up, shut down, and scale capacity based on your application&amp;#39;s needs. On top of being perfect for variable workloads, what makes Aurora Serverless powerful for Lambda is the use of its &lt;a href=&quot;https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html&quot;&gt;Data API&lt;/a&gt; via HTTP to communicate with it.&lt;/p&gt;
+
+&lt;p&gt;Over the past several months we have been working hard to use existing web frameworks like Rails with AWS Lambda. Our &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby&lt;/a&gt; gem does just that! It has opened up new application architectures by adopting cloud-native philosophies. Till today, this typically required the use of DynamoDB as a &lt;a href=&quot;https://github.com/aws/aws-sdk-ruby-record&quot;&gt;persistent store&lt;/a&gt;. A fine choice, however, there are use cases for traditional relational databases. But how... and without the overhead of &lt;a href=&quot;https://www.jeremydaly.com/manage-rds-connections-aws-lambda/&quot;&gt;zombie RDS connection&lt;/a&gt; issues?&lt;/p&gt;
+
+&lt;h4 id=&quot;activerecord-aurora-serverless-adapter&quot;&gt;ActiveRecord Aurora Serverless Adapter&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/aurora-serverless/ruby-gems-f734b8e2f5931ef0e5a82530b143a978c0e0c341502fb817aba90f72e458b517.gif&quot; alt=&quot;Lamby - Simple Rails &amp; AWS Lambda Integration&quot; class=&quot;tb-Img tb-Img--fancy tb-Img--third tb-Img--third--sm&quot; style=&quot;float:right; margin-left:1rem;&quot; /&gt;Today, I&amp;#39;d like to introduce the new &lt;a href=&quot;https://github.com/customink/activerecord-aurora-serverless-adapter&quot;&gt;ActiveRecord Adapter for Amazon Aurora Serverless&lt;/a&gt;! A simple gem that replaces ActiveRecord&amp;#39;s MySQL raw connection with an &lt;a href=&quot;https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDSDataService/Client.html&quot;&gt;Aws::RDSDataService::Client&lt;/a&gt; interface. Hence leveraging your Aurora Serverless&amp;#39; Data API over HTTP. It is a simple drop in adapter replacement, and seamless to your application.&lt;/p&gt;
+
+&lt;p&gt;And what better way to show it off by migrating your Heroku application? Here are the steps we are going to take:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Migrate PostgreSQL Data to MySQL&lt;/li&gt;
+&lt;li&gt;Reconfigure Your Rails Project&lt;/li&gt;
+&lt;li&gt;Install Lamby &amp;amp; Setup Environment Variables&lt;/li&gt;
+&lt;li&gt;Deploy Aurora Serverless&lt;/li&gt;
+&lt;li&gt;Import Your Heroku Data&lt;/li&gt;
+&lt;li&gt;Your First Lambda Deploy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;migrate-postgresql-data-to-mysql&quot;&gt;Migrate PostgreSQL Data to MySQL&lt;/h2&gt;
+
+&lt;p&gt;First, I&amp;#39;d like to point that yes, Aurora Serverless does support PostgreSQL but our adapter as of yet does not. Since we only use MySQL at Custom Ink, this was our priority. If you are interested in contributing to the PostgreSQL implementation or talking about it more - I created &lt;a href=&quot;https://github.com/customink/activerecord-aurora-serverless-adapter/issues/10&quot;&gt;this GitHub issue&lt;/a&gt; to track it. Stop on by!&lt;/p&gt;
+
+&lt;p&gt;I&amp;#39;ll be honest, exporting and converting a &lt;code&gt;pg_dump&lt;/code&gt; to MySQL formatted script files seems to be a tricky task. I&amp;#39;m going to not spend a lot of time walking through this process where other articles cover it well enough. So please use the following links below.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://mysqlworkbench.org/2012/11/set-up-and-configure-postgresql-odbc-drivers-for-the-mysql-workbench-migration-wizard/&quot;&gt;Configure PostgreSQL ODBC drivers for the MySQL Workbench&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://mysqlworkbench.org/2012/11/how-to-migrate-postgresql-databases-to-mysql-using-the-mysql-workbench-migration-wizard/&quot;&gt;Migrate PostgreSQL databases to MySQL using the MySQL Workbench&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.progress.com/tutorials/jdbc/connect-to-postgresql-on-heroku-using-odbc-and-jdbc-drivers&quot;&gt;Connect to PostgreSQL on Heroku Using ODBC and JDBC Drivers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;What did I do? I leveraged a purchased tool called &lt;a href=&quot;https://www.navicat.com/en/products/navicat-premium&quot;&gt;Navicat Premium&lt;/a&gt; which has a built in feature to connect and convert data from different databases. It worked, but I had to manually hand fix a few issues. I&amp;#39;d love to hear what worked for you in the comments below!&lt;/p&gt;
+
+&lt;h2 id=&quot;reconfigure-your-rails-project&quot;&gt;Reconfigure Your Rails Project&lt;/h2&gt;
+
+&lt;p&gt;At this point, you should have a local &lt;code&gt;mydatabase.sql&lt;/code&gt; file representing your Heroku database in MySQL format. Our goal is to migrate your Rails project off PosgreSQL. In order to do this we need to re-create your &lt;code&gt;db/schema.rb&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;First, make sure your Rails application is running v5.2 or v6.0. These are the &lt;a href=&quot;https://github.com/customink/activerecord-aurora-serverless-adapter/issues/9&quot;&gt;current ActiveRecord versions&lt;/a&gt; we have tested the adapter against.&lt;/p&gt;
+
+&lt;p&gt;Now, remove the &lt;code&gt;pg&lt;/code&gt; gem from your &lt;code&gt;Gemfile&lt;/code&gt; and replace it with &lt;code&gt;mysql2&lt;/code&gt;, but only in development group.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:development&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'mysql2'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Configure your &lt;code&gt;database.yml&lt;/code&gt; file to use MySQL locally for development &amp;amp; test environments. Alternatively, you can use Aurora Serverless here later on if you really wanted to. But I find using MySQL locally to be a little easier.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;development&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;adapter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql2&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mydatabase_development&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;adapter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mysql2&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mydatabase_test&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;username&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;root&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Run this Rails task to create your new development and test MySQL databases.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./bin/rails db:create
+Created database &lt;span class=&quot;s1&quot;&gt;'mydatabase_development'&lt;/span&gt;
+Created database &lt;span class=&quot;s1&quot;&gt;'mydatabase_test'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From here we have an empty development database that we can load our production schema/data into.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mysql &lt;span class=&quot;nt&quot;&gt;-h&lt;/span&gt; localhost &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; root mydatabase_development &amp;lt; mydatabase.sql
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will allow us to generate a new &lt;code&gt;schema.rb&lt;/code&gt; so our project can happily proceed with development using that new database.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;db/schema.rb
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./bin/rails db:schema:dump
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Congrats on migrating to MySQL! At this point, it would be a good idea to run your test suite and make sure everything is OK before moving on.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-lamby-setup-environment-variables&quot;&gt;Install Lamby &amp;amp; Setup Environment Variables&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/aurora-serverless/lambda-rails-360f90d66f8ea8739cbf7334d3cda918393e218469653de0ae0e0e87b10bac2e.png&quot; alt=&quot;Lamby - Simple Rails &amp; AWS Lambda Integration&quot; style=&quot;float:right; width:20%;&quot; /&gt;The &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby&lt;/a&gt; gem integrates Rails with AWS Lambda by converting either API Gateway or Application Load Balancer events to Rack events. This guide below is a condenses version of its &lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start&quot;&gt;quick start&lt;/a&gt; guide.&lt;/p&gt;
+
+&lt;p&gt;Add the required gems to your &lt;code&gt;Gemfile&lt;/code&gt; and bundle install.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'lamby'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;require: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aws-sdk-ssm'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With the Lamby gem installed, we can now install its SAM CloudFormation template, app handler code, and bin scripts.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./bin/rake &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; lamby lamby:install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;environment-variables&quot;&gt;Environment Variables&lt;/h4&gt;
+
+&lt;p&gt;There are a handful of ways to configure environment variables on AWS Lambda with Rails. Our tools of choice would be to use &lt;a href=&quot;https://github.com/bkeepers/dotenv&quot;&gt;Dotenv&lt;/a&gt; (for development &amp;amp; test) combined with &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html&quot;&gt;SSM Parameter Store&lt;/a&gt; and &lt;a href=&quot;https://www.viget.com/articles/storing-secret-credentials-in-rails-5-2-and-up/&quot;&gt;Rails Encrypted Credentials&lt;/a&gt; (for production). Please reference the Dotenv docs while I focus on the later production tools.&lt;/p&gt;
+
+&lt;p&gt;Edit your Rails encrypted credentials. Depending on your installed editor (Sublime, VS Code, etc) one of these should work for you.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ EDITOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vi&quot;&lt;/span&gt; ./bin/rails credentials:edit
+&lt;span class=&quot;nv&quot;&gt;$ EDITOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subl --wait&quot;&lt;/span&gt; ./bin/rails credentials:edit
+&lt;span class=&quot;nv&quot;&gt;$ EDITOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;code --wait&quot;&lt;/span&gt; ./bin/rails credentials:edit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Log into Heroku. From your app’s Settings tab, click the “Reveal Config Vars” button and copy any config vars that you will need for production into the file below. You can ignore ones like &lt;code&gt;DATABASE_URL&lt;/code&gt;. When you are done, you might have something like this.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;secret_key_base&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;abcdefghijklmnopqrstuvwxyz&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;envs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;SOME_SECRET&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;password&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;SOME_OTHER_VAR&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;whatever&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now create a &lt;code&gt;config/initilizers/credentials.rb&lt;/code&gt; file and add this code. It will load all the key/values in the &lt;code&gt;envs&lt;/code&gt; section above and create environment variables to be used in production.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;production?&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;envs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;credentials&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:envs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;envs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;On your local machine, Rails has the master key to encrypt and decrypt your credentials. We want to put these in a secure place and avoid committing them to GitHub. That is what AWS SSM Parameter Store can do for us. This AWS CLI command will copy your &lt;code&gt;config/master.key&lt;/code&gt; into SSM Parameter Store.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;aws ssm put-parameter &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/config/myapp/env/RAILS_MASTER_KEY&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--type&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;SecureString&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--value&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;config/master.key&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;When your Rails app boots in AWS Lambda, it will need to connect to SSM Parameter Store to get your master key. Add this code to Lamby&amp;#39;s &lt;code&gt;app.rb&lt;/code&gt; file directly after the &lt;code&gt;require &amp;#39;lamby&amp;#39;&lt;/code&gt; line.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'RAILS_MASTER_KEY'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Lamby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SsmParameterStore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;get!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/config/myapp/env/RAILS_MASTER_KEY'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, update your CloudFormation/SAM &lt;code&gt;template.yaml&lt;/code&gt; file by adding this to the &lt;code&gt;Properties&lt;/code&gt; section of your &lt;code&gt;RailsFunction&lt;/code&gt;. This addition allows your Lambda&amp;#39;s runtime policy to read your app&amp;#39;s configs from SSM Parameter store.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;Policies&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2012-10-17&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Statement&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Effect&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Allow&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ssm:GetParameter&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ssm:GetParameters&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ssm:GetParametersByPath&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ssm:GetParameterHistory&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Sub&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/config/myapp/*&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That was a lot! And we still have a little ways to go. Don&amp;#39;t forget, if AWS Lambda and Lamby are both new to you, take some time to review our guides and docs before your first deploy.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start#installing-the-aws-cli-sam&quot;&gt;Installing the AWS CLI &amp;amp; SAM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start#create-s3-deployment-bucket&quot;&gt;Create a S3 Deployment Bucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/docs/environment_and_configuration&quot;&gt;Environment &amp;amp; Configuration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/docs/asset_host_and_precompiling&quot;&gt;Asset Host &amp;amp; Precompiling&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Oh, one last thing. Remember to match the AWS Lambda Ruby Runtime &amp;amp; &lt;strong&gt;use Ruby 2.5.5 locally&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;deploy-aurora-serverless&quot;&gt;Deploy Aurora Serverless&lt;/h2&gt;
+
+&lt;p&gt;Here are a few options to create your Aurora Serverless cluster depending on your preference for either ClickOps or Infrastructure as Code (IaC).&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com/getting-started/tutorials/configure-connect-serverless-mysql-database-aurora/&quot;&gt;&lt;strong&gt;🖱👷 Configure and Connect to Serverless MySQL Database&lt;/strong&gt;&lt;/a&gt; - On the ClickOps side. AWS has done a great job of making a step-by-step guide. However, this guide does not walk you through enabling the Data API or creating credentials in AWS Secrets Manager. So if you go this route, please also follow this &lt;a href=&quot;https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html&quot;&gt;Using the Data API for Aurora Serverless&lt;/a&gt; guide too.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/metaskills/e17361340a9149436f2893196b1b9633&quot;&gt;&lt;strong&gt;🏫👩‍💻 Aurora Serverless IaC Example Using CDK &amp;amp; TypeScript&lt;/strong&gt;&lt;/a&gt; - If repeatable Infrastructure as Code is your thing and CloudFormation YAML feels a little awkward, you are in luck. I simplified the Aurora Serverless Adapter&amp;#39;s test setup and shared it in the GitHub Gist link below. This uses &lt;a href=&quot;https://aws.amazon.com/cdk/&quot;&gt;AWS Cloud Development Kit&lt;/a&gt; (CDK) with &lt;a href=&quot;https://www.typescriptlang.org&quot;&gt;TypeScript&lt;/a&gt; to create an Aurora Serverless cluster, with all the settings, parameters groups, and secrets needed.&lt;/p&gt;
+
+&lt;p&gt;Once your Aurora Serverless cluster is deployed, you are going to need the following bits of information:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SecretsManager ARN - Output stack above. Ex: &lt;code&gt;arn:aws:secretsmanager:us-east-1:123456789012:secret:Secret-kd3diwspxeWw-Bdsiww&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Aurora Cluster ARN - Output stack above. Ex: &lt;code&gt;arn:aws:rds:us-east-1:123456789012:cluster:mydatabase&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Aurora Cluster Endpoint - Found in your RDS cluster&amp;#39;s &amp;quot;Connectivity &amp;amp; security&amp;quot; section in AWS Console. Ex: &lt;code&gt;mydatabase.cluster-adk13dkfyqzk.us-east-1.rds.amazonaws.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Master Username &amp;amp; Password - When you created your Aurora Serverless cluster.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;import-your-heroku-data&quot;&gt;Import Your Heroku Data&lt;/h2&gt;
+
+&lt;p&gt;Remember that &lt;code&gt;mydatabase.sql&lt;/code&gt; file we migrated your PosgreSQL data to in our first steps? We used it to recreate your MySQL development structure. Now it is time to recreate your whole production database. There is just one problem. The Aurora Serverless &lt;a href=&quot;https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html&quot;&gt;Data API&lt;/a&gt; over HTTP has a maximum request capacity of 64 Kilobytes of data and I am guessing your database is bigger than that. 😀&lt;/p&gt;
+
+&lt;p&gt;Thankfully, we can use still use Aurora via the native MySQL protocol. In order to issue a MySQL command to execute our entire database file, we need to run it on a machine within the same VPC network that we created our Aurora Cluster in. One easy way to do that is to spin up an EC2 instance for this short lived task. Log into the AWS Console and take note of the &amp;quot;VPC&amp;quot; and &amp;quot;Subnets&amp;quot; in the &amp;quot;Networking&amp;quot; section of your Aurora Serverless database. You will need these when creating your EC2 instance.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;EC2 -&amp;gt; Instances -&amp;gt; Launch Instance&lt;/li&gt;
+&lt;li&gt;Select &amp;quot;AWS Marketplace&amp;quot;&lt;/li&gt;
+&lt;li&gt;Search for &amp;quot;Ruby Certified by Bitnami&amp;quot;, Select, Continue&lt;/li&gt;
+&lt;li&gt;Choose an Instance Type like &amp;quot;t2.micro&amp;quot;&lt;/li&gt;
+&lt;li&gt;Configure your Instance
+
+&lt;ul&gt;
+&lt;li&gt;Select the &amp;quot;VPC&amp;quot; (Network) matching your new Aurora Serverless DB.&lt;/li&gt;
+&lt;li&gt;Select a &amp;quot;Subnet&amp;quot; matching one in your new Aurora Serverless DB.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Review &amp;amp; Launch
+
+&lt;ul&gt;
+&lt;li&gt;Use or Create a SSH Key Pair&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is not glamorous and still fraught with possible issues. Welcome to networking! For example, if you do not have a VPN to your private network, your EC2 instance might need access to both &lt;a href=&quot;https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html&quot;&gt;Public and Private Subnets&lt;/a&gt;. If SSH&amp;#39;ing into an EC2 instance with a newly created key is new to you, here is a link to &lt;a href=&quot;https://aws.amazon.com/premiumsupport/knowledge-center/new-user-accounts-linux-instance/&quot;&gt;SSH access to my Amazon EC2 Linux&lt;/a&gt; guide that may help.&lt;/p&gt;
+
+&lt;p&gt;All said and done, you will need to &lt;code&gt;scp&lt;/code&gt; your &lt;code&gt;mydatabase.sql&lt;/code&gt; file to an EC2 instance and run the following &lt;code&gt;mysql&lt;/code&gt; command. Replace IP addresses, hosts, and username/passwords as needed.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;scp &lt;span class=&quot;s2&quot;&gt;&quot;mydatabase.sql&quot;&lt;/span&gt; ubuntu@172.16.20.118:/home/bitnami
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; ~/Downloads/mykey.pem ubuntu@172.16.20.118
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mysql &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;mydatabase.cluster-dk18asdfxyqc.us-east-1.rds.amazonaws.com&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;user&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;password&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;mydatabase&quot;&lt;/span&gt; &amp;lt; &lt;span class=&quot;s2&quot;&gt;&quot;mydatabase.sql&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;your-first-lambda-deploy&quot;&gt;Your First Lambda Deploy&lt;/h2&gt;
+
+&lt;p&gt;We did a lot of work in the &amp;quot;Install Lamby&amp;quot; section earlier to prepare your first deploy. I even made the case that you should read through most of the &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby Guides&lt;/a&gt; prior to your first deploy. One that I&amp;#39;d like to call out specifically is our guide on &lt;a href=&quot;https://lamby.custominktech.com/docs/asset_host_and_precompiling&quot;&gt;compiling assets&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;That guide makes the case for an asset host using S3 &amp;amp; CloudFront. If your application is simple enough, you can forgo that complexity and simply serve static assets from your Rails app. To do so, add this line to the top of your Lamby generated &lt;code&gt;app.rb&lt;/code&gt; file.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'RAILS_SERVE_STATIC_FILES'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now we get to add the Aurora Serverless adapter to our &lt;code&gt;Gemfile&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'activerecord-aurora-serverless-adapter'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Lastly, add a production section to your &lt;code&gt;database.yml&lt;/code&gt; file. Use the Secret ARN and Database ARN we got from the &amp;quot;Deploy Aurora Serverless&amp;quot; section above.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;production&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;adapter&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;aurora_serverless&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;mydatabase&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;secret_arn&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;arn:aws:secretsmanager:us-east-1:123456789012:secret:Secret-kd2ASwipxeWw-Bdsiww&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;resource_arn&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;arn:aws:rds:us-east-1:123456789012:cluster:mydatabase&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Assuming everything is in place, you are ready to run &lt;code&gt;./bin/deploy&lt;/code&gt;. These scripts will use &lt;a href=&quot;https://aws.amazon.com/serverless/sam/&quot;&gt;AWS SAM&lt;/a&gt; to build/package and deploy your Rails application to AWS Lambda. Assuming &lt;strong&gt;that&lt;/strong&gt; process went OK, you should see some stack outputs to your Application Load Balancer&amp;#39;s (ALB) DNS name. It will look something like &lt;code&gt;myapplication-2837213178.us-east-1.elb.amazonaws.com&lt;/code&gt;. Add &lt;code&gt;http://&lt;/code&gt; to that and see how your app looks.&lt;/p&gt;
+
+&lt;h4 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h4&gt;
+
+&lt;p&gt;If you have any error(s), go to CloudWatch -&amp;gt; Log groups and find the log group starting with &lt;code&gt;/aws/lambda/&lt;/code&gt; and ending with your Lambda&amp;#39;s name. You might see something like &amp;quot;Could not find a JavaScript runtime&amp;quot; error. This would be a sign that we missed a step in &lt;a href=&quot;https://lamby.custominktech.com/docs/asset_host_and_precompiling&quot;&gt;our lamby guides&lt;/a&gt;. For example:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# config/initializers/assets.rb&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;manifest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'config/manifest.json'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# config/environments/production.rb&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;assets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;js_compressor&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'LAMBY_BUILD'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'uglifier'&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;Uglifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From here, it would be straight forward to add a custom domain to finish off your migration. We have this guide on the Lamby site for that too. See our &lt;a href=&quot;https://lamby.custominktech.com/docs/custom_domain_name_cloudfront_and_ssl_application_load_balancer&quot;&gt;Custom Domain Name, CloudFront, &amp;amp; SSL&lt;/a&gt; documentation.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-did-we-gain&quot;&gt;What Did We Gain?&lt;/h2&gt;
+
+&lt;p&gt;Seems like a lot of work to maybe save a few Heroku-bucks 🤑 right? If cost alone were the only motivation, I would agree that you just wasted your time.&lt;/p&gt;
+
+&lt;p&gt;Our work here is more meaningful than that. Consider this your Rails introduction to learning Serverless &amp;amp; AWS as a whole. In a sense, a stepping stone to learning - learning how to program the cloud, how to rethink our existing Rails solutions within AWS&amp;#39; &lt;a href=&quot;https://acloud.guru/learn/aws-well-architected-framework&quot;&gt;Well-Architected&lt;/a&gt; framework.&lt;/p&gt;
+
+&lt;p&gt;From here you should approach any new problem from background jobs to database events in a new way. One that might have you choosing tools like AWS SNS vs Sidekiq. Let your growing application dictate what abstractions to take, micro-services to build, and more important - how to deliver value to your customers first, and quickly.&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby: Simple Rails &amp;amp; AWS Lambda Integration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/activerecord-aurora-serverless-adapter&quot;&gt;Custom Ink&amp;#39;s ActiveRecord Aurora Serverless Adapter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/rds/aurora/serverless/&quot;&gt;Amazon Aurora Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html&quot;&gt;Using the Data API for Aurora Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://mysqlworkbench.org/2012/11/set-up-and-configure-postgresql-odbc-drivers-for-the-mysql-workbench-migration-wizard/&quot;&gt;Set up and configure PostgreSQL ODBC drivers for the MySQL Workbench Migration Wizard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://mysqlworkbench.org/2012/11/how-to-migrate-postgresql-databases-to-mysql-using-the-mysql-workbench-migration-wizard/&quot;&gt;How-To: Migrate PostgreSQL databases to MySQL using the MySQL Workbench Migration Wizard&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.progress.com/tutorials/jdbc/connect-to-postgresql-on-heroku-using-odbc-and-jdbc-drivers&quot;&gt;Connect to PostgreSQL on Heroku Using ODBC and JDBC Drivers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/getting-started/tutorials/configure-connect-serverless-mysql-database-aurora/&quot;&gt;Configure and Connect to Serverless MySQL Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html&quot;&gt;VPC with Public and Private Subnets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/premiumsupport/knowledge-center/new-user-accounts-linux-instance/&quot;&gt;SSH access to my Amazon EC2 Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/docs/custom_domain_name_cloudfront_and_ssl_application_load_balancer&quot;&gt;Custom Domain Name, CloudFront, &amp;amp; SSL&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 03 Jan 2020 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2020/01/03/migrate-your-rails-app-from-heroku-to-aws-lambda/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/01/03/migrate-your-rails-app-from-heroku-to-aws-lambda/</guid>
+      </item>
+    
+      <item>
         <title>NationJS</title>
         <description>&lt;p&gt;This previous week I had the privilege of attending the Nation Frontrunner’s React JavaScript conference (&lt;a href=&quot;http://nationjs.com/main&quot;&gt;http://nationjs.com/main&lt;/a&gt;). This is a ReactJS and Javascript web stack conference and one of the bigger events of this type in the Mid-Atlantic region. Custom Ink served as one of the three main sponsors to the event and were graciously given extra tickets for employees to attend and gain important knowledge in this field of technology. This year’s event was held in Washington DC at the Burke theater in the Navy Memorial Theater and included a slew of information and informative speakers.&lt;/p&gt;
 
