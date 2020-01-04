@@ -155,7 +155,7 @@ Created database <span class="s1">'mydatabase_test'</span>
 
 <h2 id="install-lamby-setup-environment-variables">Install Lamby &amp; Setup Environment Variables</h2>
 
-<p><img src="/assets/content/aurora-serverless/lambda-rails-360f90d66f8ea8739cbf7334d3cda918393e218469653de0ae0e0e87b10bac2e.png" alt="Lamby - Simple Rails & AWS Lambda Integration" style="float:right; width:20%;" />The <a href="https://lamby.custominktech.com/">Lamby</a> gem integrates Rails with AWS Lambda by converting either API Gateway or Application Load Balancer events to Rack events. This guide below is a condenses version of its <a href="https://lamby.custominktech.com/docs/quick_start">quick start</a> guide.</p>
+<p><img src="/assets/content/aurora-serverless/lambda-rails-360f90d66f8ea8739cbf7334d3cda918393e218469653de0ae0e0e87b10bac2e.png" alt="Lamby - Simple Rails & AWS Lambda Integration" style="float:right; width:20%;" />The <a href="https://lamby.custominktech.com/">Lamby</a> gem integrates Rails with AWS Lambda by converting either API Gateway or Application Load Balancer events to Rack events. This guide below is a condensed version of its <a href="https://lamby.custominktech.com/docs/quick_start">quick start</a> guide.</p>
 
 <p>Add the required gems to your <code>Gemfile</code> and bundle install.</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">'lamby'</span><span class="p">,</span> <span class="ss">require: </span><span class="kp">false</span>
@@ -166,14 +166,14 @@ Created database <span class="s1">'mydatabase_test'</span>
 </code></pre></div>
 <h4 id="environment-variables">Environment Variables</h4>
 
-<p>There are a handful of ways to configure environment variables on AWS Lambda with Rails. Our tools of choice would be to use <a href="https://github.com/bkeepers/dotenv">Dotenv</a> (for development &amp; test) combined with <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html">SSM Parameter Store</a> and <a href="https://www.viget.com/articles/storing-secret-credentials-in-rails-5-2-and-up/">Rails Encrypted Credentials</a> (for production). Please reference the Dotenv docs while I focus on the later production tools.</p>
+<p>There are a handful of ways to configure environment variables on AWS Lambda with Rails. Our tools of choice would be to use <a href="https://github.com/bkeepers/dotenv">Dotenv</a> (for development &amp; test) combined with <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html">SSM Parameter Store</a> and <a href="https://www.viget.com/articles/storing-secret-credentials-in-rails-5-2-and-up/">Rails Encrypted Credentials</a> (for production). Please reference the Dotenv docs while I focus on the latter production tools.</p>
 
-<p>Edit your Rails encrypted credentials. Depending on your installed editor (Sublime, VS Code, etc) one of these should work for you.</p>
+<p>Edit your Rails encrypted credentials. Depending on your installed editor (Sublime, VS Code, etc.) one of these should work for you.</p>
 <div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ EDITOR</span><span class="o">=</span><span class="s2">"vi"</span> ./bin/rails credentials:edit
 <span class="nv">$ EDITOR</span><span class="o">=</span><span class="s2">"subl --wait"</span> ./bin/rails credentials:edit
 <span class="nv">$ EDITOR</span><span class="o">=</span><span class="s2">"code --wait"</span> ./bin/rails credentials:edit
 </code></pre></div>
-<p>Log into Heroku. From your app’s Settings tab, click the “Reveal Config Vars” button and copy any config vars that you will need for production into the file below. You can ignore ones like <code>DATABASE_URL</code>. When you are done, you might have something like this.</p>
+<p>Log into Heroku. From your app’s Settings tab, click the “Reveal Config Vars” button and copy any config vars that you will need for production into file opened when you run <code>credentials:edit</code> command above. You can ignore ones like <code>DATABASE_URL</code>. When you are done, you might have something like this.</p>
 <div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">secret_key_base</span><span class="pi">:</span> <span class="s">abcdefghijklmnopqrstuvwxyz</span>
 
 <span class="na">envs</span><span class="pi">:</span>
@@ -226,7 +226,7 @@ Created database <span class="s1">'mydatabase_test'</span>
 
 <p><a href="https://aws.amazon.com/getting-started/tutorials/configure-connect-serverless-mysql-database-aurora/"><strong>🖱👷 Configure and Connect to Serverless MySQL Database</strong></a> - On the ClickOps side. AWS has done a great job of making a step-by-step guide. However, this guide does not walk you through enabling the Data API or creating credentials in AWS Secrets Manager. So if you go this route, please also follow this <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html">Using the Data API for Aurora Serverless</a> guide too.</p>
 
-<p><a href="https://gist.github.com/metaskills/e17361340a9149436f2893196b1b9633"><strong>🏫👩‍💻 Aurora Serverless IaC Example Using CDK &amp; TypeScript</strong></a> - If repeatable Infrastructure as Code is your thing and CloudFormation YAML feels a little awkward, you are in luck. I simplified the Aurora Serverless Adapter&#39;s test setup and shared it in the GitHub Gist link below. This uses <a href="https://aws.amazon.com/cdk/">AWS Cloud Development Kit</a> (CDK) with <a href="https://www.typescriptlang.org">TypeScript</a> to create an Aurora Serverless cluster, with all the settings, parameters groups, and secrets needed.</p>
+<p><a href="https://gist.github.com/metaskills/e17361340a9149436f2893196b1b9633"><strong>🏫👩‍💻 Aurora Serverless IaC Example Using CDK &amp; TypeScript</strong></a> - If repeatable Infrastructure as Code is your thing and CloudFormation YAML feels a little awkward, you are in luck. I simplified the Aurora Serverless Adapter&#39;s test setup and shared it in that GitHub Gist link. It uses <a href="https://aws.amazon.com/cdk/">AWS Cloud Development Kit</a> (CDK) with <a href="https://www.typescriptlang.org">TypeScript</a> to create an Aurora Serverless cluster, with all the settings, parameters groups, and secrets needed.</p>
 
 <p>Once your Aurora Serverless cluster is deployed, you are going to need the following bits of information:</p>
 
