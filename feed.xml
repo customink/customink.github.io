@@ -266,7 +266,7 @@ Created database &lt;span class=&quot;s1&quot;&gt;'mydatabase_test'&lt;/span&gt;
 
 &lt;p&gt;Our work here is more meaningful than that. Consider this your Rails introduction to learning Serverless &amp;amp; AWS as a whole. In a sense, a stepping stone to learning - learning how to program the cloud, how to rethink our existing Rails solutions within AWS&amp;#39; &lt;a href=&quot;https://acloud.guru/learn/aws-well-architected-framework&quot;&gt;Well-Architected&lt;/a&gt; framework.&lt;/p&gt;
 
-&lt;p&gt;From here you should approach any new problem from background jobs to database events in a new way. One that might have you choosing tools like AWS SNS vs Sidekiq. Let your growing application dictate what abstractions to take, micro-services to build, and more important - how to deliver value to your customers first, and quickly.&lt;/p&gt;
+&lt;p&gt;From here you should approach any new problem from background jobs to database events in a new way. One that might have you choosing tools like &lt;a href=&quot;https://aws.amazon.com/blogs/compute/introducing-aws-lambda-destinations/&quot;&gt;Lambda Destinations&lt;/a&gt; vs Sidekiq. Let your growing application dictate what abstractions to take, micro-services to build, and more important - how to deliver value to your customers first, and quickly.&lt;/p&gt;
 
 &lt;p&gt;Are you a Rails developer making your way to the cloud? I&amp;#39;d love to hear from you in the comments on whether this post was helpful or not, if you&amp;#39;ve got any questions, or are running into problems. I&amp;#39;m happy to help! Thanks so much for reading.&lt;/p&gt;
 
