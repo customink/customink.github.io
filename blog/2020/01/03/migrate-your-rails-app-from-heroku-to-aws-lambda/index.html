@@ -289,6 +289,22 @@ Created database <span class="s1">'mydatabase_test'</span>
   <span class="na">secret_arn</span><span class="pi">:</span> <span class="s">arn:aws:secretsmanager:us-east-1:123456789012:secret:Secret-kd2ASwipxeWw-Bdsiww</span>
   <span class="na">resource_arn</span><span class="pi">:</span> <span class="s">arn:aws:rds:us-east-1:123456789012:cluster:mydatabase</span>
 </code></pre></div>
+<p>Your Lambda will need the same permissions. Again, open up your <code>template.yaml</code> file and navigate to your function&#39;s <code>Policies</code> section and add these two. We use the <code>secret_arn</code> and <code>resource_arn</code> from your database file above with one IMPORTANT addition, each need an <code>*</code> at the end.</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">-</span> <span class="na">Version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2012-10-17"</span>
+  <span class="na">Statement</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+      <span class="na">Action</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">secretsmanager:*</span>
+      <span class="na">Resource</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">arn:aws:secretsmanager:us-east-1:123456789012:secret:Secret-kd2ASwipxeWw-Bdsiww*</span>
+<span class="pi">-</span> <span class="na">Version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2012-10-17"</span>
+  <span class="na">Statement</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">Effect</span><span class="pi">:</span> <span class="s">Allow</span>
+      <span class="na">Action</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">rds-data:*</span>
+      <span class="na">Resource</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">arn:aws:rds:us-east-1:123456789012:cluster:mydatabase*</span>
+</code></pre></div>
 <p>Assuming everything is in place, you are ready to run <code>./bin/deploy</code>. These scripts will use <a href="https://aws.amazon.com/serverless/sam/">AWS SAM</a> to build/package and deploy your Rails application to AWS Lambda. Assuming <strong>that</strong> process went OK, you should see some stack outputs to your Application Load Balancer&#39;s (ALB) DNS name. It will look something like <code>myapplication-2837213178.us-east-1.elb.amazonaws.com</code>. Add <code>http://</code> to that and see how your app looks.</p>
 
 <h4 id="troubleshooting">Troubleshooting</h4>
