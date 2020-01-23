@@ -7,6 +7,69 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Prevalence of Mobile Technology and Adapting to the Industry with React Native</title>
+        <description>&lt;p&gt;Having your mobile phone on you has become almost a daily necessity. Yesterday, I was driving and while I was looking at my dwindling battery life, I considered what I could do if I didn’t have my phone. Well, since I had my car… I could drive home.. But that’s about it. I couldn’t get ahold of any of my family or friends without being able to call them. I wouldn’t be able to find out the best traffic route, and to be honest, it’s possible I would miss my turn while listening to XM and get lost without directions back. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/JSConferences/ReactNative-min-812e086884a943daa23a5ba07fce55f27426e4880cac04434de3955f282d549e.png&quot; class=&quot;tb-Img tb-Img--responsive&quot;/&gt;&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Thanks to my car, I wouldn’t be out of luck. But if I were phoneless and car-less out on the town, I would feel much more helpless. I would worry I couldn’t get anywhere. Without being in a busy part of town, I wouldn’t be able to hail a cab. I obviously couldn’t call a cab or uber, and I couldn’t call a friend without borrowing a stranger’s phone. I found myself racking my brain on how I would accomplish basic tasks without having my phone with me and I came to the realization that we are becoming utterly dependent on what we have in our pocket.&lt;/p&gt;
+
+&lt;p&gt;The thought experiment brought me back to what we all already know -- phones are easily becoming the industry norm for companies to interact with their customers. &lt;a href=&quot;https://www.emarketer.com/content/average-us-time-spent-with-mobile-in-2019-has-increased&quot;&gt;Here&lt;/a&gt; we can see that mobile phone consumption has surpassed TV consumption for the average american adult. It is becoming the burden of the company to iterate and develop quickly for their customers ease. New features must race to completion to compete with other companies with the same idea. This is why development speed in tandem with a clean user interface will win the trophy in these instances. &lt;/p&gt;
+
+&lt;p&gt;Working in mobile software development the past few years can seem daunting at times. Searching for the right technology to use seems like you are navigating an ever expanding universe where new tools are formed daily and everything moves further away from each other. This is why it is becoming harder and harder to decide with your team the right approach for the task at hand. When it comes to developing mobile technology for your users, I have found that React Native helps address development/delivery speeds without compromising clean user interfaces.&lt;/p&gt;
+
+&lt;p&gt;React as a web interface has been around for a little bit now -- since around 2012-13 time frame. React Native came a bit later (around 2015), but follows the same principles. This has allowed companies in the mobile field to address the issues of delivery in an ever expanding and demanding customer base. React Native was revolutionary in its approach to mobile development -- it allowed companies to develop both iOS and Android at the same time whilst not sacrificing the look and feel of natively built applications. &lt;/p&gt;
+
+&lt;h3 id=&quot;react-native-provides-a-lot-of-benefits-over-comparative-technologies-including&quot;&gt;React Native provides a lot of benefits over comparative technologies, including:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Faster development times&lt;/li&gt;
+&lt;li&gt;One code base = one technology to learn&lt;/li&gt;
+&lt;li&gt;Less code = fewer bugs&lt;/li&gt;
+&lt;li&gt;Prevalence in the industry
+
+&lt;ul&gt;
+&lt;li&gt;Developed by Facebook and adopted by others, there are many resources online available with more being produced every day&lt;/li&gt;
+&lt;li&gt;Reliability as it has been used and tested by large companies&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Over the air updates
+
+&lt;ul&gt;
+&lt;li&gt;React Native can pull down libraries and files from a server so you no longer have to upload to app store for updates&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Native feel
+
+&lt;ul&gt;
+&lt;li&gt;Performance and feel nearly identical to native development&lt;/li&gt;
+&lt;li&gt;Uses native buttons under the hood&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Written in JS/HTML = tons of support and wide knowledge&lt;/li&gt;
+&lt;li&gt;Third party plugins available&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;some-cons-i-can-think-of-include&quot;&gt;Some cons I can think of include:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Not all features are fully fleshed out on both iOS and Android
+
+&lt;ul&gt;
+&lt;li&gt;React releases features at slightly differing schedules, what components may be available in iOS may not be seen in Android yet&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Not all native features are available or fully supported and tested through React Native&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I had worked for over a year building features in the Amazon Mobile shopping apps with React Native. Amazon had a big push towards React Native in the time I was there. I helped contribute to Spark (which is the Amazon Shopping Social Platform) for the Android app. Since it was already on iOS, porting over to Android wasn’t a huge undertaking. However, there are some caveats with this approach. Since iOS was developed on its own in React Native, there were some parity issues when porting to Android. Notably, some features didn’t work as expected like they did in iOS. So we had to code work arounds. These issues could have been discovered and mitigated earlier if the team had tested on Android at the same time as iOS. So it is always helpful to test both iOS and Android while developing in a framework which serves both platforms. For my next React Native feature my team took on, we tested both at the same time and were able to deliver stable applications simultaneously. &lt;/p&gt;
+
+&lt;p&gt;At Custom Ink, our developers are constantly looking for better ways to improve our custom experience -- inside and outside of our technology department. React for the web is a technology which was determined best use for our design lab. The way we wanted it to react (pun intended) on the web and mobile web best worked for this technology. The same thought process can be applied when wanting to break out into the mobile application field. React (and React Native) gives a fluid look and feel with speedy development and is something Custom Ink will consider when looking to get ahead of the competition. Happy Coding!&lt;/p&gt;
+</description>
+        <pubDate>Fri, 17 Jan 2020 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2020/01/17/prevalence-of-mobile-technology-and-adapting-to-the-industry-with-react-native/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/01/17/prevalence-of-mobile-technology-and-adapting-to-the-industry-with-react-native/</guid>
+      </item>
+    
+      <item>
         <title>Migrate Your Rails App from Heroku to AWS Lambda</title>
         <description>&lt;h3&gt;Using The New ActiveRecord Aurora Serverless Adapter&lt;/h3&gt;
 
