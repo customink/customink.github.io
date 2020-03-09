@@ -7,6 +7,51 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Ken Collins - Our AWS Hero</title>
+        <description>&lt;p&gt;Amazon Web Services (AWS) provides a wide array of tools, storage, guides, and services for hosting and monitoring your web and cloud applications. There is no shortage of what AWS can do, with an ever increasing set of new tools at your disposal. With Custom Ink hosted on AWS, it is essential that our company stays ahead of the curve and takes initiative in keeping up with latest industry trends and standards. This allows us to provide the most secure, reliable, and performant experience to our customers.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;However, the task of learning about all of these services -- reading the documentation, practicing (succeeding &lt;em&gt;and&lt;/em&gt; failing) over and over -- takes time and perseverance. Luckily, Custom Ink encourages and supports our employees to take up these initiatives to bolster individual and team knowledge base. This allows our tech team and community to have the tools needed to deliver on time, quickly, efficiently, and with the highest level of support and monitoring.
+&lt;img src=&quot;/assets/content/aurora-serverless/serverlessHero-badge-min-5b1c815b4bec88c668720fda5358aae9ab030b662a679b518d7431d5b952e328.png&quot; class=&quot;tb-Img tb-Img--responsive&quot;/&gt; &lt;/p&gt;
+
+&lt;p&gt;Amazon is known for insisting on the highest standards and hard drive for being the best. This is one reason why AWS is so successful and why learning about these tools is such an accomplishment. &lt;/p&gt;
+
+&lt;p&gt;One of our own beloved Staff Engineers, Ken Collins was awarded the title of AWS Hero in February 2020. Ken Collins proved himself with a steadfast commitment to learning as well as teaching. He has a passion for Ruby, Rails, and especially serverless development. Though he has many other interests, work in these areas have helped Custom Ink grow into one of the best customizable product companies. &lt;/p&gt;
+
+&lt;p&gt;From AWS&amp;#39; recent &lt;a href=&quot;https://aws.amazon.com/blogs/aws/get-to-know-the-latest-aws-heroes-including-the-first-iot-heroes/&quot;&gt;get to know the latest AWS Heroes post&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;The AWS Heroes program recognizes and honors individuals who are prominent leaders in local communities, known for sharing AWS knowledge and facilitating peer-to-peer learning in a variety of ways. The AWS Heroes program grows just as the enthusiasm for all things AWS grows in communities around the world, and there are now AWS Heroes in 35 &amp;gt; countries.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3&gt;Ken Collins - man of past, present, and future&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/aurora-serverless/hero-ken-collins-min-d995876e07f891979f61c75266ecea9c97702c8f023f2bbd35ba3ce5270a2976.jpg&quot; class=&quot;tb-Img tb-Img--responsive&quot;/&gt; 
+Today, Ken continues his work with Rails and various open source projects. His notable work has been with AWS Lambda using a Ruby gem called &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby&lt;/a&gt;. To continue the growth, he has plans for the future roadmap for Lambdy:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Test support the new &lt;a href=&quot;https://aws.amazon.com/blogs/compute/announcing-http-apis-for-amazon-api-gateway/&quot;&gt;HTTP APIs for Amazon API Gateway&lt;/a&gt;. A lighter weight and cost-effective alternative to API Gateway.&lt;/li&gt;
+&lt;li&gt;Test &lt;a href=&quot;https://aws.amazon.com/about-aws/whats-new/2019/12/amazon-rds-proxy-available-in-preview/&quot;&gt;RDS Proxy&lt;/a&gt; now in preview mode. This would allow native MySQL &amp;amp; PostgreSQL connections.&lt;/li&gt;
+&lt;li&gt;A new &lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start&quot;&gt;quick start guide&lt;/a&gt; on the Lamby website leveraging AWS SAM templates.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Ken lives and works in Norfolk, VA, giving Virginia representation in that list. He often commutes to Custom Ink to learn, teach, and assist his fellow engineers. However, Ken is more than a gifted developer. He is also a person who will treat you as a friend upon first meeting you. He will also grab a beer with you after a long day of hard work. Custom Ink and our technology team are proud of you and hope you continue to improve yourself as well as our company. &lt;/p&gt;
+
+&lt;p&gt;Lastly, Ken would like to leave us with some encouraging words about his passion in the shift and future of cloud technologies:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;“Learning to ‘program the cloud’ has been my most enjoyable career shift since learning to build and deploy Rails applications to Heroku. I believe we are getting closer to another paradigm shift within the cloud - one similar to Rails&amp;#39; value proposition of convention over configuration. Instead of virtualized servers, this change invokes a level playing field for any infrastructure important to application developers. Resources normally partitioned into front/back or dev/ops expertise are now within reach to us all. There are many paths to this future and I am honored to help with my small part as an AWS Serverless Hero. Serverless-first, serverless for everyone!&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Learn more about Ken &lt;a href=&quot;https://aws.amazon.com/developer/community/heroes/ken-collins/&quot;&gt;here&lt;/a&gt;!&lt;/p&gt;
+</description>
+        <pubDate>Thu, 05 Mar 2020 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2020/03/05/ken-collins-our-aws-hero/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/03/05/ken-collins-our-aws-hero/</guid>
+      </item>
+    
+      <item>
         <title>Prevalence of Mobile Technology and Adapting to the Industry with React Native</title>
         <description>&lt;p&gt;Having your mobile phone on you has become almost a daily necessity. Yesterday, I was driving and while I was looking at my dwindling battery life, I considered what I could do if I didn’t have my phone. Well, since I had my car… I could drive home.. But that’s about it. I couldn’t get ahold of any of my family or friends without being able to call them. I wouldn’t be able to find out the best traffic route, and to be honest, it’s possible I would miss my turn while listening to XM and get lost without directions back. &lt;/p&gt;
 
