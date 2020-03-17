@@ -7,6 +7,185 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Using AWS SAM Cookiecutter Project Templates</title>
+        <description>&lt;h3&gt;To Kickstart Your Lambda Projects&lt;/h3&gt;
+
+&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/cookiecutter/masthead-81ebef04dce2278e5c5776780e1b9bca8ca9b23e1a0a05aa3edf80594d3b62fd.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;How to make cloud cookies: by Lisa the Bearfoot Baker.&quot; /&gt;
+  &lt;a href=&quot;https://www.ecrandal.com/cloud/&quot; &gt;&lt;aside class=&quot;tb-Masthead-caption&quot; caption=&quot;Handmade Copper Cookie Cutters: by Eric and Jamie Border.&quot;&gt;&lt;/aside&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/aurora-serverless/lambda-rails-360f90d66f8ea8739cbf7334d3cda918393e218469653de0ae0e0e87b10bac2e.png&quot; alt=&quot;Lamby - Simple Rails &amp; AWS Lambda Integration&quot; style=&quot;float:right; width:15%;&quot; /&gt;For the upcoming &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby&lt;/a&gt; work, we really want to improve our &amp;quot;getting started&amp;quot; experience. Creating a new Rails app on AWS Lambda should feel just as natural as running the &lt;code&gt;$ rails new&lt;/code&gt; command line tool. One option to explore could be AWS&amp;#39; &lt;a href=&quot;https://aws.amazon.com/serverless/serverlessrepo/&quot;&gt;Serverless Application Repository&lt;/a&gt;. Commonly called SAR (czar, not es•ay•are) for short, it offers re-usable applications similiar to Heroku&amp;#39;s &lt;a href=&quot;https://blog.heroku.com/heroku-button&quot;&gt;deploy button&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Learning SAR is definitely on my list. However, initial research showed that it was not well suited for generator style project templates. Nor did it appear to put an emphasis on leaving the user with some local version-controllable artifact to move the application forward using various CI/CD tools. However, I have known that the SAM CLI tool &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-init.html&quot;&gt;does support&lt;/a&gt; a popular Python project called &lt;a href=&quot;https://github.com/cookiecutter/cookiecutter&quot;&gt;Cookiecutter&lt;/a&gt; which might be perfect for Lamby. So I set out to learn more about it.&lt;/p&gt;
+
+&lt;h2 id=&quot;want-to-skip-ahead&quot;&gt;👟 Want to Skip Ahead?&lt;/h2&gt;
+
+&lt;p&gt;Like learning from the outside in? I took all the work (🚧) below and made a simple demo Lambda cookiecutter publicly available at &lt;a href=&quot;https://github.com/customink/cookiecutter-ruby&quot;&gt;customink/cookiecutter-ruby&lt;/a&gt; on GitHub. Feedback on your experience or how we can do this better is &lt;a href=&quot;https://github.com/customink/cookiecutter-ruby/issues/1&quot;&gt;very much appreciated&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;If you already have &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html&quot;&gt;AWS SAM CLI&lt;/a&gt; installed, run this command.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sam init &lt;span class=&quot;nt&quot;&gt;--location&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gh:customink/cookiecutter-ruby&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you want to avoid installing SAM CLI alltogether, you can use this Docker command.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker run &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--interactive&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PWD&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/var/task:delegated&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  lambci/lambda:build-ruby2.7 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  sam init &lt;span class=&quot;nt&quot;&gt;--location&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gh:customink/cookiecutter-ruby&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Commit your newly generated Lambda project to GitHub and the project&amp;#39;s README.md for usage and next steps.&lt;/p&gt;
+
+&lt;h2 id=&quot;learning-cookiecutter&quot;&gt;🚧 Learning Cookiecutter&lt;/h2&gt;
+
+&lt;p&gt;Abstract learning without a goal to apply it, rarely helps me explore a technology. So for this exercise, I set out to build a suite of Lambda starters to help our Custom Ink teams adopt a &amp;quot;serverless-first&amp;quot; mindset by starting on the small/medium sized workload needs. Here is a checklist of features I think we needed.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Mimic Rails&amp;#39; CLI &amp;quot;app_name&amp;quot; argument to customize file, folder, and class namespaces.&lt;/li&gt;
+&lt;li&gt;Expose a configuration option for simple event-driven workload or API responses.&lt;/li&gt;
+&lt;li&gt;Integrate a &lt;a href=&quot;https://technology.customink.com/blog/2019/09/02/from-travis-ci-to-github-actions/&quot;&gt;GitHub Actions&lt;/a&gt; workflow template to run tests and deploy.&lt;/li&gt;
+&lt;li&gt;Leverage Docker containers to make development, test, and deployment easy.&lt;/li&gt;
+&lt;li&gt;Remove the need to copy our SAM &lt;code&gt;bin&lt;/code&gt; script conventions to new projects.&lt;/li&gt;
+&lt;li&gt;Explore the new &lt;a href=&quot;https://aws.amazon.com/blogs/compute/announcing-http-apis-for-amazon-api-gateway/&quot;&gt;HTTP API&lt;/a&gt; version of API Gateway.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;While learning, I made heavy use of the great documentation by the Cookiecutter team, notably the &amp;quot;Advanced Usage&amp;quot; section. Searching GitHub issues is also a fine art. Especially when you lack the proper project-specific keywords to use. Sharing both below.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://cookiecutter.readthedocs.io&quot;&gt;Cookiecutter Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cookiecutter/cookiecutter&quot;&gt;Cookiecutter GitHub Repo&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;inflecting-a-single-input&quot;&gt;🚧 Inflecting a Single Input&lt;/h2&gt;
+
+&lt;p&gt;Cookiecutter&amp;#39;s input parameters are driven by a &lt;code&gt;cookiecutter.json&lt;/code&gt; file at the root of the repository. The user can customize these via the CLI prompt after running &lt;code&gt;sam init&lt;/code&gt;. Most Cookiecutter projects have a &lt;code&gt;project_name&lt;/code&gt; variable and this is the one we want to mimic Rails&amp;#39; &lt;code&gt;new&lt;/code&gt; command which drives all naming conventions for the newly created project. So if someone typed &amp;quot;my_new_service&amp;quot; it would be converted to &amp;quot;MyNewService&amp;quot; and ideally used via Cookiecutter&amp;#39;s template code like &lt;code&gt;{{cookiecutter.class_name}}&lt;/code&gt;. These are the derived project name variables we needed:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;MyNewService&lt;/code&gt; - Class name or module namespace.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;my_new_service&lt;/code&gt; - File or folder namespace.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;my-new-service&lt;/code&gt; - Other places like function/stack names.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The problem is that Cookiecutter was not built to directly support this. Sure we could use some inline, possibly verbose, Python to transform a single variable. Especially since Cookiecutter does not natively support succinct rails-like ActiveSupport inflector methods. Nor the ability to import ad-hoc code. The solution is somewhat hacky, but involves these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Leverage Cookiecutter&amp;#39;s &amp;quot;pre&amp;quot; and &amp;quot;post&amp;quot; gen hooks.&lt;/li&gt;
+&lt;li&gt;Add &lt;a href=&quot;https://github.com/jpvanhal/inflection/blob/master/inflection.py&quot;&gt;some inflector&lt;/a&gt; code to the &lt;code&gt;pre_gen_project.py&lt;/code&gt; file.&lt;/li&gt;
+&lt;li&gt;Write individual text files, one for each derived property.&lt;/li&gt;
+&lt;li&gt;Include those values within in your templates.&lt;/li&gt;
+&lt;li&gt;Clean up the project&amp;#39;s build directory using &lt;code&gt;post_gen_project.py&lt;/code&gt; file.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So instead of being able to use &lt;code&gt;{{cookiecutter.class_name}}&lt;/code&gt; we have to use something like &lt;code&gt;{% include &amp;quot;_cctmp/class_name.txt&amp;quot; %}&lt;/code&gt;. It also means that file renaming now needs to be done in the post gen hook via Python&amp;#39;s &lt;code&gt;os.rename&lt;/code&gt; method. A small price to keep the outside user experience clean.&lt;/p&gt;
+
+&lt;p&gt;How can Cookiecutter make this better? A little would go a long way. These two issues on their site are good ones to watch if you want to advocate for improving things.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cookiecutter/cookiecutter/pull/944&quot;&gt;Allow Jinja Extensions to be Bundled&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cookiecutter/cookiecutter/issues/1101&quot;&gt;Help generating GUID/UUID values for Context Variables&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;github-actions-for-ci-cd&quot;&gt;🚧 GitHub Actions for CI/CD&lt;/h2&gt;
+
+&lt;p&gt;Your newly created Lambda project includes a simple test suite with some events to get you started. It even includes a &lt;code&gt;.github/workflows/cicd.yml&lt;/code&gt; file to run those tests with GitHub Actions and even deploys your Lambda when changes land in master. We leverage the &lt;a href=&quot;https://github.com/aws-actions/configure-aws-credentials&quot;&gt;Configure AWS Credentials&lt;/a&gt; action which requires you to provide both a &lt;code&gt;AWS_ACCESS_KEY_ID&lt;/code&gt; and &lt;code&gt;AWS_SECRET_ACCESS_KEY&lt;/code&gt; via their &lt;a href=&quot;https://github.blog/2020-02-06-manage-secrets-and-more-with-the-github-actions-api/&quot;&gt;managed secrets&lt;/a&gt; interface. To survive the Cookiecutter templating process we had to quote this literal &lt;code&gt;${{ secrets.AWS_ACCESS_KEY_ID }}&lt;/code&gt; format like so.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;
+&lt;span class=&quot;na&quot;&gt;aws-access-key-id&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;secrets.AWS_ACCESS_KEY_ID&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}}&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;aws-secret-access-key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;${{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;secrets.AWS_SECRET_ACCESS_KEY&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;}}&quot;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;One easy way to make a &amp;quot;deploy&amp;quot; user with limited IAM capabilities is to do the first deployment yourself in a role with elevated permissions, and then create a user with more restricted permissions to do the updates. For example, assuming your local machine has the AWS CLI configured, this would deploy your Lambda:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ STAGE_ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;production ./bin/deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To create a simple &amp;quot;deploy&amp;quot; user with keys, we recommend getting started with the &lt;code&gt;AWSLambdaFullAccess&lt;/code&gt; managed policy. To do so, in the &amp;quot;AWS Console → IAM → Users → Add User&amp;quot;:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Check &amp;quot;Programmatic access&amp;quot; option.&lt;/li&gt;
+&lt;li&gt;Select &amp;quot;Attach existing policies directly&amp;quot; option.&lt;/li&gt;
+&lt;li&gt;Select &amp;quot;AWSLambdaFullAccess&amp;quot; policy.&lt;/li&gt;
+&lt;li&gt;Copy the &amp;quot;Access key ID&amp;quot; and &amp;quot;Secret access key&amp;quot;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Now within your GitHub repo page. Click Settings → Secrets → Add a new secret&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Name: &lt;code&gt;AWS_ACCESS_KEY_ID&lt;/code&gt; Value: Value from the step above.&lt;/li&gt;
+&lt;li&gt;Name: &lt;code&gt;AWS_SECRET_ACCESS_KEY&lt;/code&gt; Value: Value from the step above.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;byo-events-or-http-api&quot;&gt;🚧 BYO Events or HTTP API?&lt;/h2&gt;
+
+&lt;p&gt;Our demo Cookiecutter project has an option to bring your own events or to make a simple HTTP microservice using the newly released HTTP API for API Gateway. I recommend &lt;a href=&quot;https://lumigo.io/blog/http-api-goes-ga-today/&quot;&gt;Yan Cui&amp;#39;s &amp;quot;&lt;em&gt;HTTP API GOES GA TODAY!&lt;/em&gt;&amp;quot;&lt;/a&gt; post if HTTP API is new to you.&lt;/p&gt;
+
+&lt;p&gt;To enable the event options, we simply added this &lt;code&gt;http_api&lt;/code&gt; variable to our &lt;code&gt;cookiecutter.json&lt;/code&gt; file. It defaults to &lt;code&gt;yes&lt;/code&gt; because it is the first option in the array. In our template code we can check for this using simple conditions like &lt;code&gt;{%- if cookiecutter.http_api == &amp;quot;yes&amp;quot; %}&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;project_name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;my_awesome_lambda&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;http_api&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;yes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;no&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I was overjoyed to find that implementing HTTP API via SAM was super terse and easy. Every &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-httpapi.html&quot;&gt;AWS::Serverless::HttpApi&lt;/a&gt; property like &lt;code&gt;DefinitionBody&lt;/code&gt; was optional and the default behavior was a full proxy. So this would be the conditional resource added in the template:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;MyNewServiceHttpApi&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWS::Serverless::HttpApi&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;StageName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Ref&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;StageEnv&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And this would be the conditional event added to the Lambda resource.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;Events&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;MyNewServiceHttpApiProxy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;HttpApi&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;ApiId&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;MyNewServiceHttpApi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Amazing! This is the first time I felt like HTTP events in SAM was well into the convention-over-configuration camp. Well done, team! That said, they do have some work ahead of them to enable all the features of &lt;a href=&quot;https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-api.html&quot;&gt;AWS::ApiGatewayV2::Api&lt;/a&gt;. For example, tags are not passed down via CloudFormation and you have no way to use them with &lt;code&gt;AWS::Serverless::HttpApi&lt;/code&gt;. Also, our &lt;code&gt;bin/server&lt;/code&gt; script does not work since SAM CLI &lt;a href=&quot;https://github.com/awslabs/aws-sam-cli/issues/1641&quot;&gt;has yet to add support&lt;/a&gt; via the &lt;code&gt;start-api&lt;/code&gt; command. But I&amp;#39;m sure that is coming soon and not technically needed in this demo project.&lt;/p&gt;
+
+&lt;div class=&quot;sb-Dialog sb-Dialog--info&quot; style=&quot;margin-top:0;&quot;&gt;
+  &lt;div class=&quot;sb-Dialog-icon&quot;&gt;
+    &lt;i class=&quot;sb-Icon--info&quot;&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;sb-Dialog-message&quot;&gt;
+    &lt;h3&gt;SAM Support for HTTP API &lt;/h3&gt;
+    &lt;p&gt;
+      While writing this article, the &lt;a href=&quot;https://github.com/awslabs/serverless-application-model/releases/tag/v1.22.0&quot;&gt;AWS SAM team released v1.22.0&lt;/a&gt; which includes massive updates for the new HTTP API. This means AWS SAM CLI will be getting an update soon!
+    &lt;/p&gt;
+   &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;everything-else&quot;&gt;🚧 Everything else&lt;/h2&gt;
+
+&lt;p&gt;I could go on and on but for brevity&amp;#39;s sake, we can stop here. If you want to learn how to build your own Cookiecutter Lambda starter, use our &lt;a href=&quot;https://github.com/customink/cookiecutter-ruby&quot;&gt;customink/cookiecutter-ruby&lt;/a&gt; project for inspiration. Our internal ones span multiple languages (Ruby, Node, &amp;amp; Python) and do a lot more. SAM Cookiecutters are a great way to remove process or boilerplate burdens for your team. Here are some things we put an emphasis on:&lt;/p&gt;
+
+&lt;h4 id=&quot;docker-images&quot;&gt;Docker Images&lt;/h4&gt;
+
+&lt;p&gt;By using &lt;code&gt;docker-compose&lt;/code&gt;, we are able to provide a shared development, testing, and deployment process. Not only does this allow a unified developer experience, but it effectively commoditizes the deployment process, making it more portable. We do this for Lambda by leveraging &lt;a href=&quot;https://twitter.com/hichaelmart&quot;&gt;@hichaelmart&amp;#39;s&lt;/a&gt; community &lt;a href=&quot;https://github.com/lambci/docker-lambda&quot;&gt;lambci/docker-lambda&lt;/a&gt; project. These are the same images that AWS SAM CLI uses too.&lt;/p&gt;
+
+&lt;h4 id=&quot;strap-scripts&quot;&gt;Strap Scripts&lt;/h4&gt;
+
+&lt;p&gt;Following ideas like this &lt;a href=&quot;https://github.com/github/scripts-to-rule-them-all&quot;&gt;scripts to rule them all&lt;/a&gt; project, we make heavy use of &lt;code&gt;bin&lt;/code&gt; script conventions at Custom Ink. Every project no matter the language or implementation should have a unified interface to &lt;code&gt;bootstrap&lt;/code&gt;, &lt;code&gt;setup&lt;/code&gt;, and &lt;code&gt;test&lt;/code&gt; the project. Our adoption of Lambda and Infrastructure as Code extends these concepts to &lt;code&gt;deploy&lt;/code&gt; as well.&lt;/p&gt;
+
+&lt;h4 id=&quot;multi-account-deploys&quot;&gt;Multi-Account Deploys&lt;/h4&gt;
+
+&lt;p&gt;From development to staging and production. Using a combination of environment variables like &lt;code&gt;STAGE_ENV&lt;/code&gt; or &lt;code&gt;RAILS_ENV&lt;/code&gt; along with our script conventions above, we make it easy to deploy to any AWS account. Docker compose also makes this easy by leveraging its &lt;code&gt;environment&lt;/code&gt; option. It even support defaults. For example, this line will use the host&amp;#39;s &lt;code&gt;STAGE_ENV&lt;/code&gt; or default to &lt;code&gt;development&lt;/code&gt;; combine this with &lt;code&gt;AWS_PROFILE&lt;/code&gt; and you can get some really neat results:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;STAGE_ENV=${STAGE_ENV-development}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;p&gt;As always, thanks for reading! Below are some quick links for reference. If you have any ideas or feedback, leave a comment. I&amp;#39;d love to hear from you.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/customink/cookiecutter-ruby&quot;&gt;Demo AWS SAM Lambda Cookiecutter Ruby Project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lumigo.io/blog/http-api-goes-ga-today/&quot;&gt;Yan Cui&amp;#39;s HTTP API Rundown&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/panther-labs/aws-serverless-application-repository-lambda-and-beyond-fa4e652b9c75&quot;&gt;AWS Serverless Application Repository: Lambda and Beyond&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cookiecutter/cookiecutter&quot;&gt;The Cookiecutter GitHub Project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lambci/docker-lambda&quot;&gt;LambCI Docker images used by SAM&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 13 Mar 2020 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects/</guid>
+      </item>
+    
+      <item>
         <title>Ken Collins - Our AWS Hero</title>
         <description>&lt;p&gt;Amazon Web Services (AWS) provides a wide array of tools, storage, guides, and services for hosting and monitoring your web and cloud applications. There is no shortage of what AWS can do, with an ever increasing set of new tools at your disposal. With Custom Ink hosted on AWS, it is essential that our company stays ahead of the curve and takes initiative in keeping up with latest industry trends and standards. This allows us to provide the most secure, reliable, and performant experience to our customers.&lt;/p&gt;
 
