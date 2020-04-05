@@ -7,6 +7,74 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>AWS CLI Multi Factor Auth (MFA) with Docker</title>
+        <description>&lt;p&gt;Recently I blogged about using &lt;a href=&quot;https://technology.customink.com/blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects/&quot;&gt;SAM Cookicutter Projects&lt;/a&gt; to kickstart your development. One aspect of that work was leveraging Docker containers for all the SAM CLI commands. However, sometimes we all have AWS CLI tasks that fall outside a project. At Custom Ink we make heavy usage of Homebrew and projects like &lt;a href=&quot;https://github.com/pyenv/pyenv&quot;&gt;pyenv&lt;/a&gt;, a Python Version Manager, to install both system and project-scoped tooling. Neither of which help me maintain a sane global AWS CLI setup. Especially when multi factor authentication is needed.&lt;/p&gt;
+
+&lt;h2 id=&quot;thanks-aws-docker-cli&quot;&gt;🚢 Thanks AWS Docker CLI&lt;/h2&gt;
+
+&lt;p&gt;Recently the AWS Docker CLI project &lt;a href=&quot;https://aws.amazon.com/blogs/developer/aws-cli-v2-docker-image/&quot;&gt;announced CLI v2 support&lt;/a&gt;. This is a very lightweight container which delegates all run commands to the &lt;code&gt;aws&lt;/code&gt; entrypoint which is already pre-installed. I&amp;#39;ve never used the Docker CLI project and today felt like a good time to switch. So I make a shell function (this cold be a long alias too) called &lt;code&gt;dk-aws&lt;/code&gt; and aliased it to &lt;code&gt;aws&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;dk-aws&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  docker run &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--interactive&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/.aws:/root/.aws:delegated&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PWD&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/aws:delegated&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&quot;amazon/aws-cli&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$@&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;aws&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;dk-aws
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here is a simple usage example. I would imagine that this would serve most everyone&amp;#39;s AWS CLI needs. What a joy!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;aws s3 &lt;span class=&quot;nb&quot;&gt;ls
+&lt;/span&gt;2010-01-26 16:33:21 cdn.metaskills.net
+2020-03-16 00:38:38 cookiecutter-ruby-demo-c945wcad59
+2020-01-13 03:00:38 homemarks.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;multi-factor-cli&quot;&gt;🔐 Multi Factor CLI&lt;/h2&gt;
+
+&lt;p&gt;Recently I adopted some better security practices and began using MFA with my AWS CLI. Specifically, I had installed this &lt;a href=&quot;https://github.com/broamski/aws-mfa&quot;&gt;aws-mfa project&lt;/a&gt; which allows me to dynamically generate a profile that has temporary credentials. So how to make that work with the Docker CLI usage above? Here are a few hacks
+I quickly put together this morning. First, a Dockerfile is needed to build a custom image using the &lt;code&gt;amazon/aws-cli&lt;/code&gt; image above as the base. This Dockerfile can be located anywhere on your computer, mine is in my ZSH kit&amp;#39;s resources folder at &lt;code&gt;~/.zshkit/resources/Dockerfile-aws-mfa&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-docker&quot; data-lang=&quot;docker&quot;&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; amazon/aws-cli&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /tmp &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    curl &lt;span class=&quot;s2&quot;&gt;&quot;https://bootstrap.pypa.io/get-pip.py&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;get-pip.py&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    python get-pip.py &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;aws-mfa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To build and name this image, I use this function. Notice how we leverage the &lt;code&gt;--tag&lt;/code&gt; option to get a handle
+on the image name.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;dk-aws-mfa-build&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nv&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/.zshkit/resources/Dockerfile-aws-mfa&quot;&lt;/span&gt;
+  docker build &lt;span class=&quot;nt&quot;&gt;--tag&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;metaskills/aws-cli&quot;&lt;/span&gt; - &amp;lt; &lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now when I need to setup my CLI to leverage temporary MFA credentials, I invoke this &lt;code&gt;aws-mfa&lt;/code&gt; function below. Change the &lt;code&gt;--profile&lt;/code&gt; value as needed to best meet your naming strategy. Most important, have a great time using the AWS CLI via Docker from now on. 😀&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;aws-mfa&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  docker run &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--interactive&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--tty&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--rm&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HOME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/.aws:/root/.aws:delegated&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PWD&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:/aws:delegated&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--entrypoint&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/aws-mfa&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&quot;metaskills/aws-cli:latest&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;production
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;resources&quot;&gt;📚 Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/developer/aws-cli-v2-docker-image/&quot;&gt;AWS Docker CLI v2 Announcement&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/broamski/aws-mfa&quot;&gt;Easily manage your AWS Security Credentials when using Multi-Factor Authentication (MFA)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 05 Apr 2020 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2020/04/05/aws-cli-multi-factor-auth-with-docker/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/04/05/aws-cli-multi-factor-auth-with-docker/</guid>
+      </item>
+    
+      <item>
         <title>Using AWS SAM Cookiecutter Project Templates</title>
         <description>&lt;h3&gt;To Kickstart Your Lambda Projects&lt;/h3&gt;
 
@@ -181,8 +249,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 13 Mar 2020 00:00:00 -0400</pubDate>
-        <link>https://technology.customink.com//blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects/</link>
-        <guid isPermaLink="true">http://technology.customink.com//blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects/</guid>
+        <link>https://technology.customink.com//blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects-copy/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/03/13/using-aws-sam-cookiecutter-project-templates-to-kickstart-your-ambda-projects-copy/</guid>
       </item>
     
       <item>
