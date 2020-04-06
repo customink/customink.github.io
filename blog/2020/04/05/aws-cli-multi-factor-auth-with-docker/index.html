@@ -49,10 +49,12 @@
 
 <p>Recently the AWS Docker CLI project <a href="https://aws.amazon.com/blogs/developer/aws-cli-v2-docker-image/">announced CLI v2 support</a>. This is a very lightweight container which delegates all run commands to the <code>aws</code> entrypoint which is already pre-installed. I&#39;ve never used the Docker CLI project and today felt like a good time to switch. So I make a shell function (this cold be a long alias too) called <code>dk-aws</code> and aliased it to <code>aws</code>.</p>
 <div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">function </span>dk-aws<span class="o">()</span> <span class="o">{</span>
+  <span class="nv">AWS_PROFILE</span><span class="o">=</span><span class="k">${</span><span class="nv">AWS_PROFILE</span>:<span class="p">=default</span><span class="k">}</span>
   docker run <span class="se">\</span>
     <span class="nt">--interactive</span> <span class="se">\</span>
     <span class="nt">--tty</span> <span class="se">\</span>
     <span class="nt">--rm</span> <span class="se">\</span>
+    <span class="nt">--env</span> <span class="nv">AWS_PROFILE</span><span class="o">=</span><span class="nv">$AWS_PROFILE</span> <span class="se">\</span>
     <span class="nt">--volume</span> <span class="s2">"</span><span class="k">${</span><span class="nv">HOME</span><span class="k">}</span><span class="s2">/.aws:/root/.aws:delegated"</span> <span class="se">\</span>
     <span class="nt">--volume</span> <span class="s2">"</span><span class="k">${</span><span class="nv">PWD</span><span class="k">}</span><span class="s2">:/aws:delegated"</span> <span class="se">\</span>
     <span class="s2">"amazon/aws-cli"</span> <span class="se">\</span>
