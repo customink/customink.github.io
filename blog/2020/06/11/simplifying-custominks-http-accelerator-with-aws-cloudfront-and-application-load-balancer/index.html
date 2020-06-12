@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Posts By: Max Tedford - CustomInk Technology Blog</title>
+  <title>Keeping Customink.com Fast and Reliable with AWS CloudFront and Application Load Balancer - CustomInk Technology Blog</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Posts By: Max Tedford">
+  <meta name="description" content="In early 2020, Custom Ink implemented an AWS Application Load Balancer in front of CustomInk.com and decommissioned a set of EC2 instances running ...">
   
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://technology.customink.com/feed.xml" />
   <style rel="stylesheet" type="text/css">﻿/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:0.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace, monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace, monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:0.35em 0.75em 0.625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}html,body{height:100%}body,button,input,select,textarea,pre{margin:0;background-color:white}h1,h2,h3,h4,h5,h6,p,dl,ol,ul{margin-top:0;margin-bottom:1rem}ol,ul{padding-left:2rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0;padding-left:1rem}button{border:0}button,input,select,textarea{font-family:inherit;font-size:100%}textarea{display:block}article,aside,details,figcaption,figure,footer,header,main,nav,section,summary{display:block}.sb-Wrapper{padding-right:1rem;padding-left:1rem}@media (min-width: 43.75em){.sb-Wrapper{width:42.75rem;margin-right:auto;margin-left:auto}}@media (min-width: 64em){.sb-Wrapper{width:63rem;margin-right:auto;margin-left:auto}}@media (min-width: 81.25em){.sb-Wrapper{width:80.25rem;margin-right:auto;margin-left:auto}}.sb-Wrapper--fluid{padding-right:1rem;padding-left:1rem;margin-right:auto;margin-left:auto}.sb-PageWrapper.is-open:before{content:'';display:block;position:absolute;top:0;right:0;bottom:0;left:0;z-index:99999999}.sb-Main{max-width:100%;margin-left:auto;margin-right:auto}.sb-Main:after{content:" ";display:block;clear:both}.sb-Main--content{padding-top:1rem}@media (min-width: 64em){.sb-Main--content{padding-top:1.5rem}}@media (max-width: 43.6875em){html.is-minimalUI{overflow:hidden}html.is-minimalUI .sb-PageWrapper{height:100%;overflow-y:scroll;-webkit-overflow-scrolling:touch}}.sb-Btn,a.sb-Btn,.sb-Btn--primary,a.sb-Btn--primary,.sb-Btn--primaryAlt,a.sb-Btn--primaryAlt,.sb-Form input[type='submit'],.sb-Form input[type='submit'].sb-Btn--primary,.sb-Form input[type='submit'].sb-Btn--primaryAlt{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:#1f51cf;padding:0.65rem 2rem;color:#fff;border-radius:6px;transition:all 0.1s ease-in-out;display:inline-block;text-align:center;position:relative;border:0}.sb-Btn:after,a.sb-Btn:after,.sb-Btn--primary:after,a.sb-Btn--primary:after,.sb-Btn--primaryAlt:after,a.sb-Btn--primaryAlt:after,.sb-Form input[type='submit']:after,.sb-Form input[type='submit'].sb-Btn--primary:after,.sb-Form input[type='submit'].sb-Btn--primaryAlt:after{content:"";position:absolute;width:100%;height:10px;border-radius:6px;bottom:0;left:0;box-shadow:0 -3px 0 rgba(0,0,0,0.6) inset}.sb-Btn:visited,a.sb-Btn:visited,.sb-Btn--primary:visited,a.sb-Btn--primary:visited,.sb-Btn--primaryAlt:visited,a.sb-Btn--primaryAlt:visited,.sb-Form input[type='submit']:visited,.sb-Form input[type='submit'].sb-Btn--primary:visited,.sb-Form input[type='submit'].sb-Btn--primaryAlt:visited{color:#fff}.sb-Btn:hover,a.sb-Btn:hover,.sb-Btn--primary:hover,a.sb-Btn--primary:hover,.sb-Btn--primaryAlt:hover,a.sb-Btn--primaryAlt:hover,.sb-Form input[type='submit']:hover,.sb-Form input[type='submit'].sb-Btn--primary:hover,.sb-Form input[type='submit'].sb-Btn--primaryAlt:hover{color:#fff;background:#1840a3}.sb-Btn:active,.sb-Btn:focus,.sb-Btn.is-Active,a.sb-Btn:active,a.sb-Btn:focus,a.sb-Btn.is-Active,.sb-Btn--primary:active,.sb-Btn--primary:focus,.sb-Btn--primary.is-Active,a.sb-Btn--primary:active,a.sb-Btn--primary:focus,a.sb-Btn--primary.is-Active,.sb-Btn--primaryAlt:active,.sb-Btn--primaryAlt:focus,.sb-Btn--primaryAlt.is-Active,a.sb-Btn--primaryAlt:active,a.sb-Btn--primaryAlt:focus,a.sb-Btn--primaryAlt.is-Active,.sb-Form input[type='submit']:active,.sb-Form input[type='submit']:focus,.sb-Form input[type='submit'].is-Active,.sb-Form input[type='submit'].sb-Btn--primary:active,.sb-Form input[type='submit'].sb-Btn--primary:focus,.sb-Form input[type='submit'].sb-Btn--primary.is-Active,.sb-Form input[type='submit'].sb-Btn--primaryAlt:active,.sb-Form input[type='submit'].sb-Btn--primaryAlt:focus,.sb-Form input[type='submit'].sb-Btn--primaryAlt.is-Active{outline:none;color:#fff;background:#295cdf}.sb-Btn:disabled,.sb-Btn.is-Disabled,a.sb-Btn:disabled,a.sb-Btn.is-Disabled,.sb-Btn--primary:disabled,.sb-Btn--primary.is-Disabled,a.sb-Btn--primary:disabled,a.sb-Btn--primary.is-Disabled,.sb-Btn--primaryAlt:disabled,.sb-Btn--primaryAlt.is-Disabled,a.sb-Btn--primaryAlt:disabled,a.sb-Btn--primaryAlt.is-Disabled,.sb-Form input[type='submit']:disabled,.sb-Form input[type='submit'].is-Disabled,.sb-Form input[type='submit'].sb-Btn--primary:disabled,.sb-Form input[type='submit'].sb-Btn--primary.is-Disabled,.sb-Form input[type='submit'].sb-Btn--primaryAlt:disabled,.sb-Form input[type='submit'].sb-Btn--primaryAlt.is-Disabled{opacity:.3;cursor:not-allowed;pointer-events:none}.sb-Btn--primaryRed,a.sb-Btn--primaryRed,.sb-Form input[type='submit'].sb-Btn--primaryRed{background-color:#fa3c00;transition:all 0.1s ease-in-out}.sb-Btn--primaryRed:active,.sb-Btn--primaryRed:focus,.sb-Btn--primaryRed.is-Active,a.sb-Btn--primaryRed:active,a.sb-Btn--primaryRed:focus,a.sb-Btn--primaryRed.is-Active,.sb-Form input[type='submit'].sb-Btn--primaryRed:active,.sb-Form input[type='submit'].sb-Btn--primaryRed:focus,.sb-Form input[type='submit'].sb-Btn--primaryRed.is-Active{outline:none;color:#fff;background-color:#ff602e !important}.sb-Btn--primaryRed:hover,a.sb-Btn--primaryRed:hover,.sb-Form input[type='submit'].sb-Btn--primaryRed:hover{background:#e13600}.sb-Btn--secondary,a.sb-Btn--secondary,.sb-Form input[type='submit'].sb-Btn--secondary,.sb-Btn--secondaryAlt,a.sb-Btn--secondaryAlt,.sb-Form input[type='submit'].sb-Btn--secondaryAlt{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;box-shadow:inset 0px 0px 0px 2px #1f51cf;background:transparent;padding:0.65rem 2rem;color:#1f51cf !important;transition:all 0.1s ease-in-out;display:inline-block;text-align:center}.sb-Btn--secondary:after,a.sb-Btn--secondary:after,.sb-Form input[type='submit'].sb-Btn--secondary:after,.sb-Btn--secondaryAlt:after,a.sb-Btn--secondaryAlt:after,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:after{display:none}.sb-Btn--secondary:hover,.sb-Btn--secondary:focus,.sb-Btn--secondary:active,a.sb-Btn--secondary:hover,a.sb-Btn--secondary:focus,a.sb-Btn--secondary:active,.sb-Form input[type='submit'].sb-Btn--secondary:hover,.sb-Form input[type='submit'].sb-Btn--secondary:focus,.sb-Form input[type='submit'].sb-Btn--secondary:active,.sb-Btn--secondaryAlt:hover,.sb-Btn--secondaryAlt:focus,.sb-Btn--secondaryAlt:active,a.sb-Btn--secondaryAlt:hover,a.sb-Btn--secondaryAlt:focus,a.sb-Btn--secondaryAlt:active,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:hover,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:focus,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:active{background-color:#1f51cf;color:#fff !important}.sb-Btn--secondary--white,a.sb-Btn--secondary--white,.sb-Form input[type='submit'].sb-Btn--secondary--white,.sb-Btn--secondaryAlt--white,a.sb-Btn--secondaryAlt--white,.sb-Form input[type='submit'].sb-Btn--secondaryAlt--white{background-color:#fff}.sb-Btn--link,a.sb-Btn--link,.sb-Form input[type='submit'].sb-Btn--link{border:0;background:transparent;color:#1e39d2 !important;box-shadow:none;transition:all 0.1s ease-in-out}.sb-Btn--link:after,a.sb-Btn--link:after,.sb-Form input[type='submit'].sb-Btn--link:after{display:none}.sb-Btn--link:hover,.sb-Btn--link:focus,.sb-Btn--link:active,a.sb-Btn--link:hover,a.sb-Btn--link:focus,a.sb-Btn--link:active,.sb-Form input[type='submit'].sb-Btn--link:hover,.sb-Form input[type='submit'].sb-Btn--link:focus,.sb-Form input[type='submit'].sb-Btn--link:active{background:transparent;transform:none;box-shadow:none;color:#14278f !important}.sb-Btn--linkAlt,a.sb-Btn--linkAlt,.sb-Form input[type='submit'].sb-Btn--linkAlt{border:2px solid #ededed;box-shadow:none;background-color:#ededed;color:#444 !important;transition:all 0.1s ease-in-out}.sb-Btn--linkAlt:after,a.sb-Btn--linkAlt:after,.sb-Form input[type='submit'].sb-Btn--linkAlt:after{display:none}.sb-Btn--linkAlt:hover,.sb-Btn--linkAlt:focus,.sb-Btn--linkAlt:active,a.sb-Btn--linkAlt:hover,a.sb-Btn--linkAlt:focus,a.sb-Btn--linkAlt:active,.sb-Form input[type='submit'].sb-Btn--linkAlt:hover,.sb-Form input[type='submit'].sb-Btn--linkAlt:focus,.sb-Form input[type='submit'].sb-Btn--linkAlt:active{border-color:#d4d4d4;transform:none;box-shadow:none;color:#444;background:#d4d4d4}.sb-Btn--large,a.sb-Btn--large,.sb-Form input[type='submit'].sb-Btn--large{font-size:1.25rem;font-weight:bold;padding-left:2rem;padding-right:2rem}.sb-Btn--small,a.sb-Btn--small,.sb-Form input[type='submit'].sb-Btn--small{font-size:0.85rem;padding:0.35rem 1.2rem 0.5rem}.sb-Btn--block,a.sb-Btn--block,.sb-Form input[type='submit'].sb-Btn--block{display:block;width:100%;text-align:center}.sb-Btn--mr,a.sb-Btn--mr{margin-right:1rem}@media (max-width: 43.6875em){.sb-Btn--responsive,a.sb-Btn--responsive,.sb-Form input[type='submit'].sb-Btn--responsive{display:block;width:100%;margin-right:0}}@media (max-width: 43.6875em){.sb-Btn--responsive--mb,a.sb-Btn--responsive--mb,.sb-Form input[type='submit'].sb-Btn--responsive--mb{margin-bottom:1rem}}html,body{font-size:16px;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;font-weight:normal;line-height:1.5;color:#444444}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:0.5rem;padding-top:0.5rem}h1,h2,h3{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2}h4,h5,h6{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2}h1{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:21.7728px}@media (min-width: 43.75em){h1{font-size:26.12736px}}@media (min-width: 64em){h1{font-size:31.35283px}}h2{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:18.144px}@media (min-width: 43.75em){h2{font-size:21.7728px}}@media (min-width: 64em){h2{font-size:26.12736px}}h3{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:15.12px}@media (min-width: 43.75em){h3{font-size:18.144px}}@media (min-width: 64em){h3{font-size:21.7728px}}h4{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h4{font-size:15.12px}}@media (min-width: 64em){h4{font-size:18.144px}}h5{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h5{font-size:15.12px}}@media (min-width: 64em){h5{font-size:15.12px}}h6{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h6{font-size:12.6px}}@media (min-width: 64em){h6{font-size:12.6px}}p,dl,ul,ol{font-size:1rem;line-height:1.5}strong,b{font-weight:bold}a{text-decoration:none;color:#1e39d2;cursor:pointer}a:visited{color:#1e39d2}a:hover{color:#0e1b62}a:active{color:#1e39d2}a.is-currentPage{color:#1e39d2;cursor:text}.sb-Dialog{border-width:2px;border-style:solid;margin-bottom:1rem;border-radius:0.5rem}.sb-Dialog h1,.sb-Dialog h2,.sb-Dialog h3,.sb-Dialog h4,.sb-Dialog h5,.sb-Dialog h6{font-size:1.125rem;line-height:1.5rem;padding:0;margin:0 0 0.5rem}.sb-Dialog ul{padding-left:1em;text-indent:-1em;list-style-position:inside}.sb-Dialog-icon{width:1.5rem;font-size:1.5rem;line-height:1.5rem;display:table-cell;vertical-align:top;padding:0.75rem}.sb-Dialog-message{display:table-cell;vertical-align:top;padding-top:0.75rem;padding-right:1rem}.sb-Dialog--error{border-top-width:10px;border-color:#b80000}.sb-Dialog--error h1,.sb-Dialog--error h2,.sb-Dialog--error h3,.sb-Dialog--error h4,.sb-Dialog--error h5,.sb-Dialog--error h6{color:#b80000}.sb-Dialog--error .sb-Icon--error:before{content:'🚨';font-style:normal}.sb-Dialog--info{border-color:#1e39d2}.sb-Dialog--info .sb-Icon--info:before{content:'ℹ️';font-style:normal}.sb-Dialog--success{border-color:#23b268}.sb-Dialog--success .sb-Icon--success:before{content:'✅';font-style:normal}.sb-Dialog--warning{border-color:#de8f00}.sb-Dialog--warning .sb-Icon--warning:before{content:'⚠️';font-style:normal}@font-face{font-family:"SharpSans";font-style:normal;font-weight:100;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:100;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:normal;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:normal;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:bold;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:bold;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:700;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:700;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff) format("woff")}pre{margin-bottom:1rem}@font-face{font-family:"fontello";font-weight:normal;font-style:normal;src:url(/assets/fontello-5c6d5a4b860bc986924a1ec510dcddbc10a425672dc0e3ba37e3bd4020e9d84f.eot);src:url(/assets/fontello-5c6d5a4b860bc986924a1ec510dcddbc10a425672dc0e3ba37e3bd4020e9d84f.eot#iefix) format("embedded-opentype"),url(/assets/fontello-a11118120d4b90a4c4f937c40ed47f13b4ae131b1c6371fd85ec2843d7bc7b12.woff) format("woff"),url(/assets/fontello-813519383401ebf865d03b706d20d1624b232501f0accdfa1bff4d28265d3f74.ttf) format("truetype"),url(/assets/fontello-f25b435813c4882a6189f926bc10b0fc872c358e3071d21d8386765518bc4278.svg#fontello) format("svg")}[class^="icon-"]:before,[class*=" icon-"]:before{font-family:"fontello";font-style:normal;font-weight:normal;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.icon-home:before{content:'\e800'}.icon-twitter:before{content:'\e801'}.icon-git:before{content:'\e802'}p>code,ul>code,ol>code,li>code,dl>code,td>code{background-color:#f7f7f7;font-size:90%;padding:2px 3px}.highlight>pre{background-color:#f7f7f7;padding:0.5rem 1rem;border-radius:3px;margin-bottom:1rem}.highlight{background:#ffffff}.highlight .c{color:#999988;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k{font-weight:bold}.highlight .o{font-weight:bold}.highlight .cm{color:#999988;font-style:italic}.highlight .cp{color:#999999;font-weight:bold}.highlight .c1{color:#999988;font-style:italic}.highlight .cs{color:#999999;font-weight:bold;font-style:italic}.highlight .gd{color:#000000;background-color:#ffdddd}.highlight .gd .x{color:#000000;background-color:#ffaaaa}.highlight .ge{font-style:italic}.highlight .gr{color:#aa0000}.highlight .gh{color:#999999}.highlight .gi{color:#000000;background-color:#ddffdd}.highlight .gi .x{color:#000000;background-color:#aaffaa}.highlight .go{color:#888888}.highlight .gp{color:#555555}.highlight .gs{font-weight:bold}.highlight .gu{color:#aaaaaa}.highlight .gt{color:#aa0000}.highlight .kc{font-weight:bold}.highlight .kd{font-weight:bold}.highlight .kp{font-weight:bold}.highlight .kr{font-weight:bold}.highlight .kt{color:#445588;font-weight:bold}.highlight .m{color:#009999}.highlight .s{color:#d14}.highlight .na{color:#008080}.highlight .nb{color:#0086B3}.highlight .nc{color:#445588;font-weight:bold}.highlight .no{color:#008080}.highlight .ni{color:#800080}.highlight .ne{color:#990000;font-weight:bold}.highlight .nf{color:#990000;font-weight:bold}.highlight .nn{color:#555555}.highlight .nt{color:#000080}.highlight .nv{color:#008080}.highlight .ow{font-weight:bold}.highlight .w{color:#bbbbbb}.highlight .mf{color:#009999}.highlight .mh{color:#009999}.highlight .mi{color:#009999}.highlight .mo{color:#009999}.highlight .sb{color:#d14}.highlight .sc{color:#d14}.highlight .sd{color:#d14}.highlight .s2{color:#d14}.highlight .se{color:#d14}.highlight .sh{color:#d14}.highlight .si{color:#d14}.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999999}.highlight .vc{color:#008080}.highlight .vg{color:#008080}.highlight .vi{color:#008080}.highlight .il{color:#009999}.tb-Default{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Default-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Default-main:after{content:" ";display:block;clear:both}.tb-Default-content{width:100%;float:left;margin-left:0;margin-right:0}.tb-Home{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Home-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Home-main:after{content:" ";display:block;clear:both}@media (min-width: 64em){.tb-Home-content{width:74.57627%;float:left;margin-right:1.69492%}}@media (min-width: 81.25em){.tb-Home-content{width:74.68354%;float:left;margin-right:1.26582%}}.tb-Home--author .tb-Sidebar{display:block}.tb-Post{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Post-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Post-main:after{content:" ";display:block;clear:both}@media (min-width: 64em){.tb-Post-content{width:74.57627%;float:left;margin-right:1.69492%}}@media (min-width: 81.25em){.tb-Post-content{width:74.68354%;float:left;margin-right:1.26582%}}@media (min-width: 64em){.tb-Post-author{display:block;margin-top:1rem;width:23.72881%;float:right;margin-right:0}}@media (min-width: 81.25em){.tb-Post-author{width:24.05063%;float:right;margin-right:0}}@media (min-width: 43.75em){.tb-Post h1:first-child{width:70%}}.tb-Team{margin-top:1.5rem}.tb-Member{width:100%;float:left;margin-left:0;margin-right:0;text-align:center;padding-bottom:2rem}@media (min-width: 43.75em){.tb-Member{width:32.20339%;float:left}.tb-Member:nth-child(3n+1){margin-left:0;margin-right:-100%;clear:both;margin-left:0}.tb-Member:nth-child(3n+2){margin-left:33.89831%;margin-right:-100%;clear:none}.tb-Member:nth-child(3n+3){margin-left:67.79661%;margin-right:-100%;clear:none}}.tb-Member-gravatar img{max-width:100%;border-radius:50%}.tb-Member--posts{margin-top:0.5rem}.tb-Sidebar{display:none;padding:1rem}@media (min-width: 64em){.tb-Sidebar{display:block;width:23.72881%;float:right;margin-right:0}}@media (min-width: 81.25em){.tb-Sidebar{width:24.05063%;float:right;margin-right:0}}.tb-Author-gravatar{text-align:center}.tb-Author-gravatar img{border-radius:50%}.tb-Author-info{text-align:center}.tb-Author-serverlesshero{text-align:center}.tb-Author-serverlesshero img{width:125px;margin-top:0.5rem;margin-bottom:0;text-align:center}.tb-Author-icons{margin-top:0.5rem}.tb-Author-icon a,.tb-Author-icon a:visited{color:gray;padding:0.25rem;font-size:1.25rem}.tb-Author-icon a:hover{color:#5ccfc2}.tb-Author-posts{margin-top:0.5rem}.tb-Excerpt{max-width:100%;margin-left:auto;margin-right:auto;border-bottom:1px dotted #d5d5d5;padding-bottom:1rem;margin-bottom:1rem}.tb-Excerpt:after{content:" ";display:block;clear:both}.tb-Excerpt-date{margin-bottom:0.5rem;color:#939393}.tb-Header{background-color:white;background-color:rgba(255,255,255,0.95);border-bottom:1px solid #cccccc;display:block;margin-top:0.5rem;margin-bottom:1rem}.tb-Header::after{clear:both;content:"";display:table}#tb-Header-toggle{display:none;position:relative;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}#tb-Header-toggle:checked+.tb-Header-area .tb-Header-menu{display:block;opacity:1;z-index:10}.tb-Header-home-link{text-decoration:none}.tb-Header-home-logo{display:block;margin-top:0.375rem}.tb-Header-home-logo img{width:85%;max-width:450.5px}.tb-Header-toggle{cursor:pointer}@media (min-width: 43.75em){.tb-Header-toggle{display:none}}.tb-Header-toggle:after{width:2.625rem;height:2.625rem;position:absolute;right:1rem;top:1rem;display:block;content:'\e800';font-family:'inkicons';font-size:2rem;color:#cccccc;cursor:pointer;text-align:center;vertical-align:center}@media (min-width: 43.75em){.tb-Header-toggle:after{display:none}}.tb-Header-menu{display:none;opacity:0;width:100%;margin:0;padding:0;position:absolute;right:0}.tb-Header-menu::after{clear:both;content:"";display:table}@media (min-width: 43.75em){.tb-Header-menu{position:inherit;display:block;opacity:1}}.tb-Header-menu:after{content:"";height:3px;width:100%;background-color:rgba(0,0,0,0.1)}@media (min-width: 43.75em){.tb-Header-menu:after{display:none}}.tb-Header-menu-item{display:block;width:100%;list-style:none}@media (min-width: 43.75em){.tb-Header-menu-item{float:left;width:auto}}.tb-Header-menu-link{padding:0.75rem 1rem;background-color:#f8f8f8;background-color:white;border-bottom:0.25rem solid transparent;border-bottom:1px solid #cccccc;color:inherit;display:block;padding-bottom:0.25rem;text-decoration:none;width:100%}@media (min-width: 43.75em){.tb-Header-menu-link{border-bottom:0.25rem solid transparent}}.tb-Header-menu-link:hover,.tb-Header-menu-link:active,.tb-Header-menu-link:visited{color:inherit}.tb-Header-menu-link:hover{border-bottom:0.25rem solid #fa3c00;color:#fa3c00}.tb-Header-menu-link.is-active{border-bottom:0.25rem solid #fa3c00;color:#fa3c00}.tb-Header-menu-link:before{content:attr(data-link-long)}@media (min-width: 43.75em){.tb-Header-menu-link:before{content:attr(data-link-short)}}@media (min-width: 64em){.tb-Header-menu-link:before{content:attr(data-link-long)}}.tb-Footer{background-color:#ededed;margin-top:2rem;padding:1rem;text-align:center;width:100%}.tb-Paginator{width:100%;float:left;margin-left:0;margin-right:0}.tb-Paginator-newerBtn{width:47.36842%;float:left;margin-right:5.26316%}@media (min-width: 43.75em){.tb-Paginator-newerBtn{width:23.72881%;float:left;margin-right:1.69492%}}.tb-Paginator-newerBtn .sb-Btn{width:100%}.tb-Paginator-olderBtn{width:47.36842%;float:right;margin-right:0}@media (min-width: 43.75em){.tb-Paginator-olderBtn{width:23.72881%;float:right;margin-right:0}}.tb-Paginator-olderBtn .sb-Btn{width:100%}.tb-AsideQuote{display:none;position:relative;width:30vw;float:right;background-color:#f7f7f7;border-radius:3px;font-family:Georgia, serif;font-size:1.25rem;line-height:1.2;color:#939393;font-style:italic;padding:1rem 1rem 1rem 3rem;margin-left:1rem;margin-bottom:1rem}.tb-AsideQuote:before{content:"\201C";font-family:Georgia, serif;font-size:3rem;font-weight:bold;color:#d5d5d5;position:absolute;left:0.75rem;top:0.5rem}@media (min-width: 43.75em){.tb-AsideQuote{display:block}}.tb-Images{max-width:100%;margin-left:auto;margin-right:auto}.tb-Images:after{content:" ";display:block;clear:both}@media (min-width: 81.25em){.tb-Img-processing{max-width:50%}}.tb-Img{max-width:100%}@media (min-width: 43.75em){.tb-Img{float:right;clear:right;margin-bottom:1rem;margin-left:1rem}}.tb-Img--fancy{border-radius:0.25rem}.tb-Img--picture{padding:0.5rem;border:1px solid #eeeeee;background-color:white;box-shadow:2px 2px 4px 0px rgba(0,0,0,0.2);margin-bottom:0 !important}@media (min-width: 43.75em){.tb-Img--quarter{max-width:25%}}@media (max-width: 43.6875em){.tb-Img--quarter--sm{max-width:25% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--quarter--md{max-width:25%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--quarter--lg{max-width:25%}}@media (min-width: 43.75em){.tb-Img--third{max-width:33%}}@media (max-width: 43.6875em){.tb-Img--third--sm{max-width:33% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--third--md{max-width:33%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--third--lg{max-width:33%}}@media (min-width: 43.75em){.tb-Img--half{max-width:50%}}@media (max-width: 43.6875em){.tb-Img--half--sm{max-width:50% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--half--md{max-width:50%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--half--lg{max-width:50%}}@media (min-width: 43.75em){.tb-Img--responsive{max-width:50%}}@media (min-width: 64em){.tb-Img--responsive{max-width:40%}}@media (min-width: 81.25em){.tb-Img--responsive{max-width:30%}}.tb-Img--responsive-ctr{margin-bottom:1rem}@media (min-width: 43.75em){.tb-Img--responsive-ctr{float:none !important;clear:none !important;display:block;width:70%;margin-top:0 !important;margin-right:auto !important;margin-left:auto !important}}@media (min-width: 43.75em) and (min-width: 43.75em){.tb-Img--responsive-ctr{margin-bottom:1.5rem !important}}@media (min-width: 64em){.tb-Img--responsive-ctr{max-width:60%}}@media (min-width: 81.25em){.tb-Img--responsive-ctr{max-width:50%}}.tb-ImgCenter{margin:0 24%}@font-face{font-family:'tbicons';src:url(/assets/tbicons-096fa3970ce3a3595debd167e1cd11422745885e43987130c7ad2b9fd020a910.eot);src:url(/assets/tbicons-096fa3970ce3a3595debd167e1cd11422745885e43987130c7ad2b9fd020a910.eot#iefix) format("embedded-opentype"),url(/assets/tbicons-a255c4d7531756c350cd3cb8ac924a3a70dba66357bc6f53cdcce66be69e1ca4.woff) format("woff"),url(/assets/tbicons-04c88863a35923e4156691375c162cd8b6fb44104e3cecbc17972c89da722d17.ttf) format("truetype"),url(/assets/tbicons-737a98cc543fbd45788943a259ba88d32a06bdd4e57cf10d9631866dce5df09e.svg#tbicons) format("svg");font-weight:normal;font-style:normal}[class^="tb-Icon-"]:before,[class*=" tb-Icon-"]:before{font-family:"tbicons";font-style:normal;font-weight:normal;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.tb-Icon-twitter:before{content:'\e800'}.tb-Icon-home:before{content:'\e801'}.tb-Icon-github:before{content:'\e802'}.tb-Masthead{margin-bottom:1rem}.tb-Masthead::after{clear:both;content:"";display:table}@media (min-width: 43.75em){.tb-Masthead{margin-top:1rem;margin-bottom:2rem}}.tb-Masthead .tb-Img{float:none;display:block;margin:0}.tb-Masthead aside{display:block;color:#939393;margin-top:0.25rem;font-size:10px;line-height:1rem;height:1rem;text-align:right}.tb-Masthead a{color:#939393;text-decoration:none;border:0}.tb-Masthead a:link,.tb-Masthead a:visited,.tb-Masthead a:hover,.tb-Masthead a:active{color:#939393}.tb-Masthead-caption{position:relative}.tb-Masthead-caption:after{display:block;position:absolute;top:0;right:0;content:attr(caption)}
 </style>
 </head>
 
-  <body class="tb-Home tb-Home--author">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -40,316 +40,145 @@
   </div>
 </header>
 
-    <div class="tb-Home-main sb-Wrapper">
-      <div class="tb-Home-content">
-        <div class="tb-AuthorPage">
-          
-          <h1>Posts By: Max Tedford</h1>
-          
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2016-07-11T00:00:00-04:00">
-      Posted On 11 Jul 2016&nbsp;&nbsp;-&nbsp;&nbsp;Max Tedford
-    </time>
-    <h2><a href="/blog/2016/07/11/contributing-to-open-source/">Contributing to Open-Source</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Over the last six months here at CustomInk we’ve been building an internal Content Management System (CMS) named Inkpress to help various company stakeholders design and publish a wide array of landing pages that drive overall business objectives. Inkpress makes heavy use of AlchemyCMS - an open-source Rails engine - to help power the user interface and manage much of the back-end page template and element data. It’s a fantastic piece of software, but there was one small issue: we...</p>
-  <a href="/blog/2016/07/11/contributing-to-open-source/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Keeping Customink.com Fast and Reliable with AWS CloudFront and Application Load Balancer</h1>
+        <p>In early 2020, Custom Ink implemented an AWS Application Load Balancer in front of CustomInk.com and decommissioned a set of EC2 instances running an open-source HTTP accelerator called Varnish. This transition was the latest step in our long journey to make CustomInk.com faster, more reliable, and easier to maintain. Read on to see how we used caching and load balancing to make our website more scalable and less complicated, and how we eventually got to use Amazon Web Services&#39; managed applications to solve the problem without having to manage more servers.</p>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-        </div>
+<!--more-->
+
+<h2 id="the-objective-keeping-customink-com-fast-and-reliable">The Objective: Keeping Customink.com Fast and Reliable</h2>
+
+<p><img src=/assets/content/varnish-replace/backend-services-f1d6b94a50d3f736faf5d47cdeacf2cf4919227a92c4ca55efe70623e71920f6.png class="tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy"/></p>
+
+<p>Although designing a t-shirt or creating a fundraiser feels like a cohesive experience, CustomInk.com is actually made up of many different applications that service different features of the website. For instance, if you log into the website to view your cart, you are authenticating with a service that&#39;s just for keeping track of your account. Then, when you go to create a group order form to ship a cool shirt to the rest of your team, you&#39;re actually talking to an application whose only job is to manage group orders. </p>
+
+<p>We spread these functions out across many different services so it&#39;s easier to scale one or the other to adjust to demand without having to allocate a lot of resources we don&#39;t need to use. (During a busy time with lots of folks logging in, the account management service might be doing a lot of work, while &quot;Ink of the Week&quot; might not.) It&#39;s also a great way to limit the impact of changes, and prevent a problem in one part of the website from bringing everything else down. </p>
+
+<p>These services all serve two kinds of content: dynamic content (like price and shipping estimates, how your fundraiser is doing, and renders of your new shirt design), and static content (fonts, images, video files, and stylesheets). We need a server to serve dynamic content; after all, it needs to run code and crunch numbers to decide what to show you. However, we don&#39;t necessarily need the server to send you static content; since it&#39;s not going to change based on what you ask the server, we can use a cache to store that content on yet another server. That way, the servers running &quot;Fundraising&quot; can focus entirely on thinking about launching your new fundraising campaign and figuring out how much money it&#39;s making, instead of showing you the same picture of a shirt that it&#39;s probably already sent a thousand times already. That part can be handled by the cache.</p>
+
+<p><img src=/assets/content/varnish-replace/caching-4cc405bb8047220fc37a1b8dca9713837eb00258e207451158fec1f2392a231a.png class="tb-Img tb-Img--fancy" style="float:right; margin-left:1rem;"/></p>
+
+<p>This is a great way to run a modern, scalable website, but it creates a challenge: how do we direct all that traffic going to &quot;CustomInk.com&quot; to all of those servers, and how can we store static content like images somewhere closer to you to reduce the load on those servers?</p>
+
+<h2 id="original-approach-varnish">Original Approach: Varnish</h2>
+
+<p>The first way Custom Ink approached this problem was by using an open-source tool called Varnish. This software can, among other things, do path routing (so requests to a certain part of the website, like <a href="http://www.customink.com/fundraising">www.customink.com/fundraising</a>, go to the &quot;Fundraising&quot; servers) and cache static content (so you can see images without having to hit the &quot;Fundraising&quot; server every time).  We originally ran Varnish on a dedicated set of servers in a datacenter, and later as EC2 instances in Amazon Web Services. When you navigated to <a href="http://www.customink.com">www.customink.com</a> in your browser, your request would hit Varnish first before it made it to any of the application servers.</p>
+
+<p>This worked pretty well. From the user&#39;s perspective, they were using CustomInk.com; not &quot;Fundraising&quot;, &quot;Profiles&quot;, or &quot;Groups&quot;. It even let us balance load between multiple servers providing an application, so if one went down, it would send your request to the ones that were still up. It also took up a lot of the heavy lifting serving static content. Would you believe that the font that Custom Ink uses for some logos, icons, and shapes was served up 5,628,019 times in April of 2020? That&#39;s a lot of scroll arrows; 46.16 GB worth, to be exact. There&#39;s no reason an application server should have to deal with that, and happily, the cache did that instead.</p>
+
+<p>Varnish also stores this content in memory - so when you loaded a website, it didn&#39;t even need to check the disk to go get those images and icons ready for you. As soon as you go to the site, images, fonts, and stylesheets are all queued up for you. This makes the website load faster, since the static content can reach you faster and the backend servers can focus on serving up your dynamic content instead of sending you pictures of Inky.</p>
+
+<p><img src=/assets/content/varnish-replace/varnish-58c2d4be776138b588e7d880e4aa3f68e651197aa4a4e032b688a904ee74a23f.png class="tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy"/></p>
+
+<h3 id="friction-managing-infrastructure">Friction: Managing Infrastructure</h3>
+
+<p>Using Varnish solved a lot of problems, but created some new ones. As mentioned above, Varnish ran on servers. This meant we needed to patch them when they needed updating, monitor them so we knew when they were running low on resources, and put them behind a load balancer so other servers could take up the load if one failed. Also, because all incoming traffic to the website was hitting Varnish, we needed to be able to scale those servers horizontally to handle the load - and we had to do it very fast and very well, since if Varnish had problems, the whole site had problems. (No pressure.)</p>
+
+<p>Varnish is a very flexible, very powerful tool that lets you do a lot of different things in a lot of different ways. Not only does it route traffic to backends, but it opens up a lot of very complex tuning settings that matter a lot when you&#39;re taking care of your own load balancer on your own servers. The majority of these settings make very little sense to an engineer who hasn&#39;t spent months operating Varnish, and we very rarely changed them. Varnish Configuration Language (or VCL) can get very complex very fast; in fact, we wound up writing a little DSL on top of it using the Chef cookbook we used to spin up more Varnish servers, just so it was simpler for an engineer to add a new server to a backend group. </p>
+
+<p><img src=/assets/content/varnish-replace/varnish-uhoh-6ed4c555d8e00d43b375ae989e11d5bce0748140473bc8cf7a38045920c11cfb.png class="tb-Img tb-Img--fancy" style="float:right; margin-left:1rem;"/></p>
+
+<p>While this worked, it was more risky than we would have liked. The one service that could take the whole site down was held together by a configuration language few of us knew, and our Chef cookbooks - while they did what we needed - could only add more Varnish servers and more backends. If we had needed to jump in and start really tuning Varnish, we would not have been able to move quickly.</p>
+
+<p>Just to make things more complicated, a few years later, we also started using AWS CloudFront. I&#39;ll go into more detail on that in the next section, but for now, suffice it to say that we had <em>two caches</em> as a result of that - Varnish, and then CloudFront. That meant that there was a delay between when a resource was updated, when it was reflected in the first cache, then the second cache. This made it hard to diagnose problems.</p>
+
+<h2 id="new-approach-aws-native-services">New Approach: AWS Native Services</h2>
+
+<p>Today, the vast majority of Custom Ink&#39;s services are hosted on Amazon Web Services. They take many forms, varying from serverless Lambda functions to traditional EC2 instances. We try to use cloud-native, AWS-managed services wherever we can; after all, if those services break, it&#39;s AWS that will go fix them, not us. It&#39;s easy to manage and deploy these services with CloudFormation and Terraform, so it&#39;s easy for us to keep configuration in code and tweak them when we need to. AWS has a very big mindshare and community (that is, it&#39;s easier to google when we have problems), and their support is also very responsive and informed. As a result, the more we can offload to Amazon, and the less servers we have to look after, the better. This has meant adopting Route53, Elastic Load Balancers, S3, Lambda, API Gateway, Elastic Kubernetes Service, and more over the years.</p>
+
+<p>Eventually, as the difficulty of maintaining our Varnish implementation became obvious, we started to look for a way to replace it with services provided by AWS.</p>
+
+<h3 id="application-load-balancer">Application Load Balancer</h3>
+
+<p>AWS&#39; Application Load Balancer is a high-availability managed layer-7 (HTTP) load balancer meant to route requests to specific paths across groups of servers. We arrange groups of servers into resources called Target Groups; for instance, all of the &quot;Fundraising&quot; servers go into the &quot;Fundraising&quot; Target Group, and then we create a Listener Rule that instructs the ALB to send all traffic going to &quot;<a href="http://www.customink.com/fundraising">www.customink.com/fundraising</a>&quot; to that Target Group. Both the load balancer and target groups can span multiple Amazon availability zones, giving us high availability if a datacenter were to fail. </p>
+
+<p>This allows us to totally replace the path routing functionality provided by Varnish. Because it&#39;s a managed service, Amazon is responsible for their scaling and availability (not us); we just provision an ALB, point it at some servers, and relax. Configuration is easy; we can either point-and-click, or write it all up in a CloudFormation or Terraform template using the same syntax we use to manage all of our other AWS infrastructure.</p>
+
+<h3 id="cloudfront">CloudFront</h3>
+
+<p>AWS&#39; CloudFront is a high-availability managed CDN meant to serve static files from edge locations around the world. We set up a CloudFront distribution and set up backends called Origins; the sources of static content, be they S3 buckets with images or the load balancers in front of our services. CloudFront caches static content after the first time it&#39;s called - and an added benefit of CloudFront is that instead of caching it on EC2 instances in the regional data centers (like Varnish did), it caches them at edge locations, which are often much closer to users than the data centers our EC2 instances are in. Requests that don&#39;t hit a cached item are routed to the Origin, which serves up the response. As an added bonus, CloudFront also handles HTTPS offloading for us.</p>
+
+<p>CloudFront let us replace the caching functionality in Varnish, and improves on it by caching at edge locations instead of on servers. Like the ALB, it is totally managed by Amazon; all we have to do is tell CloudFront what to cache, have it point the rest of the traffic at the origin, and relax. No monitoring, managing threads, or adding more memory. (We actually added CloudFront well before we removed Varnish, which led to the double-cache issues alluded to earlier).</p>
+
+<h2 id="transition-strangler-pattern">Transition: Strangler Pattern</h2>
+
+<p><img src=/assets/content/varnish-replace/transition-6df2a48b0349c799af033950b0f7bc76e2158ac302d02dd2c8f23b6431b69cf1.png class="tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy"/></p>
+
+<p>Given the critical role Varnish played for our website, we knew we needed to implement this change cautiously; we didn&#39;t want to make the change and suddenly break some paths or make the cache hit ratio worse. The WebOps team would need to work closely with all of the fire teams that worked on these individual services, and make sure that we were able to test their performance and cache-hit ratios before and after we switched away from Varnish. </p>
+
+<p>Asking all of the developers in Technology to drop what they were doing and help facilitate that would&#39;ve been unnecessarily disruptive (not to mention a little rude). Happily, we didn&#39;t need to do that; we had the option of making the transition one service at a time, so we could change one service in staging, work with a handful of developers to test it out, and make the change in production a few days later. This way we could slowly slice services out of Varnish and into the ALB one by one, without juggling a massive testing effort filled with inter-dependencies and fraught with risk.</p>
+
+<p>The first step we took was to introduce an Application Load Balancer between CloudFront and Varnish. The ALB didn&#39;t change anything functionally; it only had one listener rule, which just sent all traffic to a target group with the Varnish servers in it. Varnish handled the rest of the routing. With this done, we were done touching CloudFront - we just changed its default origin to be this new ALB instead of the Classic ELB that used to serve up the Varnish servers. </p>
+
+<p>This ALB was where we would gradually add new listener rules, grabbing traffic headed for &quot;Fundraising&quot; and sending it right to the Fundraising servers, bypassing Varnish. Over time, we would see requests to Varnish go down until eventually every service was being handled by the ALB. At that point, we knew we could terminate the Varnish servers. This was a fairly relaxed effort; we added about two services to the ALB a week, giving ourselves plenty of time to check functionality and cache-hit ratio between when we made the switch in staging and when we did it in production. </p>
+
+<p>To test cache performance, we turned on access logs for the Application Load Balancer, and turned on logs for CloudFront as well. (Both went straight to S3, which is the best way to store massive files.) We used Athena to query those logs after each application cutover to verify that the cache-hit ratio had not degraded, and that the ALB was routing requests to the right target group. It&#39;s hard to overstate how helpful S3 and Athena were here, since these logs represented every HTTP request hitting customink.com - they were huge, and it would&#39;ve been expensive and slow to do something like this on another service.</p>
+
+<h2 id="what-did-we-gain">What Did We Gain?</h2>
+
+<p><img src=/assets/content/varnish-replace/finalstate-9dcb4c17832724613cad88c92c5f70659662f0a49e478fdb94bf5b5ffc132954.png class="tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy"/></p>
+
+<p>After the last service cutover, we saw zero traffic hitting the Varnish target group; every request was being funelled by the ALB to the right servers, and meanwhile, the cache-hit ratio stayed largely the same. We were able to terminate the Varnish servers, saving ourselves a sizable amount of EC2 spend. </p>
+
+<p>We were also able to immediately scrap the Chef cookbook that had been used for managing Varnish, which amounted to hundreds of lines of Chef code and template files. This made it much easier to ramp up new engineers; it&#39;s much easier to learn the AWS ALB than Varnish&#39;s VLC (or the Chef cookbook we put on top of it). Adding and removing servers got less scary, and keeping track of infrastructure as code got much simpler. We currently configure the ALB using a CloudFormation template which lives in Git; adding or removing a server or path is as easy as opening a PR. </p>
+
+<p>Finally, monitoring got much easier; requests and responses to each target group in the ALB is exposed as a CloudWatch metric, which makes it easy to create dashboards and check for things like increased 5xx errors and other anomalies. As I mentioned earlier, we also got ALB logs streaming to S3, allowing for (relatively) cheap and easy traffic analysis.</p>
+
+<p>Overall, the move away from Varnish and to Amazon-managed services made it easier for us to keep CustomInk.com quick and reliable by reducing the amount of overhead involved in caching and routing traffic to multiple backend servers. Coming out of this, we have less servers to manage, managing incoming traffic is easier, and more of the heavy lifting is managed by AWS, not us. </p>
+
       </div>
-      <div class="tb-Sidebar">
+      <div class="tb-Post-author">
+        
+        
         <div class="tb-Author">
   
+    <div class="tb-Author-gravatar">
+      <img title="Martin Bonica" src="https://www.gravatar.com/avatar/7e36be76e10ebc6ce845d46a5362b2b8?s=150"/>
+    </div>
+  
   <div class="tb-Author-info">
+    
+      <time pubdate datetime="2020-06-11T00:00:00-04:00">
+        11 Jun 2020
+      </time></br>
+      by Martin Bonica
     
     
     <div class="tb-Author-icons">
       
       
-        <span class="tb-Author-icon">
-          <a href="https://github.com/maxtedford"><i class="tb-Icon-github"></i></a>
-        </span>
-      
       
     </div>
+    
+      <div class="tb-Author-posts">
+        <a href="/authors/martin-bonica" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+          View All Posts
+        </a>
+      </div>
     
   </div>
 </div>
 
       </div>
     </div>
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2020/06/11/simplifying-custominks-http-accelerator-with-aws-cloudfront-and-application-load-balancer/';
+    var disqus_title = "Keeping Customink.com Fast and Reliable with AWS CloudFront and Application Load Balancer";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
     <div class="tb-Footer">
   <div><small>&copy; 2020 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="https://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>

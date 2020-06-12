@@ -521,6 +521,10 @@
 <lastmod>2020-04-05T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>/blog/2020/06/11/simplifying-custominks-http-accelerator-with-aws-cloudfront-and-application-load-balancer/</loc>
+<lastmod>2020-06-11T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>/team/</loc>
 </url>
 <url>
@@ -624,6 +628,9 @@
 </url>
 <url>
 <loc>/authors/austin-moore/</loc>
+</url>
+<url>
+<loc>/authors/martin-bonica/</loc>
 </url>
 <url>
 <loc>/page2/</loc>
