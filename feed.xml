@@ -221,7 +221,7 @@
 
 &lt;ul&gt;
 &lt;li&gt;Launching a DataSync task takes a few minutes. Why? Maybe it was the &lt;code&gt;t2.micro&lt;/code&gt; I used? If a CI/CD pipeline used this technique, I would have to explore using events to coordinate timing issues.&lt;/li&gt;
-&lt;li&gt;It would be nice if DataSync supported using Lambda as agents vs EC2. Feels like this fits the task model better. Coming from a Lambda perspective, I did not enjoy setting up an EC2 instance.&lt;/li&gt;
+&lt;li&gt;It would be nice if DataSync supported using Lambda as agents vs EC2. Feels like this fits the task model better. Coming from a Lambda perspective, I did not enjoy setting up an EC2 instance. &lt;strong&gt;&lt;a href=&quot;https://github.com/lambci/cmda&quot;&gt;UPDATE: Michael Hart released cmda: A new command line tool for copying files to/from AWS Lambda, especially useful with EFS&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;During the test I experienced out-of-sync file data and had to sync an empty source to fix it. Maybe I need to learn more about &lt;code&gt;aws s3 sync&lt;/code&gt; options besides &lt;code&gt;--delete&lt;/code&gt;. Or maybe my DataSync file management task needed tweaking?&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -254,8 +254,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/aws/new-a-shared-file-system-for-your-lambda-functions/&quot;&gt;A Shared File System for Your Lambda Functions&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby: Simple Rails &amp;amp; AWS Lambda Integration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lambci/cmda&quot;&gt;cmda: A new command line tool for copying files to/from AWS Lambda, especially useful with EFS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/efs/&quot;&gt;Amazon Elastic File System&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://twitter.com/jeffbarr/status/1247988428374814720&quot;&gt;Jeff Barr EFS File Systems Twitter Announcement for ECS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=5HaztXVaJQ8&quot;&gt;Namrata Shah&amp;#39;s DataSync Demo: Copy data from S3 to EFS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html&quot;&gt;AWS DataSync&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://gist.github.com/metaskills/1eee9da3baaa5df9ac8426cc5fe12ca0&quot;&gt;Sample API Gateway HTTP API Version 1 Event&lt;/a&gt;&lt;/li&gt;

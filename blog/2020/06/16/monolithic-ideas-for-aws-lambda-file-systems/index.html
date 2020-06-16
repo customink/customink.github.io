@@ -265,7 +265,7 @@ Today I am excited to share the release of AWS Lambda File Systems. A simple, sc
 
 <ul>
 <li>Launching a DataSync task takes a few minutes. Why? Maybe it was the <code>t2.micro</code> I used? If a CI/CD pipeline used this technique, I would have to explore using events to coordinate timing issues.</li>
-<li>It would be nice if DataSync supported using Lambda as agents vs EC2. Feels like this fits the task model better. Coming from a Lambda perspective, I did not enjoy setting up an EC2 instance.</li>
+<li>It would be nice if DataSync supported using Lambda as agents vs EC2. Feels like this fits the task model better. Coming from a Lambda perspective, I did not enjoy setting up an EC2 instance. <strong><a href="https://github.com/lambci/cmda">UPDATE: Michael Hart released cmda: A new command line tool for copying files to/from AWS Lambda, especially useful with EFS</a></strong></li>
 <li>During the test I experienced out-of-sync file data and had to sync an empty source to fix it. Maybe I need to learn more about <code>aws s3 sync</code> options besides <code>--delete</code>. Or maybe my DataSync file management task needed tweaking?</li>
 </ul>
 
@@ -298,8 +298,8 @@ Today I am excited to share the release of AWS Lambda File Systems. A simple, sc
 <ul>
 <li><a href="https://aws.amazon.com/blogs/aws/new-a-shared-file-system-for-your-lambda-functions/">A Shared File System for Your Lambda Functions</a></li>
 <li><a href="https://lamby.custominktech.com/">Lamby: Simple Rails &amp; AWS Lambda Integration</a></li>
+<li><a href="https://github.com/lambci/cmda">cmda: A new command line tool for copying files to/from AWS Lambda, especially useful with EFS</a></li>
 <li><a href="https://aws.amazon.com/efs/">Amazon Elastic File System</a></li>
-<li><a href="https://twitter.com/jeffbarr/status/1247988428374814720">Jeff Barr EFS File Systems Twitter Announcement for ECS</a></li>
 <li><a href="https://www.youtube.com/watch?v=5HaztXVaJQ8">Namrata Shah&#39;s DataSync Demo: Copy data from S3 to EFS</a></li>
 <li><a href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html">AWS DataSync</a></li>
 <li><a href="https://gist.github.com/metaskills/1eee9da3baaa5df9ac8426cc5fe12ca0">Sample API Gateway HTTP API Version 1 Event</a></li>
