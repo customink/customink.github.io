@@ -252,6 +252,7 @@
 &lt;p&gt;As always, thanks for reading! Below are some links for reference. If you have any ideas or feedback, leave a comment. I&amp;#39;d love to hear from you. Also, please remember to delete any AWS Resources that you are not using when playing around today. No need to pay for anything you are not using!&lt;/p&gt;
 
 &lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/blogs/aws/new-a-shared-file-system-for-your-lambda-functions/&quot;&gt;A Shared File System for Your Lambda Functions&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby: Simple Rails &amp;amp; AWS Lambda Integration&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/efs/&quot;&gt;Amazon Elastic File System&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://twitter.com/jeffbarr/status/1247988428374814720&quot;&gt;Jeff Barr EFS File Systems Twitter Announcement for ECS&lt;/a&gt;&lt;/li&gt;
