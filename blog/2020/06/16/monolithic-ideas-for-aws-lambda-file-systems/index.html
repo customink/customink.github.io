@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Posts By: Karle Durante - CustomInk Technology Blog</title>
+  <title>Monolithic Ideas For AWS Lambda File Systems - CustomInk Technology Blog</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="Posts By: Karle Durante">
+  <meta name="description" content="With Rails &amp; Lamby
+
+
+  
+  
+
+
+Today I am excited to share the release of AWS Lambda File Systems. A simple, scalable, fully managed network file...">
+  
+  <meta property="og:image" content="https://technology.customink.com/assets/content/lambda-file-systems/masthead-867a17f618e0c2f6b04260b68de597850d7c98b0d9872478f4317988abacce1e.jpg">
   
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://technology.customink.com/feed.xml" />
   <style rel="stylesheet" type="text/css">﻿/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:0.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace, monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace, monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:0.35em 0.75em 0.625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}html,body{height:100%}body,button,input,select,textarea,pre{margin:0;background-color:white}h1,h2,h3,h4,h5,h6,p,dl,ol,ul{margin-top:0;margin-bottom:1rem}ol,ul{padding-left:2rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0;padding-left:1rem}button{border:0}button,input,select,textarea{font-family:inherit;font-size:100%}textarea{display:block}article,aside,details,figcaption,figure,footer,header,main,nav,section,summary{display:block}.sb-Wrapper{padding-right:1rem;padding-left:1rem}@media (min-width: 43.75em){.sb-Wrapper{width:42.75rem;margin-right:auto;margin-left:auto}}@media (min-width: 64em){.sb-Wrapper{width:63rem;margin-right:auto;margin-left:auto}}@media (min-width: 81.25em){.sb-Wrapper{width:80.25rem;margin-right:auto;margin-left:auto}}.sb-Wrapper--fluid{padding-right:1rem;padding-left:1rem;margin-right:auto;margin-left:auto}.sb-PageWrapper.is-open:before{content:'';display:block;position:absolute;top:0;right:0;bottom:0;left:0;z-index:99999999}.sb-Main{max-width:100%;margin-left:auto;margin-right:auto}.sb-Main:after{content:" ";display:block;clear:both}.sb-Main--content{padding-top:1rem}@media (min-width: 64em){.sb-Main--content{padding-top:1.5rem}}@media (max-width: 43.6875em){html.is-minimalUI{overflow:hidden}html.is-minimalUI .sb-PageWrapper{height:100%;overflow-y:scroll;-webkit-overflow-scrolling:touch}}.sb-Btn,a.sb-Btn,.sb-Btn--primary,a.sb-Btn--primary,.sb-Btn--primaryAlt,a.sb-Btn--primaryAlt,.sb-Form input[type='submit'],.sb-Form input[type='submit'].sb-Btn--primary,.sb-Form input[type='submit'].sb-Btn--primaryAlt{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:#1f51cf;padding:0.65rem 2rem;color:#fff;border-radius:6px;transition:all 0.1s ease-in-out;display:inline-block;text-align:center;position:relative;border:0}.sb-Btn:after,a.sb-Btn:after,.sb-Btn--primary:after,a.sb-Btn--primary:after,.sb-Btn--primaryAlt:after,a.sb-Btn--primaryAlt:after,.sb-Form input[type='submit']:after,.sb-Form input[type='submit'].sb-Btn--primary:after,.sb-Form input[type='submit'].sb-Btn--primaryAlt:after{content:"";position:absolute;width:100%;height:10px;border-radius:6px;bottom:0;left:0;box-shadow:0 -3px 0 rgba(0,0,0,0.6) inset}.sb-Btn:visited,a.sb-Btn:visited,.sb-Btn--primary:visited,a.sb-Btn--primary:visited,.sb-Btn--primaryAlt:visited,a.sb-Btn--primaryAlt:visited,.sb-Form input[type='submit']:visited,.sb-Form input[type='submit'].sb-Btn--primary:visited,.sb-Form input[type='submit'].sb-Btn--primaryAlt:visited{color:#fff}.sb-Btn:hover,a.sb-Btn:hover,.sb-Btn--primary:hover,a.sb-Btn--primary:hover,.sb-Btn--primaryAlt:hover,a.sb-Btn--primaryAlt:hover,.sb-Form input[type='submit']:hover,.sb-Form input[type='submit'].sb-Btn--primary:hover,.sb-Form input[type='submit'].sb-Btn--primaryAlt:hover{color:#fff;background:#1840a3}.sb-Btn:active,.sb-Btn:focus,.sb-Btn.is-Active,a.sb-Btn:active,a.sb-Btn:focus,a.sb-Btn.is-Active,.sb-Btn--primary:active,.sb-Btn--primary:focus,.sb-Btn--primary.is-Active,a.sb-Btn--primary:active,a.sb-Btn--primary:focus,a.sb-Btn--primary.is-Active,.sb-Btn--primaryAlt:active,.sb-Btn--primaryAlt:focus,.sb-Btn--primaryAlt.is-Active,a.sb-Btn--primaryAlt:active,a.sb-Btn--primaryAlt:focus,a.sb-Btn--primaryAlt.is-Active,.sb-Form input[type='submit']:active,.sb-Form input[type='submit']:focus,.sb-Form input[type='submit'].is-Active,.sb-Form input[type='submit'].sb-Btn--primary:active,.sb-Form input[type='submit'].sb-Btn--primary:focus,.sb-Form input[type='submit'].sb-Btn--primary.is-Active,.sb-Form input[type='submit'].sb-Btn--primaryAlt:active,.sb-Form input[type='submit'].sb-Btn--primaryAlt:focus,.sb-Form input[type='submit'].sb-Btn--primaryAlt.is-Active{outline:none;color:#fff;background:#295cdf}.sb-Btn:disabled,.sb-Btn.is-Disabled,a.sb-Btn:disabled,a.sb-Btn.is-Disabled,.sb-Btn--primary:disabled,.sb-Btn--primary.is-Disabled,a.sb-Btn--primary:disabled,a.sb-Btn--primary.is-Disabled,.sb-Btn--primaryAlt:disabled,.sb-Btn--primaryAlt.is-Disabled,a.sb-Btn--primaryAlt:disabled,a.sb-Btn--primaryAlt.is-Disabled,.sb-Form input[type='submit']:disabled,.sb-Form input[type='submit'].is-Disabled,.sb-Form input[type='submit'].sb-Btn--primary:disabled,.sb-Form input[type='submit'].sb-Btn--primary.is-Disabled,.sb-Form input[type='submit'].sb-Btn--primaryAlt:disabled,.sb-Form input[type='submit'].sb-Btn--primaryAlt.is-Disabled{opacity:.3;cursor:not-allowed;pointer-events:none}.sb-Btn--primaryRed,a.sb-Btn--primaryRed,.sb-Form input[type='submit'].sb-Btn--primaryRed{background-color:#fa3c00;transition:all 0.1s ease-in-out}.sb-Btn--primaryRed:active,.sb-Btn--primaryRed:focus,.sb-Btn--primaryRed.is-Active,a.sb-Btn--primaryRed:active,a.sb-Btn--primaryRed:focus,a.sb-Btn--primaryRed.is-Active,.sb-Form input[type='submit'].sb-Btn--primaryRed:active,.sb-Form input[type='submit'].sb-Btn--primaryRed:focus,.sb-Form input[type='submit'].sb-Btn--primaryRed.is-Active{outline:none;color:#fff;background-color:#ff602e !important}.sb-Btn--primaryRed:hover,a.sb-Btn--primaryRed:hover,.sb-Form input[type='submit'].sb-Btn--primaryRed:hover{background:#e13600}.sb-Btn--secondary,a.sb-Btn--secondary,.sb-Form input[type='submit'].sb-Btn--secondary,.sb-Btn--secondaryAlt,a.sb-Btn--secondaryAlt,.sb-Form input[type='submit'].sb-Btn--secondaryAlt{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;box-shadow:inset 0px 0px 0px 2px #1f51cf;background:transparent;padding:0.65rem 2rem;color:#1f51cf !important;transition:all 0.1s ease-in-out;display:inline-block;text-align:center}.sb-Btn--secondary:after,a.sb-Btn--secondary:after,.sb-Form input[type='submit'].sb-Btn--secondary:after,.sb-Btn--secondaryAlt:after,a.sb-Btn--secondaryAlt:after,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:after{display:none}.sb-Btn--secondary:hover,.sb-Btn--secondary:focus,.sb-Btn--secondary:active,a.sb-Btn--secondary:hover,a.sb-Btn--secondary:focus,a.sb-Btn--secondary:active,.sb-Form input[type='submit'].sb-Btn--secondary:hover,.sb-Form input[type='submit'].sb-Btn--secondary:focus,.sb-Form input[type='submit'].sb-Btn--secondary:active,.sb-Btn--secondaryAlt:hover,.sb-Btn--secondaryAlt:focus,.sb-Btn--secondaryAlt:active,a.sb-Btn--secondaryAlt:hover,a.sb-Btn--secondaryAlt:focus,a.sb-Btn--secondaryAlt:active,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:hover,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:focus,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:active{background-color:#1f51cf;color:#fff !important}.sb-Btn--secondary--white,a.sb-Btn--secondary--white,.sb-Form input[type='submit'].sb-Btn--secondary--white,.sb-Btn--secondaryAlt--white,a.sb-Btn--secondaryAlt--white,.sb-Form input[type='submit'].sb-Btn--secondaryAlt--white{background-color:#fff}.sb-Btn--link,a.sb-Btn--link,.sb-Form input[type='submit'].sb-Btn--link{border:0;background:transparent;color:#1e39d2 !important;box-shadow:none;transition:all 0.1s ease-in-out}.sb-Btn--link:after,a.sb-Btn--link:after,.sb-Form input[type='submit'].sb-Btn--link:after{display:none}.sb-Btn--link:hover,.sb-Btn--link:focus,.sb-Btn--link:active,a.sb-Btn--link:hover,a.sb-Btn--link:focus,a.sb-Btn--link:active,.sb-Form input[type='submit'].sb-Btn--link:hover,.sb-Form input[type='submit'].sb-Btn--link:focus,.sb-Form input[type='submit'].sb-Btn--link:active{background:transparent;transform:none;box-shadow:none;color:#14278f !important}.sb-Btn--linkAlt,a.sb-Btn--linkAlt,.sb-Form input[type='submit'].sb-Btn--linkAlt{border:2px solid #ededed;box-shadow:none;background-color:#ededed;color:#444 !important;transition:all 0.1s ease-in-out}.sb-Btn--linkAlt:after,a.sb-Btn--linkAlt:after,.sb-Form input[type='submit'].sb-Btn--linkAlt:after{display:none}.sb-Btn--linkAlt:hover,.sb-Btn--linkAlt:focus,.sb-Btn--linkAlt:active,a.sb-Btn--linkAlt:hover,a.sb-Btn--linkAlt:focus,a.sb-Btn--linkAlt:active,.sb-Form input[type='submit'].sb-Btn--linkAlt:hover,.sb-Form input[type='submit'].sb-Btn--linkAlt:focus,.sb-Form input[type='submit'].sb-Btn--linkAlt:active{border-color:#d4d4d4;transform:none;box-shadow:none;color:#444;background:#d4d4d4}.sb-Btn--large,a.sb-Btn--large,.sb-Form input[type='submit'].sb-Btn--large{font-size:1.25rem;font-weight:bold;padding-left:2rem;padding-right:2rem}.sb-Btn--small,a.sb-Btn--small,.sb-Form input[type='submit'].sb-Btn--small{font-size:0.85rem;padding:0.35rem 1.2rem 0.5rem}.sb-Btn--block,a.sb-Btn--block,.sb-Form input[type='submit'].sb-Btn--block{display:block;width:100%;text-align:center}.sb-Btn--mr,a.sb-Btn--mr{margin-right:1rem}@media (max-width: 43.6875em){.sb-Btn--responsive,a.sb-Btn--responsive,.sb-Form input[type='submit'].sb-Btn--responsive{display:block;width:100%;margin-right:0}}@media (max-width: 43.6875em){.sb-Btn--responsive--mb,a.sb-Btn--responsive--mb,.sb-Form input[type='submit'].sb-Btn--responsive--mb{margin-bottom:1rem}}html,body{font-size:16px;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;font-weight:normal;line-height:1.5;color:#444444}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:0.5rem;padding-top:0.5rem}h1,h2,h3{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2}h4,h5,h6{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2}h1{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:21.7728px}@media (min-width: 43.75em){h1{font-size:26.12736px}}@media (min-width: 64em){h1{font-size:31.35283px}}h2{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:18.144px}@media (min-width: 43.75em){h2{font-size:21.7728px}}@media (min-width: 64em){h2{font-size:26.12736px}}h3{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:15.12px}@media (min-width: 43.75em){h3{font-size:18.144px}}@media (min-width: 64em){h3{font-size:21.7728px}}h4{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h4{font-size:15.12px}}@media (min-width: 64em){h4{font-size:18.144px}}h5{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h5{font-size:15.12px}}@media (min-width: 64em){h5{font-size:15.12px}}h6{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h6{font-size:12.6px}}@media (min-width: 64em){h6{font-size:12.6px}}p,dl,ul,ol{font-size:1rem;line-height:1.5}strong,b{font-weight:bold}a{text-decoration:none;color:#1e39d2;cursor:pointer}a:visited{color:#1e39d2}a:hover{color:#0e1b62}a:active{color:#1e39d2}a.is-currentPage{color:#1e39d2;cursor:text}.sb-Dialog{border-width:2px;border-style:solid;margin-bottom:1rem;border-radius:0.5rem}.sb-Dialog h1,.sb-Dialog h2,.sb-Dialog h3,.sb-Dialog h4,.sb-Dialog h5,.sb-Dialog h6{font-size:1.125rem;line-height:1.5rem;padding:0;margin:0 0 0.5rem}.sb-Dialog ul{padding-left:1em;text-indent:-1em;list-style-position:inside}.sb-Dialog-icon{width:1.5rem;font-size:1.5rem;line-height:1.5rem;display:table-cell;vertical-align:top;padding:0.75rem}.sb-Dialog-message{display:table-cell;vertical-align:top;padding-top:0.75rem;padding-right:1rem}.sb-Dialog--error{border-top-width:10px;border-color:#b80000}.sb-Dialog--error h1,.sb-Dialog--error h2,.sb-Dialog--error h3,.sb-Dialog--error h4,.sb-Dialog--error h5,.sb-Dialog--error h6{color:#b80000}.sb-Dialog--error .sb-Icon--error:before{content:'🚨';font-style:normal}.sb-Dialog--info{border-color:#1e39d2}.sb-Dialog--info .sb-Icon--info:before{content:'ℹ️';font-style:normal}.sb-Dialog--success{border-color:#23b268}.sb-Dialog--success .sb-Icon--success:before{content:'✅';font-style:normal}.sb-Dialog--warning{border-color:#de8f00}.sb-Dialog--warning .sb-Icon--warning:before{content:'⚠️';font-style:normal}@font-face{font-family:"SharpSans";font-style:normal;font-weight:100;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:100;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:normal;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:normal;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:bold;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:bold;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:700;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:700;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff) format("woff")}pre{margin-bottom:1rem}@font-face{font-family:"fontello";font-weight:normal;font-style:normal;src:url(/assets/fontello-5c6d5a4b860bc986924a1ec510dcddbc10a425672dc0e3ba37e3bd4020e9d84f.eot);src:url(/assets/fontello-5c6d5a4b860bc986924a1ec510dcddbc10a425672dc0e3ba37e3bd4020e9d84f.eot#iefix) format("embedded-opentype"),url(/assets/fontello-a11118120d4b90a4c4f937c40ed47f13b4ae131b1c6371fd85ec2843d7bc7b12.woff) format("woff"),url(/assets/fontello-813519383401ebf865d03b706d20d1624b232501f0accdfa1bff4d28265d3f74.ttf) format("truetype"),url(/assets/fontello-f25b435813c4882a6189f926bc10b0fc872c358e3071d21d8386765518bc4278.svg#fontello) format("svg")}[class^="icon-"]:before,[class*=" icon-"]:before{font-family:"fontello";font-style:normal;font-weight:normal;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.icon-home:before{content:'\e800'}.icon-twitter:before{content:'\e801'}.icon-git:before{content:'\e802'}p>code,ul>code,ol>code,li>code,dl>code,td>code{background-color:#f7f7f7;font-size:90%;padding:2px 3px}.highlight>pre{background-color:#f7f7f7;padding:0.5rem 1rem;border-radius:3px;margin-bottom:1rem}.highlight{background:#ffffff}.highlight .c{color:#999988;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k{font-weight:bold}.highlight .o{font-weight:bold}.highlight .cm{color:#999988;font-style:italic}.highlight .cp{color:#999999;font-weight:bold}.highlight .c1{color:#999988;font-style:italic}.highlight .cs{color:#999999;font-weight:bold;font-style:italic}.highlight .gd{color:#000000;background-color:#ffdddd}.highlight .gd .x{color:#000000;background-color:#ffaaaa}.highlight .ge{font-style:italic}.highlight .gr{color:#aa0000}.highlight .gh{color:#999999}.highlight .gi{color:#000000;background-color:#ddffdd}.highlight .gi .x{color:#000000;background-color:#aaffaa}.highlight .go{color:#888888}.highlight .gp{color:#555555}.highlight .gs{font-weight:bold}.highlight .gu{color:#aaaaaa}.highlight .gt{color:#aa0000}.highlight .kc{font-weight:bold}.highlight .kd{font-weight:bold}.highlight .kp{font-weight:bold}.highlight .kr{font-weight:bold}.highlight .kt{color:#445588;font-weight:bold}.highlight .m{color:#009999}.highlight .s{color:#d14}.highlight .na{color:#008080}.highlight .nb{color:#0086B3}.highlight .nc{color:#445588;font-weight:bold}.highlight .no{color:#008080}.highlight .ni{color:#800080}.highlight .ne{color:#990000;font-weight:bold}.highlight .nf{color:#990000;font-weight:bold}.highlight .nn{color:#555555}.highlight .nt{color:#000080}.highlight .nv{color:#008080}.highlight .ow{font-weight:bold}.highlight .w{color:#bbbbbb}.highlight .mf{color:#009999}.highlight .mh{color:#009999}.highlight .mi{color:#009999}.highlight .mo{color:#009999}.highlight .sb{color:#d14}.highlight .sc{color:#d14}.highlight .sd{color:#d14}.highlight .s2{color:#d14}.highlight .se{color:#d14}.highlight .sh{color:#d14}.highlight .si{color:#d14}.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999999}.highlight .vc{color:#008080}.highlight .vg{color:#008080}.highlight .vi{color:#008080}.highlight .il{color:#009999}.tb-Default{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Default-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Default-main:after{content:" ";display:block;clear:both}.tb-Default-content{width:100%;float:left;margin-left:0;margin-right:0}.tb-Home{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Home-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Home-main:after{content:" ";display:block;clear:both}@media (min-width: 64em){.tb-Home-content{width:74.57627%;float:left;margin-right:1.69492%}}@media (min-width: 81.25em){.tb-Home-content{width:74.68354%;float:left;margin-right:1.26582%}}.tb-Home--author .tb-Sidebar{display:block}.tb-Post{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Post-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Post-main:after{content:" ";display:block;clear:both}@media (min-width: 64em){.tb-Post-content{width:74.57627%;float:left;margin-right:1.69492%}}@media (min-width: 81.25em){.tb-Post-content{width:74.68354%;float:left;margin-right:1.26582%}}@media (min-width: 64em){.tb-Post-author{display:block;margin-top:1rem;width:23.72881%;float:right;margin-right:0}}@media (min-width: 81.25em){.tb-Post-author{width:24.05063%;float:right;margin-right:0}}@media (min-width: 43.75em){.tb-Post h1:first-child{width:70%}}.tb-Team{margin-top:1.5rem}.tb-Member{width:100%;float:left;margin-left:0;margin-right:0;text-align:center;padding-bottom:2rem}@media (min-width: 43.75em){.tb-Member{width:32.20339%;float:left}.tb-Member:nth-child(3n+1){margin-left:0;margin-right:-100%;clear:both;margin-left:0}.tb-Member:nth-child(3n+2){margin-left:33.89831%;margin-right:-100%;clear:none}.tb-Member:nth-child(3n+3){margin-left:67.79661%;margin-right:-100%;clear:none}}.tb-Member-gravatar img{max-width:100%;border-radius:50%}.tb-Member--posts{margin-top:0.5rem}.tb-Sidebar{display:none;padding:1rem}@media (min-width: 64em){.tb-Sidebar{display:block;width:23.72881%;float:right;margin-right:0}}@media (min-width: 81.25em){.tb-Sidebar{width:24.05063%;float:right;margin-right:0}}.tb-Author-gravatar{text-align:center}.tb-Author-gravatar img{border-radius:50%}.tb-Author-info{text-align:center}.tb-Author-serverlesshero{text-align:center}.tb-Author-serverlesshero img{width:125px;margin-top:0.5rem;margin-bottom:0;text-align:center}.tb-Author-icons{margin-top:0.5rem}.tb-Author-icon a,.tb-Author-icon a:visited{color:gray;padding:0.25rem;font-size:1.25rem}.tb-Author-icon a:hover{color:#5ccfc2}.tb-Author-posts{margin-top:0.5rem}.tb-Excerpt{max-width:100%;margin-left:auto;margin-right:auto;border-bottom:1px dotted #d5d5d5;padding-bottom:1rem;margin-bottom:1rem}.tb-Excerpt:after{content:" ";display:block;clear:both}.tb-Excerpt-date{margin-bottom:0.5rem;color:#939393}.tb-Header{background-color:white;background-color:rgba(255,255,255,0.95);border-bottom:1px solid #cccccc;display:block;margin-top:0.5rem;margin-bottom:1rem}.tb-Header::after{clear:both;content:"";display:table}#tb-Header-toggle{display:none;position:relative;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}#tb-Header-toggle:checked+.tb-Header-area .tb-Header-menu{display:block;opacity:1;z-index:10}.tb-Header-home-link{text-decoration:none}.tb-Header-home-logo{display:block;margin-top:0.375rem}.tb-Header-home-logo img{width:85%;max-width:450.5px}.tb-Header-toggle{cursor:pointer}@media (min-width: 43.75em){.tb-Header-toggle{display:none}}.tb-Header-toggle:after{width:2.625rem;height:2.625rem;position:absolute;right:1rem;top:1rem;display:block;content:'\e800';font-family:'inkicons';font-size:2rem;color:#cccccc;cursor:pointer;text-align:center;vertical-align:center}@media (min-width: 43.75em){.tb-Header-toggle:after{display:none}}.tb-Header-menu{display:none;opacity:0;width:100%;margin:0;padding:0;position:absolute;right:0}.tb-Header-menu::after{clear:both;content:"";display:table}@media (min-width: 43.75em){.tb-Header-menu{position:inherit;display:block;opacity:1}}.tb-Header-menu:after{content:"";height:3px;width:100%;background-color:rgba(0,0,0,0.1)}@media (min-width: 43.75em){.tb-Header-menu:after{display:none}}.tb-Header-menu-item{display:block;width:100%;list-style:none}@media (min-width: 43.75em){.tb-Header-menu-item{float:left;width:auto}}.tb-Header-menu-link{padding:0.75rem 1rem;background-color:#f8f8f8;background-color:white;border-bottom:0.25rem solid transparent;border-bottom:1px solid #cccccc;color:inherit;display:block;padding-bottom:0.25rem;text-decoration:none;width:100%}@media (min-width: 43.75em){.tb-Header-menu-link{border-bottom:0.25rem solid transparent}}.tb-Header-menu-link:hover,.tb-Header-menu-link:active,.tb-Header-menu-link:visited{color:inherit}.tb-Header-menu-link:hover{border-bottom:0.25rem solid #fa3c00;color:#fa3c00}.tb-Header-menu-link.is-active{border-bottom:0.25rem solid #fa3c00;color:#fa3c00}.tb-Header-menu-link:before{content:attr(data-link-long)}@media (min-width: 43.75em){.tb-Header-menu-link:before{content:attr(data-link-short)}}@media (min-width: 64em){.tb-Header-menu-link:before{content:attr(data-link-long)}}.tb-Footer{background-color:#ededed;margin-top:2rem;padding:1rem;text-align:center;width:100%}.tb-Paginator{width:100%;float:left;margin-left:0;margin-right:0}.tb-Paginator-newerBtn{width:47.36842%;float:left;margin-right:5.26316%}@media (min-width: 43.75em){.tb-Paginator-newerBtn{width:23.72881%;float:left;margin-right:1.69492%}}.tb-Paginator-newerBtn .sb-Btn{width:100%}.tb-Paginator-olderBtn{width:47.36842%;float:right;margin-right:0}@media (min-width: 43.75em){.tb-Paginator-olderBtn{width:23.72881%;float:right;margin-right:0}}.tb-Paginator-olderBtn .sb-Btn{width:100%}.tb-AsideQuote{display:none;position:relative;width:30vw;float:right;background-color:#f7f7f7;border-radius:3px;font-family:Georgia, serif;font-size:1.25rem;line-height:1.2;color:#939393;font-style:italic;padding:1rem 1rem 1rem 3rem;margin-left:1rem;margin-bottom:1rem}.tb-AsideQuote:before{content:"\201C";font-family:Georgia, serif;font-size:3rem;font-weight:bold;color:#d5d5d5;position:absolute;left:0.75rem;top:0.5rem}@media (min-width: 43.75em){.tb-AsideQuote{display:block}}.tb-Images{max-width:100%;margin-left:auto;margin-right:auto}.tb-Images:after{content:" ";display:block;clear:both}@media (min-width: 81.25em){.tb-Img-processing{max-width:50%}}.tb-Img{max-width:100%}@media (min-width: 43.75em){.tb-Img{float:right;clear:right;margin-bottom:1rem;margin-left:1rem}}.tb-Img--fancy{border-radius:0.25rem}.tb-Img--picture{padding:0.5rem;border:1px solid #eeeeee;background-color:white;box-shadow:2px 2px 4px 0px rgba(0,0,0,0.2);margin-bottom:0 !important}@media (min-width: 43.75em){.tb-Img--quarter{max-width:25%}}@media (max-width: 43.6875em){.tb-Img--quarter--sm{max-width:25% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--quarter--md{max-width:25%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--quarter--lg{max-width:25%}}@media (min-width: 43.75em){.tb-Img--third{max-width:33%}}@media (max-width: 43.6875em){.tb-Img--third--sm{max-width:33% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--third--md{max-width:33%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--third--lg{max-width:33%}}@media (min-width: 43.75em){.tb-Img--half{max-width:50%}}@media (max-width: 43.6875em){.tb-Img--half--sm{max-width:50% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--half--md{max-width:50%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--half--lg{max-width:50%}}@media (min-width: 43.75em){.tb-Img--responsive{max-width:50%}}@media (min-width: 64em){.tb-Img--responsive{max-width:40%}}@media (min-width: 81.25em){.tb-Img--responsive{max-width:30%}}.tb-Img--responsive-ctr{margin-bottom:1rem}@media (min-width: 43.75em){.tb-Img--responsive-ctr{float:none !important;clear:none !important;display:block;width:70%;margin-top:0 !important;margin-right:auto !important;margin-left:auto !important}}@media (min-width: 43.75em) and (min-width: 43.75em){.tb-Img--responsive-ctr{margin-bottom:1.5rem !important}}@media (min-width: 64em){.tb-Img--responsive-ctr{max-width:60%}}@media (min-width: 81.25em){.tb-Img--responsive-ctr{max-width:50%}}.tb-ImgCenter{margin:0 24%}@font-face{font-family:'tbicons';src:url(/assets/tbicons-096fa3970ce3a3595debd167e1cd11422745885e43987130c7ad2b9fd020a910.eot);src:url(/assets/tbicons-096fa3970ce3a3595debd167e1cd11422745885e43987130c7ad2b9fd020a910.eot#iefix) format("embedded-opentype"),url(/assets/tbicons-a255c4d7531756c350cd3cb8ac924a3a70dba66357bc6f53cdcce66be69e1ca4.woff) format("woff"),url(/assets/tbicons-04c88863a35923e4156691375c162cd8b6fb44104e3cecbc17972c89da722d17.ttf) format("truetype"),url(/assets/tbicons-737a98cc543fbd45788943a259ba88d32a06bdd4e57cf10d9631866dce5df09e.svg#tbicons) format("svg");font-weight:normal;font-style:normal}[class^="tb-Icon-"]:before,[class*=" tb-Icon-"]:before{font-family:"tbicons";font-style:normal;font-weight:normal;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.tb-Icon-twitter:before{content:'\e800'}.tb-Icon-home:before{content:'\e801'}.tb-Icon-github:before{content:'\e802'}.tb-Masthead{margin-bottom:1rem}.tb-Masthead::after{clear:both;content:"";display:table}@media (min-width: 43.75em){.tb-Masthead{margin-top:1rem;margin-bottom:2rem}}.tb-Masthead .tb-Img{float:none;display:block;margin:0}.tb-Masthead aside{display:block;color:#939393;margin-top:0.25rem;font-size:10px;line-height:1rem;height:1rem;text-align:right}.tb-Masthead a{color:#939393;text-decoration:none;border:0}.tb-Masthead a:link,.tb-Masthead a:visited,.tb-Masthead a:hover,.tb-Masthead a:active{color:#939393}.tb-Masthead-caption{position:relative}.tb-Masthead-caption:after{display:block;position:absolute;top:0;right:0;content:attr(caption)}
 </style>
 </head>
 
-  <body class="tb-Home tb-Home--author">
+  <body class="tb-Post">
     <header class="tb-Header">
   <div class="sb-Wrapper">
     <nav class="tb-Header-home">
@@ -40,622 +49,338 @@
   </div>
 </header>
 
-    <div class="tb-Home-main sb-Wrapper">
-      <div class="tb-Home-content">
-        <div class="tb-AuthorPage">
-          
-          <h1>Posts By: Karle Durante</h1>
-          
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2015-06-19T00:00:00-04:00">
-      Posted On 19 Jun 2015&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2015/06/19/rubys-private-is-for-methods-only/">Ruby's Private is for Methods Only</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">The other day I saw a pull request, on a Rails project, that declared a private inner class. Having my fair share of experience with Java, I am very familiar with the construct. Essentially, you declare one class inside of another class and declare it as private. This is often done to clean up your internal data structures and hide the implementation details from others. I couldn&#39;t recall ever seeing this in Ruby before, so it gave me pause. As...</p>
-  <a href="/blog/2015/06/19/rubys-private-is-for-methods-only/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+    <div class="tb-Post-main sb-Wrapper">
+      <div class="tb-Post-content">
+        <h1>Monolithic Ideas For AWS Lambda File Systems</h1>
+        <h3>With Rails &amp; Lamby</h3>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2014-10-31T09:00:00-04:00">
-      Posted On 31 Oct 2014&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2014/10/31/ecomic-con-2014/">eComic Con 2014</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Halloween is a special time at CustomInk, especially for a group of technologists who have a healthy appreciation for Sci-Fi and comic books.  This year, our eCommerce group decided to hold an eComic-con and let our imaginations run wild.
-</p>
-  <a href="/blog/2014/10/31/ecomic-con-2014/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<div class="tb-Masthead">
+  <img src="/assets/content/lambda-file-systems/masthead-867a17f618e0c2f6b04260b68de597850d7c98b0d9872478f4317988abacce1e.jpg" class="tb-Img tb-Img--fancy" alt="Monolithic Ideas For AWS Lambda File Systems on Rails using Lamby." />
+  <a href="https://www.jointhespectacle.com/aboutmonolith" ><aside class="tb-Masthead-caption" caption="MONOLITH™ by Dario Santacroce."></aside></a>
+</div>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2014-09-12T13:00:00-04:00">
-      Posted On 12 Sep 2014&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2014/09/12/fall-college-recruiting-schedule/">Fall College Recruiting Schedule</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Fall is in the air and so our engineers will be heading back to college!
+<p><img src="/assets/content/lambda-file-systems/efs-logo-07c46dafb5ab211876311a1f125a35d320d781052fb0bc128e3fd17b73390357.png" alt="Amazon EFS Logo" style="float:right; width:15%; margin-left:1rem;" />Today I am excited to share the release of <a href="https://aws.amazon.com/about-aws/whats-new/2020/06/aws-lambda-support-for-amazon-elastic-file-system-now-generally-/">AWS Lambda File Systems</a>. A simple, scalable, fully managed network file system leveraging <a href="https://aws.amazon.com/efs/">Amazon&#39;s Elastic File System</a> (EFS) technology. And what better way to celebrate the accomplishments of our hard-working AWS friends than by building clever uses of their tools in ways they may not have intended... or outright feared 😱</p>
 
-We are looking for Summer 2015 interns and early career software engineer hires. You can learn more about our early career software engineer position by visiting our careers page: http://www.customink.com/about/jobs/openings
-</p>
-  <a href="/blog/2014/09/12/fall-college-recruiting-schedule/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<!--more-->
 
-                </div>
-              
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2014-09-08T09:00:00-04:00">
-      Posted On 08 Sep 2014&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2014/09/08/building-the-customink-living-style-guide/">Building the CustomInk Living Style Guide</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Ken Collins and Jonathan Lehman will be presenting &quot;Like A Ross! - Building The CustomInk.com Living Style Guide&quot; at SassyDC this Wednesday, September 10th.
+<h2 id="creating-your-first-efs">💾 Creating Your First EFS</h2>
 
-Be sure to register if you plan on attending: https://nvite.com/SassyDC/f4a
-</p>
-  <a href="/blog/2014/09/08/building-the-customink-living-style-guide/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>For some of us in the serverless space, EFS could be an entirely new thing. So let&#39;s create a simple file system with a little ClickOps™ to use with our &quot;experiments&quot; below. Log into the <a href="https://console.aws.amazon.com/console/home">AWS Management Console</a> and:</p>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2014-08-15T15:24:00-04:00">
-      Posted On 15 Aug 2014&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2014/08/15/tapas-time/">Tapas Time!</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">The engineering team at CustomInk is always looking to learn new things.  We&#39;ve come to realize that the density of the information is not always the most important thing.  Rather, exploring a single idea in depth can be a lot of fun.
+<ul>
+<li>Click on &quot;Services&quot; in the toolbar.</li>
+<li>Enter &quot;EFS&quot; into the find services field, select.</li>
+<li>Click on &quot;Create file system&quot;.</li>
+<li>For &quot;Network access&quot;, the default VPC, AZs, Subnets (public), &amp; Security Groups should work.</li>
+<li>➡️ Click &quot;Next Step&quot;.</li>
+<li>Default &quot;Lifecycle policy&quot; of &quot;None&quot;</li>
+<li>Change &quot;Throughput Mode&quot; to &quot;Provisioned&quot;.</li>
+<li>Change &quot;Throughput (MiB/s)&quot; to &quot;1&quot;. Estimated up to $6.00/month.</li>
+<li>Default &quot;Performance Mode&quot; to &quot;General Purpose&quot;</li>
+<li>➡️ Click &quot;Next Step&quot;</li>
+<li>For &quot;Policy settings&quot;, leave empty.</li>
+<li>Click the &quot;Add access point&quot; button.</li>
+<li>Set the name, user, directory, and owner as pictured.</li>
+<li>➡️ Click &quot;Next Step&quot;</li>
+<li>✅ Click &quot;Create File System&quot;</li>
+</ul>
 
-Avdi Grimm&#39;s Ruby Tapas has provided us with a really simple way to execute on this idea.
-</p>
-  <a href="/blog/2014/08/15/tapas-time/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p><img src=/assets/content/lambda-file-systems/access-point-70ae0b8ee149f62acd5eb939f2b92ee21bcca337a0df593065bba775b525b66c.png alt="Our CloudFront Cookie Histogram Report Goal" class="tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy" /></p>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2013-10-01T08:38:00-04:00">
-      Posted On 01 Oct 2013&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2013/10/01/chris-mar-is-an-inker/">Chris Mar is an Inker</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">CustomInk technology is proud to announce that Chris Mar is our newest Inker!  Following the new hire tradition, Chris pushed his first deploy to Booster.com within hours of arrival.
+<p>It might take a few minutes for the state to become available. Once complete, we&#39;ll have a fun little sandbox 🏖 file system. Time to drop some 💩&#39;y ideas in production for our co-workers to find during their next sprint.</p>
 
+<h2 id="rails-filestore-cache">🗂 Rails FileStore Cache</h2>
 
-</p>
-  <a href="/blog/2013/10/01/chris-mar-is-an-inker/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>Rails developers love caching things. The framework makes it easy by exposing a simple <code>Rails.cache</code> interface with optional backends. Commonly used with distributed stores such as Memcached or <a href="https://www.lastweekinaws.com/podcast/aws-morning-brief/whiteboard-confessional-route-53-db/">Route53</a> (why else would it be on <a href="https://aws.amazon.com/caching/aws-caching/#Amazon_Route_53">this page</a>), they are easy enough to use with Lambda via a VPC Config. But is <a href="https://aws.amazon.com/elasticache/">ElastiCache</a> truly serverless and cost effective? Perhaps. But maybe Rails&#39; built-in <a href="https://api.rubyonrails.org/classes/ActiveSupport/Cache/FileStore.html">FileStore</a> can be used with EFS instead?</p>
 
-                </div>
-              
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2013-06-05T21:35:00-04:00">
-      Posted On 05 Jun 2013&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2013/06/05/welcome-sukhada-kulkarni/">Welcome Sukhada Kulkarni</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">CustomInk technology is very excited to welcome one of our new summer interns, Sukhada Kulkarni.
+<p><img src="/assets/content/lambda-file-systems/lambda-rails-360f90d66f8ea8739cbf7334d3cda918393e218469653de0ae0e0e87b10bac2e.png" alt="Lamby - Simple Rails & AWS Lambda Integration" style="float:right; width:15%;" />We are going use our new and improved <a href="https://lamby.custominktech.com/docs/quick_start">Lamby Quick Start</a> to deploy a working Rails app to AWS Lambda in a few minutes! After the initial deploy, here are the changes we need to make to our new project. Adding the <a href="https://lostisland.github.io/faraday/">Faraday</a> gem is first:</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Gemfile</span>
+<span class="n">gem</span> <span class="s1">'faraday'</span>
+</code></pre></div>
+<p>Next we are going to need some simulated API data. For this demo we can use the <a href="http://fakerestapi.azurewebsites.net">Fake Rest API</a> service to get a list of books in XML (the monolith&#39;s true format). This request takes ~400ms and the response body is 100KB in size. Perfect use case as this gives us enough latency and cache usage on disk to find out if and when using EFS as a disk cache helps.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># app/controller/application_controller.rb</span>
+<span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="nb">id</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">..</span><span class="mi">30</span><span class="p">).</span><span class="nf">to_a</span><span class="p">.</span><span class="nf">sample</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s2">"api/</span><span class="si">#{</span><span class="nb">id</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">"https://fakerestapi.azurewebsites.net/api/Books"</span>
+    <span class="no">Rails</span><span class="p">.</span><span class="nf">cache</span><span class="p">.</span><span class="nf">fetch</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="no">Faraday</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="nf">body</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Edit the AWS SAM YAML file using the example below. Information needed can be found in the EFS section of the AWS Console by clicking on your newly-created file system.</p>
 
+<ul>
+<li>Add this under the <code>Properties</code> section of your <code>AWS::Serverless::Function</code> resource.</li>
+<li>Under the <code>FileSystemConfigs</code> config for <code>Arn</code>, replace the following:
 
-</p>
-  <a href="/blog/2013/06/05/welcome-sukhada-kulkarni/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<ul>
+<li><code>123456789012</code> with your AWS Account ID.</li>
+<li><code>fs-12345678</code> with your subdomain. See &quot;DNS name&quot; in Console.</li>
+</ul></li>
+<li>Replace the <code>SubnetIds</code> and <code>SecurityGroupIds</code> with your own. See &quot;File system access&quot; in Console.</li>
+</ul>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># template.yaml</span>
+<span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">RailsLambda</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::Serverless::Function</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="c1"># ...</span>
+      <span class="na">Policies</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">AmazonElasticFileSystemClientFullAccess</span>
+        <span class="pi">-</span> <span class="s">AWSLambdaVPCAccessExecutionRole</span>
+      <span class="na">FileSystemConfigs</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">Arn</span><span class="pi">:</span> <span class="s">arn:aws:elasticfilesystem:us-east-1:123456789012:access-point/fs-12345678</span>
+          <span class="na">LocalMountPath</span><span class="pi">:</span> <span class="s">/mnt/sandbox</span>
+      <span class="na">VpcConfig</span><span class="pi">:</span>
+        <span class="na">SubnetIds</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">subnet-1ae4e78c3f32147b2</span>
+          <span class="pi">-</span> <span class="s">subnet-029c281a81822b209</span>
+        <span class="na">SecurityGroupIds</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">sg-1fd20e31e93f646b9</span>
+</code></pre></div>
+<p>Lastly don&#39;t forget to configure Rails to use the <code>:file_store</code> for the cache backend. All file systems will be under the <code>/mnt</code> directory.</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># config/environments/production.rb</span>
+<span class="n">config</span><span class="p">.</span><span class="nf">cache_store</span> <span class="o">=</span> <span class="ss">:file_store</span> <span class="p">,</span> <span class="s2">"/mnt/sandbox"</span>
+</code></pre></div>
+<h3 id="the-results">The Results</h3>
 
-                </div>
-              
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-09-14T15:34:00-04:00">
-      Posted On 14 Sep 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/09/14/welcome-ken-collins/">Welcome Ken Collins!</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">CustomInk technology is very excited to announce that Ken Collins has joined the team!
+<p>Below are some apache <a href="https://httpd.apache.org/docs/2.4/programs/ab.html"><code>bm</code></a> metrics. For each we are making 1000 requests with a concurrency level set to 10. To avoid measuring cold starts, we run our benchmarks twice after each deploy and present the data from the second. Those familiar with AWS Lambda may remember a time when a <code>VpcConfig</code> incurred a substantial cold start. I&#39;m happy to report that the <a href="https://aws.amazon.com/blogs/compute/announcing-improved-vpc-networking-for-aws-lambda-functions/">VPC Networking Improvements</a> announced last year are indeed real. General measurements of the cold starts were nearly identical with and without a VPC config.</p>
 
+<p><strong>API Latency/Size:</strong> ~400ms/100KB</p>
+<div class="highlight"><pre><code class="language-" data-lang="">56.556 seconds - No Cache Baseline
+26.679 seconds - FileStore Cache w/EFS Provisioned (1 MiB/s) $6.00/month
+28.726 seconds - FileStore Cache w/EFS Provisioned (4 MiB/s) $24.00/month
+27.306 seconds - FileStore Cache w/EFS Provisioned (8 MiB/s) $48.00/month
+</code></pre></div>
+<p><strong>API Latency/Size:</strong> ~100ms/5KB</p>
+<div class="highlight"><pre><code class="language-" data-lang="">32.796 seconds - No Cache Baseline
+29.175 seconds - FileStore Cache w/EFS Provisioned (8 MiB/s) $48.00/month
+29.598 seconds - FileStore Cache w/EFS Provisioned (16 MiB/s) $96.00/month
+</code></pre></div>
+<p>As you can see we did another test which simulated a ~100ms API response latency with 5KB of data and with more EFS throughput. In both we can see there is a disk read time tradeoff at play here. So if you do use EFS as some form of distributed cache, keep this in mind and configure your provisioned throughput as needed. Lastly, EFS can be configured with a lifecycle policy. So if you want to treat it as an LRU (least recently used) cache, maybe set it to something like &quot;7 days since last access&quot;.</p>
 
-</p>
-  <a href="/blog/2012/09/14/welcome-ken-collins/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<h2 id="file-system-deploys">🤯 File System Deploys</h2>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-07-10T19:15:00-04:00">
-      Posted On 10 Jul 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/07/10/stay-cool/">Stay Cool</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">We had a fairly severe production issue the other day. The kind of issue where you get sick to your stomach as you begin to realize what...just....happened...... As the issue escalated, news spread and a core group of people took control to work towards a resolution. The questions were always &quot;what&#39;s happening&quot; and &quot;what&#39;s changed recently&quot; and &quot;what kinds of things might cause this&quot; and never &quot;who deployed last&quot; and &quot;who worked on this code originally&quot;. It says a lot...</p>
-  <a href="/blog/2012/07/10/stay-cool/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>Is your application so monolithic that it exceeds Lambda&#39;s 250MB unzipped deployment package size and yet somehow still qualifies as worthy of the Lambdalith title? Asked another way: could we &quot;deploy&quot; our application to EFS and have Lambda boot our Rails application from there? Let&#39;s find out!</p>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-06-15T10:47:00-04:00">
-      Posted On 15 Jun 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/06/15/welcome-jason-gilbertson/">Welcome Jason Gilbertson!</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">The CustomInk technology team would like welcome Jason Gilbertson. Jason, a native of Iowa and a graduate of the Georgia Institute of Technology, has relocated himself to McLean, VA to join our team and we couldn&#39;t be more excited. Like everyone on the CustomInk technology team, Jason was quick to create a feature branch and then deploy his first feature to production. But there is another important aspect of our continuous deployment strategy that Jason participated in: feature verification. When...</p>
-  <a href="/blog/2012/06/15/welcome-jason-gilbertson/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>If you are unfamiliar with how <a href="https://lamby.custominktech.com/">Lamby</a> works, we basically load your Rack/Rails application from a single <code>app.rb</code> file at the root of your project/deployment package, like the one below. However, in this example, we have changed the relative requires to absolute paths pointing to our EFS mount. Will this work and if so, how well?</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ENV</span><span class="p">[</span><span class="s1">'RAILS_SERVE_STATIC_FILES'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'1'</span>
+<span class="nb">require</span> <span class="s1">'/mnt/sandbox/config/boot'</span>
+<span class="nb">require</span> <span class="s1">'dotenv'</span> <span class="p">;</span> <span class="no">Dotenv</span><span class="p">.</span><span class="nf">load</span> <span class="s2">"/mnt/sandbox/.env.</span><span class="si">#{</span><span class="no">ENV</span><span class="p">[</span><span class="s1">'RAILS_ENV'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">require</span> <span class="s1">'lamby'</span>
+<span class="nb">require</span> <span class="s1">'/mnt/sandbox/config/application'</span>
+<span class="nb">require</span> <span class="s1">'/mnt/sandbox/config/environment'</span>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-05-24T16:01:00-04:00">
-      Posted On 24 May 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/05/24/welcome-interns/">Welcome Interns!</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Last week the CustomInk Tech team welcomed two new interns, Nolan Carroll and Seth Vargo. Nolan and Seth are joining us for the summer from Carnegie Mellon University where they are both majoring in Information Systems. Nolan and Seth wasted no time hopping on our deploy train last week, but they couldn&#39;t have done it without the help of our (semi) automated build process. A while ago, Nathen Harvey talked about our Green Screen build monitor. While this serves as...</p>
-  <a href="/blog/2012/05/24/welcome-interns/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<span class="vg">$app</span> <span class="o">=</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Builder</span><span class="p">.</span><span class="nf">new</span> <span class="p">{</span> <span class="n">run</span> <span class="no">Rails</span><span class="p">.</span><span class="nf">application</span> <span class="p">}.</span><span class="nf">to_app</span>
 
-                </div>
-              
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-05-14T13:17:00-04:00">
-      Posted On 14 May 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/05/14/welcome-josh-born/">Welcome Josh Born!</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">The CustomInk technology team wants to extend a warm welcome to our newest member, Josh Born.  Josh wasted no time and hopped onto the deploy train today for his first production release.
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">:,</span> <span class="n">context</span><span class="p">:)</span>
+  <span class="no">Lamby</span><span class="p">.</span><span class="nf">handler</span> <span class="vg">$app</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="ss">rack: :http</span>
+<span class="k">end</span>
+</code></pre></div>
+<h3 id="setup-app-efs">Setup App &amp; EFS</h3>
 
-At CustomInk we like to continuously deploy changes to our site.  This means no sprints, no iterations, no milestones.  We work, and when we are satisfied with our work, we deploy it.  On average, engineers deploy updates to our site about five to seven times a day.
-</p>
-  <a href="/blog/2012/05/14/welcome-josh-born/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>We are going to use the <a href="https://lamby.custominktech.com/docs/quick_start">Lamby Quick Start</a> guide again to generate a new Rails app to Lambda. Name the application <code>disk_deploy</code> and go through the entire process including the <code>bin/deploy</code> task. Please make sure to add the <code>Policies</code> from the YAML Rails FileStore Cache above.</p>
 
-                </div>
-              
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-04-27T11:48:00-04:00">
-      Posted On 27 Apr 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/04/27/critical-oversight-indexes/">Critical Oversight: Indexes</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">One of the most common production issues I run into are missing indexes. The other day I got to thinking that they are usually missing because of the evolution of the software. We might use some rails generators to prototype some basic functionality. Then we&#39;ll iterate over a set of stories incorporating new behavior. Maybe we&#39;ll do some refactoring, scrap some features, pull out some dead code and &quot;harden&quot; some areas we&#39;ve identified as brittle. But we almost never analyze...</p>
-  <a href="/blog/2012/04/27/critical-oversight-indexes/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>We are going to reuse this Lambda&#39;s execution role and deploy artifacts located in the project&#39;s <code>.aws-sam</code> directory which is created after the deploy. The files there will be synced to a new EFS volume and used via a fresh &quot;from scratch&quot; Lambda whose only code is the few lines in the example above.</p>
 
-                </div>
-              
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-03-26T13:36:00-04:00">
-      Posted On 26 Mar 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/03/26/rubynation-2012/">RubyNation 2012</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">RubyNation is awesome. Most ruby events are awesome, but in particular I enjoy RubyNation because it&#39;s local to me. It&#39;s not that I don&#39;t like traveling to other conferences or that I think Washington DC is the best possible place for a conference. What I love about RubyNation being local is having 200+ ruby developers from my immediate locale in one single place, at one single time. Of course, it doesn&#39;t hurt to have Jim Weirich and Corey Haines show...</p>
-  <a href="/blog/2012/03/26/rubynation-2012/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<h3 id="sync-data-with-efs">Sync Data with EFS</h3>
 
-                </div>
-              
-            
-          
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-03-02T15:35:00-05:00">
-      Posted On 02 Mar 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/03/02/simple-data-mapper/">Simple Data Mapper</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">I recently tackled a pretty typical data migration task where some source model had to be transformed into some target model.  About 80% of the elements were mapped field for field, and the other 20% had to be mutated in some way.  Tired of writing one off rake tasks to pull and transform data, I came up with a little data mapper class that I cold reuse in the future.
-</p>
-  <a href="/blog/2012/03/02/simple-data-mapper/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<p>So, how do we get our application&#39;s files on EFS? Luckily AWS has yet another product aptly named <a href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html">AWS DataSync</a> which can move data around to/from various <a href="https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html">location</a> types. I decided to use DataSync&#39;s S3 to EFS&#39; built in NFS support.</p>
 
-                </div>
-              
-            
-          
-            
-              
-              
-              
-                <div class="tb-PostItem">
-                  <article class="tb-Excerpt">
-  <header>
-    <time class="tb-Excerpt-date" pubdate datetime="2012-02-03T15:38:00-05:00">
-      Posted On 03 Feb 2012&nbsp;&nbsp;-&nbsp;&nbsp;Karle Durante
-    </time>
-    <h2><a href="/blog/2012/02/03/organizing-your-rails-models/">Organizing Your Rails Models</a></h2>
-  </header>
-  <p class="tb-Excerpt-text">Like people, applications start out small.  Unlike people, applications do not always have a predictable growth pattern.  Sometimes they grow really big, and sometimes not at all.  When applications grow large, organization becomes important because it is no longer possible to remember every detail about your application without consulting the source code.
+<p>If you are new to DataSync, setting it up can be a little daunting. Thankfully fellow AWS Hero <a href="https://aws.amazon.com/developer/community/heroes/namrata-shah/">Namrata Shah</a> made a YouTube video titled <a href="https://www.youtube.com/watch?v=5HaztXVaJQ8">DataSync Demo: Copy data from S3 to EFS</a> which was absolutely perfect! Assuming you have your VPC all set up from the test above, maybe start somewhere in the middle. Here are some critical points ⚠️ to follow:</p>
 
-&quot;We use Rails, the convention tells us how to organize our code&quot;.  Yes, but having 50 or more files in your app/models directory is hardly being organized.
-</p>
-  <a href="/blog/2012/02/03/organizing-your-rails-models/" class="sb-Btn sb-Btn--secondary sb-Btn--responsive">Read More</a>
-</article>
+<ul>
+<li>The S3 Source Location has an empty &quot;Folder&quot; prefix.</li>
+<li>The NFS Destination Location has a path matching the EFS access point. Ex: <code>/sandbox</code>.</li>
+<li>Make sure the &quot;Copy ownership&quot; task setting is <strong>OFF</strong>.</li>
+<li>Make sure the &quot;Copy permissions&quot; task setting is <strong>OFF</strong>.</li>
+<li>Make sure the &quot;Keep deleted files&quot; task setting is <strong>OFF</strong>.</li>
+<li>Make sure the &quot;Overwrite files&quot; task setting is <strong>ON</strong>.</li>
+</ul>
 
-                </div>
-              
-            
-          
-            
-          
-            
-          
-            
-          
-            
-          
-        </div>
+<p><img src=/assets/content/lambda-file-systems/datasync-task-0b9663539358843ad91455a48ffe0a3d3471934247fdbaeac1ad70df8a227d15.png alt="Our AWS Lambda S3 to EFS DataSync Task" class="tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy" /></p>
+
+<p>When completed, your DataSync task should look something like the image above. Starting the task to copy files from S3 to EFS is a few short CLI commands which can be run in the <code>disk_deploy</code> project.</p>
+<div class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">cd</span> .aws-sam/build/DiskDeployLambda
+<span class="nv">$ </span>aws s3 <span class="nb">sync</span> <span class="nb">.</span> s3://lambda-deploy.metaskills.net/sandbox <span class="nt">--delete</span>
+<span class="nv">$ </span>aws datasync start-task-execution <span class="se">\</span>
+  <span class="nt">--task-arn</span> arn:aws:datasync:<span class="nv">$AWS_REGION</span>:<span class="nv">$AWS_ACCOUNT_ID</span>:task/task-09d19037fc3cc57eb
+</code></pre></div>
+<p>Please take note that we are syncing to an S3 prefix that matches our EFS access point. The ARN above is an example and you can replace the account ID and task name with your own. You could also use the <a href="https://docs.aws.amazon.com/cli/latest/reference/datasync/list-tasks.html"><code>aws datasync list-tasks</code></a> CLI command to get your ARN too.</p>
+
+<h3 id="lambda-from-scratch">Lambda From Scratch</h3>
+
+<p>Building a Lambda from scratch is pretty straight forward. Here are the basic steps. Please remember we are reusing the execution role from the <code>disk_deploy</code> app which must have the <code>AmazonElasticFileSystemClientFullAccess</code> and <code>AWSLambdaVPCAccessExecutionRole</code> managed policies added prior to its deploy. Our from-scratch Lambda will not be able to use a VPC or File System without these policies in the execution role.</p>
+
+<ul>
+<li>Lambda Create Function -&gt; Author from scratch
+
+<ul>
+<li>Name: <code>efs-deploy-test</code>,</li>
+<li>Runtime: <code>Ruby 2.7</code></li>
+<li>Permissions -&gt; Existing Role: Use role from <code>disk_deploy</code> app.</li>
+</ul></li>
+<li>Function Code Section
+
+<ul>
+<li>Use modified <code>app.rb</code> above with absolute path require statements using <code>/mnt/sandbox</code>.</li>
+</ul></li>
+<li>Environment Variables Section -&gt; Edit
+
+<ul>
+<li>Click &quot;Add environment variable&quot;</li>
+<li>Key: <code>RAILS_ENV</code> Value: <code>production</code></li>
+</ul></li>
+<li>Basic Settings -&gt; Edit
+
+<ul>
+<li>Timeout: <code>60 seconds</code></li>
+<li>Memory: <code>512</code></li>
+</ul></li>
+<li>VPC Section -&gt; Edit
+
+<ul>
+<li>Custom VPC: Use Subnets &amp; Security Group from above.</li>
+</ul></li>
+<li>File System  Section -&gt; Add file system
+
+<ul>
+<li>Use EFS file system and access point from above.</li>
+<li>Local mount path: <code>/mnt/sandbox</code>. Same path as EFS&#39; access point path.</li>
+</ul></li>
+</ul>
+
+<p>We do not need a true API Gateway event to test this. We can simply add this <a href="https://gist.github.com/metaskills/1eee9da3baaa5df9ac8426cc5fe12ca0">test event</a> and trigger our Lambda from the console. If all goes well you should see a full response with headers and an HTML response for Lamby&#39;s <a href="https://lamby.custominktech.com/docs/quick_start#first-deploy">getting started</a> page.</p>
+
+<h3 id="the-results">The Results</h3>
+
+<p>First, this actually worked! Technically our Lambda is only a few bytes of code and all the application code is on the EFS volume. So does this allow everyone to break the bounds of Lambda&#39;s <code>250MB</code> limit? Maybe. Maybe not. 🤷‍♂️</p>
+
+<p>During this test I found that cold start times were drastically increased. Our application which is about <code>42MB</code> uncompressed will take <code>~3</code> seconds to boot when deployed normally. However, using EFS, boot times changed to <code>~30</code> seconds!</p>
+
+<p>I explored EFS provisioned throughput from <code>16 MiB/s</code> to <code>48 MiB/s</code> with no discernible difference. I guess at the end of the day you are going to have to benchmark EFS in different use cases to make a decision on what is right for you. I myself will certainly look forward to other&#39;s posts on EFS performance benchmarks.</p>
+
+<p>Finally, here are some quickly-formed thoughts I had on DataSync while working on this experiment:</p>
+
+<ul>
+<li>Launching a DataSync task takes a few minutes. Why? Maybe it was the <code>t2.micro</code> I used? If a CI/CD pipeline used this technique, I would have to explore using events to coordinate timing issues.</li>
+<li>It would be nice if DataSync supported using Lambda as agents vs EC2. Feels like this fits the task model better. Coming from a Lambda perspective, I did not enjoy setting up an EC2 instance.</li>
+<li>During the test I experienced out-of-sync file data and had to sync an empty source to fix it. Maybe I need to learn more about <code>aws s3 sync</code> options besides <code>--delete</code>. Or maybe my DataSync file management task needed tweaking?</li>
+</ul>
+
+<h2 id="in-all-seriousness">🎓 In All Seriousness</h2>
+
+<p>I welcome the addition of Lambda File Systems with EFS! We have already found use cases at Custom Ink for new workloads to move to Lambda based on this new capability. I hope these weird ideas above get your brain thinking on how Lambda File Systems can work for you. For example:</p>
+
+<ul>
+<li>Data processing</li>
+<li>Large Packages/Gems vs Layers</li>
+<li>Crazy EC2 File System Coordination</li>
+<li>Administrative Backup Tasks</li>
+</ul>
+
+<p>Your imagination is the limit here. Explore, deliver value, and have fun!</p>
+
+<h2 id="resources">Resources</h2>
+
+<div class="sb-Dialog sb-Dialog--info">
+  <div class="sb-Dialog-icon">
+    <i class="sb-Icon--info"></i>
+  </div>
+  <div class="sb-Dialog-message">
+    <h3><span style="font-weight:normal;">Interested in Rails on Lambda? Try our <a href="https://lamby.custominktech.com/">Lamby</a> gem.</span></h3>
+  </div>
+</div>
+
+<p>As always, thanks for reading! Below are some links for reference. If you have any ideas or feedback, leave a comment. I&#39;d love to hear from you. Also, please remember to delete any AWS Resources that you are not using when playing around today. No need to pay for anything you are not using!</p>
+
+<ul>
+<li><a href="https://lamby.custominktech.com/">Lamby: Simple Rails &amp; AWS Lambda Integration</a></li>
+<li><a href="https://aws.amazon.com/efs/">Amazon Elastic File System</a></li>
+<li><a href="https://twitter.com/jeffbarr/status/1247988428374814720">Jeff Barr EFS File Systems Twitter Announcement for ECS</a></li>
+<li><a href="https://www.youtube.com/watch?v=5HaztXVaJQ8">Namrata Shah&#39;s DataSync Demo: Copy data from S3 to EFS</a></li>
+<li><a href="https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html">AWS DataSync</a></li>
+<li><a href="https://gist.github.com/metaskills/1eee9da3baaa5df9ac8426cc5fe12ca0">Sample API Gateway HTTP API Version 1 Event</a></li>
+</ul>
+
+<p>With regard to caching, here are some other AWS Lambda cache posts you may find interesting.</p>
+
+<ul>
+<li><a href="https://dashbird.io/blog/leveraging-lambda-cache-for-serverless-cost-efficiency/">Leveraging Lambda Cache for Serverless Cost-Efficiency</a></li>
+<li><a href="https://medium.com/@pheath/aws-lambda-layers-for-sub-millisecond-static-cache-2378d759c48b">Using AWS Lambda Layers to implement sub-millisecond Static Caches</a></li>
+<li><a href="https://mikhail.io/2020/03/infinicache-distributed-cache-on-aws-lambda/">InfiniCache: Distributed Cache on Top of AWS Lambda</a></li>
+<li><a href="https://aws.amazon.com/dynamodb/dax/">DyanomoDB DAX</a></li>
+</ul>
+
       </div>
-      <div class="tb-Sidebar">
+      <div class="tb-Post-author">
+        
+        
         <div class="tb-Author">
   
     <div class="tb-Author-gravatar">
-      <img title="Karle Durante" src="https://www.gravatar.com/avatar/ccaeb0336801e0015145ad901d879377?s=150"/>
+      <img title="Ken Collins" src="https://www.gravatar.com/avatar/0a4a62376a54055b727fca8fa0442c3d?s=150"/>
     </div>
   
   <div class="tb-Author-info">
     
+      <time pubdate datetime="2020-06-16T00:00:00-04:00">
+        16 Jun 2020
+      </time></br>
+      by Ken Collins
+    
+    
+    <div class="tb-Author-serverlesshero">
+      <img src="/assets/authors/serverlesshero-2e96cfd1ad50c766ec3d5bde04c75aaa3709b59a33599346c1968f152a6638ae.png" alt="AWS Serverless Hero" />
+    </div>
     
     <div class="tb-Author-icons">
       
         <span class="tb-Author-icon">
-          <a href="https://twitter.com/karledurante"><i class="tb-Icon-twitter"></i></a>
+          <a href="https://twitter.com/metaskills"><i class="tb-Icon-twitter"></i></a>
         </span>
       
       
         <span class="tb-Author-icon">
-          <a href="https://github.com/karledurante"><i class="tb-Icon-github"></i></a>
+          <a href="https://github.com/metaskills"><i class="tb-Icon-github"></i></a>
         </span>
       
       
+        <span class="tb-Author-icon">
+          <a href="http://metaskills.net/"><i class="tb-Icon-home"></i></a>
+        </span>
+      
     </div>
+    
+      <div class="tb-Author-posts">
+        <a href="/authors/ken-collins" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+          View All Posts
+        </a>
+      </div>
     
   </div>
 </div>
 
       </div>
     </div>
+    
+  <div class="sb-Wrapper">
+    <section id="disqus_thread">
+    </section>
+  </div>
+  <script type="text/javascript">
+    var disqus_shortname = 'custominktechnologyblog';
+    var disqus_identifier = '/blog/2020/06/16/monolithic-ideas-for-aws-lambda-file-systems/';
+    var disqus_title = "Monolithic Ideas For AWS Lambda File Systems";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
     <div class="tb-Footer">
   <div><small>&copy; 2020 CustomInk, LLC. All rights reserved.</small></div>
   <div><small><a href="https://customink.com">CustomInk</a> is a registered trademark of CustomInk LLC. "T-shirts Unite!" and the "Inky" octopus are trademarks of CustomInk, LLC.</small></div>

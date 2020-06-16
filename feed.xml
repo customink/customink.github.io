@@ -7,6 +7,274 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Monolithic Ideas For AWS Lambda File Systems</title>
+        <description>&lt;h3&gt;With Rails &amp;amp; Lamby&lt;/h3&gt;
+
+&lt;div class=&quot;tb-Masthead&quot;&gt;
+  &lt;img src=&quot;/assets/content/lambda-file-systems/masthead-867a17f618e0c2f6b04260b68de597850d7c98b0d9872478f4317988abacce1e.jpg&quot; class=&quot;tb-Img tb-Img--fancy&quot; alt=&quot;Monolithic Ideas For AWS Lambda File Systems on Rails using Lamby.&quot; /&gt;
+  &lt;a href=&quot;https://www.jointhespectacle.com/aboutmonolith&quot; &gt;&lt;aside class=&quot;tb-Masthead-caption&quot; caption=&quot;MONOLITH™ by Dario Santacroce.&quot;&gt;&lt;/aside&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/lambda-file-systems/efs-logo-07c46dafb5ab211876311a1f125a35d320d781052fb0bc128e3fd17b73390357.png&quot; alt=&quot;Amazon EFS Logo&quot; style=&quot;float:right; width:15%; margin-left:1rem;&quot; /&gt;Today I am excited to share the release of &lt;a href=&quot;https://aws.amazon.com/about-aws/whats-new/2020/06/aws-lambda-support-for-amazon-elastic-file-system-now-generally-/&quot;&gt;AWS Lambda File Systems&lt;/a&gt;. A simple, scalable, fully managed network file system leveraging &lt;a href=&quot;https://aws.amazon.com/efs/&quot;&gt;Amazon&amp;#39;s Elastic File System&lt;/a&gt; (EFS) technology. And what better way to celebrate the accomplishments of our hard-working AWS friends than by building clever uses of their tools in ways they may not have intended... or outright feared 😱&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;creating-your-first-efs&quot;&gt;💾 Creating Your First EFS&lt;/h2&gt;
+
+&lt;p&gt;For some of us in the serverless space, EFS could be an entirely new thing. So let&amp;#39;s create a simple file system with a little ClickOps™ to use with our &amp;quot;experiments&amp;quot; below. Log into the &lt;a href=&quot;https://console.aws.amazon.com/console/home&quot;&gt;AWS Management Console&lt;/a&gt; and:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Click on &amp;quot;Services&amp;quot; in the toolbar.&lt;/li&gt;
+&lt;li&gt;Enter &amp;quot;EFS&amp;quot; into the find services field, select.&lt;/li&gt;
+&lt;li&gt;Click on &amp;quot;Create file system&amp;quot;.&lt;/li&gt;
+&lt;li&gt;For &amp;quot;Network access&amp;quot;, the default VPC, AZs, Subnets (public), &amp;amp; Security Groups should work.&lt;/li&gt;
+&lt;li&gt;➡️ Click &amp;quot;Next Step&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Default &amp;quot;Lifecycle policy&amp;quot; of &amp;quot;None&amp;quot;&lt;/li&gt;
+&lt;li&gt;Change &amp;quot;Throughput Mode&amp;quot; to &amp;quot;Provisioned&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Change &amp;quot;Throughput (MiB/s)&amp;quot; to &amp;quot;1&amp;quot;. Estimated up to $6.00/month.&lt;/li&gt;
+&lt;li&gt;Default &amp;quot;Performance Mode&amp;quot; to &amp;quot;General Purpose&amp;quot;&lt;/li&gt;
+&lt;li&gt;➡️ Click &amp;quot;Next Step&amp;quot;&lt;/li&gt;
+&lt;li&gt;For &amp;quot;Policy settings&amp;quot;, leave empty.&lt;/li&gt;
+&lt;li&gt;Click the &amp;quot;Add access point&amp;quot; button.&lt;/li&gt;
+&lt;li&gt;Set the name, user, directory, and owner as pictured.&lt;/li&gt;
+&lt;li&gt;➡️ Click &amp;quot;Next Step&amp;quot;&lt;/li&gt;
+&lt;li&gt;✅ Click &amp;quot;Create File System&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/lambda-file-systems/access-point-70ae0b8ee149f62acd5eb939f2b92ee21bcca337a0df593065bba775b525b66c.png alt=&quot;Our CloudFront Cookie Histogram Report Goal&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It might take a few minutes for the state to become available. Once complete, we&amp;#39;ll have a fun little sandbox 🏖 file system. Time to drop some 💩&amp;#39;y ideas in production for our co-workers to find during their next sprint.&lt;/p&gt;
+
+&lt;h2 id=&quot;rails-filestore-cache&quot;&gt;🗂 Rails FileStore Cache&lt;/h2&gt;
+
+&lt;p&gt;Rails developers love caching things. The framework makes it easy by exposing a simple &lt;code&gt;Rails.cache&lt;/code&gt; interface with optional backends. Commonly used with distributed stores such as Memcached or &lt;a href=&quot;https://www.lastweekinaws.com/podcast/aws-morning-brief/whiteboard-confessional-route-53-db/&quot;&gt;Route53&lt;/a&gt; (why else would it be on &lt;a href=&quot;https://aws.amazon.com/caching/aws-caching/#Amazon_Route_53&quot;&gt;this page&lt;/a&gt;), they are easy enough to use with Lambda via a VPC Config. But is &lt;a href=&quot;https://aws.amazon.com/elasticache/&quot;&gt;ElastiCache&lt;/a&gt; truly serverless and cost effective? Perhaps. But maybe Rails&amp;#39; built-in &lt;a href=&quot;https://api.rubyonrails.org/classes/ActiveSupport/Cache/FileStore.html&quot;&gt;FileStore&lt;/a&gt; can be used with EFS instead?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/lambda-file-systems/lambda-rails-360f90d66f8ea8739cbf7334d3cda918393e218469653de0ae0e0e87b10bac2e.png&quot; alt=&quot;Lamby - Simple Rails &amp; AWS Lambda Integration&quot; style=&quot;float:right; width:15%;&quot; /&gt;We are going use our new and improved &lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start&quot;&gt;Lamby Quick Start&lt;/a&gt; to deploy a working Rails app to AWS Lambda in a few minutes! After the initial deploy, here are the changes we need to make to our new project. Adding the &lt;a href=&quot;https://lostisland.github.io/faraday/&quot;&gt;Faraday&lt;/a&gt; gem is first:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Gemfile&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'faraday'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next we are going to need some simulated API data. For this demo we can use the &lt;a href=&quot;http://fakerestapi.azurewebsites.net&quot;&gt;Fake Rest API&lt;/a&gt; service to get a list of books in XML (the monolith&amp;#39;s true format). This request takes ~400ms and the response body is 100KB in size. Perfect use case as this gives us enough latency and cache usage on disk to find out if and when using EFS as a disk cache helps.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# app/controller/application_controller.rb&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApplicationController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ActionController&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Base&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;..&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sample&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;api/&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;https://fakerestapi.azurewebsites.net/api/Books&quot;&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Faraday&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Edit the AWS SAM YAML file using the example below. Information needed can be found in the EFS section of the AWS Console by clicking on your newly-created file system.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add this under the &lt;code&gt;Properties&lt;/code&gt; section of your &lt;code&gt;AWS::Serverless::Function&lt;/code&gt; resource.&lt;/li&gt;
+&lt;li&gt;Under the &lt;code&gt;FileSystemConfigs&lt;/code&gt; config for &lt;code&gt;Arn&lt;/code&gt;, replace the following:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;123456789012&lt;/code&gt; with your AWS Account ID.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fs-12345678&lt;/code&gt; with your subdomain. See &amp;quot;DNS name&amp;quot; in Console.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Replace the &lt;code&gt;SubnetIds&lt;/code&gt; and &lt;code&gt;SecurityGroupIds&lt;/code&gt; with your own. See &amp;quot;File system access&amp;quot; in Console.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# template.yaml&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;RailsLambda&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWS::Serverless::Function&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# ...&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;Policies&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AmazonElasticFileSystemClientFullAccess&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWSLambdaVPCAccessExecutionRole&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;FileSystemConfigs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Arn&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;arn:aws:elasticfilesystem:us-east-1:123456789012:access-point/fs-12345678&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;LocalMountPath&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/mnt/sandbox&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;VpcConfig&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;SubnetIds&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;subnet-1ae4e78c3f32147b2&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;subnet-029c281a81822b209&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;SecurityGroupIds&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sg-1fd20e31e93f646b9&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Lastly don&amp;#39;t forget to configure Rails to use the &lt;code&gt;:file_store&lt;/code&gt; for the cache backend. All file systems will be under the &lt;code&gt;/mnt&lt;/code&gt; directory.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# config/environments/production.rb&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cache_store&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:file_store&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/mnt/sandbox&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;the-results&quot;&gt;The Results&lt;/h3&gt;
+
+&lt;p&gt;Below are some apache &lt;a href=&quot;https://httpd.apache.org/docs/2.4/programs/ab.html&quot;&gt;&lt;code&gt;bm&lt;/code&gt;&lt;/a&gt; metrics. For each we are making 1000 requests with a concurrency level set to 10. To avoid measuring cold starts, we run our benchmarks twice after each deploy and present the data from the second. Those familiar with AWS Lambda may remember a time when a &lt;code&gt;VpcConfig&lt;/code&gt; incurred a substantial cold start. I&amp;#39;m happy to report that the &lt;a href=&quot;https://aws.amazon.com/blogs/compute/announcing-improved-vpc-networking-for-aws-lambda-functions/&quot;&gt;VPC Networking Improvements&lt;/a&gt; announced last year are indeed real. General measurements of the cold starts were nearly identical with and without a VPC config.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;API Latency/Size:&lt;/strong&gt; ~400ms/100KB&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;56.556 seconds - No Cache Baseline
+26.679 seconds - FileStore Cache w/EFS Provisioned (1 MiB/s) $6.00/month
+28.726 seconds - FileStore Cache w/EFS Provisioned (4 MiB/s) $24.00/month
+27.306 seconds - FileStore Cache w/EFS Provisioned (8 MiB/s) $48.00/month
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;API Latency/Size:&lt;/strong&gt; ~100ms/5KB&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;32.796 seconds - No Cache Baseline
+29.175 seconds - FileStore Cache w/EFS Provisioned (8 MiB/s) $48.00/month
+29.598 seconds - FileStore Cache w/EFS Provisioned (16 MiB/s) $96.00/month
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As you can see we did another test which simulated a ~100ms API response latency with 5KB of data and with more EFS throughput. In both we can see there is a disk read time tradeoff at play here. So if you do use EFS as some form of distributed cache, keep this in mind and configure your provisioned throughput as needed. Lastly, EFS can be configured with a lifecycle policy. So if you want to treat it as an LRU (least recently used) cache, maybe set it to something like &amp;quot;7 days since last access&amp;quot;.&lt;/p&gt;
+
+&lt;h2 id=&quot;file-system-deploys&quot;&gt;🤯 File System Deploys&lt;/h2&gt;
+
+&lt;p&gt;Is your application so monolithic that it exceeds Lambda&amp;#39;s 250MB unzipped deployment package size and yet somehow still qualifies as worthy of the Lambdalith title? Asked another way: could we &amp;quot;deploy&amp;quot; our application to EFS and have Lambda boot our Rails application from there? Let&amp;#39;s find out!&lt;/p&gt;
+
+&lt;p&gt;If you are unfamiliar with how &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby&lt;/a&gt; works, we basically load your Rack/Rails application from a single &lt;code&gt;app.rb&lt;/code&gt; file at the root of your project/deployment package, like the one below. However, in this example, we have changed the relative requires to absolute paths pointing to our EFS mount. Will this work and if so, how well?&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'RAILS_SERVE_STATIC_FILES'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/mnt/sandbox/config/boot'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'dotenv'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Dotenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;load&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;/mnt/sandbox/.env.&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'RAILS_ENV'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'lamby'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/mnt/sandbox/config/application'&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/mnt/sandbox/config/environment'&lt;/span&gt;
+
+&lt;span class=&quot;vg&quot;&gt;$app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rack&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;run&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;application&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;to_app&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lambda_handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:)&lt;/span&gt;
+  &lt;span class=&quot;no&quot;&gt;Lamby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;handler&lt;/span&gt; &lt;span class=&quot;vg&quot;&gt;$app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;rack: :http&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;setup-app-efs&quot;&gt;Setup App &amp;amp; EFS&lt;/h3&gt;
+
+&lt;p&gt;We are going to use the &lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start&quot;&gt;Lamby Quick Start&lt;/a&gt; guide again to generate a new Rails app to Lambda. Name the application &lt;code&gt;disk_deploy&lt;/code&gt; and go through the entire process including the &lt;code&gt;bin/deploy&lt;/code&gt; task. Please make sure to add the &lt;code&gt;Policies&lt;/code&gt; from the YAML Rails FileStore Cache above.&lt;/p&gt;
+
+&lt;p&gt;We are going to reuse this Lambda&amp;#39;s execution role and deploy artifacts located in the project&amp;#39;s &lt;code&gt;.aws-sam&lt;/code&gt; directory which is created after the deploy. The files there will be synced to a new EFS volume and used via a fresh &amp;quot;from scratch&amp;quot; Lambda whose only code is the few lines in the example above.&lt;/p&gt;
+
+&lt;h3 id=&quot;sync-data-with-efs&quot;&gt;Sync Data with EFS&lt;/h3&gt;
+
+&lt;p&gt;So, how do we get our application&amp;#39;s files on EFS? Luckily AWS has yet another product aptly named &lt;a href=&quot;https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html&quot;&gt;AWS DataSync&lt;/a&gt; which can move data around to/from various &lt;a href=&quot;https://docs.aws.amazon.com/datasync/latest/userguide/working-with-locations.html&quot;&gt;location&lt;/a&gt; types. I decided to use DataSync&amp;#39;s S3 to EFS&amp;#39; built in NFS support.&lt;/p&gt;
+
+&lt;p&gt;If you are new to DataSync, setting it up can be a little daunting. Thankfully fellow AWS Hero &lt;a href=&quot;https://aws.amazon.com/developer/community/heroes/namrata-shah/&quot;&gt;Namrata Shah&lt;/a&gt; made a YouTube video titled &lt;a href=&quot;https://www.youtube.com/watch?v=5HaztXVaJQ8&quot;&gt;DataSync Demo: Copy data from S3 to EFS&lt;/a&gt; which was absolutely perfect! Assuming you have your VPC all set up from the test above, maybe start somewhere in the middle. Here are some critical points ⚠️ to follow:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The S3 Source Location has an empty &amp;quot;Folder&amp;quot; prefix.&lt;/li&gt;
+&lt;li&gt;The NFS Destination Location has a path matching the EFS access point. Ex: &lt;code&gt;/sandbox&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Make sure the &amp;quot;Copy ownership&amp;quot; task setting is &lt;strong&gt;OFF&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Make sure the &amp;quot;Copy permissions&amp;quot; task setting is &lt;strong&gt;OFF&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Make sure the &amp;quot;Keep deleted files&amp;quot; task setting is &lt;strong&gt;OFF&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Make sure the &amp;quot;Overwrite files&amp;quot; task setting is &lt;strong&gt;ON&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/lambda-file-systems/datasync-task-0b9663539358843ad91455a48ffe0a3d3471934247fdbaeac1ad70df8a227d15.png alt=&quot;Our AWS Lambda S3 to EFS DataSync Task&quot; class=&quot;tb-Img tb-Img--picture tb-Img--responsive-ctr tb-Img--fancy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When completed, your DataSync task should look something like the image above. Starting the task to copy files from S3 to EFS is a few short CLI commands which can be run in the &lt;code&gt;disk_deploy&lt;/code&gt; project.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; .aws-sam/build/DiskDeployLambda
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;aws s3 &lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; s3://lambda-deploy.metaskills.net/sandbox &lt;span class=&quot;nt&quot;&gt;--delete&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;aws datasync start-task-execution &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;--task-arn&lt;/span&gt; arn:aws:datasync:&lt;span class=&quot;nv&quot;&gt;$AWS_REGION&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$AWS_ACCOUNT_ID&lt;/span&gt;:task/task-09d19037fc3cc57eb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Please take note that we are syncing to an S3 prefix that matches our EFS access point. The ARN above is an example and you can replace the account ID and task name with your own. You could also use the &lt;a href=&quot;https://docs.aws.amazon.com/cli/latest/reference/datasync/list-tasks.html&quot;&gt;&lt;code&gt;aws datasync list-tasks&lt;/code&gt;&lt;/a&gt; CLI command to get your ARN too.&lt;/p&gt;
+
+&lt;h3 id=&quot;lambda-from-scratch&quot;&gt;Lambda From Scratch&lt;/h3&gt;
+
+&lt;p&gt;Building a Lambda from scratch is pretty straight forward. Here are the basic steps. Please remember we are reusing the execution role from the &lt;code&gt;disk_deploy&lt;/code&gt; app which must have the &lt;code&gt;AmazonElasticFileSystemClientFullAccess&lt;/code&gt; and &lt;code&gt;AWSLambdaVPCAccessExecutionRole&lt;/code&gt; managed policies added prior to its deploy. Our from-scratch Lambda will not be able to use a VPC or File System without these policies in the execution role.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Lambda Create Function -&amp;gt; Author from scratch
+
+&lt;ul&gt;
+&lt;li&gt;Name: &lt;code&gt;efs-deploy-test&lt;/code&gt;,&lt;/li&gt;
+&lt;li&gt;Runtime: &lt;code&gt;Ruby 2.7&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Permissions -&amp;gt; Existing Role: Use role from &lt;code&gt;disk_deploy&lt;/code&gt; app.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Function Code Section
+
+&lt;ul&gt;
+&lt;li&gt;Use modified &lt;code&gt;app.rb&lt;/code&gt; above with absolute path require statements using &lt;code&gt;/mnt/sandbox&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Environment Variables Section -&amp;gt; Edit
+
+&lt;ul&gt;
+&lt;li&gt;Click &amp;quot;Add environment variable&amp;quot;&lt;/li&gt;
+&lt;li&gt;Key: &lt;code&gt;RAILS_ENV&lt;/code&gt; Value: &lt;code&gt;production&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Basic Settings -&amp;gt; Edit
+
+&lt;ul&gt;
+&lt;li&gt;Timeout: &lt;code&gt;60 seconds&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Memory: &lt;code&gt;512&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;VPC Section -&amp;gt; Edit
+
+&lt;ul&gt;
+&lt;li&gt;Custom VPC: Use Subnets &amp;amp; Security Group from above.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;File System  Section -&amp;gt; Add file system
+
+&lt;ul&gt;
+&lt;li&gt;Use EFS file system and access point from above.&lt;/li&gt;
+&lt;li&gt;Local mount path: &lt;code&gt;/mnt/sandbox&lt;/code&gt;. Same path as EFS&amp;#39; access point path.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We do not need a true API Gateway event to test this. We can simply add this &lt;a href=&quot;https://gist.github.com/metaskills/1eee9da3baaa5df9ac8426cc5fe12ca0&quot;&gt;test event&lt;/a&gt; and trigger our Lambda from the console. If all goes well you should see a full response with headers and an HTML response for Lamby&amp;#39;s &lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start#first-deploy&quot;&gt;getting started&lt;/a&gt; page.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-results&quot;&gt;The Results&lt;/h3&gt;
+
+&lt;p&gt;First, this actually worked! Technically our Lambda is only a few bytes of code and all the application code is on the EFS volume. So does this allow everyone to break the bounds of Lambda&amp;#39;s &lt;code&gt;250MB&lt;/code&gt; limit? Maybe. Maybe not. 🤷‍♂️&lt;/p&gt;
+
+&lt;p&gt;During this test I found that cold start times were drastically increased. Our application which is about &lt;code&gt;42MB&lt;/code&gt; uncompressed will take &lt;code&gt;~3&lt;/code&gt; seconds to boot when deployed normally. However, using EFS, boot times changed to &lt;code&gt;~30&lt;/code&gt; seconds!&lt;/p&gt;
+
+&lt;p&gt;I explored EFS provisioned throughput from &lt;code&gt;16 MiB/s&lt;/code&gt; to &lt;code&gt;48 MiB/s&lt;/code&gt; with no discernible difference. I guess at the end of the day you are going to have to benchmark EFS in different use cases to make a decision on what is right for you. I myself will certainly look forward to other&amp;#39;s posts on EFS performance benchmarks.&lt;/p&gt;
+
+&lt;p&gt;Finally, here are some quickly-formed thoughts I had on DataSync while working on this experiment:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Launching a DataSync task takes a few minutes. Why? Maybe it was the &lt;code&gt;t2.micro&lt;/code&gt; I used? If a CI/CD pipeline used this technique, I would have to explore using events to coordinate timing issues.&lt;/li&gt;
+&lt;li&gt;It would be nice if DataSync supported using Lambda as agents vs EC2. Feels like this fits the task model better. Coming from a Lambda perspective, I did not enjoy setting up an EC2 instance.&lt;/li&gt;
+&lt;li&gt;During the test I experienced out-of-sync file data and had to sync an empty source to fix it. Maybe I need to learn more about &lt;code&gt;aws s3 sync&lt;/code&gt; options besides &lt;code&gt;--delete&lt;/code&gt;. Or maybe my DataSync file management task needed tweaking?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;in-all-seriousness&quot;&gt;🎓 In All Seriousness&lt;/h2&gt;
+
+&lt;p&gt;I welcome the addition of Lambda File Systems with EFS! We have already found use cases at Custom Ink for new workloads to move to Lambda based on this new capability. I hope these weird ideas above get your brain thinking on how Lambda File Systems can work for you. For example:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data processing&lt;/li&gt;
+&lt;li&gt;Large Packages/Gems vs Layers&lt;/li&gt;
+&lt;li&gt;Crazy EC2 File System Coordination&lt;/li&gt;
+&lt;li&gt;Administrative Backup Tasks&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Your imagination is the limit here. Explore, deliver value, and have fun!&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;div class=&quot;sb-Dialog sb-Dialog--info&quot;&gt;
+  &lt;div class=&quot;sb-Dialog-icon&quot;&gt;
+    &lt;i class=&quot;sb-Icon--info&quot;&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;sb-Dialog-message&quot;&gt;
+    &lt;h3&gt;&lt;span style=&quot;font-weight:normal;&quot;&gt;Interested in Rails on Lambda? Try our &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby&lt;/a&gt; gem.&lt;/span&gt;&lt;/h3&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As always, thanks for reading! Below are some links for reference. If you have any ideas or feedback, leave a comment. I&amp;#39;d love to hear from you. Also, please remember to delete any AWS Resources that you are not using when playing around today. No need to pay for anything you are not using!&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby: Simple Rails &amp;amp; AWS Lambda Integration&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/efs/&quot;&gt;Amazon Elastic File System&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/jeffbarr/status/1247988428374814720&quot;&gt;Jeff Barr EFS File Systems Twitter Announcement for ECS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=5HaztXVaJQ8&quot;&gt;Namrata Shah&amp;#39;s DataSync Demo: Copy data from S3 to EFS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/datasync/latest/userguide/what-is-datasync.html&quot;&gt;AWS DataSync&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://gist.github.com/metaskills/1eee9da3baaa5df9ac8426cc5fe12ca0&quot;&gt;Sample API Gateway HTTP API Version 1 Event&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;With regard to caching, here are some other AWS Lambda cache posts you may find interesting.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dashbird.io/blog/leveraging-lambda-cache-for-serverless-cost-efficiency/&quot;&gt;Leveraging Lambda Cache for Serverless Cost-Efficiency&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/@pheath/aws-lambda-layers-for-sub-millisecond-static-cache-2378d759c48b&quot;&gt;Using AWS Lambda Layers to implement sub-millisecond Static Caches&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mikhail.io/2020/03/infinicache-distributed-cache-on-aws-lambda/&quot;&gt;InfiniCache: Distributed Cache on Top of AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://aws.amazon.com/dynamodb/dax/&quot;&gt;DyanomoDB DAX&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 16 Jun 2020 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2020/06/16/monolithic-ideas-for-aws-lambda-file-systems/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/06/16/monolithic-ideas-for-aws-lambda-file-systems/</guid>
+      </item>
+    
+      <item>
         <title>Keeping Customink.com Fast and Reliable with AWS CloudFront and Application Load Balancer</title>
         <description>&lt;p&gt;In early 2020, Custom Ink implemented an AWS Application Load Balancer in front of CustomInk.com and decommissioned a set of EC2 instances running an open-source HTTP accelerator called Varnish. This transition was the latest step in our long journey to make CustomInk.com faster, more reliable, and easier to maintain. Read on to see how we used caching and load balancing to make our website more scalable and less complicated, and how we eventually got to use Amazon Web Services&amp;#39; managed applications to solve the problem without having to manage more servers.&lt;/p&gt;
 
