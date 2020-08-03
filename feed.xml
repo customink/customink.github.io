@@ -739,7 +739,7 @@ Today, Ken continues his work with Rails and various open source projects. His n
   &lt;div class=&quot;sb-Dialog-message&quot;&gt;
     &lt;h3&gt;Need a More Robust Rails on Lambda Database Solution?&lt;/h3&gt;
     &lt;p&gt;
-      AWS recently announced &lt;a href=&quot;https://aws.amazon.com/about-aws/whats-new/2019/12/amazon-rds-proxy-available-in-preview/&quot;&gt;RDS Proxy (Preview)&lt;/a&gt;. Stay tuned to this blog or &lt;a href=&quot;https://twitter.com/CustomInkTech&quot;&gt;@CustomInkTech&lt;/a&gt; on Twitter for my next post on using &lt;a href=&quot;https://lamby.custominktech.com&quot;&gt;Lamby&lt;/a&gt; with RDS Proxy.
+      AWS announced that &lt;a href=&quot;https://aws.amazon.com/about-aws/whats-new/2020/06/amazon-rds-proxy-generally-available/&quot;&gt;RDS Proxy is Generally Available&lt;/a&gt;. Our Lamby guides now have detailed steps to &lt;a href=&quot;https://lamby.custominktech.com/docs/database_options&quot;&gt;deploy your first RDS Proxy with Rails using native MySQL connnections&lt;/a&gt; with our very own statically built gem for Amazon Linux 1 &amp; 2.
     &lt;/p&gt;
    &lt;/div&gt;
 &lt;/div&gt;
