@@ -7,6 +7,172 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Ruby-Curator-for-AWS-ElasticSearch-Service</title>
+        <description>&lt;p&gt;A Ruby alternative to the Python Curator for ElasticSearch.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;If you use Amazon Web Services&amp;#39; ElasticSearch Service, there&amp;#39;s a good chance you will need to manage the indices so you do not kill your ElasticSearch cluster. On the AWS &lt;a href=&quot;https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/managing-indices.html&quot;&gt;documentation page&lt;/a&gt; they have four options available as of this writing and depending on which version of the ElasticSearch engine you are using, you will find a best fit for your use case. Three of the options seem to be native to AWS, and the other is an outside resource that is written in Python.  This blog post is not intended to convince you to use one version over another, it is simply providing an alternative to one of the options, Curator, which is written in &lt;a href=&quot;https://curator.readthedocs.io/en/latest/index.html&quot;&gt;Python&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;At Custom Ink, we primarily support Ruby on Rails apps, and we felt as though this may be a good opportunity to have something that is more widely understood and supportable by our engineers. After researching online for a Ruby alternative to the &lt;a href=&quot;https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/curator.html&quot;&gt;Curator lambda&lt;/a&gt;, I was unable to find something, so we went to work on writing our own. &lt;/p&gt;
+
+&lt;p&gt;I used &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Lamby&lt;/a&gt; as the framework for this Lambda, which made a lot of the initial set up very easy! The first step in the proccess is to create an IAM role for the Lambda function.&lt;/p&gt;
+
+&lt;h3 id=&quot;create-an-iam-user-for-your-lambda-function&quot;&gt;Create an IAM user for your lambda function&lt;/h3&gt;
+
+&lt;p&gt;You should first create an IAM user that will be used by the lambda to invalidate/delete indices. This is how the policy should look like for this user:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+        {
+            &quot;Sid&quot;: &quot;VisualEditor0&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Action&quot;: [
+                &quot;es:ESHttpGet&quot;,
+                &quot;es:ESHttpPut&quot;
+            ],
+            &quot;Resource&quot;: &quot;arn:aws:es:REGION:ACCOUNT:domain/elasticsearch-cluster/*&quot;
+        }
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If the above policy has too wide of a resource, you can definitely pin down the resource access even further to the endpoint that controls the indices. Our Lambda was in the VPC and only affected our 1 cluster so we felt okay with access to more than that endpoint for our access policy.&lt;/p&gt;
+
+&lt;p&gt;Under the &lt;em&gt;Security Credentials&lt;/em&gt; tab, you should generate access keys and then save those keys in SSM. You can save both the username &amp;amp; password in the same secret, or have them in separate secrets, just be mindful that you are charged by API call for SSM. Below is the example I have for this function:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;{
+  &quot;access_key_id&quot;: &quot;SUPERSECRETACCESSKEYID&quot;,
+  &quot;secret_access_key&quot;: &quot;SUPERSECRETACCESSKEY&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;create-your-serverless-function-code&quot;&gt;Create your serverless function &amp;amp; code&lt;/h3&gt;
+
+&lt;p&gt;Below is the core of the work, this curator.rb file is set in the lib directory. As you can see, it&amp;#39;s fairly straightforward. You simply have to add in the name of your full URL &amp;amp; port for the ElasticSearch cluster, your region, and your account number. In order to ensure the lambda can actually perform the proper functions, we do have to pass in variables saved in SSM, which is set as an environment below that is passed in to the lambda function. This will delete indexes older than 7 days, but is completely customizable depending on your needs. The values in the event handler can be passed in as ENV values along with the ElasticSearch domain if you want to make the lambda more generic or want to deploy it across different development environments or AWS accounts. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# Add your gem requires here:
+require 'aws-sdk'
+require 'faraday_middleware/aws_sigv4'
+require 'elasticsearch'
+# to convert json from ssm
+require 'json' 
+require_relative 'curator/ssm'
+
+def handler(event:, context:)
+  full_url_and_port = https://my-domain.region.es.amazonaws.com:443
+  region = 'us-east-1' # e.g. us-west-1
+  account = '1234567890'
+
+  keys = JSON.parse(SSM.get_parameter('/path/to-elasticsearch-keys'))
+
+
+  client = Elasticsearch::Client.new(url: full_url_and_port) do |f|
+    f.request :aws_sigv4,
+      service: 'es',
+      region: region,
+      access_key_id: keys['access_key_id'],
+      secret_access_key: keys['secret_access_key']
+  end
+  response = client.perform_request 'GET', '_cat/indices?format=JSON'
+  p response.body
+  # gather indexes here
+  indices = response.body.map {|a| a[&quot;index&quot;]}  
+  indices.each do |index|
+  # returns class called match data.
+    date = index.match(/\d{4}-\d{2}-\d{2}/) 
+    if date
+      date = Date.parse date.to_s
+      if date &amp;lt; Date.today - 7
+        puts client.indices.delete index: index
+        p &quot;Deleted index: #{index}&quot;
+      end
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the above code, please note that you can pass in the account ID &amp;amp; region values as ENV values along with the ES domain if you want to make the lambda more generic or want to deploy it across different development environments or AWS accounts.&lt;/p&gt;
+
+&lt;p&gt;In the curator folder, we have another folder for the Ruby code that generates an SSM class to get the SSM variables from AWS, that is shared below:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# uses AWS SDK SSM gem
+require 'aws-sdk-ssm'
+
+class SSM
+  def self.get_parameter(name)
+    ssm = Aws::SSM::Client.new()
+    ssm_response = ssm.get_parameter({
+      name: name,
+      with_decryption: true,
+    })
+    ssm_response.parameter.value
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Be sure to add these two gems to your gemfile as well:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;gem 'elasticsearch', &quot;~&amp;gt; 6.7&quot; # change depending on your version
+gem 'faraday_middleware-aws-sigv4'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;write-your-template-yaml-cloudformation&quot;&gt;Write your template.yaml CloudFormation&lt;/h3&gt;
+
+&lt;p&gt;Lastly we have a template.yaml for our CloudFormation which generates these resources. You can see it below:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Curator
+
+Parameters:
+
+  StageEnv:
+    Type: String
+    Default: development
+    AllowedValues:
+      - test
+      - development
+      - staging
+      - prod
+
+Resources:
+
+  CuratorLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: lib/curator.handler
+      Runtime: ruby2.7
+      Timeout: 60
+      MemorySize: 512
+      FunctionName: !Sub curator-${StageEnv}
+      Environment:
+        Variables:
+          STAGE_ENV: !Ref StageEnv
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - ssm:GetParametersByPath
+                - ssm:GetParameters
+                - ssm:GetParameterHistory
+                - ssm:GetParameter
+                - kms:Decrypt
+              Resource:
+                - arn:aws:ssm:*:1234567890:parameter/path/to-elasticsearch-keys
+                - arn:aws:kms:*:1234567890:key/key-string-12345
+      Events:
+        Curator:
+          Type: Schedule
+          Properties:
+            Schedule: 'cron(0 8 ? * * *)' # UTC so 3AM EST          
+
+Outputs:
+
+  CuratorLambdaArn:
+    Description: Lambda Function Arn
+    Value: !GetAtt CuratorLambda.Arn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That&amp;#39;s it! Now we have a serverless resource that can help you manage your indicies in AWS ElasticSearch. If you have any questions on this, please feel free to leave a comment! I hope this is helpful to others out there who are finding it hard to have a Ruby version for an ElasticSearch lambda curator. This work was done with &lt;a href=&quot;https://technology.customink.com/authors/william-spencer/&quot;&gt;William Spencer&lt;/a&gt;, the WebOps manager at Custom Ink.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 02 Dec 2020 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2020/12/02/ruby-curator-for-aws-elasticsearch-service/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2020/12/02/ruby-curator-for-aws-elasticsearch-service/</guid>
+      </item>
+    
+      <item>
         <title>Monolithic Ideas For AWS Lambda File Systems</title>
         <description>&lt;h3&gt;With Rails &amp;amp; Lamby&lt;/h3&gt;
 

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Easily test your DNS - CustomInk Technology Blog</title>
+  <title>Ruby-Curator-for-AWS-ElasticSearch-Service - CustomInk Technology Blog</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <meta name="description" content="At CustomInk, we recently made the switch to a new DNS provider. During the switch, we mass-imported records from our existing provider to our new ...">
+  <meta name="description" content="A Ruby alternative to the Python Curator for ElasticSearch.
+
+
+
+If you use Amazon Web Services&#39; ElasticSearch Service, there&#39;s a good chance...">
   
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://technology.customink.com/feed.xml" />
   <style rel="stylesheet" type="text/css">﻿/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:0.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace, monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace, monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-0.25em}sup{top:-0.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}button,[type="button"],[type="reset"],[type="submit"]{-webkit-appearance:button}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner{border-style:none;padding:0}button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:0.35em 0.75em 0.625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type="checkbox"],[type="radio"]{box-sizing:border-box;padding:0}[type="number"]::-webkit-inner-spin-button,[type="number"]::-webkit-outer-spin-button{height:auto}[type="search"]{-webkit-appearance:textfield;outline-offset:-2px}[type="search"]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}html,body{height:100%}body,button,input,select,textarea,pre{margin:0;background-color:white}h1,h2,h3,h4,h5,h6,p,dl,ol,ul{margin-top:0;margin-bottom:1rem}ol,ul{padding-left:2rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0;padding-left:1rem}button{border:0}button,input,select,textarea{font-family:inherit;font-size:100%}textarea{display:block}article,aside,details,figcaption,figure,footer,header,main,nav,section,summary{display:block}.sb-Wrapper{padding-right:1rem;padding-left:1rem}@media (min-width: 43.75em){.sb-Wrapper{width:42.75rem;margin-right:auto;margin-left:auto}}@media (min-width: 64em){.sb-Wrapper{width:63rem;margin-right:auto;margin-left:auto}}@media (min-width: 81.25em){.sb-Wrapper{width:80.25rem;margin-right:auto;margin-left:auto}}.sb-Wrapper--fluid{padding-right:1rem;padding-left:1rem;margin-right:auto;margin-left:auto}.sb-PageWrapper.is-open:before{content:'';display:block;position:absolute;top:0;right:0;bottom:0;left:0;z-index:99999999}.sb-Main{max-width:100%;margin-left:auto;margin-right:auto}.sb-Main:after{content:" ";display:block;clear:both}.sb-Main--content{padding-top:1rem}@media (min-width: 64em){.sb-Main--content{padding-top:1.5rem}}@media (max-width: 43.6875em){html.is-minimalUI{overflow:hidden}html.is-minimalUI .sb-PageWrapper{height:100%;overflow-y:scroll;-webkit-overflow-scrolling:touch}}.sb-Btn,a.sb-Btn,.sb-Btn--primary,a.sb-Btn--primary,.sb-Btn--primaryAlt,a.sb-Btn--primaryAlt,.sb-Form input[type='submit'],.sb-Form input[type='submit'].sb-Btn--primary,.sb-Form input[type='submit'].sb-Btn--primaryAlt{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:#1f51cf;padding:0.65rem 2rem;color:#fff;border-radius:6px;transition:all 0.1s ease-in-out;display:inline-block;text-align:center;position:relative;border:0}.sb-Btn:after,a.sb-Btn:after,.sb-Btn--primary:after,a.sb-Btn--primary:after,.sb-Btn--primaryAlt:after,a.sb-Btn--primaryAlt:after,.sb-Form input[type='submit']:after,.sb-Form input[type='submit'].sb-Btn--primary:after,.sb-Form input[type='submit'].sb-Btn--primaryAlt:after{content:"";position:absolute;width:100%;height:10px;border-radius:6px;bottom:0;left:0;box-shadow:0 -3px 0 rgba(0,0,0,0.6) inset}.sb-Btn:visited,a.sb-Btn:visited,.sb-Btn--primary:visited,a.sb-Btn--primary:visited,.sb-Btn--primaryAlt:visited,a.sb-Btn--primaryAlt:visited,.sb-Form input[type='submit']:visited,.sb-Form input[type='submit'].sb-Btn--primary:visited,.sb-Form input[type='submit'].sb-Btn--primaryAlt:visited{color:#fff}.sb-Btn:hover,a.sb-Btn:hover,.sb-Btn--primary:hover,a.sb-Btn--primary:hover,.sb-Btn--primaryAlt:hover,a.sb-Btn--primaryAlt:hover,.sb-Form input[type='submit']:hover,.sb-Form input[type='submit'].sb-Btn--primary:hover,.sb-Form input[type='submit'].sb-Btn--primaryAlt:hover{color:#fff;background:#1840a3}.sb-Btn:active,.sb-Btn:focus,.sb-Btn.is-Active,a.sb-Btn:active,a.sb-Btn:focus,a.sb-Btn.is-Active,.sb-Btn--primary:active,.sb-Btn--primary:focus,.sb-Btn--primary.is-Active,a.sb-Btn--primary:active,a.sb-Btn--primary:focus,a.sb-Btn--primary.is-Active,.sb-Btn--primaryAlt:active,.sb-Btn--primaryAlt:focus,.sb-Btn--primaryAlt.is-Active,a.sb-Btn--primaryAlt:active,a.sb-Btn--primaryAlt:focus,a.sb-Btn--primaryAlt.is-Active,.sb-Form input[type='submit']:active,.sb-Form input[type='submit']:focus,.sb-Form input[type='submit'].is-Active,.sb-Form input[type='submit'].sb-Btn--primary:active,.sb-Form input[type='submit'].sb-Btn--primary:focus,.sb-Form input[type='submit'].sb-Btn--primary.is-Active,.sb-Form input[type='submit'].sb-Btn--primaryAlt:active,.sb-Form input[type='submit'].sb-Btn--primaryAlt:focus,.sb-Form input[type='submit'].sb-Btn--primaryAlt.is-Active{outline:none;color:#fff;background:#295cdf}.sb-Btn:disabled,.sb-Btn.is-Disabled,a.sb-Btn:disabled,a.sb-Btn.is-Disabled,.sb-Btn--primary:disabled,.sb-Btn--primary.is-Disabled,a.sb-Btn--primary:disabled,a.sb-Btn--primary.is-Disabled,.sb-Btn--primaryAlt:disabled,.sb-Btn--primaryAlt.is-Disabled,a.sb-Btn--primaryAlt:disabled,a.sb-Btn--primaryAlt.is-Disabled,.sb-Form input[type='submit']:disabled,.sb-Form input[type='submit'].is-Disabled,.sb-Form input[type='submit'].sb-Btn--primary:disabled,.sb-Form input[type='submit'].sb-Btn--primary.is-Disabled,.sb-Form input[type='submit'].sb-Btn--primaryAlt:disabled,.sb-Form input[type='submit'].sb-Btn--primaryAlt.is-Disabled{opacity:.3;cursor:not-allowed;pointer-events:none}.sb-Btn--primaryRed,a.sb-Btn--primaryRed,.sb-Form input[type='submit'].sb-Btn--primaryRed{background-color:#fa3c00;transition:all 0.1s ease-in-out}.sb-Btn--primaryRed:active,.sb-Btn--primaryRed:focus,.sb-Btn--primaryRed.is-Active,a.sb-Btn--primaryRed:active,a.sb-Btn--primaryRed:focus,a.sb-Btn--primaryRed.is-Active,.sb-Form input[type='submit'].sb-Btn--primaryRed:active,.sb-Form input[type='submit'].sb-Btn--primaryRed:focus,.sb-Form input[type='submit'].sb-Btn--primaryRed.is-Active{outline:none;color:#fff;background-color:#ff602e !important}.sb-Btn--primaryRed:hover,a.sb-Btn--primaryRed:hover,.sb-Form input[type='submit'].sb-Btn--primaryRed:hover{background:#e13600}.sb-Btn--secondary,a.sb-Btn--secondary,.sb-Form input[type='submit'].sb-Btn--secondary,.sb-Btn--secondaryAlt,a.sb-Btn--secondaryAlt,.sb-Form input[type='submit'].sb-Btn--secondaryAlt{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;box-shadow:inset 0px 0px 0px 2px #1f51cf;background:transparent;padding:0.65rem 2rem;color:#1f51cf !important;transition:all 0.1s ease-in-out;display:inline-block;text-align:center}.sb-Btn--secondary:after,a.sb-Btn--secondary:after,.sb-Form input[type='submit'].sb-Btn--secondary:after,.sb-Btn--secondaryAlt:after,a.sb-Btn--secondaryAlt:after,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:after{display:none}.sb-Btn--secondary:hover,.sb-Btn--secondary:focus,.sb-Btn--secondary:active,a.sb-Btn--secondary:hover,a.sb-Btn--secondary:focus,a.sb-Btn--secondary:active,.sb-Form input[type='submit'].sb-Btn--secondary:hover,.sb-Form input[type='submit'].sb-Btn--secondary:focus,.sb-Form input[type='submit'].sb-Btn--secondary:active,.sb-Btn--secondaryAlt:hover,.sb-Btn--secondaryAlt:focus,.sb-Btn--secondaryAlt:active,a.sb-Btn--secondaryAlt:hover,a.sb-Btn--secondaryAlt:focus,a.sb-Btn--secondaryAlt:active,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:hover,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:focus,.sb-Form input[type='submit'].sb-Btn--secondaryAlt:active{background-color:#1f51cf;color:#fff !important}.sb-Btn--secondary--white,a.sb-Btn--secondary--white,.sb-Form input[type='submit'].sb-Btn--secondary--white,.sb-Btn--secondaryAlt--white,a.sb-Btn--secondaryAlt--white,.sb-Form input[type='submit'].sb-Btn--secondaryAlt--white{background-color:#fff}.sb-Btn--link,a.sb-Btn--link,.sb-Form input[type='submit'].sb-Btn--link{border:0;background:transparent;color:#1e39d2 !important;box-shadow:none;transition:all 0.1s ease-in-out}.sb-Btn--link:after,a.sb-Btn--link:after,.sb-Form input[type='submit'].sb-Btn--link:after{display:none}.sb-Btn--link:hover,.sb-Btn--link:focus,.sb-Btn--link:active,a.sb-Btn--link:hover,a.sb-Btn--link:focus,a.sb-Btn--link:active,.sb-Form input[type='submit'].sb-Btn--link:hover,.sb-Form input[type='submit'].sb-Btn--link:focus,.sb-Form input[type='submit'].sb-Btn--link:active{background:transparent;transform:none;box-shadow:none;color:#14278f !important}.sb-Btn--linkAlt,a.sb-Btn--linkAlt,.sb-Form input[type='submit'].sb-Btn--linkAlt{border:2px solid #ededed;box-shadow:none;background-color:#ededed;color:#444 !important;transition:all 0.1s ease-in-out}.sb-Btn--linkAlt:after,a.sb-Btn--linkAlt:after,.sb-Form input[type='submit'].sb-Btn--linkAlt:after{display:none}.sb-Btn--linkAlt:hover,.sb-Btn--linkAlt:focus,.sb-Btn--linkAlt:active,a.sb-Btn--linkAlt:hover,a.sb-Btn--linkAlt:focus,a.sb-Btn--linkAlt:active,.sb-Form input[type='submit'].sb-Btn--linkAlt:hover,.sb-Form input[type='submit'].sb-Btn--linkAlt:focus,.sb-Form input[type='submit'].sb-Btn--linkAlt:active{border-color:#d4d4d4;transform:none;box-shadow:none;color:#444;background:#d4d4d4}.sb-Btn--large,a.sb-Btn--large,.sb-Form input[type='submit'].sb-Btn--large{font-size:1.25rem;font-weight:bold;padding-left:2rem;padding-right:2rem}.sb-Btn--small,a.sb-Btn--small,.sb-Form input[type='submit'].sb-Btn--small{font-size:0.85rem;padding:0.35rem 1.2rem 0.5rem}.sb-Btn--block,a.sb-Btn--block,.sb-Form input[type='submit'].sb-Btn--block{display:block;width:100%;text-align:center}.sb-Btn--mr,a.sb-Btn--mr{margin-right:1rem}@media (max-width: 43.6875em){.sb-Btn--responsive,a.sb-Btn--responsive,.sb-Form input[type='submit'].sb-Btn--responsive{display:block;width:100%;margin-right:0}}@media (max-width: 43.6875em){.sb-Btn--responsive--mb,a.sb-Btn--responsive--mb,.sb-Form input[type='submit'].sb-Btn--responsive--mb{margin-bottom:1rem}}html,body{font-size:16px;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;font-weight:normal;line-height:1.5;color:#444444}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:0.5rem;padding-top:0.5rem}h1,h2,h3{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2}h4,h5,h6{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2}h1{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:21.7728px}@media (min-width: 43.75em){h1{font-size:26.12736px}}@media (min-width: 64em){h1{font-size:31.35283px}}h2{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:18.144px}@media (min-width: 43.75em){h2{font-size:21.7728px}}@media (min-width: 64em){h2{font-size:26.12736px}}h3{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:15.12px}@media (min-width: 43.75em){h3{font-size:18.144px}}@media (min-width: 64em){h3{font-size:21.7728px}}h4{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h4{font-size:15.12px}}@media (min-width: 64em){h4{font-size:18.144px}}h5{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h5{font-size:15.12px}}@media (min-width: 64em){h5{font-size:15.12px}}h6{color:#444444;font-weight:bold;font-family:SharpSans, Helvetica, Arial, "Trebuchet MS", sans-serif;line-height:1.2;font-size:12.6px}@media (min-width: 43.75em){h6{font-size:12.6px}}@media (min-width: 64em){h6{font-size:12.6px}}p,dl,ul,ol{font-size:1rem;line-height:1.5}strong,b{font-weight:bold}a{text-decoration:none;color:#1e39d2;cursor:pointer}a:visited{color:#1e39d2}a:hover{color:#0e1b62}a:active{color:#1e39d2}a.is-currentPage{color:#1e39d2;cursor:text}.sb-Dialog{border-width:2px;border-style:solid;margin-bottom:1rem;border-radius:0.5rem}.sb-Dialog h1,.sb-Dialog h2,.sb-Dialog h3,.sb-Dialog h4,.sb-Dialog h5,.sb-Dialog h6{font-size:1.125rem;line-height:1.5rem;padding:0;margin:0 0 0.5rem}.sb-Dialog ul{padding-left:1em;text-indent:-1em;list-style-position:inside}.sb-Dialog-icon{width:1.5rem;font-size:1.5rem;line-height:1.5rem;display:table-cell;vertical-align:top;padding:0.75rem}.sb-Dialog-message{display:table-cell;vertical-align:top;padding-top:0.75rem;padding-right:1rem}.sb-Dialog--error{border-top-width:10px;border-color:#b80000}.sb-Dialog--error h1,.sb-Dialog--error h2,.sb-Dialog--error h3,.sb-Dialog--error h4,.sb-Dialog--error h5,.sb-Dialog--error h6{color:#b80000}.sb-Dialog--error .sb-Icon--error:before{content:'🚨';font-style:normal}.sb-Dialog--info{border-color:#1e39d2}.sb-Dialog--info .sb-Icon--info:before{content:'ℹ️';font-style:normal}.sb-Dialog--success{border-color:#23b268}.sb-Dialog--success .sb-Icon--success:before{content:'✅';font-style:normal}.sb-Dialog--warning{border-color:#de8f00}.sb-Dialog--warning .sb-Icon--warning:before{content:'⚠️';font-style:normal}@font-face{font-family:"SharpSans";font-style:normal;font-weight:100;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:100;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:normal;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Medium-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:normal;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-MediumItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:bold;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:bold;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:normal;font-weight:700;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-Bold-0000000000000000000000000000000000000001.woff) format("woff")}@font-face{font-family:"SharpSans";font-style:italic;font-weight:700;font-display:swap;src:url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.eot?#iefix) format("embedded-opentype"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff2) format("woff2"),url(https://www.customink.com/assets-inkpress/style_bitz/SharpSans-BoldItalic-0000000000000000000000000000000000000001.woff) format("woff")}pre{margin-bottom:1rem}@font-face{font-family:"fontello";font-weight:normal;font-style:normal;src:url(/assets/fontello-5c6d5a4b860bc986924a1ec510dcddbc10a425672dc0e3ba37e3bd4020e9d84f.eot);src:url(/assets/fontello-5c6d5a4b860bc986924a1ec510dcddbc10a425672dc0e3ba37e3bd4020e9d84f.eot#iefix) format("embedded-opentype"),url(/assets/fontello-a11118120d4b90a4c4f937c40ed47f13b4ae131b1c6371fd85ec2843d7bc7b12.woff) format("woff"),url(/assets/fontello-813519383401ebf865d03b706d20d1624b232501f0accdfa1bff4d28265d3f74.ttf) format("truetype"),url(/assets/fontello-f25b435813c4882a6189f926bc10b0fc872c358e3071d21d8386765518bc4278.svg#fontello) format("svg")}[class^="icon-"]:before,[class*=" icon-"]:before{font-family:"fontello";font-style:normal;font-weight:normal;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.icon-home:before{content:'\e800'}.icon-twitter:before{content:'\e801'}.icon-git:before{content:'\e802'}p>code,ul>code,ol>code,li>code,dl>code,td>code{background-color:#f7f7f7;font-size:90%;padding:2px 3px}.highlight>pre{background-color:#f7f7f7;padding:0.5rem 1rem;border-radius:3px;margin-bottom:1rem}.highlight{background:#ffffff}.highlight .c{color:#999988;font-style:italic}.highlight .err{color:#a61717;background-color:#e3d2d2}.highlight .k{font-weight:bold}.highlight .o{font-weight:bold}.highlight .cm{color:#999988;font-style:italic}.highlight .cp{color:#999999;font-weight:bold}.highlight .c1{color:#999988;font-style:italic}.highlight .cs{color:#999999;font-weight:bold;font-style:italic}.highlight .gd{color:#000000;background-color:#ffdddd}.highlight .gd .x{color:#000000;background-color:#ffaaaa}.highlight .ge{font-style:italic}.highlight .gr{color:#aa0000}.highlight .gh{color:#999999}.highlight .gi{color:#000000;background-color:#ddffdd}.highlight .gi .x{color:#000000;background-color:#aaffaa}.highlight .go{color:#888888}.highlight .gp{color:#555555}.highlight .gs{font-weight:bold}.highlight .gu{color:#aaaaaa}.highlight .gt{color:#aa0000}.highlight .kc{font-weight:bold}.highlight .kd{font-weight:bold}.highlight .kp{font-weight:bold}.highlight .kr{font-weight:bold}.highlight .kt{color:#445588;font-weight:bold}.highlight .m{color:#009999}.highlight .s{color:#d14}.highlight .na{color:#008080}.highlight .nb{color:#0086B3}.highlight .nc{color:#445588;font-weight:bold}.highlight .no{color:#008080}.highlight .ni{color:#800080}.highlight .ne{color:#990000;font-weight:bold}.highlight .nf{color:#990000;font-weight:bold}.highlight .nn{color:#555555}.highlight .nt{color:#000080}.highlight .nv{color:#008080}.highlight .ow{font-weight:bold}.highlight .w{color:#bbbbbb}.highlight .mf{color:#009999}.highlight .mh{color:#009999}.highlight .mi{color:#009999}.highlight .mo{color:#009999}.highlight .sb{color:#d14}.highlight .sc{color:#d14}.highlight .sd{color:#d14}.highlight .s2{color:#d14}.highlight .se{color:#d14}.highlight .sh{color:#d14}.highlight .si{color:#d14}.highlight .sx{color:#d14}.highlight .sr{color:#009926}.highlight .s1{color:#d14}.highlight .ss{color:#990073}.highlight .bp{color:#999999}.highlight .vc{color:#008080}.highlight .vg{color:#008080}.highlight .vi{color:#008080}.highlight .il{color:#009999}.tb-Default{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Default-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Default-main:after{content:" ";display:block;clear:both}.tb-Default-content{width:100%;float:left;margin-left:0;margin-right:0}.tb-Home{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Home-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Home-main:after{content:" ";display:block;clear:both}@media (min-width: 64em){.tb-Home-content{width:74.57627%;float:left;margin-right:1.69492%}}@media (min-width: 81.25em){.tb-Home-content{width:74.68354%;float:left;margin-right:1.26582%}}.tb-Home--author .tb-Sidebar{display:block}.tb-Post{display:-webkit-box;display:-moz-box;display:box;display:-webkit-flex;display:-moz-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical;-webkit-box-direction:normal;-moz-box-direction:normal;box-direction:normal;-webkit-flex-direction:column;-moz-flex-direction:column;flex-direction:column;-ms-flex-direction:column;min-height:100vh}.tb-Post-main{max-width:100%;margin-left:auto;margin-right:auto;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;-webkit-flex:1;-moz-flex:1;-ms-flex:1;flex:1}.tb-Post-main:after{content:" ";display:block;clear:both}@media (min-width: 64em){.tb-Post-content{width:74.57627%;float:left;margin-right:1.69492%}}@media (min-width: 81.25em){.tb-Post-content{width:74.68354%;float:left;margin-right:1.26582%}}@media (min-width: 64em){.tb-Post-author{display:block;margin-top:1rem;width:23.72881%;float:right;margin-right:0}}@media (min-width: 81.25em){.tb-Post-author{width:24.05063%;float:right;margin-right:0}}@media (min-width: 43.75em){.tb-Post h1:first-child{width:70%}}.tb-Team{margin-top:1.5rem}.tb-Member{width:100%;float:left;margin-left:0;margin-right:0;text-align:center;padding-bottom:2rem}@media (min-width: 43.75em){.tb-Member{width:32.20339%;float:left}.tb-Member:nth-child(3n+1){margin-left:0;margin-right:-100%;clear:both;margin-left:0}.tb-Member:nth-child(3n+2){margin-left:33.89831%;margin-right:-100%;clear:none}.tb-Member:nth-child(3n+3){margin-left:67.79661%;margin-right:-100%;clear:none}}.tb-Member-gravatar img{max-width:100%;border-radius:50%}.tb-Member--posts{margin-top:0.5rem}.tb-Sidebar{display:none;padding:1rem}@media (min-width: 64em){.tb-Sidebar{display:block;width:23.72881%;float:right;margin-right:0}}@media (min-width: 81.25em){.tb-Sidebar{width:24.05063%;float:right;margin-right:0}}.tb-Author-gravatar{text-align:center}.tb-Author-gravatar img{border-radius:50%}.tb-Author-info{text-align:center}.tb-Author-serverlesshero{text-align:center}.tb-Author-serverlesshero img{width:125px;margin-top:0.5rem;margin-bottom:0;text-align:center}.tb-Author-icons{margin-top:0.5rem}.tb-Author-icon a,.tb-Author-icon a:visited{color:gray;padding:0.25rem;font-size:1.25rem}.tb-Author-icon a:hover{color:#5ccfc2}.tb-Author-posts{margin-top:0.5rem}.tb-Excerpt{max-width:100%;margin-left:auto;margin-right:auto;border-bottom:1px dotted #d5d5d5;padding-bottom:1rem;margin-bottom:1rem}.tb-Excerpt:after{content:" ";display:block;clear:both}.tb-Excerpt-date{margin-bottom:0.5rem;color:#939393}.tb-Header{background-color:white;background-color:rgba(255,255,255,0.95);border-bottom:1px solid #cccccc;display:block;margin-top:0.5rem;margin-bottom:1rem}.tb-Header::after{clear:both;content:"";display:table}#tb-Header-toggle{display:none;position:relative;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}#tb-Header-toggle:checked+.tb-Header-area .tb-Header-menu{display:block;opacity:1;z-index:10}.tb-Header-home-link{text-decoration:none}.tb-Header-home-logo{display:block;margin-top:0.375rem}.tb-Header-home-logo img{width:85%;max-width:450.5px}.tb-Header-toggle{cursor:pointer}@media (min-width: 43.75em){.tb-Header-toggle{display:none}}.tb-Header-toggle:after{width:2.625rem;height:2.625rem;position:absolute;right:1rem;top:1rem;display:block;content:'\e800';font-family:'inkicons';font-size:2rem;color:#cccccc;cursor:pointer;text-align:center;vertical-align:center}@media (min-width: 43.75em){.tb-Header-toggle:after{display:none}}.tb-Header-menu{display:none;opacity:0;width:100%;margin:0;padding:0;position:absolute;right:0}.tb-Header-menu::after{clear:both;content:"";display:table}@media (min-width: 43.75em){.tb-Header-menu{position:inherit;display:block;opacity:1}}.tb-Header-menu:after{content:"";height:3px;width:100%;background-color:rgba(0,0,0,0.1)}@media (min-width: 43.75em){.tb-Header-menu:after{display:none}}.tb-Header-menu-item{display:block;width:100%;list-style:none}@media (min-width: 43.75em){.tb-Header-menu-item{float:left;width:auto}}.tb-Header-menu-link{padding:0.75rem 1rem;background-color:#f8f8f8;background-color:white;border-bottom:0.25rem solid transparent;border-bottom:1px solid #cccccc;color:inherit;display:block;padding-bottom:0.25rem;text-decoration:none;width:100%}@media (min-width: 43.75em){.tb-Header-menu-link{border-bottom:0.25rem solid transparent}}.tb-Header-menu-link:hover,.tb-Header-menu-link:active,.tb-Header-menu-link:visited{color:inherit}.tb-Header-menu-link:hover{border-bottom:0.25rem solid #fa3c00;color:#fa3c00}.tb-Header-menu-link.is-active{border-bottom:0.25rem solid #fa3c00;color:#fa3c00}.tb-Header-menu-link:before{content:attr(data-link-long)}@media (min-width: 43.75em){.tb-Header-menu-link:before{content:attr(data-link-short)}}@media (min-width: 64em){.tb-Header-menu-link:before{content:attr(data-link-long)}}.tb-Footer{background-color:#ededed;margin-top:2rem;padding:1rem;text-align:center;width:100%}.tb-Paginator{width:100%;float:left;margin-left:0;margin-right:0}.tb-Paginator-newerBtn{width:47.36842%;float:left;margin-right:5.26316%}@media (min-width: 43.75em){.tb-Paginator-newerBtn{width:23.72881%;float:left;margin-right:1.69492%}}.tb-Paginator-newerBtn .sb-Btn{width:100%}.tb-Paginator-olderBtn{width:47.36842%;float:right;margin-right:0}@media (min-width: 43.75em){.tb-Paginator-olderBtn{width:23.72881%;float:right;margin-right:0}}.tb-Paginator-olderBtn .sb-Btn{width:100%}.tb-AsideQuote{display:none;position:relative;width:30vw;float:right;background-color:#f7f7f7;border-radius:3px;font-family:Georgia, serif;font-size:1.25rem;line-height:1.2;color:#939393;font-style:italic;padding:1rem 1rem 1rem 3rem;margin-left:1rem;margin-bottom:1rem}.tb-AsideQuote:before{content:"\201C";font-family:Georgia, serif;font-size:3rem;font-weight:bold;color:#d5d5d5;position:absolute;left:0.75rem;top:0.5rem}@media (min-width: 43.75em){.tb-AsideQuote{display:block}}.tb-Images{max-width:100%;margin-left:auto;margin-right:auto}.tb-Images:after{content:" ";display:block;clear:both}@media (min-width: 81.25em){.tb-Img-processing{max-width:50%}}.tb-Img{max-width:100%}@media (min-width: 43.75em){.tb-Img{float:right;clear:right;margin-bottom:1rem;margin-left:1rem}}.tb-Img--fancy{border-radius:0.25rem}.tb-Img--picture{padding:0.5rem;border:1px solid #eeeeee;background-color:white;box-shadow:2px 2px 4px 0px rgba(0,0,0,0.2);margin-bottom:0 !important}@media (min-width: 43.75em){.tb-Img--quarter{max-width:25%}}@media (max-width: 43.6875em){.tb-Img--quarter--sm{max-width:25% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--quarter--md{max-width:25%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--quarter--lg{max-width:25%}}@media (min-width: 43.75em){.tb-Img--third{max-width:33%}}@media (max-width: 43.6875em){.tb-Img--third--sm{max-width:33% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--third--md{max-width:33%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--third--lg{max-width:33%}}@media (min-width: 43.75em){.tb-Img--half{max-width:50%}}@media (max-width: 43.6875em){.tb-Img--half--sm{max-width:50% !important;float:right;clear:right;margin-bottom:0.5rem;margin-left:0.5rem}}@media (min-width: 43.75em) and (max-width: 63.9375em){.tb-Img--half--md{max-width:50%}}@media (min-width: 64em) and (max-width: 81.1875em){.tb-Img--half--lg{max-width:50%}}@media (min-width: 43.75em){.tb-Img--responsive{max-width:50%}}@media (min-width: 64em){.tb-Img--responsive{max-width:40%}}@media (min-width: 81.25em){.tb-Img--responsive{max-width:30%}}.tb-Img--responsive-ctr{margin-bottom:1rem}@media (min-width: 43.75em){.tb-Img--responsive-ctr{float:none !important;clear:none !important;display:block;width:70%;margin-top:0 !important;margin-right:auto !important;margin-left:auto !important}}@media (min-width: 43.75em) and (min-width: 43.75em){.tb-Img--responsive-ctr{margin-bottom:1.5rem !important}}@media (min-width: 64em){.tb-Img--responsive-ctr{max-width:60%}}@media (min-width: 81.25em){.tb-Img--responsive-ctr{max-width:50%}}.tb-ImgCenter{margin:0 24%}@font-face{font-family:'tbicons';src:url(/assets/tbicons-096fa3970ce3a3595debd167e1cd11422745885e43987130c7ad2b9fd020a910.eot);src:url(/assets/tbicons-096fa3970ce3a3595debd167e1cd11422745885e43987130c7ad2b9fd020a910.eot#iefix) format("embedded-opentype"),url(/assets/tbicons-a255c4d7531756c350cd3cb8ac924a3a70dba66357bc6f53cdcce66be69e1ca4.woff) format("woff"),url(/assets/tbicons-04c88863a35923e4156691375c162cd8b6fb44104e3cecbc17972c89da722d17.ttf) format("truetype"),url(/assets/tbicons-737a98cc543fbd45788943a259ba88d32a06bdd4e57cf10d9631866dce5df09e.svg#tbicons) format("svg");font-weight:normal;font-style:normal}[class^="tb-Icon-"]:before,[class*=" tb-Icon-"]:before{font-family:"tbicons";font-style:normal;font-weight:normal;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.tb-Icon-twitter:before{content:'\e800'}.tb-Icon-home:before{content:'\e801'}.tb-Icon-github:before{content:'\e802'}.tb-Masthead{margin-bottom:1rem}.tb-Masthead::after{clear:both;content:"";display:table}@media (min-width: 43.75em){.tb-Masthead{margin-top:1rem;margin-bottom:2rem}}.tb-Masthead .tb-Img{float:none;display:block;margin:0}.tb-Masthead aside{display:block;color:#939393;margin-top:0.25rem;font-size:10px;line-height:1rem;height:1rem;text-align:right}.tb-Masthead a{color:#939393;text-decoration:none;border:0}.tb-Masthead a:link,.tb-Masthead a:visited,.tb-Masthead a:hover,.tb-Masthead a:active{color:#939393}.tb-Masthead-caption{position:relative}.tb-Masthead-caption:after{display:block;position:absolute;top:0;right:0;content:attr(caption)}
@@ -42,173 +46,165 @@
 
     <div class="tb-Post-main sb-Wrapper">
       <div class="tb-Post-content">
-        <h1>Easily test your DNS</h1>
-        <p>At CustomInk, we recently made the switch to a new DNS provider. During the switch, we mass-imported records from our existing provider to our new provider. Did we get them all? Are they live yet? The immediate solution was to open up the terminal and fire off cURL requests, but there had to be a better way...</p>
-
-<p>In this post/tutorial, I will show you how I created a test suite for our DNS records using RSpec. The solution is amazingly simple, and your specs will only be about 7 lines of code!</p>
+        <h1>Ruby-Curator-for-AWS-ElasticSearch-Service</h1>
+        <p>A Ruby alternative to the Python Curator for ElasticSearch.</p>
 
 <!--more-->
 
-<h2 id="the-end-result">The End Result</h2>
+<p>If you use Amazon Web Services&#39; ElasticSearch Service, there&#39;s a good chance you will need to manage the indices so you do not kill your ElasticSearch cluster. On the AWS <a href="https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/managing-indices.html">documentation page</a> they have four options available as of this writing and depending on which version of the ElasticSearch engine you are using, you will find a best fit for your use case. Three of the options seem to be native to AWS, and the other is an outside resource that is written in Python.  This blog post is not intended to convince you to use one version over another, it is simply providing an alternative to one of the options, Curator, which is written in <a href="https://curator.readthedocs.io/en/latest/index.html">Python</a>.</p>
 
-<p>I don&#39;t often do this, but to demonstrate just how awesome these tests are going to be, here is a final example spec:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+<p>At Custom Ink, we primarily support Ruby on Rails apps, and we felt as though this may be a good opportunity to have something that is more widely understood and supportable by our engineers. After researching online for a Ruby alternative to the <a href="https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/curator.html">Curator lambda</a>, I was unable to find something, so we went to work on writing our own. </p>
 
-<span class="n">describe</span> <span class="s1">'www.customink.com'</span> <span class="k">do</span>
-  <span class="n">expects</span> <span class="ss">ttl: </span><span class="mi">300</span><span class="p">,</span> <span class="ss">type: </span><span class="s1">'A'</span><span class="p">,</span> <span class="ss">value: </span><span class="s1">'1.2.3.4'</span>
-<span class="k">end</span>
+<p>I used <a href="https://lamby.custominktech.com/">Lamby</a> as the framework for this Lambda, which made a lot of the initial set up very easy! The first step in the proccess is to create an IAM role for the Lambda function.</p>
+
+<h3 id="create-an-iam-user-for-your-lambda-function">Create an IAM user for your lambda function</h3>
+
+<p>You should first create an IAM user that will be used by the lambda to invalidate/delete indices. This is how the policy should look like for this user:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "es:ESHttpGet",
+                "es:ESHttpPut"
+            ],
+            "Resource": "arn:aws:es:REGION:ACCOUNT:domain/elasticsearch-cluster/*"
+        }
+    ]
+}
 </code></pre></div>
-<h2 id="getting-started">Getting Started</h2>
+<p>If the above policy has too wide of a resource, you can definitely pin down the resource access even further to the endpoint that controls the indices. Our Lambda was in the VPC and only affected our 1 cluster so we felt okay with access to more than that endpoint for our access policy.</p>
 
-<p>As with any Ruby-based project, there&#39;s some initial setup. Generate a new project and create a <code>Gemfile</code> with the following content:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="ss">:rubygems</span>
-
-<span class="n">gem</span> <span class="s1">'rspec'</span><span class="p">,</span> <span class="s1">'~&gt; 2.11.0'</span>
+<p>Under the <em>Security Credentials</em> tab, you should generate access keys and then save those keys in SSM. You can save both the username &amp; password in the same secret, or have them in separate secrets, just be mindful that you are charged by API call for SSM. Below is the example I have for this function:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">{
+  "access_key_id": "SUPERSECRETACCESSKEYID",
+  "secret_access_key": "SUPERSECRETACCESSKEY"
+}
 </code></pre></div>
-<p>Don&#39;t forget to run the <code>bundle</code> command to install the gems:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">$ bundle
-</code></pre></div>
-<p>Next, create a folder named <code>spec</code> in your project directory and then create a <code>spec/spec_helper.rb</code> file with the following content:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">'rspec'</span>
-<span class="nb">require</span> <span class="s1">'resolv'</span>
+<h3 id="create-your-serverless-function-code">Create your serverless function &amp; code</h3>
 
-<span class="nb">require</span> <span class="s1">'spec/macros/zones_macro'</span>
+<p>Below is the core of the work, this curator.rb file is set in the lib directory. As you can see, it&#39;s fairly straightforward. You simply have to add in the name of your full URL &amp; port for the ElasticSearch cluster, your region, and your account number. In order to ensure the lambda can actually perform the proper functions, we do have to pass in variables saved in SSM, which is set as an environment below that is passed in to the lambda function. This will delete indexes older than 7 days, but is completely customizable depending on your needs. The values in the event handler can be passed in as ENV values along with the ElasticSearch domain if you want to make the lambda more generic or want to deploy it across different development environments or AWS accounts. </p>
+<div class="highlight"><pre><code class="language-" data-lang=""># Add your gem requires here:
+require 'aws-sdk'
+require 'faraday_middleware/aws_sigv4'
+require 'elasticsearch'
+# to convert json from ssm
+require 'json' 
+require_relative 'curator/ssm'
 
-<span class="no">RSpec</span><span class="p">.</span><span class="nf">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="n">config</span><span class="p">.</span><span class="nf">tty</span> <span class="o">=</span> <span class="kp">true</span>
-  <span class="n">config</span><span class="p">.</span><span class="nf">include</span> <span class="no">ZonesMacro</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>There are a few things to cover here:</p>
+def handler(event:, context:)
+  full_url_and_port = https://my-domain.region.es.amazonaws.com:443
+  region = 'us-east-1' # e.g. us-west-1
+  account = '1234567890'
 
-<ol>
-<li>We are requiring <code>resolv</code>, which is a Ruby 1.9 library for resolving DNS queries (it&#39;s like <code>dig</code> on steroids). Here is the <a href="http://ruby-doc.org/stdlib-1.9.3/libdoc/resolv/rdoc/">official documentation for resolv</a>.</li>
-<li>We require our custom macro - <code>ZonesMacro</code>.</li>
-<li>Lastly, we enable <code>tty</code> so that we get colored output on our CI server and include our <code>ZoneMacro</code>.</li>
-</ol>
+  keys = JSON.parse(SSM.get_parameter('/path/to-elasticsearch-keys'))
 
-<h2 id="writing-zonemacro">Writing <code>ZoneMacro</code></h2>
 
-<p>The <code>ZoneMacro</code> is where the &quot;hardest&quot; of our logic will live. That being said, it&#39;s not very complicated.</p>
-
-<p>Create the <code>macros/zones_macro.rb</code> file and start with the &quot;boiler-plate&quot; macro:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">ZonesMacro</span>
-  <span class="k">module</span> <span class="nn">ClassMethods</span>
-  <span class="k">end</span>
-
-  <span class="k">module</span> <span class="nn">InstanceMethods</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
-    <span class="n">base</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="no">ClassMethods</span><span class="p">)</span>
-    <span class="n">base</span><span class="p">.</span><span class="nf">send</span> <span class="ss">:include</span><span class="p">,</span> <span class="no">InstanceMethods</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>In the context of RSpec (no pun intended), <code>ClassMethods</code> are things directly inside a <code>describe</code> block, and <code>InstanceMethods</code> are things inside an <code>it</code> declaration.</p>
-
-<p>If you look back at our earlier example, you can see that we actually want <code>ClassMethods</code> for our <code>expects</code> method:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">expects</span><span class="p">(</span><span class="n">expected</span> <span class="o">=</span> <span class="p">{})</span>
-  <span class="n">matched_records</span> <span class="o">=</span> <span class="n">records</span><span class="p">.</span><span class="nf">select</span> <span class="k">do</span> <span class="o">|</span><span class="n">record</span><span class="o">|</span>
-    <span class="n">record</span><span class="p">.</span><span class="nf">type</span> <span class="o">==</span> <span class="n">expected</span><span class="p">[</span><span class="ss">:type</span><span class="p">].</span><span class="nf">upcase</span> <span class="o">&amp;&amp;</span>
-    <span class="n">record</span><span class="p">.</span><span class="nf">ttl</span> <span class="o">==</span> <span class="n">expected</span><span class="p">[</span><span class="ss">:ttl</span><span class="p">].</span><span class="nf">to_i</span> <span class="o">&amp;&amp;</span>
-    <span class="n">record</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">include?</span><span class="p">(</span><span class="n">expected</span><span class="p">[</span><span class="ss">:value</span><span class="p">].</span><span class="nf">upcase</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="n">it</span> <span class="s2">"should have the correct DNS entry"</span> <span class="k">do</span>
-    <span class="n">matched_records</span><span class="p">.</span><span class="nf">should_not</span> <span class="n">be_empty</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>So what is <code>records</code>? Well, we need to define it. Because <code>records</code> exists outside an <code>it</code> block, the declaration needs to go inside the <code>ClassMethods</code> module:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="kp">private</span>
-<span class="k">def</span> <span class="nf">records</span>
-  <span class="vi">@records</span> <span class="o">||=</span> <span class="k">begin</span>
-    <span class="no">Timeout</span><span class="o">::</span><span class="n">timeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-      <span class="no">Resolv</span><span class="o">::</span><span class="no">DNS</span><span class="p">.</span><span class="nf">new</span><span class="p">.</span><span class="nf">getresources</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nf">display_name</span><span class="p">,</span> <span class="no">Resolv</span><span class="o">::</span><span class="no">DNS</span><span class="o">::</span><span class="no">Resource</span><span class="o">::</span><span class="no">IN</span><span class="o">::</span><span class="no">ANY</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="k">rescue</span> <span class="no">Timeout</span><span class="o">::</span><span class="no">Error</span> <span class="o">=&gt;</span> <span class="n">e</span>
-    <span class="vg">$stderr</span><span class="p">.</span><span class="nf">puts</span> <span class="s2">"Connection timed out for </span><span class="si">#{</span><span class="nb">self</span><span class="p">.</span><span class="nf">display_name</span><span class="si">}</span><span class="s2">"</span>
-    <span class="p">[]</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>We add the <code>Timeout::timeout</code> so that resources that cannot be reached timeout in a reasonable amount of time.</p>
-
-<p>Most of that is directly out of the <a href="http://ruby-doc.org/stdlib-1.9.3/libdoc/resolv/rdoc/">Resolv Documentation</a>, except for the <code>self.class.display_name</code>. This is provided by RSpec, and it&#39;s the value of the <code>describe</code> block.</p>
-
-<p>In other words:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">describe</span> <span class="s1">'This is the self.display_name'</span> <span class="k">do</span>
-  <span class="c1"># ...</span>
-<span class="k">end</span>
-</code></pre></div>
-<p>The <code>Resolv</code> block will make a DNS query to the <code>display_name</code>. Notice that we are returning an array of resources. You may also see a method called <code>getresource</code> (singular) for <code>Resolve::DNS</code> that returns only the first resource. If you have multiple records for the same key (like an A record and an MX record), your tests will not pass, because <code>getresource</code> just grabs the first record it sees...</p>
-
-<p>We are also searching for a <code>resource_type</code> of <code>ANY</code>. This doesn&#39;t really matter because we are caching the result, and we are also already checking the type of the record returned.</p>
-
-<p>If you run this right now, you&#39;ll get a lot of <code>undefined method</code> errors. That&#39;s because I also monkey-patched <code>Resolv::DNS::Resource</code> to return normalized data:</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Resolv</span><span class="o">::</span><span class="no">DNS</span><span class="o">::</span><span class="no">Resource</span>
-  <span class="k">def</span> <span class="nf">value</span>
-    <span class="sx">%w(address data exchange name target)</span><span class="p">.</span><span class="nf">collect</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="o">|</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="nf">to_sym</span><span class="p">).</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">upcase</span> <span class="k">if</span> <span class="nb">self</span><span class="p">.</span><span class="nf">respond_to?</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="nf">to_sym</span><span class="p">)</span>
-    <span class="k">end</span><span class="p">.</span><span class="nf">compact</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">type</span>
-    <span class="nb">self</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s1">'::'</span><span class="p">).</span><span class="nf">last</span><span class="p">.</span><span class="nf">upcase</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
-<h2 id="dynamically-writing-tests">Dynamically Writing Tests</h2>
-
-<p>We have 500+ DNS records, so manually writing all of those tests was also a daunting task. Of course, I scripted it. You can get an export file of your current configuration from your DNS provider. The format may vary, but here&#39;s the simple little script I wrote to automatically generate all our tests.</p>
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># `config` is the existing DNS configuration file</span>
-<span class="n">config</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">readlines</span><span class="p">(</span><span class="s1">'/Users/svargo/Desktop/config'</span><span class="p">)</span><span class="o">.</span>
-
-<span class="c1"># For each line, split on a space, remove the drunk, and</span>
-<span class="c1"># create a hash for easy access.</span>
-<span class="n">collect</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
-  <span class="nb">split</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">).</span><span class="nf">collect</span><span class="p">{</span> <span class="o">|</span><span class="n">l</span><span class="o">|</span> <span class="n">l</span><span class="p">.</span><span class="nf">strip</span><span class="p">.</span><span class="nf">chomp</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span> <span class="p">}</span>
-  <span class="p">{</span> <span class="ss">:url</span> <span class="o">=&gt;</span> <span class="nb">split</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="ss">:ttl</span> <span class="o">=&gt;</span> <span class="nb">split</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="nb">split</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="ss">:data</span> <span class="o">=&gt;</span> <span class="nb">split</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="p">}</span>
-<span class="k">end</span>
-
-<span class="c1"># For each record, write out the spec and expected results.</span>
-<span class="c1"># I had to massage some data using `gsub` because of inconsistent formatting.</span>
-<span class="n">config</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">record</span><span class="o">|</span>
-  <span class="n">str</span> <span class="o">=</span> <span class="o">&lt;&lt;-</span><span class="no">EOH</span><span class="sh">
-require 'spec_helper'
-
-describe '</span><span class="si">#{</span><span class="n">record</span><span class="p">[</span><span class="ss">:url</span><span class="p">]</span><span class="si">}</span><span class="sh">' do
-  expects ttl: </span><span class="si">#{</span><span class="n">record</span><span class="p">[</span><span class="ss">:ttl</span><span class="p">]</span><span class="si">}</span><span class="sh">, type: '</span><span class="si">#{</span><span class="n">record</span><span class="p">[</span><span class="ss">:type</span><span class="p">]</span><span class="si">}</span><span class="sh">', value: '</span><span class="si">#{</span><span class="n">record</span><span class="p">[</span><span class="ss">:data</span><span class="p">].</span><span class="nf">gsub</span><span class="p">(</span><span class="s1">'"'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span><span class="si">}</span><span class="sh">'
+  client = Elasticsearch::Client.new(url: full_url_and_port) do |f|
+    f.request :aws_sigv4,
+      service: 'es',
+      region: region,
+      access_key_id: keys['access_key_id'],
+      secret_access_key: keys['secret_access_key']
+  end
+  response = client.perform_request 'GET', '_cat/indices?format=JSON'
+  p response.body
+  # gather indexes here
+  indices = response.body.map {|a| a["index"]}  
+  indices.each do |index|
+  # returns class called match data.
+    date = index.match(/\d{4}-\d{2}-\d{2}/) 
+    if date
+      date = Date.parse date.to_s
+      if date &lt; Date.today - 7
+        puts client.indices.delete index: index
+        p "Deleted index: #{index}"
+      end
+    end
+  end
 end
-</span><span class="no">EOH</span>
-
-  <span class="c1"># Write the spec to the proper file</span>
-  <span class="no">File</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s2">"spec/units/</span><span class="si">#{</span><span class="n">record</span><span class="p">[</span><span class="ss">:url</span><span class="p">]</span><span class="si">}</span><span class="s2">_spec.rb"</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">){</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="p">}</span>
-<span class="k">end</span>
 </code></pre></div>
-<p>Needless to say, this saved a significant amount of time and energy.</p>
+<p>In the above code, please note that you can pass in the account ID &amp; region values as ENV values along with the ES domain if you want to make the lambda more generic or want to deploy it across different development environments or AWS accounts.</p>
 
-<h2 id="add-to-ci">Add to CI</h2>
+<p>In the curator folder, we have another folder for the Ruby code that generates an SSM class to get the SSM variables from AWS, that is shared below:</p>
+<div class="highlight"><pre><code class="language-" data-lang=""># uses AWS SDK SSM gem
+require 'aws-sdk-ssm'
 
-<p>I created a quick Jenkins job for these specs and set them to run every 15 minutes. Super simple and reliable CI for our DNS entires. Now, we can easily spot outdated records or problem servers.</p>
+class SSM
+  def self.get_parameter(name)
+    ssm = Aws::SSM::Client.new()
+    ssm_response = ssm.get_parameter({
+      name: name,
+      with_decryption: true,
+    })
+    ssm_response.parameter.value
+  end
+end
+</code></pre></div>
+<p>Be sure to add these two gems to your gemfile as well:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">gem 'elasticsearch', "~&gt; 6.7" # change depending on your version
+gem 'faraday_middleware-aws-sigv4'
+</code></pre></div>
+<h3 id="write-your-template-yaml-cloudformation">Write your template.yaml CloudFormation</h3>
 
-<h2 id="a-question-of-completeness">A Question of Completeness?</h2>
+<p>Lastly we have a template.yaml for our CloudFormation which generates these resources. You can see it below:</p>
+<div class="highlight"><pre><code class="language-" data-lang="">AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Curator
 
-<dl>
-  <dt>Q: Is this a complete solution?</dt>
-  <dd>A: No</dd>
-</dl>
+Parameters:
 
-<p><br></p>
+  StageEnv:
+    Type: String
+    Default: development
+    AllowedValues:
+      - test
+      - development
+      - staging
+      - prod
 
-<p>While this solution is expandable, it&#39;s far from complete. That being said, do you really require 100% coverage for all your DNS entires? It was very useful to have 100% coverage here, because we were migrating from our existing provider entirely. If you are writing these specs as &quot;health checks&quot;, you will probably have significantly less...</p>
+Resources:
 
-<p>This is definitely not a replacement for solutions like New Relic or other monitoring software, but it&#39;s an excellent homegrown solution in under 2 hours.</p>
+  CuratorLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: lib/curator.handler
+      Runtime: ruby2.7
+      Timeout: 60
+      MemorySize: 512
+      FunctionName: !Sub curator-${StageEnv}
+      Environment:
+        Variables:
+          STAGE_ENV: !Ref StageEnv
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - ssm:GetParametersByPath
+                - ssm:GetParameters
+                - ssm:GetParameterHistory
+                - ssm:GetParameter
+                - kms:Decrypt
+              Resource:
+                - arn:aws:ssm:*:1234567890:parameter/path/to-elasticsearch-keys
+                - arn:aws:kms:*:1234567890:key/key-string-12345
+      Events:
+        Curator:
+          Type: Schedule
+          Properties:
+            Schedule: 'cron(0 8 ? * * *)' # UTC so 3AM EST          
 
-<h2 id="disclaimer">Disclaimer</h2>
+Outputs:
 
-<p>This post was written using Ruby 1.9.3. It should work on Ruby 1.9.x, but I guarantee it won&#39;t work on 1.8.7.</p>
+  CuratorLambdaArn:
+    Description: Lambda Function Arn
+    Value: !GetAtt CuratorLambda.Arn
+</code></pre></div>
+<p>That&#39;s it! Now we have a serverless resource that can help you manage your indicies in AWS ElasticSearch. If you have any questions on this, please feel free to leave a comment! I hope this is helpful to others out there who are finding it hard to have a Ruby version for an ElasticSearch lambda curator. This work was done with <a href="https://technology.customink.com/authors/william-spencer/">William Spencer</a>, the WebOps manager at Custom Ink.</p>
 
       </div>
       <div class="tb-Post-author">
@@ -216,22 +212,34 @@ end
         
         <div class="tb-Author">
   
+    <div class="tb-Author-gravatar">
+      <img title="Katherine Cisneros" src="https://www.gravatar.com/avatar/5e2129899b46af4ac7eee6343c2feb45?s=150"/>
+    </div>
+  
   <div class="tb-Author-info">
     
-      <time pubdate datetime="2012-07-31T01:31:00-04:00">
-        31 Jul 2012
+      <time pubdate datetime="2020-12-02T00:00:00-05:00">
+        02 Dec 2020
       </time></br>
-      by Seth Vargo
+      by Katherine Cisneros
     
     
     <div class="tb-Author-icons">
       
+        <span class="tb-Author-icon">
+          <a href="https://twitter.com/kc_sneros"><i class="tb-Icon-twitter"></i></a>
+        </span>
+      
+      
+        <span class="tb-Author-icon">
+          <a href="https://github.com/cisnerosk"><i class="tb-Icon-github"></i></a>
+        </span>
       
       
     </div>
     
       <div class="tb-Author-posts">
-        <a href="/authors/seth-vargo" class="sb-Btn sb-Btn--secondary sb-Btn--small">
+        <a href="/authors/katherine-cisneros" class="sb-Btn sb-Btn--secondary sb-Btn--small">
           View All Posts
         </a>
       </div>
@@ -248,8 +256,8 @@ end
   </div>
   <script type="text/javascript">
     var disqus_shortname = 'custominktechnologyblog';
-    var disqus_identifier = '/blog/2012/07/31/easily-test-your-dns/';
-    var disqus_title = "Easily test your DNS";
+    var disqus_identifier = '/blog/2020/12/02/ruby-curator-for-aws-elasticsearch-service/';
+    var disqus_title = "Ruby-Curator-for-AWS-ElasticSearch-Service";
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
