@@ -533,6 +533,10 @@
 <lastmod>2020-12-02T00:00:00-05:00</lastmod>
 </url>
 <url>
+<loc>/blog/2022/01/10/aws-systems-manager-ssm-cross-region-replication/</loc>
+<lastmod>2022-01-10T00:00:00-05:00</lastmod>
+</url>
+<url>
 <loc>/careers/</loc>
 </url>
 <url>
@@ -693,5 +697,8 @@
 </url>
 <url>
 <loc>/page19/</loc>
+</url>
+<url>
+<loc>/page20/</loc>
 </url>
 </urlset>

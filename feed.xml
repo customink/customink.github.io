@@ -7,7 +7,415 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Ruby-Curator-for-AWS-ElasticSearch-Service</title>
+        <title>AWS Systems Manager (SSM) Cross Region Replication</title>
+        <description>&lt;p&gt;Replicate SSM parameters to another region using AWS Lambda &amp;amp; SQS.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;overview-of-ssm-replication&quot;&gt;Overview of SSM Replication&lt;/h2&gt;
+
+&lt;p&gt;This blog post will explain in detail how to set up cross region replication for &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html&quot;&gt;AWS Parameter Store&lt;/a&gt;. As of the writing of this blog post, AWS does not have a native feature for replicating parameters in SSM. If you are using SSM Parameter Store instead of Secrets Manager and are seeking a way to replicate parameters for DR/Multi-Region purposes, this post may help you.&lt;/p&gt;
+
+&lt;p&gt;Diagram showing the architecture setup:
+&lt;img src=&quot;/assets/content/ssm-crr-lambda/ssm_crr_customink-8406544a87d272f0ffa7cf246890b8d84e0eac361329197835f08cd4398de3d2.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;serverless-framework-setup&quot;&gt;Serverless Framework Setup&lt;/h2&gt;
+
+&lt;p&gt;I used &lt;a href=&quot;https://github.com/customink/lamby-cookiecutter&quot;&gt;Lamby&lt;/a&gt; cookie-cutter as the framework for this Lambda, which made a lot of the initial set up very easy! Please take a look at that site &amp;amp; set up your serverless framework for the work to be done ahead. I will first share the CloudFormation template used, then share the code that makes the replication work as well as plain in detail what&amp;#39;s happening. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS SSM regional replication for multi-region setup
+
+Parameters:
+
+  StageEnv:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - test
+      - dev
+      - staging
+      - prod
+
+Mappings:
+  KmsMap:
+    us-east-1:
+      dev: 'arn:aws:kms:us-east-1:123456:key/super-cool-key1'
+      staging: 'arn:aws:kms:us-east-1:123456:key/super-cool-key2' 
+      prod: arn:aws:kms:us-east-1:123456:key/super-cool-key3'
+    us-east-2:
+      dev: 'arn:aws:kms:us-east-2:123456:key/super-cool-key1'
+      staging: 'arn:aws:kms:us-east-2:123456:key/super-cool-key1'
+      prod: 'arn:aws:kms:us-east-2:123456:key/super-cool-key1' 
+  DestinationMap:
+    us-east-1: 
+      target: &quot;us-east-2&quot;
+
+Resources:
+
+  ReplicationQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub 'SSM-SQS-replication-${StageEnv}-${AWS::Region}'
+      VisibilityTimeout: 1000
+
+  LambdaRegionalReplication:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: lib/ssm_regional_replication.handler
+      Runtime: ruby2.7
+      Timeout: 900
+      MemorySize: 512
+      Environment:
+        Variables:
+          STAGE_ENV: !Ref StageEnv
+          TARGET_REGION: !FindInMap [DestinationMap, !Ref AWS::Region, target]
+          SKIP_SYNC: 'skip_sync'
+      Events:
+        InvokeFromSQS:
+          Type: SQS
+          Properties:
+            Queue: {&quot;Fn::GetAtt&quot; : [ &quot;ReplicationQueue&quot;, &quot;Arn&quot; ]}
+            BatchSize: 1
+            Enabled: true
+        ReactToSSM:
+          Type: EventBridgeRule
+          Properties:
+            Pattern:
+              detail-type:
+                - Parameter Store Change 
+              source:
+                - aws.ssm
+      Policies:
+      - Statement:
+        - Sid: ReadSSM
+          Effect: Allow
+          Action:
+          - ssm:GetParameter
+          - ssm:GetParameters
+          - ssm:PutParameter
+          - ssm:DeleteParameter
+          - ssm:AddTagsToResource
+          - ssm:ListTagsForResource
+          Resource: 
+          - !Sub &quot;arn:aws:ssm:*:${AWS::AccountId}:parameter/*&quot;
+      - Statement:
+        - Sid: DecryptSSM
+          Effect: Allow
+          Action:
+          - kms:Decrypt
+          - kms:Encrypt
+          Resource: 
+          - !FindInMap [KmsMap, us-east-1, !Ref StageEnv]
+          - !FindInMap [KmsMap, us-east-2, !Ref StageEnv]
+  LambdaFullReplication:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: lib/ssm_full_replication.handler
+      Runtime: ruby2.7
+      Timeout: 900
+      MemorySize: 512
+      Environment:
+        Variables:
+          STAGE_ENV: !Ref StageEnv
+          TARGET_REGION: !FindInMap [DestinationMap, !Ref AWS::Region, target]
+          SKIP_SYNC: 'skip_sync'
+      Events:
+        DailyReplication:
+          Type: Schedule
+          Properties:
+            Description: Cronjob to run replication at 9:30am EST every Wednesday (cron is UTC)
+            Enabled: True 
+            Name: DailySSMReplication
+            Schedule: &quot;cron(30 13 ? * 4 *)&quot;
+      Policies:
+      - Statement:
+        - Sid: SQSPerms
+          Effect: Allow
+          Action:
+          - sqs:SendMessage
+          Resource: 
+          - !Sub &quot;arn:aws:sqs:*:${AWS::AccountId}:SSM-SQS-replication-*&quot;
+      - Statement:
+        - Sid: ReadSSM
+          Effect: Allow
+          Action:
+          - ssm:GetParameter
+          - ssm:GetParameters
+          - ssm:PutParameter
+          - ssm:AddTagsToResource
+          - ssm:ListTagsForResource
+          - ssm:DescribeParameters
+          Resource: 
+          - !Sub &quot;arn:aws:ssm:*:${AWS::AccountId}:*&quot;
+          - !Sub &quot;arn:aws:ssm:*:${AWS::AccountId}:parameter/*&quot;
+      - Statement:
+        - Sid: DecryptSSM
+          Effect: Allow
+          Action:
+          - kms:Decrypt
+          - kms:Encrypt
+          Resource: 
+          - !FindInMap [KmsMap, us-east-1, !Ref StageEnv]
+          - !FindInMap [KmsMap, us-east-2, !Ref StageEnv]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above template does a number of things. It creates my SQS queue, a regional replication lambda that is event based, and a full replication lambda that is cron based. Under the &amp;#39;Mappings&amp;#39; section I have &amp;quot;KmsMap&amp;quot; which maps to the aws/ssm KMS keys. If you use other keys for your SSM entries, enter that value here. If you use &lt;em&gt;many&lt;/em&gt; keys across your SSM parameters, simply add them to the lambda properties, example here:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;      - Statement:
+        - Sid: DecryptSSM
+          Effect: Allow
+          Action:
+          - kms:Decrypt
+          - kms:Encrypt
+          Resource: 
+          - !FindInMap [KmsMap, us-east-1, !Ref StageEnv]
+          - !FindInMap [KmsMap, us-east-2, !Ref StageEnv]
+          - 'arn:aws:kms:us-east-1:123456:key/my-managed-key1' 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The other &amp;#39;Mapping&amp;#39;, &lt;code&gt;DestinationMap&lt;/code&gt;, sets up my source and target region. My original SSM parameters are in &lt;code&gt;us-east-1&lt;/code&gt;, so the target is &lt;code&gt;us-east-2&lt;/code&gt; in this case. The SQS queue holds all of the parameters from the &lt;code&gt;LambdaFullReplication&lt;/code&gt;, since lambdas cannot run indefinitely, there&amp;#39;s a high chance the function won&amp;#39;t finish before going through all of your parameters. This &lt;code&gt;LambdaFullReplication&lt;/code&gt; function sends the parameters to the SQS queue, where the &lt;code&gt;LambdaRegionalReplication&lt;/code&gt; then performs the put action to the destination region. The &lt;code&gt;VisibilityTimeout&lt;/code&gt; is set to &lt;code&gt;1000&lt;/code&gt; to allow some wiggle room for the lambda (&lt;code&gt;900&lt;/code&gt;). 
+The full replication lambda runs every Wednesday (or whatever frequency you&amp;#39;d like) for a few reasons: &lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;to do the initial get/put for the parameters and&lt;/li&gt;
+&lt;li&gt;to catch any parameters that have/delete the skip_sync tag &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I will discuss the &lt;code&gt;skip_sync&lt;/code&gt; tag in detail when discussing the code. The regional replication lambda runs when there&amp;#39;s an entry in the SQS queue that has to be processed, or anytime there&amp;#39;s a change to a parameter, driven by event based actions.&lt;/p&gt;
+
+&lt;h2 id=&quot;code-setup&quot;&gt;Code Setup&lt;/h2&gt;
+
+&lt;p&gt;Next I will discuss and share the Ruby code that actually does the work. There are three Ruby files that make this lambda function, &lt;code&gt;parameter_store.rb&lt;/code&gt;, &lt;code&gt;ssm_regional_replication.rb&lt;/code&gt;, and &lt;code&gt;ssm_full_replication.rb&lt;/code&gt;. I will share the code along with the comments around what is happening in the file.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;require 'aws-sdk-ssm'
+
+# Create ParameterStore class, to be shared by both regional
+# and full replication lambda.
+class ParameterStore
+  # The parameter store class creates instance variables with &quot;attr_accessor&quot; 
+  # for the initial client, response, name, and tag_list. 
+  attr_accessor :client, :response, :name, :tag_list
+
+  # Initialize method for hash
+  # this allows the client &amp;amp; name instance vars
+  # to be used outside of the init method
+  def initialize(h)
+    self.client = h[:client] # this gets the client key from CloudWatch metrics
+    self.name = h[:name] # gets the name of the param &amp;amp; assigns it to name instance var
+  end
+
+  # this method takes the client &amp;amp; name args from prev method.
+  def self.find_by_name(client, name) 
+    # create new client connection &amp;amp; name from private `find_by_name` method
+    new(client: client, name: name).find_by_name(name)
+  end
+
+  private 
+  def find_by_name(name)
+    # set begin block in order for the get_parameter call to
+    # loop through all of the parameters
+    begin
+      # declare instance variable with self.response
+      # set to the AWS client connection calling
+      # get_parameter method via Ruby CLI
+      # extract the name &amp;amp; with_decruption options set
+      self.response = client.get_parameter({
+        name: name,
+        with_decryption: true,
+      })
+      # rescue to look for AWS SSM throttling errors.
+      # take the exception below, and place in variable &quot;e&quot;
+    rescue Aws::SSM::Errors::ThrottlingException =&amp;gt; e 
+      p &quot;Sleeping for 60 seconds while getting parameters.&quot;
+      sleep(60)
+      # will re-run what is in begin block
+      retry
+    end
+    self
+  end
+
+
+  # creates a `tag_list` instance var
+  # `||=` operator is Ruby &quot;short-circuit&quot; which means
+  # if `tag_list` is set, then skip this part,
+  # if not set, then set it to what is on the right side of equals sign.
+  # the purpose is to set the tag_list var equal to
+  # the response from the `list_tags_for_resource`¹ 
+  # which contains resource_type set to Parameter, and the 
+  # resource_id set to name
+  def tag_list
+    @tag_list ||= client.list_tags_for_resource({resource_type: 'Parameter', resource_id: name})
+  end
+
+  # checks the `tag_list` method above &amp;amp; runs a 
+  # select method on the tag_list hash
+  # loops to see if there is a key with the `key` value in hash
+  # and checks presence of a `skip_sync` tag with the `.any?` 
+  # boolean method. If this exists, then the lambda function
+  # will not run and the replication will not occur.
+  # If this does not exist, then it proceeds. 
+  # You may want to skip syncing for regional specific resources. 
+  # If you want to replicate an initial skip_sync param, simply
+  # remove the tag in question and on the next run, the param will sync`
+  def skip_sync?
+    tag_list[:tag_list].select {|key| key[:key] == $skip_tag }.any?
+  end
+
+  # Calls the Ruby `put_parameters` method on the `client_target` parameter.
+  # `put_parameter` replicates name, value, type, and overwrite. This method
+  # also adds the tags copied over from the tag_list method to resources by name.
+  def sync_to_region(client_target)
+    client_target.put_parameter({
+      name: response['parameter']['name'], # required
+      value: response['parameter']['value'], # required
+      type: response['parameter']['type'], # accepts String, StringList, SecureString
+      overwrite: true,
+    })
+    client_target.add_tags_to_resource({resource_type: 'Parameter', resource_id: name, tags: tag_list.to_h[:tag_list]})    
+  end
+end
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;The next file I will discuss is the &lt;code&gt;ssm_full_replication.rb&lt;/code&gt; piece of the code. As you may gather from the name, this is responsible for full replication.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# this pulls the AWS sdk gem
+require 'aws-sdk-ssm'
+require 'aws-sdk-sqs'
+require_relative 'parameter_store'
+
+# Declare global variables which are set to the
+# respective values from CloudFormation template.
+$target_region = ENV['TARGET_REGION'] or raise &quot;Missing TARGET_REGION variable.&quot;
+$skip_tag = ENV['SKIP_SYNC'] or raise &quot;Missing skip_sync tag.&quot;
+$stage_env = ENV['STAGE_ENV']
+
+# method set to us-east-1 for source region. 
+# var `sqs_client` set to new SQS client connection in target region
+# var `sts_client` set to new STS client conn in source region.
+# call `send_message` on `sqs_client` var with queue_url &amp;amp; message_body as params.
+def send_params_to_sqs(name)
+  region = &quot;us-east-1&quot;
+  sqs_client = Aws::SQS::Client.new(region: $target_region)
+  sts_client = Aws::STS::Client.new(region: region)
+
+  sqs_client.send_message(
+    queue_url: &quot;https://sqs.#{region}.amazonaws.com/#{sts_client.get_caller_identity.account}/SSM-SQS-replication-#{$stage_env}-#{region}&quot;,
+    message_body: name
+  )
+end
+
+# sets new SSM client connection in source region
+# and new SSM client_target connection in target region
+def handler(event:, context:)
+  client = Aws::SSM::Client.new
+  client_target = Aws::SSM::Client.new(region: $target_region)
+
+  # next_token set to nil, which is important at start of lambda func
+  next_token = nil
+  # loop starts with begin block which
+  # runs before the rest of the code in method.
+  loop do 
+    begin
+      # describe_batch is set to value from 
+      # describe_parameters² call on the client variable.
+      @describe_batch = client.describe_parameters({
+        # parameter_filter limits request results to what we need
+        parameter_filters: [
+          {
+            key: &quot;Type&quot;,
+            values: [&quot;String&quot;, &quot;StringList&quot;, &quot;SecureString&quot;]
+          },
+        ],
+        # next_token is set to next set of items to return
+        next_token: next_token,
+      })
+      # describe_batch var calls iterative loop and
+      # sends param name to send_params_to_sqs method
+      @describe_batch.parameters.each do |item|
+        send_params_to_sqs(item.name)
+      end
+      # break means that func will end if the next_token value is empty.
+      break if @describe_batch.next_token.nil?
+      next_token = @describe_batch.next_token
+      # exception handling. it looks for this error message, and this is how it will handle, by pausing for 60 seconds.
+    rescue Aws::SSM::Errors::ThrottlingException
+      p &quot;Sleeping for 60 seconds while describing parameters.&quot;
+      sleep(60)
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;p&gt;The last file to share is the &lt;code&gt;ssm_regional_replication.rb&lt;/code&gt; file. This file is event based and does the regional replication.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;# this pulls the AWS sdk gem
+require 'aws-sdk-ssm'
+require_relative 'parameter_store'
+
+# Global vars for file
+$target_region = ENV['TARGET_REGION'] or raise &quot;Missing TARGET_REGION variable.&quot;
+$skip_tag = ENV['SKIP_SYNC'] or raise &quot;Missing skip_sync tag.&quot;
+
+# CloudWatch sends events in a specific format compared to SQS triggered lambdas
+# so this method grabs the values from CloudWatch handles both formats.
+def massage_event_data(event)
+  # pull out values from a cloudwatch invocation
+  operation = event.fetch('detail', {})['operation']
+  name      = event.fetch('detail', {})['name']
+  return operation,name if operation &amp;amp;&amp;amp; name
+  operation = 'Update' 
+  name      = event.fetch('Records', []).first['body']
+  return operation,name 
+end
+
+def handler(event:, context:)
+  # set vars called operation and name. output from prev. method.
+  # create new client &amp;amp; target vars for SSM
+  operation,name = massage_event_data(event)
+  client = Aws::SSM::Client.new
+  client_target = Aws::SSM::Client.new(region: $target_region)
+
+  # this logic runs event based code. If the operation from 
+  # the CloudWatch metrics is equal to either update or create
+  # the ps var uses the ParameterStore find_by_name class method
+  # and passes the client * name.
+  if operation == 'Update' || operation == 'Create'
+    ps = ParameterStore.find_by_name(client, name)
+
+    # if the ps var has a skip_sync tag, then the CloudWatch logs
+    # you will get what's in the puts string. if there is no tag
+    # it syncs to target region.
+    if ps.skip_sync?
+      puts &quot;This function has been opted out, not replicating parameter.&quot;
+    else
+      ps.sync_to_region(client_target)
+    end
+
+  # if the operation is delete in the source region, then the delete_parameter method is called on the
+  # client_target and it's also deleted from the target_region to ensure parity.
+  elsif operation == 'Delete'
+    response = client_target.delete_parameter({
+      name: name, # required. go into event, reference the detail key, and the value name
+    })
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;References to AWS API docs page:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSM/Client.html#list_tags_for_resource-instance_method&quot;&gt;list_tags_for_resource-instance_method&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSM/Client.html#describe_parameters-instance_method&quot;&gt;describe_parameters&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If you want to be sure that there are no missed variables, you can always set up a CloudWatch alarm on if your lambda has any failed invocations or if your SQS queue isn&amp;#39;t sending any messages. I hope that this has helped others who are looking for a way to replicate SSM parameters in AWS from one region to another. That&amp;#39;s the end of the code, I know it is a lot to digest, so if you have any questions please leave a comment and I&amp;#39;ll do my best to follow up.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Jan 2022 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2022/01/10/aws-systems-manager-ssm-cross-region-replication/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2022/01/10/aws-systems-manager-ssm-cross-region-replication/</guid>
+      </item>
+    
+      <item>
+        <title>Ruby Curator for AWS ElasticSearch Service</title>
         <description>&lt;p&gt;A Ruby alternative to the Python Curator for ElasticSearch.&lt;/p&gt;
 
 &lt;!--more--&gt;
