@@ -7,6 +7,452 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Trigger CircleCI Workflow. AKA Simple Deploy Button</title>
+        <description>&lt;p&gt;Very simple, no parameters needed, no enums, no booleans... just a really easy way to trigger a deploy with CircleCI. We can do this making use of the &lt;a href=&quot;https://circleci.com/docs/variables/#pipeline-values&quot;&gt;trigger_source&lt;/a&gt; pipeline value. When you click the button in CircleCI to &amp;quot;Trigger Pipeline&amp;quot; the value would be &lt;code&gt;api&lt;/code&gt; vs something like &lt;code&gt;webhook&lt;/code&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2.1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;machine&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-2204:current&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo 'Deploying...'&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;workflows&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;api&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;&amp;lt; pipeline.trigger_source &amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If your workflow needs a test job, consider doing something a bit more complicated. Here we use two &lt;code&gt;when&lt;/code&gt; conditions to work with a parameter.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2.1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;workflow&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;enum&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;The workflow to trigger.&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;enum&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;test-job&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;machine&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-2204:current&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo 'Testing...'&lt;/span&gt;  
+  &lt;span class=&quot;na&quot;&gt;deploy-job&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;machine&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-2204:current&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;echo 'Deploying...'&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;workflows&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;&amp;lt; pipeline.parameters.workflow &amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;test-job&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;when&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;equal&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;deploy&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;&amp;lt; pipeline.parameters.workflow &amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;deploy-job&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now your CircleCI config will run tests by default and you can easily trigger a deploy via any branch using the &amp;quot;Trigger Pipeline&amp;quot; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/circleci-deploy/circleci-deploy-trigger-4a79c8b1657909ed2de9965ad6ea53686719dcb5cd4f02fd622e260c315b395f.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr tb-Img--fancy&quot; alt=&quot;Screen capture of the CircleCI application. This shows the trigger pipeline UI which has the Add Parameter disclosure open. The options Parameter type, Name, and Value have been set to string, workflow, deploy.&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Mar 2023 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2023/03/03/trigger-circleci-workflow-aka-simple-deploy-button/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2023/03/03/trigger-circleci-workflow-aka-simple-deploy-button/</guid>
+      </item>
+    
+      <item>
+        <title>New Amazon Linux Dev Container Features</title>
+        <description>&lt;p&gt;🆕 &lt;strong&gt;Want to use &lt;a href=&quot;https://github.com/features/codespaces&quot;&gt;Codespaces&lt;/a&gt; with Amazon Linux 2?&lt;/strong&gt; Check out &lt;a href=&quot;https://github.com/customink/codespaces-features&quot;&gt;customink/codespaces-features&lt;/a&gt; for two custom features. 1) &lt;a href=&quot;https://github.com/customink/codespaces-features/tree/main/src/common-amzn&quot;&gt;common-amzn&lt;/a&gt; 2) &lt;a href=&quot;https://github.com/customink/codespaces-features/tree/main/src/docker-in-docker-amzn&quot;&gt;docker-in-docker-amzn&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;So, last year I shared how we could &lt;a href=&quot;/blog/2022/02/06/getting-started-with-github-codespaces-from-a-serverless-perspective&quot;&gt;integrate Codespaces&lt;/a&gt; into our AWS Lambda &lt;a href=&quot;https://dev.to/aws-heroes/lambda-containers-with-rails-a-perfect-match-4lgb&quot;&gt;docker compose patterns&lt;/a&gt;. Since then Microsoft&amp;#39;s Development Containers specification has come a LONG way. Everything is wrapped up nice and neatly at the &lt;a href=&quot;https://containers.dev&quot;&gt;containers.dev&lt;/a&gt; site. Take a look if you have not already seen it.&lt;/p&gt;
+
+&lt;h2 id=&quot;dev-containers&quot;&gt;Dev Containers?&lt;/h2&gt;
+
+&lt;p&gt;So why are Development Containers &amp;amp; Codespaces such a big deal? I can illustrate some Lambda &amp;amp; Kubernetes use cases below, but first I would like to spell out a few features that may be new to some. Including existing Codespaces users.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The Dev Container &lt;a href=&quot;https://containers.dev&quot;&gt;specification&lt;/a&gt; at the lowest level of Codespaces is open to everyone and lots of tooling exists around it by a growing community.&lt;/li&gt;
+&lt;li&gt;The specification has a reference implementation via a node &lt;a href=&quot;Dev%20Container%20CLI&quot;&gt;Command Line Interface&lt;/a&gt;. Think of this &lt;code&gt;devcontainer&lt;/code&gt; CLI as a higher order docker compose. You can use this to run Codespaces projects locally!&lt;/li&gt;
+&lt;li&gt;Atop of the CLI, there is CI tooling for &lt;a href=&quot;https://github.com/devcontainers/ci&quot;&gt;GitHub Actions&lt;/a&gt;. This means you can use the same development container as your CI/CD environment.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;containers-usage-areas&quot;&gt;Containers Usage Areas&lt;/h2&gt;
+
+&lt;p&gt;So where are containers used in your organization or projects?  Here are some phases that most of us can identify with. Where projects move from the left to the right.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/linux-devcontainers/container-areas-268f50de2e3e354f9dd3e226de34e1e9f740a838d6669902c1697653dcc90e21.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;Container Areas&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Development:&lt;/strong&gt; Most of us have tried to use docker or compose at some point. For example, the most common use of this area would be running a database like MySQL. Docker makes this easy.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CI/CD:&lt;/strong&gt; Typically where we run tests and hopefully build and/or deploy our code to production. If you have used CircleCI before, again a database container here might feel familiar. &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Runtime:&lt;/strong&gt; Which is often our final container environment. We can think of this as production for most of us but it could be any container orchestration like Kubernetes, Lambda, or Fargate.&lt;/p&gt;
+
+&lt;h2 id=&quot;old-aws-sam-patterns-with-docker-compose&quot;&gt;Old AWS SAM Patterns with Docker Compose&lt;/h2&gt;
+
+&lt;p&gt;Today our Lambda SAM cookiecutters leverage SAM&amp;#39;s build image via docker compose to ensure local development is within the same environment for our CI/CD tooling. We ended up with something like this image&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/linux-devcontainers/aws-lambda-before-devcontainers-7d9ad2ac5ffc39cf08115bcc97292a2bfdf816b2dc54d7bbe36e6c3381d93688.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;AWS Lambda Before Dev Containers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At the bottom we can see the host platform typically associated with each of these stages. Because we use Docker, we can be cross-platform and consistent. &lt;strong&gt;The problem?&lt;/strong&gt; ⚠️ Making up your own docker/compose patterns are a huge drag. From SSH patterns to Docker-in-Docker gotchas. &lt;/p&gt;
+
+&lt;h2 id=&quot;new-aws-sam-patterns-with-dev-containers&quot;&gt;New AWS SAM Patterns with Dev Containers&lt;/h2&gt;
+
+&lt;p&gt;In the coming weeks the &lt;a href=&quot;https://github.com/customink/lamby-cookiecutter/tree/master/%7B%7Bcookiecutter.project_name%7D%7D&quot;&gt;Lamby Cookiecutter&lt;/a&gt; will be updated to use Development Containers so folks with (or without) Codespaces can easily work with the project. The result will be something like this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/linux-devcontainers/aws-lambda-after-devcontainers-94e148ef0601a15c55848eecd0a6b591c7e8b2ce2f2ff5fc49b4ccc3aead784f.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;AWS Lambda After Dev Containers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With Development Containers, so much docker compose boilerplate can be removed. Thanks in huge part to our newly released &lt;a href=&quot;https://github.com/customink/codespaces-features&quot;&gt;common &amp;amp; docker-in-docker Amazon Linux 2 features&lt;/a&gt; work. If you want to see an example of how this helps everyone including running Codespaces locally with VS Code, checkout our &lt;a href=&quot;https://github.com/customink/crypteia#development&quot;&gt;Crypteia Project&amp;#39;s Development&lt;/a&gt; section. You can even use all this without VS Code &amp;amp; GitHub Codespaces. For example:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;devcontainer build &lt;span class=&quot;nt&quot;&gt;--workspace-folder&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+devcontainer up &lt;span class=&quot;nt&quot;&gt;--workspace-folder&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+devcontainer run-user-commands &lt;span class=&quot;nt&quot;&gt;--workspace-folder&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+devcontainer &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--workspace-folder&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; ./bin/setup
+devcontainer &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--workspace-folder&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; ./bin/test-local
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;unexplored-development-container-space&quot;&gt;Unexplored Development Container Space&lt;/h2&gt;
+
+&lt;p&gt;So can Development Containers be used in your projects without the Lambda patterns above? Yes! Consider the following diagram that has a Platform Engineering team building base images. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/linux-devcontainers/devcontainers-in-k8s-projects-e13c2f8cce935c9378054b32becbd76dd98704db3f7c11a072f68e81ee9674bf.png&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;Where could Development Container fit into your Kubernetes/K8s Projects&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;These teams typically approach containers from the right to the left. Where base OS images are made into language specific images with variants for CI/CD. Just like SAM has build and runtime images. Technically for them &amp;quot;Runtime&amp;quot; is some container registry like Amazon ECR, but you get the idea.&lt;/p&gt;
+
+&lt;p&gt;At &lt;a href=&quot;https://www.customink.com&quot;&gt;Custom Ink&lt;/a&gt; we are using our CircleCI images for our Kubernetes projects with Codespaces. The Microsoft team makes this easy since all of their features work with Ubuntu out of the box.&lt;/p&gt;
+
+&lt;p&gt;If your development stages look something like the image above. Please consider adopting Development Containers based on your CI/CD images and explore that big purple space by connecting your container value chain in a beautiful little circle. Thanks for reading!&lt;/p&gt;
+</description>
+        <pubDate>Sun, 30 Oct 2022 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2022/10/30/new-amazon-linux-dev-container-features/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2022/10/30/new-amazon-linux-dev-container-features/</guid>
+      </item>
+    
+      <item>
+        <title>Lambda Rust Extension for any Runtime to preload SSM Parameters as Secure Environment Variables!</title>
+        <description>&lt;p&gt;ℹ️ &lt;a href=&quot;https://github.com/customink/crypteia&quot;&gt;Crypteia Hits v1.0.0 Miletstone!&lt;/a&gt; 🎉 - It now has support for Python among other popular languages like Ruby, Node, &amp;amp; PHP. Crypteia is easy to install as a Lambda Layer or in a Container. It can even be used with K8s containers!&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/customink/crypteia&quot;&gt;Crypteia&lt;/a&gt; is a new super fast Lambda Extension written in Rust which turns your serverless environment variables from SSM Parameter Store paths like these...&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;Variables&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;SECRET&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;x-crypteia-ssm:/myapp/SECRET&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;... into real environment variables when using your Runtime&amp;#39;s language of choice. For example, assuming the SSM Parameter path above returns &lt;code&gt;1A2B3C4D5E6F&lt;/code&gt; as the value. Your code&amp;#39;s environment variable methods would return that same value.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;process.env.SECRET   // 1A2B3C4D5E6F
+ENV['SECRET']        # 1A2B3C4D5E6F
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It works by using a shared object library via the &lt;code&gt;LD_PRELOAD&lt;/code&gt; environment variable in coordination with our &lt;a href=&quot;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html&quot;&gt;Lambda Extension&lt;/a&gt; binary that loads all Parameter Store values within a few milliseconds of your function starting up.&lt;/p&gt;
+
+&lt;h2 id=&quot;installation&quot;&gt;Installation&lt;/h2&gt;
+
+&lt;p&gt;When building your own Lambda Containers, &lt;a href=&quot;https://github.com/customink/crypteia/releases&quot;&gt;download&lt;/a&gt; both the &lt;code&gt;crypteia&lt;/code&gt; binary and &lt;code&gt;libcrypteia.so&lt;/code&gt; shared object files that match your platform from our &lt;a href=&quot;https://github.com/customink/crypteia/releases&quot;&gt;Releases&lt;/a&gt; page. Target platforms include the following using these naming conventions.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Amazon Linux 2: &lt;code&gt;crypteia-amzn.zip&lt;/code&gt; &amp;amp; &lt;code&gt;libcrypteia-amzn.zip&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Debian, Ubuntu, Etc: &lt;code&gt;crypteia-debian.zip&lt;/code&gt; &amp;amp; &lt;code&gt;libcrypteia-debian.zip&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;⚠️ When building your own Lambda Containers, please make sure &lt;a href=&quot;https://www.gnu.org/software/libc/&quot;&gt;glibc&lt;/a&gt; is installed since this is used by &lt;a href=&quot;https://github.com/geofft/redhook&quot;&gt;redhook&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;⚠️ For now our project supports the &lt;code&gt;x86_64&lt;/code&gt; architecture, but we plan to release &lt;code&gt;arm64&lt;/code&gt; variants soon. Follow or contribute in our &lt;a href=&quot;https://github.com/customink/crypteia/issues/5&quot;&gt;GitHub Issue&lt;/a&gt; which tracks this topic.&lt;/p&gt;
+
+&lt;p&gt;Once these files are downloaded, they can be incorporated into your &lt;code&gt;Dockerfile&lt;/code&gt; file like so:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /opt/lib
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /opt/extensions
+&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; crypteia /opt/extensions/crypteia&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;COPY&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; libcrypteia.so /opt/lib/libcrypteia.so&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; LD_PRELOAD=/opt/lib/libcrypteia.so&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;lambda-layer&quot;&gt;Lambda Layer&lt;/h4&gt;
+
+&lt;p&gt;Our Amazon Linux 2 files can be used within a &lt;a href=&quot;https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html&quot;&gt;Lambda Layer&lt;/a&gt; that you can deploy to your own AWS account. You can use this project to build, publish, and deploy that layer since it has the SAM CLI installed. All you need to do is supply your own S3 bucket. For example:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;aws configure
+./amzn/setup
+&lt;span class=&quot;nv&quot;&gt;S3_BUCKET_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;my-bucket ./layer/deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;usage&quot;&gt;Usage&lt;/h2&gt;
+
+&lt;p&gt;First, you will need your secret environment variables setup in &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html&quot;&gt;AWS Systems Manager Parameter Store&lt;/a&gt;. These can be whatever &lt;a href=&quot;https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-hierarchies.html&quot;&gt;hierarchy&lt;/a&gt; you choose. Parameters can be any string type. However, we recommend using &lt;code&gt;SecureString&lt;/code&gt; to ensure your secrets are encrypted within AWS. For example, let&amp;#39;s assume the following paramter paths and values exists.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/myapp/SECRET&lt;/code&gt; -&amp;gt; &lt;code&gt;1A2B3C4D5E6F&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/myapp/access-key&lt;/code&gt; -&amp;gt; &lt;code&gt;G7H8I9J0K1L2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/myapp/envs/DB_URL&lt;/code&gt; -&amp;gt; &lt;code&gt;mysql2://u:p@host:3306&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/myapp/envs/NR_KEY&lt;/code&gt; -&amp;gt; &lt;code&gt;z6y5x4w3v2u1&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Crypteia supports two methods to fetch SSM parameters:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;x-crypteia-ssm:&lt;/code&gt; - Single path for a single environment variable.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x-crypteia-ssm-path:&lt;/code&gt; - Path prefix to fetch many environment variables.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Using whatever serverless framework you prefer, setup your function&amp;#39;s environment variables using either of the two SSM interfaces from above. For example, here is a environment variables section for an &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started.html&quot;&gt;AWS SAM&lt;/a&gt; template that demonstrates all of Crypteia&amp;#39;s features.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;na&quot;&gt;Environment&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;Variables&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;SECRET&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;x-crypteia-ssm:/myapp/SECRET&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;ACCESS_KEY&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;x-crypteia-ssm:/myapp/access-key&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;X_CRYPTEIA_SSM&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;x-crypteia-ssm-path:/myapp/envs&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;DB_URL&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;x-crypteia&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;NR_KEY&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;x-crypteia&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;When your function initializes, each of the four environmet variables (&lt;code&gt;SECRET&lt;/code&gt;, &lt;code&gt;ACCESS_KEY&lt;/code&gt;, &lt;code&gt;DB_URL&lt;/code&gt;, and &lt;code&gt;NR_KEY&lt;/code&gt;) will return values from their respective SSM paths.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;process.env.SECRET;       // 1A2B3C4D5E6F
+process.env.ACCESS_KEY;   // G7H8I9J0K1L2
+process.env.DB_URL;       // mysql2://u:p@host:3306
+process.env.NR_KEY;       // z6y5x4w3v2u1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here are a few details about the internal implementation on how Crypteia works:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;When accessing a single parameter path via &lt;code&gt;x-crypteia-ssm:&lt;/code&gt; the environment variable name available to your runtime is used as is. No part of the parameter path effects the resulting name.&lt;/li&gt;
+&lt;li&gt;When using &lt;code&gt;x-crypteia-ssm-path:&lt;/code&gt; the environment variable name can be anything and the value is left unchanged.&lt;/li&gt;
+&lt;li&gt;The parameter path hierarchy passed with &lt;code&gt;x-crypteia-ssm-path:&lt;/code&gt; must be one level deep and end with valid environment variable names. These names must match environement placeholders using &lt;code&gt;x-crypteia&lt;/code&gt; values.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;For security, the usage of &lt;code&gt;DB_URL: x-crypteia&lt;/code&gt; placeholders ensures that your application&amp;#39;s configuration is in full control on which dynamic values can be used with &lt;code&gt;x-crypteia-ssm-path:&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;lambda-layer&quot;&gt;Lambda Layer&lt;/h4&gt;
+
+&lt;p&gt;Shown below is a simple Node.js 16 function which has the appropriate &lt;a href=&quot;#iam-permissions&quot;&gt;IAM Permissions&lt;/a&gt; and Crypteia Lambda Layer added. Also configured are the needed &lt;code&gt;LD_PRELOAD&lt;/code&gt; and &lt;code&gt;SECRET&lt;/code&gt; environment variables. The code of this function log the value of the &lt;code&gt;process.env.SECRET&lt;/code&gt; which does correctly resolve to the value within SSM Parameter Store.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/lambda-rust/env-vars-2a128bc2c4fdc80a35244468c7386ab05a88b1c0cc4e7d41ac7acb46082776c0.webp&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;Screenshot of the Environment variables in the AWS Lambda Console showing `LD_PRELOAD` to `/opt/lib/libcrypteia.so` and `SECRET` to `x-crypteia-ssm:/myapp/SECRET`.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/lambda-rust/cloud-watch-322b77dd8f0cb4fc0d07896ab76ed80d0cf6d1813651a27d7bf0af6c8706dbeb.webp&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;Screenshot of Code source in the AWS Lambda Console showing the `body` results of `1A2B3C4D5E6F` which is resolved from SSM Parameter Store.&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;thank-you&quot;&gt;Thank You 💞&lt;/h2&gt;
+
+&lt;p&gt;Let me know if you find Crypteia useful or have any questions.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 29 Jun 2022 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2022/06/29/lambda-rust-extension-for-any-runtime-to-preload-ssm-parameters-as-secure-environment-variables/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2022/06/29/lambda-rust-extension-for-any-runtime-to-preload-ssm-parameters-as-secure-environment-variables/</guid>
+      </item>
+    
+      <item>
+        <title>Getting Started with GitHub Codespaces from a Serverless Perspective</title>
+        <description>&lt;p&gt;If you are into Serverless and AWS Lambda, you may already know that the &lt;a href=&quot;https://aws.amazon.com/serverless/sam/&quot;&gt;AWS Serverless Application Model (SAM)&lt;/a&gt; CLI makes it easy to leverage their Docker &lt;a href=&quot;https://github.com/aws/aws-sam-build-images&quot;&gt;build images&lt;/a&gt; as development containers. We do exactly this for our &lt;a href=&quot;https://lamby.custominktech.com/&quot;&gt;Rails &amp;amp; Lambda&lt;/a&gt; projects.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Leveraging Docker with SAM ensures we have a Linux environment and versioned dependencies that closely mimic the Lambda Runtime or Container being shipped. The use and &lt;a href=&quot;https://dev.to/quinncuatro/the-promise-of-docker-containers-57fd&quot;&gt;The Promise of Docker&lt;/a&gt; to solve these problems is nothing new... but something else is.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-rise-of-ephemeral-dev-environments&quot;&gt;✨ The Rise of Ephemeral Dev Environments&lt;/h2&gt;
+
+&lt;p&gt;A few weeks ago GitHub&amp;#39;s engineering team released an &lt;a href=&quot;https://github.blog/2021-08-11-githubs-engineering-team-moved-codespaces/&quot;&gt;in-depth article&lt;/a&gt; announcing their internal usage of the now generally available &lt;a href=&quot;https://github.com/features/codespaces&quot;&gt;GitHub Codespaces&lt;/a&gt;. Since Custom Ink shares many of the same problems described in this post, I was curious if our Lambda projects could easily leverage Codespaces. But what is this new tool? Where did it come from? And what is this &lt;code&gt;devcontainer.json&lt;/code&gt; file?&lt;/p&gt;
+
+&lt;p&gt;As best I can tell this all started in May of 2019 when the VS Code team first mentioned their &lt;a href=&quot;https://code.visualstudio.com/blogs/2019/05/02/remote-development&quot;&gt;remote development extensions&lt;/a&gt;. About a year later this content was rolled up into the &lt;a href=&quot;https://code.visualstudio.com/docs/remote/remote-overview&quot;&gt;VS Code Remote Development&lt;/a&gt; guides we have today.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/serverless-devcontainers/devcontainers-c50583eea3e4ef72a8cd7045d04c3c0385e9ef8efc8975162773ce28c3c27be1.webp&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;VS Code Remote Development Architecture Diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Prior to Codespaces, we have had a clear leader in the automated development environment space with &lt;a href=&quot;https://www.gitpod.io&quot;&gt;Gitpod&lt;/a&gt;. It was even featured in a January 2021 episode of &lt;a href=&quot;https://www.youtube.com/watch?v=rjDDAFHEYEc&amp;list=PLehXSATXjcQFHpz-HAO8YOC6EqFScEz27&quot;&gt;Containers from the Couch&lt;/a&gt;. Gitpod leverages the same technology built into VS Code for remote development.&lt;/p&gt;
+
+&lt;p&gt;However, sometimes slow and steady wins the race. If this were ever true for GitHub-based projects, I think we have a huge winner with GitHub Codespaces. Keep reading below on how your company (or you) could get started. I will even cover how well Codespaces has worked for our Lambda projects that use an existing Docker in Docker development pattern.&lt;/p&gt;
+
+&lt;h2 id=&quot;github-settings&quot;&gt;⚙️ GitHub Settings&lt;/h2&gt;
+
+&lt;p&gt;GitHub Codespaces is ONLY available now for GitHub Teams &amp;amp; Enterprise Cloud plans. It is not yet available for public repositories. If you are an administrator of such an account, here are a few things I did &lt;a href=&quot;https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization&quot;&gt;at the organization level&lt;/a&gt; to get started experimenting.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/enabling-codespaces-for-your-organization#setting-a-spending-limit&quot;&gt;Enable Codespaces&lt;/a&gt;: This can also be disabled completely or enabled for select users.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-repository-access-for-your-organizations-codespaces&quot;&gt;Repository Access&lt;/a&gt;: You can even limit repositories that are able to use Codespaces. If your GitHub account leverages permissions &amp;amp; teams, remember, Codespaces (via the generated &lt;code&gt;GITHUB_TOKEN&lt;/code&gt; will not grant anyone elevated permissions to other repositories.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/billing/managing-billing-for-github-codespaces/managing-spending-limits-for-codespaces&quot;&gt;Manage Spending Limits&lt;/a&gt;: It would have been neat to see a way to limit which VMs (vCPU/Memory) options could have been used here.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-encrypted-secrets-for-your-repository-and-organization-for-codespaces#adding-secrets-for-an-organization&quot;&gt;Organizational Secrets&lt;/a&gt;: Create any secrets your organization needs to enable individuals to work. Remember, Codespaces secrets can be set at the repository or even user level too. Pick the one(s) that work the best for y&amp;#39;all.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;developer-tips&quot;&gt;🔰 Developer Tips&lt;/h2&gt;
+
+&lt;p&gt;It could go without saying but getting good at Codespaces for most may mean getting good at VS Code. Technically you could bring your own editor like Vim or Emacs. But trust me, as a recent Sublime Text convert, switching to VS Code is worth it. Make sure to take the time to Google, learn, and in some cases &lt;a href=&quot;https://github.com/Microsoft/vscode-sublime-keybindings&quot;&gt;install packages&lt;/a&gt; that make the transition easier.&lt;/p&gt;
+
+&lt;h3 id=&quot;dotfiles-settings&quot;&gt;Dotfiles &amp;amp; Settings&lt;/h3&gt;
+
+&lt;p&gt;Remote development needs to feel local! Everything that makes your editor &amp;amp; terminal productive needs to be available to you. As described in the &lt;a href=&quot;https://docs.github.com/en/codespaces/customizing-your-codespace/personalizing-codespaces-for-your-account&quot;&gt;Personalizing Codespaces&lt;/a&gt; guide setting up your Dotfiles was high on my list.&lt;/p&gt;
+
+&lt;p&gt;For years I have maintained a personal Zshkit which had a ton of personal functions and aliases. When moving to Codespaces, I took the time to clean them up and create a &lt;code&gt;github.com/metaskills/dotfiles&lt;/code&gt; repository, cloned it locally and hooked it up to my ZSH (default shell on Mac) &lt;code&gt;~/.zshrc&lt;/code&gt; file. Codespaces will automatically clone this repo when creating a Codespace and install it by running the &lt;code&gt;install.sh&lt;/code&gt; script. Example.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CODESPACES&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;source /workspaces/.codespaces/.persistedshare/dotfiles/rc&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.zshrc
+  &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;chsh &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; /usr/bin/zsh
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can leverage the &lt;code&gt;CODESPACES&lt;/code&gt; environment variable to do any customization per environment. Also, do not forget to use &lt;a href=&quot;https://code.visualstudio.com/docs/editor/settings-sync&quot;&gt;Settings Sync&lt;/a&gt;. I think this is only needed if you use VS Code&amp;#39;s web-based editor. More on that topic later.&lt;/p&gt;
+
+&lt;h3 id=&quot;your-codespaces-settings&quot;&gt;Your Codespaces Settings&lt;/h3&gt;
+
+&lt;p&gt;You can &lt;a href=&quot;https://docs.github.com/en/codespaces/managing-your-codespaces&quot;&gt;Manage Your Codespaces&lt;/a&gt; settings at somewhat the same level as the organization. Here are a few settings I did.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Access &amp;amp; Security: Set this to &amp;quot;All repositories&amp;quot;. Your needs may vary.&lt;/li&gt;
+&lt;li&gt;Editor Preference: Set to &amp;quot;Visual Studio Code&amp;quot; vs for web. Ensures the &lt;code&gt;[&amp;lt;&amp;gt; Code]&lt;/code&gt; button on repos opens VS Code on my Mac and avoids the need to click redirect in the browser.&lt;/li&gt;
+&lt;li&gt;Region: I set this manually to &lt;code&gt;EastUs&lt;/code&gt; but I suspect I had no reason to do so.&lt;/li&gt;
+&lt;li&gt;Added Secrets: Read below on using SSH with Ruby Bundler or NPM packages.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;codespaces-extension&quot;&gt;Codespaces Extension&lt;/h3&gt;
+
+&lt;p&gt;Install the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces&quot;&gt;GitHub Codespaces&lt;/a&gt; for VS Code. I think this is done for you automatically if you are using the web-based editor. Installing it on your host machine&amp;#39;s VS Code will mean you can use Codespaces without ever browsing to GitHub.com and clicking on a &lt;code&gt;[&amp;lt;&amp;gt; Code]&lt;/code&gt; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/serverless-devcontainers/vscode-codespaces-7f9106d37751482d16fb413125224e779ec55adb20efd4c026464d48d1e01dfa.webp&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;The Codespaces Command Pallet in VS Code provided by the Codespaces Extension&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;the-integrated-terminal&quot;&gt;The Integrated Terminal&lt;/h3&gt;
+
+&lt;p&gt;Assuming you have setup your Dotfiles, VS Code&amp;#39;s &lt;a href=&quot;https://code.visualstudio.com/docs/editor/integrated-terminal&quot;&gt;integrated terminal&lt;/a&gt; should feel familiar by mirroring your host machine&amp;#39;s prompt, aliases, and more. If your default shell is ZSH, you may need to do a few things to help Codespaces use ZSH by default vs Bash. Here are my settings for the integrated terminal now. Mind you, there was (maybe still is) &lt;a href=&quot;https://github.community/t/integrated-terminal-setting-not-respected/145625&quot;&gt;a bug&lt;/a&gt; in VS Code where ZSH would not be respected. I have noticed in some cases Bash is used but it is easy to launch a new profile with ZSH if that happens.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.fontSize&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.defaultProfile.osx&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;zsh&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;terminal.integrated.defaultProfile.linux&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;zsh&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Using &lt;code&gt;Command+K&lt;/code&gt; to clear the terminal&amp;#39;s buffer is second nature to most. By default this key binding will not reach the integrated terminal. You can edit your Keyboard Shortcuts JSON file to solve for that. Below is a screen capture of the magic little button you have to press to edit that raw JSON file. Use the following snippet to fix this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/content/serverless-devcontainers/vscode-preferences-998a7e5f016288cac7578c594ac2c2e275ac0e77d5ee183f90f3f7faa78afbe1.webp&quot; class=&quot;tb-Img tb-Img--responsive-ctr&quot; alt=&quot;Super Hidden Keyboard Shortcuts JSON Edit Button&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;key&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cmd+k&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;command&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;workbench.action.terminal.clear&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;when&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;terminalFocus&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Terminal visibility and placement. When working on my laptop&amp;#39;s smaller screen, I learned that you can use &lt;code&gt;Control+~&lt;/code&gt; to toggle the visibility of the integrated terminal. However, when working at my desk and larger screen, I really want the integrated terminal to be to the right of my editor. Thanks to this &lt;a href=&quot;https://stackoverflow.com/questions/41874426/how-do-i-move-the-panel-in-visual-studio-code-to-the-right-side&quot;&gt;this Stack Overflow&lt;/a&gt; here are convoluted steps to make this happen. Hopefully one day they will make this easier. 😅&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;At the right top of the integrated terminal, click the &lt;code&gt;+&lt;/code&gt; sign to open a 2nd terminal.&lt;/li&gt;
+&lt;li&gt;Within the panel to the right, right click any of the two profiles, select &lt;code&gt;Move into Editor Area&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Close the bottom integrated terminal with the &lt;code&gt;x&lt;/code&gt; button.&lt;/li&gt;
+&lt;li&gt;Focus the editor tab at the top moved from step 2, click the &lt;code&gt;[|]&lt;/code&gt; split editor button.&lt;/li&gt;
+&lt;li&gt;Close the shell tab on the left side of the screen.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;fun-highlights&quot;&gt;🎉 Fun Highlights&lt;/h2&gt;
+
+&lt;p&gt;Here are a few things I was pleasantly surprised with Codespaces&amp;#39; DX and how it works:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;When learning Codespaces or working on uncommitted code, you may have to rebuild your development container. Codespaces automatically maintains your present working directory, open files, etc when doing this. Amazing!&lt;/li&gt;
+&lt;li&gt;You can see all your Codespaces on GitHub by navigating to &lt;a href=&quot;https://github.com/codespaces&quot;&gt;https://github.com/codespaces&lt;/a&gt;. However, I typically use VS Code&amp;#39;s &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces&quot;&gt;extension&lt;/a&gt; to navigate, open, and disconnect.&lt;/li&gt;
+&lt;li&gt;Leveraging the &lt;code&gt;CODESPACES&lt;/code&gt; environment variable set to &lt;code&gt;true&lt;/code&gt; is an easy way to integrate your existing tooling into Codespaces allowing your teams to support multiple ways to bootstrap your applications.&lt;/li&gt;
+&lt;li&gt;Forwarded ports are automatically detected via the integrated terminal&amp;#39;s STDOUT. For example, a &lt;code&gt;.bin/rails server&lt;/code&gt; will ouput whatever host/port you are using and Codespaces will see it. If needed you can use the &lt;code&gt;forwardPorts&lt;/code&gt; config for &lt;code&gt;devcontainer.json&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;difficult-lessons&quot;&gt;⚠️ Difficult Lessons&lt;/h2&gt;
+
+&lt;p&gt;Some hard lessons learned when dipping into the deep end of using GitHub Codespaces. If you have any to share, please drop some comments below.&lt;/p&gt;
+
+&lt;h3 id=&quot;private-packages-ssh&quot;&gt;Private Packages &amp;amp; SSH&lt;/h3&gt;
+
+&lt;p&gt;GitHub does a great job at providing your Codespace with a short lived &lt;code&gt;GITHUB_TOKEN&lt;/code&gt;. Most package managers including NPM and Bundler can leverage this. However, if your organization has standardized on SSH setting up your projects could be a problem.&lt;/p&gt;
+
+&lt;p&gt;Thankfully when I reached out on Twitter, Jonathan Carter on the Codespaces team, &lt;a href=&quot;https://twitter.com/LostInTangent/status/1427053387007225861&quot;&gt;seemed to suggest&lt;/a&gt; they may be working on a native SSH integration one day. Till then, here is the solution I came up with. This process address some sequencing issues around &lt;code&gt;devcontainer.json&lt;/code&gt;&amp;#39;s &lt;a href=&quot;https://code.visualstudio.com/docs/remote/devcontainerjson-reference#_lifecycle-scripts&quot;&gt;Lifecycle Scripts&lt;/a&gt; and when your Dotfiles are installed. Credit to VS Codes &lt;a href=&quot;https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys&quot;&gt;Using SSH Keys&lt;/a&gt; guide. Also, some things here are pulled directly from the &lt;a href=&quot;https://github.com/webfactory/ssh-agent&quot;&gt;GitHub Action&lt;/a&gt; to setup SSH. Again, thanks to Johnathan Carter for the ideas.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Create a personal Codespace secret called &lt;code&gt;PERSONAL_SSH_KEY&lt;/code&gt; by visiting this page &lt;a href=&quot;https://github.com/settings/codespaces/secrets/new&quot;&gt;https://github.com/settings/codespaces/secrets/new&lt;/a&gt; and adding your private key, typically found in the &lt;code&gt;~/.ssh/id_rsa&lt;/code&gt; file.&lt;/li&gt;
+&lt;li&gt;Add this snippet to your &lt;code&gt;postCreate&lt;/code&gt; script. It ensures GitHub is in the known hosts for SSH.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Adding GitHub.com keys to ~/.ssh/known_hosts&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; ~/.ssh/known_hosts
+&lt;span class=&quot;nb&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;github.com ssh-dss AAAAB3NzaC1kc3MAAACBANGFW2P9xlGU3zWrymJgI/lKo//ZW2WfVtmbsUZJ5uyKArtlQOT2+WRhcg4979aFxgKdcsqAYW3/LS1T2km3jYW/vr4Uzn+dXWODVk5VlUiZ1HFOHf6s6ITcZvjvdbp6ZbpM+DuJT7Bw+h5Fx8Qt8I16oCZYmAPJRtu46o9C2zk1AAAAFQC4gdFGcSbp5Gr0Wd5Ay/jtcldMewAAAIATTgn4sY4Nem/FQE+XJlyUQptPWMem5fwOcWtSXiTKaaN0lkk2p2snz+EJvAGXGq9dTSWHyLJSM2W6ZdQDqWJ1k+cL8CARAqL+UMwF84CR0m3hj+wtVGD/J4G5kW2DBAf4/bqzP4469lT+dF2FRQ2L9JKXrCWcnhMtJUvua8dvnwAAAIB6C4nQfAA7x8oLta6tT+oCk2WQcydNsyugE8vLrHlogoWEicla6cWPk7oXSspbzUcfkjN3Qa6e74PhRkc7JdSdAlFzU3m7LMkXo1MHgkqNX8glxWNVqBSc0YRdbFdTkL0C6gtpklilhvuHQCdbgB3LBAikcRkDp+FCVkUgPC/7Rw==&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; ~/.ssh/known_hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Add this snippet to your Dotfiles. It will ensure the proper SSH agent is started, if not already, and that the key environment variables are set.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CODESPACES&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;true&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+  if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SSH_AUTH_SOCK&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RUNNING_AGENT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;ps &lt;span class=&quot;nt&quot;&gt;-ax&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'ssh-agent -s'&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;tr&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'[:space:]'&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$RUNNING_AGENT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;# Launch a new instance of the agent&lt;/span&gt;
+      ssh-agent &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &amp;amp;&amp;gt; &lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.ssh/ssh-agent
+    &lt;span class=&quot;k&quot;&gt;fi
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.ssh/ssh-agent&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;# Add my SSH key.&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PERSONAL_SSH_KEY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;+1&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;/span&gt;ssh-add - &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PERSONAL_SSH_KEY&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;fi
+fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In order to see this all come together with our Docker in Docker Lambda patterns, please read the &lt;a href=&quot;https://dev.to/aws-heroes/serverless-docker-patterns-4g1p&quot;&gt;Serverless Docker Patterns&lt;/a&gt; article in this series where we describe how to use the &lt;code&gt;SSH_AUTH_SOCK&lt;/code&gt; in a cross platform way for Mac &amp;amp; Linux.&lt;/p&gt;
+
+&lt;h3 id=&quot;aws-cli&quot;&gt;AWS CLI&lt;/h3&gt;
+
+&lt;p&gt;For our Lambda projects we use Docker in Docker patterns where both the AWS &amp;amp; SAM CLIs are pre-installed on the development image. However, you may need the AWS CLI installed on the developer&amp;#39;s host machine too. In this case, Codespaces. Here is a short snippet that you can use in your &lt;code&gt;postCreate&lt;/code&gt; script.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Installing AWS CLI&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;pushd&lt;/span&gt; /tmp
+curl &lt;span class=&quot;s2&quot;&gt;&quot;https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;awscliv2.zip&quot;&lt;/span&gt;
+unzip &lt;span class=&quot;nt&quot;&gt;-qq&lt;/span&gt; awscliv2.zip
+&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; ./aws/install
+&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; awscliv2.zip ./aws
+&lt;span class=&quot;nb&quot;&gt;popd&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;docker-in-docker&quot;&gt;Docker in Docker&lt;/h3&gt;
+
+&lt;p&gt;I&amp;#39;ve said this before but cross platform Docker in Docker is really hard. This series aims to talk about most of them, but one I learned the hard way is that sometimes the pain comes from the ones you love... in this case AWS SAM. The team is doing some amazing work but I ran into a few issues where Docker in Docker patterns have broken down. Read here for details.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/aws/aws-sam-cli/issues/2837#issuecomment-845487064&quot;&gt;No Response from Invoke Container for Lambda Inside docker-compose #2837&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/aws/aws-sam-cli/issues/921#issuecomment-907859353&quot;&gt;Watch Option for SAM Build Command #921&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;full-lamby-example&quot;&gt;🚂 Full Lamby Example&lt;/h2&gt;
+
+&lt;p&gt;Assuming the other patterns were in place like various &lt;code&gt;postCreate&lt;/code&gt; hooks for SSH, using GitHub Codespaces with your already Docker&amp;#39;ized project is super easy. Here is a complete &lt;code&gt;.devcontainer/devcontainer.json&lt;/code&gt; file for one of our projects. Again, see the &lt;a href=&quot;https://dev.to/aws-heroes/serverless-docker-patterns-4g1p&quot;&gt;Serverless Docker Patterns&lt;/a&gt; related post on how we are using &lt;code&gt;COMPOSE_FILE&lt;/code&gt; for Mac filesystem performance and why it would be needed here.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;my-application&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;forwardPorts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4020&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;remoteEnv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;COMPOSE_FILE&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;docker-compose.yml&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;postCreateCommand&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./.devcontainer/postCreate&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In fact, none of this would be needed for a starter application! Give it a try. Go through our &lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start&quot;&gt;Lamby Quick Start&lt;/a&gt; guide, commit your project to GitHub... and give Codespaces a try!&lt;/p&gt;
+
+&lt;h2 id=&quot;security-questions&quot;&gt;🔐 Security Questions&lt;/h2&gt;
+
+&lt;p&gt;The Codespaces team was kind enough to write their own &lt;a href=&quot;https://docs.github.com/en/codespaces/codespaces-reference/security-in-codespaces&quot;&gt;Security in Codespaces&lt;/a&gt; documentation. I&amp;#39;ll highlight their introduction below:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Codespaces is designed to be security hardened by default. Consequently, you will need to ensure that your software development practices do not risk reducing the security posture of your codespace.&lt;/p&gt;
+
+&lt;p&gt;This guide describes the way Codespaces keeps your development environment secure and provides some of the good practices that will help maintain your security as you work. As with any development tool, remember that you should only open and work within repositories you know and trust.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Good stuff! Security is a shared responsibility and it appears GitHub is doing their part. Please read over the full documentation for more information, but here are a few things I paid special attention to.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/reviewing-your-organizations-audit-logs-for-codespaces&quot;&gt;Audit Logs&lt;/a&gt;: Are generated and can be queried.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/managing-encrypted-secrets-for-your-repository-and-organization-for-codespaces&quot;&gt;Organization &amp;amp; User Secrets&lt;/a&gt;: Built on the &lt;a href=&quot;https://libsodium.gitbook.io/doc/public-key_cryptography/sealed_boxes&quot;&gt;same technology&lt;/a&gt; GitHub draws a line between GitHub standard org/user secrets with the Codespace ones. Again, they can be set at the organization, repository, or user. Providing an immense amount of control and security layers.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/customizing-your-codespace/personalizing-codespaces-for-your-account#dotfiles&quot;&gt;Dotfiles&lt;/a&gt;: Remind users that these are public repositories! Tho possible to encrypt secrets, I personally recommend keeping them basic to aliases and functions.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces/codespaces-reference/security-in-codespaces#isolated-networking&quot;&gt;Secure Networking&lt;/a&gt;: Authenticated via GitHub via temporary tokens. Forwarding ports for web servers is done securely over the network between the host. Nothing is public by default.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-is-coming&quot;&gt;🔮 What is Coming?&lt;/h2&gt;
+
+&lt;p&gt;As mentioned above, I would love to see a native SSH solution. For now, the workarounds are minimal and feel secure with GitHub Secrets and Codespaces integration.&lt;/p&gt;
+
+&lt;p&gt;In their introductory &lt;a href=&quot;https://github.blog/2021-08-11-githubs-engineering-team-moved-codespaces/&quot;&gt;blog article&lt;/a&gt;, the GitHub team put a lot of emphasis on prebuilds ensuring that each Codespaces development environment was super fast to setup. This was critical for their team and as of now Gitpod is making a clear distinction this is a &lt;a href=&quot;https://www.gitpod.io/gitpod-vs-github-codespaces&quot;&gt;key differentiator&lt;/a&gt; for them. I suspect prebuilds are coming soon. 🤔&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;📚 Resources&lt;/h2&gt;
+
+&lt;p&gt;Thanks so much for reading! I would love to hear if you found this article helpful or what your organization may be doing with GitHub Codespaces. 💕&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.github.com/en/codespaces&quot;&gt;GitHub Codespaces&lt;/a&gt; - Blazing fast cloud
+developer environments with Visual Studio Code backed by high performance VMs that start in seconds.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.blog/2021-08-11-githubs-engineering-team-moved-codespaces/&quot;&gt;GitHub’s Engineering Team has moved to Codespaces&lt;/a&gt; - Great description of the business needs for easy development environments. Common for most orgs.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lamby.custominktech.com/docs/quick_start&quot;&gt;Getting Started with Rails on Lambda&lt;/a&gt; - An quick start guide using Docker for development with GitHub &amp;amp; Codespaces.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://code.visualstudio.com/docs/remote/remote-overview&quot;&gt;VS Code Remote Development&lt;/a&gt; - The architecture behind GitHub Codespaces.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.gitpod.io&quot;&gt;Gitpod&lt;/a&gt; - Spin up fresh, automated dev environments
+for each task, in the cloud, in seconds.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.gitpod.io/blog/ephemeral-dev-envs&quot;&gt;DevX Digest: The Rise of Ephemeral Developer Environments&lt;/a&gt; - Great post by &lt;a href=&quot;https://twitter.com/paulienuh&quot;&gt;Pauline P. Narvas&lt;/a&gt; on where cloud-based dev environments are headed.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 06 Feb 2022 00:00:00 -0500</pubDate>
+        <link>https://technology.customink.com//blog/2022/02/06/getting-started-with-github-codespaces-from-a-serverless-perspective/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2022/02/06/getting-started-with-github-codespaces-from-a-serverless-perspective/</guid>
+      </item>
+    
+      <item>
         <title>AWS Systems Manager (SSM) Cross Region Replication</title>
         <description>&lt;p&gt;Replicate SSM parameters to another region using AWS Lambda &amp;amp; SQS.&lt;/p&gt;
 
