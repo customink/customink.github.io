@@ -7,6 +7,177 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Magic Eye Puzzles: Keeping Design Principles in Focus</title>
+        <description>&lt;p&gt;Custom Ink is an eCommerce company, so our business involves creating orders for customers. And creating orders means allowing customers to check out, to bring their desired goods and services to the register and pay for them.&lt;/p&gt;
+
+&lt;p&gt;There are different ways people order from us - for example, in bulk, for a group, as part of a fundraiser - so we offer a number of different ways to create orders. Each of these ways has its own application, a &lt;em&gt;domain service&lt;/em&gt; that bundles together the various entities and workflows needed to create orders. While each way of ordering has things that are unique about it, they also share a fair bit of functionality that is mostly or entirely the same, like checking out. This means duplicated code, divergent customer experiences, and our focus today, separate-but-identical integrations with a third-party tax service.&lt;/p&gt;
+
+&lt;!--more--&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
+    subgraph Application 1
+        BizProcess1[Create Order]--&amp;gt;BizRule1[Checkout]
+    end
+    BizRule1--&amp;gt;ExtSvL[Tax Service]
+
+    subgraph Application 2
+        BizProcess2[Create Order]--&amp;gt;BizRule2[Checkout]
+    end
+    BizRule2--&amp;gt;ExtSvL
+
+    subgraph Application 3
+        BizProcess3[Create Order]--&amp;gt;BizRule3[Checkout]
+    end
+    BizRule3--&amp;gt;ExtSvL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We set about to create a single checkout experience that could serve all our ways of ordering and, among other benefits, reduce our surface area with the tax service to a single client-consumer relationship. Our new architecture would look like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
+    subgraph Application 1
+        BizProcess1[Create Order]
+    end
+    subgraph Task
+        BizProcess1--&amp;gt;BizRule[Checkout]
+    end
+    BizRule--&amp;gt;ExtSvL[Tax Service]
+
+    subgraph Application 2
+        BizProcess2[Create Order]--&amp;gt;BizRule
+    end
+
+    subgraph Application 3
+        BizProcess3[Create Order]--&amp;gt;BizRule
+    end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We did the work, and after a few months, we rolled out the first integration with our new checkout experience. But we found that instead of reducing our interface with our tax service, it expanded it! We failed to realize that each application still needed to invoice tax post-checkout, meaning it still talked to the tax service. Our architecture now looked like this:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
+    subgraph Application 1
+        BizProcess1[Create Order]--&amp;gt;BizRule1A[Invoice Tax]
+    end
+    subgraph Task
+        BizProcess1--&amp;gt;BizRule[Checkout]
+    end
+    BizRule--&amp;gt;ExtSvL[Tax Service]
+    BizRule1A--&amp;gt;ExtSvL
+
+    subgraph Application 2
+        BizProcess2[Create Order]--&amp;gt;BizRule
+        BizProcess2--&amp;gt;BizRule2A[Invoice Tax]
+    end
+    BizRule2A--&amp;gt;ExtSvL
+
+    subgraph Application 3
+        BizProcess3[Create Order]--&amp;gt;BizRule
+        BizProcess3--&amp;gt;BizRule3A[Invoice Tax]
+    end
+    BizRule3A--&amp;gt;ExtSvL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is the opposite of what we intended! How did we miss this?&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Our goal with creating a checkout platform was not just to DRY checkout code - including our tax integration - but to pivot from a domain service model to a &lt;em&gt;task-oriented&lt;/em&gt; one. In a domain service model, each application groups together and is responsible for its own business capabilities, like checkout. In a task-oriented model, each application represents a single task, a general business capability that can be used wherever needed. Eventually, tasks can be strung together to compose entire domains.&lt;/p&gt;
+
+&lt;p&gt;Despite this difference between the focus of services and tasks, their infrastructural &lt;em&gt;shape&lt;/em&gt; is the same. They’re both applications deployed to your tech and infrastructure stack. They probably have a lot of the same configurations, and may even be built using the same framework and libraries.&lt;/p&gt;
+
+&lt;p&gt;This same-shapedness leads us to a familiar problem, similar to one further down the tech stack. In POODR, Sandi Metz tells us:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;It’s tempting to think of object-orient applications as being the sum of their classes. Classes are so very visible… Classes are what you see in your text editor and what you check in to your source code repository.&lt;/p&gt;
+
+&lt;p&gt;[B]ut an object-oriented application is more than just classes. It is made up of classes but defined by messages. Classes control what’s in your source code respository; messages reflect the living, animated application. &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Applications are our architectural objects. They are concrete, correspond to a code repository or module, and are what you deploy to your infrastructure. Tasks are akin to architectural messages. They are conceptual, representing processes or interactions that don’t automatically correspond to a grouping of code or deployment.&lt;/p&gt;
+
+&lt;p&gt;As with objects and messages, there is a tension between applications - what we build - and tasks - how it behaves. Like the hidden image in a &lt;a href=&quot;https://en.wikipedia.org/wiki/Autostereogram&quot;&gt;Magic Eye puzzle&lt;/a&gt;, seeing tasks require concerted focus, even though they are the true subject of our software. It’s much easier to take in the codebase as it first appears to us. The domain services approach is, in a way, a concession to this tendency. It says “build the application, and the tasks will come.”&lt;/p&gt;
+
+&lt;p&gt;Programmers who have worked in a large, legacy OOP applications know the limits to this approach. They know that you end up with a Metzian “woven mat” of applications that coordinate in a chaotic, tangled fashion. Task-oriented architecture pushes back against this tendency and elevates the task to a first-order architectural principle - the single-responsibility principle for applications.&lt;/p&gt;
+
+&lt;p&gt;But deciding on a task-oriented architecture doesn’t mean you won’t lapse back into focusing on applications, like I did. I thought I would be DRYing up applications - we had domain services that spoke to a tax service. But that service-to-service collaboration performs multiple tasks, calculating tax for checkout is only one of them. Seeing tasks instead of applications is a skill. We practice at it and make mistakes.&lt;/p&gt;
+
+&lt;p&gt;Now that we’ve reminded ourselves to focus on the tasks, we can now revise our diagrams and get a better perspective on what we’ve accomplished.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Let’s revisit the first graph. We’ll correct it by adding in the missing task.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
+    subgraph Application 1
+        BizProcess1[Create Order]--&amp;gt;BizRule1[Checkout]
+        BizProcess1--&amp;gt;BizRule1A[Invoice Tax]
+    end
+    BizRule1--&amp;gt;ExtSvL[Tax Service]
+    BizRule1A--&amp;gt;ExtSvL[Tax Service]
+
+    subgraph Application 2
+        BizProcess2[Create Order]--&amp;gt;BizRule2[Checkout]
+        BizProcess2--&amp;gt;BizRule2A[Invoice Tax]
+    end
+    BizRule2--&amp;gt;ExtSvL
+    BizRule2A--&amp;gt;ExtSvL[Tax Service]
+
+    subgraph Application 3
+        BizProcess3[Create Order]--&amp;gt;BizRule3[Checkout]
+        BizProcess3--&amp;gt;BizRule3A[Invoice Tax]
+    end
+    BizRule3--&amp;gt;ExtSvL
+    BizRule3A--&amp;gt;ExtSvL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You may be thinking that things would have been clearer from the outset if we simply hadn’t forgotten about the “Invoice Tax” task. Yes and no - we would have known earlier that our tax service integration encompassed more than we thought, but it’s not automatic that we would have seen &lt;em&gt;tasks&lt;/em&gt;. We could have looked at this and thought we needed a “tax integration service”.&lt;/p&gt;
+
+&lt;p&gt;Diagram #4 immediately makes the architectural accomplishment represented in diagram #3 much more obvious. We have, in fact, DRYed up our architecture! But what we DRYed was not the concrete tax service integration but a specific task that used it. We’ll simply repeat the diagram here.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
+    subgraph Application 1
+        BizProcess1[Create Order]--&amp;gt;BizRule1A[Invoice Tax]
+    end
+    subgraph Task
+        BizProcess1--&amp;gt;BizRule[Checkout]
+    end
+    BizRule--&amp;gt;ExtSvL[Tax Service]
+    BizRule1A--&amp;gt;ExtSvL
+
+    subgraph Application 2
+        BizProcess2[Create Order]--&amp;gt;BizRule
+        BizProcess2--&amp;gt;BizRule2A[Invoice Tax]
+    end
+    BizRule2A--&amp;gt;ExtSvL
+
+    subgraph Application 3
+        BizProcess3[Create Order]--&amp;gt;BizRule
+        BizProcess3--&amp;gt;BizRule3A[Invoice Tax]
+    end
+    BizRule3A--&amp;gt;ExtSvL
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, we can now imagine the next step, the step that would in fact get us towards fully DRYing up our tax service integration - a new task component for tax invoicing:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
+    subgraph Application 1
+        BizProcess1[Create Order]
+    end
+    subgraph Checkout Task
+        BizProcess1--&amp;gt;BizRule[Checkout]
+    end
+    subgraph Tax Invoice Task
+        BizProcess1--&amp;gt;BizRule2[Invoice Tax]
+    end
+    BizRule--&amp;gt;ExtSvL[Tax Service]
+    BizRule2--&amp;gt;ExtSvL
+
+    subgraph Application 2
+        BizProcess2[Create Order]--&amp;gt;BizRule
+        BizProcess2--&amp;gt;BizRule2
+    end
+
+    subgraph Application 3
+        BizProcess3[Create Order]--&amp;gt;BizRule
+        BizProcess3--&amp;gt;BizRule2
+    end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That nicely expresses our commitment to focusing on tasks as the building blocks of our business systems. And one more benefit is now apparent - a concerted task-oriented architecture make it easier to keep seeing the tasks, both where we’ve already found them and where they still wait for discovery.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 25 Aug 2023 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2023/08/25/magic-eye-puzzles-design-principles/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2023/08/25/magic-eye-puzzles-design-principles/</guid>
+      </item>
+    
+      <item>
         <title>Using Ruby-Netsnmp in an AWS Lambda to Get SNMP Metrics from Cloud/On-Prem Devices</title>
         <description>&lt;p&gt;This blog post will explore how to use &lt;a href=&quot;https://github.com/swisscom/ruby-netsnmp#mib&quot;&gt;Ruby-Netsnmp&lt;/a&gt;, a Ruby library for SNMP, in an AWS Lambda function to collect SNMP metrics from  devices and post them to New Relic.&lt;/p&gt;
 
