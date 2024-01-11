@@ -13,63 +13,17 @@
 &lt;p&gt;There are different ways people order from us - for example, in bulk, for a group, as part of a fundraiser - so we offer a number of different ways to create orders. Each of these ways has its own application, a &lt;em&gt;domain service&lt;/em&gt; that bundles together the various entities and workflows needed to create orders. While each way of ordering has things that are unique about it, they also share a fair bit of functionality that is mostly or entirely the same, like checking out. This means duplicated code, divergent customer experiences, and our focus today, separate-but-identical integrations with a third-party tax service.&lt;/p&gt;
 
 &lt;!--more--&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
-    subgraph Application 1
-        BizProcess1[Create Order]--&amp;gt;BizRule1[Checkout]
-    end
-    BizRule1--&amp;gt;ExtSvL[Tax Service]
 
-    subgraph Application 2
-        BizProcess2[Create Order]--&amp;gt;BizRule2[Checkout]
-    end
-    BizRule2--&amp;gt;ExtSvL
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggTFJcbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDFcbkJpelByb2Nlc3MxW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlMVtDaGVja291dF1cbmVuZFxuQml6UnVsZTEtLT5FeHRTdkxbVGF4IFNlcnZpY2VdXG4lJS1cbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDJcbkJpelByb2Nlc3MyW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlMltDaGVja291dF1cbmVuZFxuQml6UnVsZTItLT5FeHRTdkxcbiUlLVxuc3ViZ3JhcGggQXBwbGljYXRpb24gM1xuQml6UHJvY2VzczNbQ3JlYXRlIE9yZGVyXS0tPkJpelJ1bGUzW0NoZWNrb3V0XVxuZW5kXG5CaXpSdWxlMy0tPkV4dFN2TCIsIm1lcm1haWQiOm51bGx9&quot;&gt;&lt;/p&gt;
 
-    subgraph Application 3
-        BizProcess3[Create Order]--&amp;gt;BizRule3[Checkout]
-    end
-    BizRule3--&amp;gt;ExtSvL
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We set about to create a single checkout experience that could serve all our ways of ordering and, among other benefits, reduce our surface area with the tax service to a single client-consumer relationship. Our new architecture would look like this:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
-    subgraph Application 1
-        BizProcess1[Create Order]
-    end
-    subgraph Task
-        BizProcess1--&amp;gt;BizRule[Checkout]
-    end
-    BizRule--&amp;gt;ExtSvL[Tax Service]
 
-    subgraph Application 2
-        BizProcess2[Create Order]--&amp;gt;BizRule
-    end
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggTFJcbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDFcbkJpelByb2Nlc3MxW0NyZWF0ZSBPcmRlcl1cbmVuZFxuc3ViZ3JhcGggVGFza1xuQml6UHJvY2VzczEtLT5CaXpSdWxlW0NoZWNrb3V0XVxuZW5kXG5CaXpSdWxlLS0-RXh0U3ZMW1RheCBTZXJ2aWNlXVxuJSUtXG5zdWJncmFwaCBBcHBsaWNhdGlvbiAyXG5CaXpQcm9jZXNzMltDcmVhdGUgT3JkZXJdLS0-Qml6UnVsZVxuZW5kXG4lJS1cbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDNcbkJpelByb2Nlc3MzW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlXG5lbmQiLCJtZXJtYWlkIjpudWxsfQ&quot;&gt;&lt;/p&gt;
 
-    subgraph Application 3
-        BizProcess3[Create Order]--&amp;gt;BizRule
-    end
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We did the work, and after a few months, we rolled out the first integration with our new checkout experience. But we found that instead of reducing our interface with our tax service, it expanded it! We failed to realize that each application still needed to invoice tax post-checkout, meaning it still talked to the tax service. Our architecture now looked like this:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
-    subgraph Application 1
-        BizProcess1[Create Order]--&amp;gt;BizRule1A[Invoice Tax]
-    end
-    subgraph Task
-        BizProcess1--&amp;gt;BizRule[Checkout]
-    end
-    BizRule--&amp;gt;ExtSvL[Tax Service]
-    BizRule1A--&amp;gt;ExtSvL
 
-    subgraph Application 2
-        BizProcess2[Create Order]--&amp;gt;BizRule
-        BizProcess2--&amp;gt;BizRule2A[Invoice Tax]
-    end
-    BizRule2A--&amp;gt;ExtSvL
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggTFJcbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDFcbkJpelByb2Nlc3MxW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlMUFbSW52b2ljZSBUYXhdXG5lbmRcbnN1YmdyYXBoIFRhc2tcbkJpelByb2Nlc3MxLS0-Qml6UnVsZVtDaGVja291dF1cbmVuZFxuQml6UnVsZS0tPkV4dFN2TFtUYXggU2VydmljZV1cbkJpelJ1bGUxQS0tPkV4dFN2TFxuJSUtXG5zdWJncmFwaCBBcHBsaWNhdGlvbiAyXG5CaXpQcm9jZXNzMltDcmVhdGUgT3JkZXJdLS0-Qml6UnVsZVxuQml6UHJvY2VzczItLT5CaXpSdWxlMkFbSW52b2ljZSBUYXhdXG5lbmRcbkJpelJ1bGUyQS0tPkV4dFN2TFxuJSUtXG5zdWJncmFwaCBBcHBsaWNhdGlvbiAzXG5CaXpQcm9jZXNzM1tDcmVhdGUgT3JkZXJdLS0-Qml6UnVsZVxuQml6UHJvY2VzczMtLT5CaXpSdWxlM0FbSW52b2ljZSBUYXhdXG5lbmRcbkJpelJ1bGUzQS0tPkV4dFN2TCIsIm1lcm1haWQiOm51bGx9&quot;&gt;&lt;/p&gt;
 
-    subgraph Application 3
-        BizProcess3[Create Order]--&amp;gt;BizRule
-        BizProcess3--&amp;gt;BizRule3A[Invoice Tax]
-    end
-    BizRule3A--&amp;gt;ExtSvL
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This is the opposite of what we intended! How did we miss this?&lt;/p&gt;
 
 &lt;hr&gt;
@@ -99,77 +53,19 @@
 &lt;hr&gt;
 
 &lt;p&gt;Let’s revisit the first graph. We’ll correct it by adding in the missing task.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
-    subgraph Application 1
-        BizProcess1[Create Order]--&amp;gt;BizRule1[Checkout]
-        BizProcess1--&amp;gt;BizRule1A[Invoice Tax]
-    end
-    BizRule1--&amp;gt;ExtSvL[Tax Service]
-    BizRule1A--&amp;gt;ExtSvL[Tax Service]
 
-    subgraph Application 2
-        BizProcess2[Create Order]--&amp;gt;BizRule2[Checkout]
-        BizProcess2--&amp;gt;BizRule2A[Invoice Tax]
-    end
-    BizRule2--&amp;gt;ExtSvL
-    BizRule2A--&amp;gt;ExtSvL[Tax Service]
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggTFJcbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDFcbkJpelByb2Nlc3MxW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlMVtDaGVja291dF1cbkJpelByb2Nlc3MxLS0-Qml6UnVsZTFBW0ludm9pY2UgVGF4XVxuZW5kXG5CaXpSdWxlMS0tPkV4dFN2TFtUYXggU2VydmljZV1cbkJpelJ1bGUxQS0tPkV4dFN2TFtUYXggU2VydmljZV1cbiUlLVxuc3ViZ3JhcGggQXBwbGljYXRpb24gMlxuQml6UHJvY2VzczJbQ3JlYXRlIE9yZGVyXS0tPkJpelJ1bGUyW0NoZWNrb3V0XVxuQml6UHJvY2VzczItLT5CaXpSdWxlMkFbSW52b2ljZSBUYXhdXG5lbmRcbkJpelJ1bGUyLS0-RXh0U3ZMXG5CaXpSdWxlMkEtLT5FeHRTdkxbVGF4IFNlcnZpY2VdXG4lJS1cbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDNcbkJpelByb2Nlc3MzW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlM1tDaGVja291dF1cbkJpelByb2Nlc3MzLS0-Qml6UnVsZTNBW0ludm9pY2UgVGF4XVxuZW5kXG5CaXpSdWxlMy0tPkV4dFN2TFxuQml6UnVsZTNBLS0-RXh0U3ZMIiwibWVybWFpZCI6bnVsbH0&quot;&gt;&lt;/p&gt;
 
-    subgraph Application 3
-        BizProcess3[Create Order]--&amp;gt;BizRule3[Checkout]
-        BizProcess3--&amp;gt;BizRule3A[Invoice Tax]
-    end
-    BizRule3--&amp;gt;ExtSvL
-    BizRule3A--&amp;gt;ExtSvL
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;You may be thinking that things would have been clearer from the outset if we simply hadn’t forgotten about the “Invoice Tax” task. Yes and no - we would have known earlier that our tax service integration encompassed more than we thought, but it’s not automatic that we would have seen &lt;em&gt;tasks&lt;/em&gt;. We could have looked at this and thought we needed a “tax integration service”.&lt;/p&gt;
 
 &lt;p&gt;Diagram #4 immediately makes the architectural accomplishment represented in diagram #3 much more obvious. We have, in fact, DRYed up our architecture! But what we DRYed was not the concrete tax service integration but a specific task that used it. We’ll simply repeat the diagram here.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
-    subgraph Application 1
-        BizProcess1[Create Order]--&amp;gt;BizRule1A[Invoice Tax]
-    end
-    subgraph Task
-        BizProcess1--&amp;gt;BizRule[Checkout]
-    end
-    BizRule--&amp;gt;ExtSvL[Tax Service]
-    BizRule1A--&amp;gt;ExtSvL
 
-    subgraph Application 2
-        BizProcess2[Create Order]--&amp;gt;BizRule
-        BizProcess2--&amp;gt;BizRule2A[Invoice Tax]
-    end
-    BizRule2A--&amp;gt;ExtSvL
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggTFJcbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDFcbkJpelByb2Nlc3MxW0NyZWF0ZSBPcmRlcl0tLT5CaXpSdWxlMUFbSW52b2ljZSBUYXhdXG5lbmRcbnN1YmdyYXBoIFRhc2tcbkJpelByb2Nlc3MxLS0-Qml6UnVsZVtDaGVja291dF1cbmVuZFxuQml6UnVsZS0tPkV4dFN2TFtUYXggU2VydmljZV1cbkJpelJ1bGUxQS0tPkV4dFN2TFxuJSUtXG5zdWJncmFwaCBBcHBsaWNhdGlvbiAyXG5CaXpQcm9jZXNzMltDcmVhdGUgT3JkZXJdLS0-Qml6UnVsZVxuQml6UHJvY2VzczItLT5CaXpSdWxlMkFbSW52b2ljZSBUYXhdXG5lbmRcbkJpelJ1bGUyQS0tPkV4dFN2TFxuJSUtXG5zdWJncmFwaCBBcHBsaWNhdGlvbiAzXG5CaXpQcm9jZXNzM1tDcmVhdGUgT3JkZXJdLS0-Qml6UnVsZVxuQml6UHJvY2VzczMtLT5CaXpSdWxlM0FbSW52b2ljZSBUYXhdXG5lbmRcbkJpelJ1bGUzQS0tPkV4dFN2TCIsIm1lcm1haWQiOm51bGx9&quot;&gt;&lt;/p&gt;
 
-    subgraph Application 3
-        BizProcess3[Create Order]--&amp;gt;BizRule
-        BizProcess3--&amp;gt;BizRule3A[Invoice Tax]
-    end
-    BizRule3A--&amp;gt;ExtSvL
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Finally, we can now imagine the next step, the step that would in fact get us towards fully DRYing up our tax service integration - a new task component for tax invoicing:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;graph LR
-    subgraph Application 1
-        BizProcess1[Create Order]
-    end
-    subgraph Checkout Task
-        BizProcess1--&amp;gt;BizRule[Checkout]
-    end
-    subgraph Tax Invoice Task
-        BizProcess1--&amp;gt;BizRule2[Invoice Tax]
-    end
-    BizRule--&amp;gt;ExtSvL[Tax Service]
-    BizRule2--&amp;gt;ExtSvL
 
-    subgraph Application 2
-        BizProcess2[Create Order]--&amp;gt;BizRule
-        BizProcess2--&amp;gt;BizRule2
-    end
+&lt;p&gt;&lt;img class=&quot;mermaid&quot; src=&quot;https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggTFJcbnN1YmdyYXBoIEFwcGxpY2F0aW9uIDFcbkJpelByb2Nlc3MxW0NyZWF0ZSBPcmRlcl1cbmVuZFxuc3ViZ3JhcGggQ2hlY2tvdXQgVGFza1xuQml6UHJvY2VzczEtLT5CaXpSdWxlW0NoZWNrb3V0XVxuZW5kXG5zdWJncmFwaCBUYXggSW52b2ljZSBUYXNrXG5CaXpQcm9jZXNzMS0tPkJpelJ1bGUyW0ludm9pY2UgVGF4XVxuZW5kXG5CaXpSdWxlLS0-RXh0U3ZMW1RheCBTZXJ2aWNlXVxuQml6UnVsZTItLT5FeHRTdkxcbiUlLVxuc3ViZ3JhcGggQXBwbGljYXRpb24gMlxuQml6UHJvY2VzczJbQ3JlYXRlIE9yZGVyXS0tPkJpelJ1bGVcbkJpelByb2Nlc3MyLS0-Qml6UnVsZTJcbmVuZFxuJSUtXG5zdWJncmFwaCBBcHBsaWNhdGlvbiAzXG5CaXpQcm9jZXNzM1tDcmVhdGUgT3JkZXJdLS0-Qml6UnVsZVxuQml6UHJvY2VzczMtLT5CaXpSdWxlMlxuZW5kIiwibWVybWFpZCI6bnVsbH0&quot;&gt;&lt;/p&gt;
 
-    subgraph Application 3
-        BizProcess3[Create Order]--&amp;gt;BizRule
-        BizProcess3--&amp;gt;BizRule2
-    end
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;That nicely expresses our commitment to focusing on tasks as the building blocks of our business systems. And one more benefit is now apparent - a concerted task-oriented architecture make it easier to keep seeing the tasks, both where we’ve already found them and where they still wait for discovery.&lt;/p&gt;
 </description>
         <pubDate>Fri, 25 Aug 2023 00:00:00 -0400</pubDate>
