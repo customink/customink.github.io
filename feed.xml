@@ -7,6 +7,50 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Using Ruby-Netsnmp in an AWS Lambda to Get SNMP Metrics from Cloud/On-Prem Devices</title>
+        <description>&lt;p&gt;This blog post will explore how to use &lt;a href=&quot;https://github.com/swisscom/ruby-netsnmp#mib&quot;&gt;Ruby-Netsnmp&lt;/a&gt;, a Ruby library for SNMP, in an AWS Lambda function to collect SNMP metrics from  devices and post them to New Relic.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;how-it-works&quot;&gt;How it Works&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=/assets/content/snmp/snmp-4e5e71da6e8e62e19a002c188f42be33a6112cb37d02909563045a4e24245784.png class=&quot;tb-Img tb-Img--fancy&quot;/&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The Lambda function is triggered, either by a schedule or an event.&lt;/li&gt;
+&lt;li&gt;The function retrieves the desired SNMP metrics from the device and processes them as needed.&lt;/li&gt;
+&lt;li&gt;The function returns the results to the calling application or service.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-ruby-netsnmp-to-translate-mibs&quot;&gt;Using Ruby-Netsnmp to Translate MIBs&lt;/h2&gt;
+
+&lt;p&gt;One of the main benefits of using Ruby-Netsnmp in an AWS Lambda function is the ability to translate MIBs. MIBs, or Management Information Bases, are databases of information that SNMP devices use to organize and communicate their data. MIBs use a specific syntax that can be difficult to read and interpret, making it challenging to extract useful information.&lt;/p&gt;
+
+&lt;p&gt;However, Ruby-Netsnmp includes a MIB parser that can translate the MIB syntax into a more human-readable format. This allows you to easily extract the relevant SNMP metrics and incorporate them into your monitoring solution.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-the-load_module-method-to-load-mibs&quot;&gt;Using the load_module Method to Load MIBs&lt;/h2&gt;
+
+&lt;p&gt;One of the most powerful features of Ruby-Netsnmp is the ability to load MIB files and translate the complex MIB syntax into human-readable form. This makes it much easier to work with SNMP data and incorporate it into your monitoring solution.&lt;/p&gt;
+
+&lt;p&gt;To load a MIB file, you can use the load_module method in the Ruby-Netsnmp library. This method takes the name of the MIB file as an argument, and then loads the file into memory for use in your code.&lt;/p&gt;
+
+&lt;p&gt;Note that the load_module method needs to be called before any SNMP queries are made, as it needs to load the MIB file into memory first.&lt;/p&gt;
+
+&lt;h2 id=&quot;posting-snmp-metrics-to-new-relic&quot;&gt;Posting SNMP Metrics to New Relic&lt;/h2&gt;
+
+&lt;p&gt;Once you&amp;#39;ve retrieved the SNMP metrics from your devices using Ruby-Netsnmp, the next step is to post them to our monitoring solution. New Relic is a popular monitoring platform that provides real-time visibility into the performance of your applications and infrastructure. It includes a flexible API that allows you to easily post custom metrics from your own applications and scripts.
+Using the Faraday gem to make a POST request to the New Relic Metrics API. We&amp;#39;re building a JSON payload containing the custom event SNMPMetrics. We&amp;#39;re then making the POST request to the New Relic API endpoint with the appropriate headers and API key.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Using Ruby-Netsnmp in an AWS Lambda function is an effective way to retrieve SNMP metrics from devices, while also allowing for the translation of MIBs. By leveraging the flexibility and scalability of AWS Lambda, you can simplify your monitoring stack and reduce the need for additional infrastructure. With the right implementation and configuration, you can use this approach to monitor the health and performance of your cloud/on-premises infrastructure with ease.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 10 Apr 2023 00:00:00 -0400</pubDate>
+        <link>https://technology.customink.com//blog/2023/04/10/customink-snmp-lambda/</link>
+        <guid isPermaLink="true">http://technology.customink.com//blog/2023/04/10/customink-snmp-lambda/</guid>
+      </item>
+    
+      <item>
         <title>Trigger CircleCI Workflow. AKA Simple Deploy Button</title>
         <description>&lt;p&gt;Very simple, no parameters needed, no enums, no booleans... just a really easy way to trigger a deploy with CircleCI. We can do this making use of the &lt;a href=&quot;https://circleci.com/docs/variables/#pipeline-values&quot;&gt;trigger_source&lt;/a&gt; pipeline value. When you click the button in CircleCI to &amp;quot;Trigger Pipeline&amp;quot; the value would be &lt;code&gt;api&lt;/code&gt; vs something like &lt;code&gt;webhook&lt;/code&gt;.&lt;/p&gt;
 

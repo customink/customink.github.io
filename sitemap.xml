@@ -553,10 +553,14 @@
 <lastmod>2023-03-03T00:00:00-05:00</lastmod>
 </url>
 <url>
-<loc>/careers/</loc>
+<loc>/blog/2023/04/10/customink-snmp-lambda/</loc>
+<lastmod>2023-04-10T00:00:00-04:00</lastmod>
 </url>
 <url>
 <loc>/team/</loc>
+</url>
+<url>
+<loc>/careers/</loc>
 </url>
 <url>
 <loc>/</loc>
@@ -659,6 +663,9 @@
 </url>
 <url>
 <loc>/authors/martin-bonica/</loc>
+</url>
+<url>
+<loc>/authors/sean-faria/</loc>
 </url>
 <url>
 <loc>/page2/</loc>
