@@ -561,6 +561,10 @@
 <lastmod>2023-08-25T00:00:00-04:00</lastmod>
 </url>
 <url>
+<loc>/blog/2023/10/09/customink-on-kubernetes/</loc>
+<lastmod>2023-10-09T00:00:00-04:00</lastmod>
+</url>
+<url>
 <loc>/team/</loc>
 </url>
 <url>
@@ -730,5 +734,8 @@
 </url>
 <url>
 <loc>/page20/</loc>
+</url>
+<url>
+<loc>/page21/</loc>
 </url>
 </urlset>
