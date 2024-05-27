@@ -1,17 +1,17 @@
 name: customink.github.io
 
-owner:  # team definitions at https://app.opslevel.com/teams
+owner: principal_engineers # team definitions at https://app.opslevel.com/teams
 
 purpose: # multiple choice
-  # - app
+  - app
   # - demo
   # - library
   # - configuration
   # - other
 deployment_type: # multiple choice
   # - kubernetes
-  # - infrastructure_serverless
-  - package
+  - infrastructure_serverless
+  # - package
   # - cli-only
   # - data
   # - docker-image
@@ -23,6 +23,6 @@ deployment_type: # multiple choice
 # tier: tier_na # this repo does not have a tier. typically libraries
 
 properties:
-  public_facing: false
+  public_facing: true
   pci: false
   pii: false
